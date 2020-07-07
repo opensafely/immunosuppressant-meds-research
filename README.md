@@ -1,3 +1,5 @@
+The working protocol is located at https://docs.google.com/document/d/1gUsQ6qOW008-IclWVftBsSrjM-zsMv0Q/edit?ts=5f046214
+
 # OpenSAFELY Research Template
 
 This is a template repository for making new OpenSAFELY resarch projects.  Eventually it'll become a framework. To get started, create a new repo using this repo as a template, delete this front matter, and edit the text that follows.
