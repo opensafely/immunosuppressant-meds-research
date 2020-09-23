@@ -104,10 +104,6 @@ chronic_liver_disease_codes = codelist_from_csv(
     "codelists/opensafely-chronic-liver-disease.csv", system="ctv3", column="CTV3ID",
 )
 
-current_asthma_codes = codelist_from_csv(
-    "codelists/opensafely-current-asthma.csv", system="ctv3", column="CTV3ID",
-)
-
 stroke_codes = codelist_from_csv(
     "codelists/opensafely-stroke-updated.csv", system="ctv3", column="CTV3ID",
 )
