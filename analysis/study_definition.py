@@ -59,6 +59,16 @@ study = StudyDefinition(
             "category": {"ratios": {"M": 0.49, "F": 0.51}},
         }
     ),
+    ethnicity=patients.with_these_clinical_events(
+        ethnicity_codes,
+        returning="category",
+        find_last_match_in_period=True,
+        include_date_of_match=True,
+        return_expectations={
+            "category": {"ratios": {"1": 0.8, "5": 0.1, "3": 0.1}},
+            "incidence": 0.75,
+        },
+    ),
     # Disease codes
     crohns_disease=patients.with_these_clinical_events(
         crohns_disease_codes,
@@ -100,6 +110,16 @@ study = StudyDefinition(
             "date": {"earliest": "1950-01-01", "latest": "today"},
         },
     ),
+    hidradenitis_suppurativa=patients.with_these_clinical_events(
+        hidradenitis_suppurativa_codes,
+        returning="date",
+        find_first_match_in_period=True,
+        include_month=True,
+        return_expectations={
+            "incidence": 0.2,
+            "date": {"earliest": "1950-01-01", "latest": "today"},
+        },
+    ),   
     psoriatic_arthritis=patients.with_these_clinical_events(
         psoriatic_arthritis_codes,
         returning="date",
@@ -112,6 +132,16 @@ study = StudyDefinition(
     ),
     rheumatoid_arthritis=patients.with_these_clinical_events(
         rheumatoid_arthritis_codes,
+        returning="date",
+        find_first_match_in_period=True,
+        include_month=True,
+        return_expectations={
+            "incidence": 0.2,
+            "date": {"earliest": "1950-01-01", "latest": "today"},
+        },
+    ),
+    ankylosing_spondylitis=patients.with_these_clinical_events(
+        ankylosing_spondylitis_codes,
         returning="date",
         find_first_match_in_period=True,
         include_month=True,
@@ -160,6 +190,35 @@ study = StudyDefinition(
             "date": {"earliest": "1950-01-01", "latest": "today"},
         },
     ),
+    
+    hba1c_mmol_per_mol=patients.with_these_clinical_events(
+        hba1c_new_codes,
+        find_last_match_in_period=True,
+        on_or_before="2020-02-29",
+        returning="numeric_value",
+        include_date_of_match=True,
+        include_month=True,
+        return_expectations={
+            "date": {"latest": "2020-02-29"},
+            "float": {"distribution": "normal", "mean": 40.0, "stddev": 20},
+            "incidence": 0.95,
+        },
+    ),
+
+    hba1c_percentage=patients.with_these_clinical_events(
+        hba1c_old_codes,
+        find_last_match_in_period=True,
+        on_or_before="2020-02-29",
+        returning="numeric_value",
+        include_date_of_match=True,
+        include_month=True,
+        return_expectations={
+            "date": {"latest": "2020-02-29"},
+            "float": {"distribution": "normal", "mean": 5, "stddev": 2},
+            "incidence": 0.95,
+        },
+    ),
+    
     hypertension=patients.with_these_clinical_events(
         hypertension_codes,
         returning="date",
@@ -250,6 +309,31 @@ study = StudyDefinition(
             "date": {"earliest": "1950-01-01", "latest": "today"},
         },
     ),
+
+    #CKD
+    creatinine=patients.with_these_clinical_events(
+        creatinine_codes,
+        find_last_match_in_period=True,
+        between=["2018-12-01", "2020-02-29"],
+        returning="numeric_value",
+        include_date_of_match=True,
+        include_month=True,
+        return_expectations={
+            "float": {"distribution": "normal", "mean": 150.0, "stddev": 200.0},
+            "date": {"earliest": "2018-12-01", "latest": "2020-02-29"},
+            "incidence": 0.95,
+        },
+    ),
+
+    #### end stage renal disease codes incl. dialysis / transplant 
+    esrf=patients.with_these_clinical_events(
+        ckd_codes,
+        on_or_before="2020-02-29",
+        return_last_date_in_period=True,
+        include_month=True,
+        return_expectations={"date": {"latest": "2020-02-29"}},
+    ),
+
     ckd=patients.with_these_clinical_events(
         ckd_codes,
         returning="date",
@@ -349,6 +433,21 @@ study = StudyDefinition(
         include_month=True,
         return_expectations={"date": {"latest": "2020-02-29"}},
     ),
+    
+    ### GP CONSULTATION RATE
+    gp_consult_count=patients.with_gp_consultations(
+        between=["2019-03-01", "2020-02-29"],
+        returning="number_of_matches_in_period",
+        return_expectations={
+            "int": {"distribution": "normal", "mean": 4, "stddev": 2},
+            "date": {"earliest": "2019-03-01", "latest": "2020-02-29"},
+            "incidence": 0.7,
+        },
+    ),
+    has_consultation_history=patients.with_complete_gp_consultation_history_between(
+        "2019-03-01", "2020-02-29", return_expectations={"incidence": 0.9},
+    ),
+    
     # Medications
     oral_prednisolone_count=patients.with_these_medications(
         oral_pred_codes,
