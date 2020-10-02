@@ -1,0 +1,172 @@
+obj_type,vpid,snomed_id,bnf_code,dmd_name,bnf_name,form_route
+amp,327071005,338311000000000,0802010G0AAADAD,Azathioprine 25mg tablets (Kent Pharmaceuticals Ltd),Azathioprine 25mg tablets,tablet.oral
+amp,327071005,544611000000000,0802010G0AAADAD,Azathioprine 25mg tablets (Mylan),Azathioprine 25mg tablets,tablet.oral
+amp,327071005,611111000000000,0802010G0AAADAD,Azathioprine 25mg tablets (Alliance Healthcare (Distribution) Ltd),Azathioprine 25mg tablets,tablet.oral
+amp,327071005,744711000000000,0802010G0AAADAD,Azathioprine 25mg tablets (A A H Pharmaceuticals Ltd),Azathioprine 25mg tablets,tablet.oral
+amp,327071005,369501e10,0802010G0AAADAD,Azathioprine 25mg tablets (IVAX Pharmaceuticals UK Ltd),Azathioprine 25mg tablets,tablet.oral
+amp,327071005,586691e10,0802010G0AAADAD,Azathioprine 25mg tablets (Actavis UK Ltd),Azathioprine 25mg tablets,tablet.oral
+amp,327071005,838861e10,0802010G0AAADAD,Azathioprine 25mg tablets (Teva UK Ltd),Azathioprine 25mg tablets,tablet.oral
+amp,327071005,137407e11,0802010G0AAADAD,Azathioprine 25mg tablets (Tillomed Laboratories Ltd),Azathioprine 25mg tablets,tablet.oral
+amp,327071005,150704e11,0802010G0AAADAD,Azathioprine 25mg tablets (Sigma Pharmaceuticals Plc),Azathioprine 25mg tablets,tablet.oral
+amp,327071005,177891e11,0802010G0AAADAD,Azathioprine 25mg tablets (Phoenix Healthcare Distribution Ltd),Azathioprine 25mg tablets,tablet.oral
+amp,327071005,217804e11,0802010G0AAADAD,Azathioprine 25mg tablets (Waymade Healthcare Plc),Azathioprine 25mg tablets,tablet.oral
+amp,327071005,226141e11,0802010G0AAADAD,Azathioprine 25mg tablets (DE Pharmaceuticals),Azathioprine 25mg tablets,tablet.oral
+amp,327071005,245052e11,0802010G0AAADAD,Azathioprine 25mg tablets (Sandoz Ltd),Azathioprine 25mg tablets,tablet.oral
+amp,327071005,299978e11,0802010G0AAADAD,Azathioprine 25mg tablets (Mawdsley-Brooks & Company Ltd),Azathioprine 25mg tablets,tablet.oral
+amp,327070006,41911000000000,0802010G0AAAEAE,Azathioprine 50mg tablets (A A H Pharmaceuticals Ltd),Azathioprine 50mg tablets,tablet.oral
+amp,327070006,178511000000000,0802010G0AAAEAE,Azathioprine 50mg tablets (IVAX Pharmaceuticals UK Ltd),Azathioprine 50mg tablets,tablet.oral
+amp,327070006,339911000000000,0802010G0AAAEAE,Azathioprine 50mg tablets (Actavis UK Ltd),Azathioprine 50mg tablets,tablet.oral
+amp,327070006,428011000000000,0802010G0AAAEAE,Azathioprine 50mg tablets (Sandoz Ltd),Azathioprine 50mg tablets,tablet.oral
+amp,327070006,715511000000000,0802010G0AAAEAE,Azathioprine 50mg tablets (Teva UK Ltd),Azathioprine 50mg tablets,tablet.oral
+amp,327070006,843311000000000,0802010G0AAAEAE,Azathioprine 50mg tablets (Mylan),Azathioprine 50mg tablets,tablet.oral
+amp,327070006,863111000000000,0802010G0AAAEAE,Azathioprine 50mg tablets (Kent Pharmaceuticals Ltd),Azathioprine 50mg tablets,tablet.oral
+amp,327070006,888811000000000,0802010G0AAAEAE,Azathioprine 50mg tablets (Alliance Healthcare (Distribution) Ltd),Azathioprine 50mg tablets,tablet.oral
+amp,327070006,102881e11,0802010G0AAAEAE,Azathioprine 50mg tablets (Focus Pharmaceuticals Ltd),Azathioprine 50mg tablets,tablet.oral
+amp,327070006,133867e11,0802010G0AAAEAE,Azathioprine 50mg tablets (Arrow Generics Ltd),Azathioprine 50mg tablets,tablet.oral
+amp,327070006,137409e11,0802010G0AAAEAE,Azathioprine 50mg tablets (Tillomed Laboratories Ltd),Azathioprine 50mg tablets,tablet.oral
+amp,327070006,150706e11,0802010G0AAAEAE,Azathioprine 50mg tablets (Sigma Pharmaceuticals Plc),Azathioprine 50mg tablets,tablet.oral
+amp,327070006,1779e13,0802010G0AAAEAE,Azathioprine 50mg tablets (Phoenix Healthcare Distribution Ltd),Azathioprine 50mg tablets,tablet.oral
+amp,327070006,182803e11,0802010G0AAAEAE,Azathioprine 50mg tablets (Strides Pharma UK Ltd),Azathioprine 50mg tablets,tablet.oral
+amp,327070006,184975e11,0802010G0AAAEAE,Azathioprine 50mg tablets (Almus Pharmaceuticals Ltd),Azathioprine 50mg tablets,tablet.oral
+amp,327070006,217807e11,0802010G0AAAEAE,Azathioprine 50mg tablets (Waymade Healthcare Plc),Azathioprine 50mg tablets,tablet.oral
+amp,327070006,226152e11,0802010G0AAAEAE,Azathioprine 50mg tablets (DE Pharmaceuticals),Azathioprine 50mg tablets,tablet.oral
+amp,327070006,279901e11,0802010G0AAAEAE,Azathioprine 50mg tablets (Ennogen Healthcare Ltd),Azathioprine 50mg tablets,tablet.oral
+amp,327070006,299981e11,0802010G0AAAEAE,Azathioprine 50mg tablets (Mawdsley-Brooks & Company Ltd),Azathioprine 50mg tablets,tablet.oral
+amp,327070006,361055e11,0802010G0AAAEAE,Azathioprine 50mg tablets (Ennogen Pharma Ltd),Azathioprine 50mg tablets,tablet.oral
+amp,327070006,370771e11,0802010G0AAAEAE,Azathioprine 50mg tablets (Relonchem Ltd),Azathioprine 50mg tablets,tablet.oral
+amp,879131e10,873351e10,0802010G0AAAHAH,Azathioprine 10mg capsules (Special Order),Azathioprine 10mg capsules,capsule.oral
+amp,830851e10,827481e10,0802010G0AAAPAP,Azathioprine 50mg/5ml oral solution (Special Order),Azathioprine 50mg/5ml oral solution,solution.oral
+amp,830871e10,827231e10,0802010G0AAAQAQ,Azathioprine 40mg/5ml oral solution (Special Order),Azathioprine 40mg/5ml oral liquid,solution.oral
+amp,830861e10,827771e10,0802010G0AAAQAQ,Azathioprine 40mg/5ml oral suspension (Special Order),Azathioprine 40mg/5ml oral liquid,suspension.oral
+amp,828211e10,826281e10,0802010G0AAARAR,Azathioprine 10mg/5ml oral solution (Special Order),Azathioprine 10mg/5ml oral liquid,solution.oral
+amp,828221e10,826411e10,0802010G0AAARAR,Azathioprine 10mg/5ml oral suspension (Special Order),Azathioprine 10mg/5ml oral liquid,suspension.oral
+amp,828401e10,826871e10,0802010G0AAASAS,Azathioprine 25mg/5ml oral solution (Special Order),Azathioprine 25mg/5ml oral solution,solution.oral
+amp,830791e10,827941e10,0802010G0AAATAT,Azathioprine 75mg/5ml oral solution (Special Order),Azathioprine 75mg/5ml oral liquid,solution.oral
+amp,830781e10,828041e10,0802010G0AAATAT,Azathioprine 75mg/5ml oral suspension (Special Order),Azathioprine 75mg/5ml oral liquid,suspension.oral
+amp,828311e10,826311e10,0802010G0AAAUAU,Azathioprine 15mg/5ml oral solution (Special Order),Azathioprine 15mg/5ml oral liquid,solution.oral
+amp,828321e10,826431e10,0802010G0AAAUAU,Azathioprine 15mg/5ml oral suspension (Special Order),Azathioprine 15mg/5ml oral liquid,suspension.oral
+amp,828191e10,825981e10,0802010G0AAAVAV,Azathioprine 100mg/5ml oral solution (Special Order),Azathioprine 100mg/5ml oral solution,solution.oral
+amp,828381e10,826721e10,0802010G0AAAWAW,Azathioprine 20mg/5ml oral solution (Special Order),Azathioprine 20mg/5ml oral solution,solution.oral
+amp,120805e11,120687e11,0802010G0AAAXAX,Azathioprine 125mg/5ml oral suspension (Special Order),Azathioprine 125mg/5ml oral liquid,suspension.oral
+amp,120804e11,12069e12,0802010G0AAAXAX,Azathioprine 125mg/5ml oral solution (Special Order),Azathioprine 125mg/5ml oral liquid,solution.oral
+amp,830831e10,827341e10,0802010G0AAAYAY,Azathioprine 5mg/5ml oral solution (Special Order),Azathioprine 5mg/5ml oral liquid,solution.oral
+amp,830821e10,827591e10,0802010G0AAAYAY,Azathioprine 5mg/5ml oral suspension (Special Order),Azathioprine 5mg/5ml oral liquid,suspension.oral
+amp,122119e11,122123e11,0802010G0AABABA,Azathioprine 45mg/5ml oral suspension (Special Order),Azathioprine 45mg/5ml oral liquid,suspension.oral
+amp,122218e11,122154e11,0802010G0AABABA,Azathioprine 45mg/5ml oral solution (Special Order),Azathioprine 45mg/5ml oral liquid,solution.oral
+amp,122224e11,122148e11,0802010G0AABBBB,Azathioprine 7mg/5ml oral suspension (Special Order),Azathioprine 7mg/5ml oral liquid,suspension.oral
+amp,122223e11,122178e11,0802010G0AABBBB,Azathioprine 7mg/5ml oral solution (Special Order),Azathioprine 7mg/5ml oral liquid,solution.oral
+amp,828421e10,826851e10,0802010G0AABCBC,Azathioprine 30mg/5ml oral solution (Special Order),Azathioprine 30mg/5ml oral liquid,solution.oral
+amp,830881e10,826911e10,0802010G0AABCBC,Azathioprine 30mg/5ml oral suspension (Special Order),Azathioprine 30mg/5ml oral liquid,suspension.oral
+amp,828331e10,826461e10,0802010G0AABDBD,Azathioprine 17.5mg/5ml oral solution (Special Order),Azathioprine 17.5mg/5ml oral liquid,solution.oral
+amp,828341e10,826601e10,0802010G0AABDBD,Azathioprine 17.5mg/5ml oral suspension (Special Order),Azathioprine 17.5mg/5ml oral liquid,suspension.oral
+amp,120973e11,120936e11,0802010G0AABEBE,Azathioprine 35mg/5ml oral suspension (Special Order),Azathioprine 35mg/5ml oral liquid,suspension.oral
+amp,120972e11,120939e11,0802010G0AABEBE,Azathioprine 35mg/5ml oral solution (Special Order),Azathioprine 35mg/5ml oral liquid,solution.oral
+amp,122118e11,122096e11,0802010G0AABFBF,Azathioprine 37.5mg/5ml oral suspension (Special Order),Azathioprine 37.5mg/5ml oral liquid,suspension.oral
+amp,122117e11,122104e11,0802010G0AABFBF,Azathioprine 37.5mg/5ml oral solution (Special Order),Azathioprine 37.5mg/5ml oral liquid,solution.oral
+amp,830811e10,828851e10,0802010G0AABGBG,Azathioprine 60mg/5ml oral solution (Special Order),Azathioprine 60mg/5ml oral liquid,solution.oral
+amp,830801e10,829011e10,0802010G0AABGBG,Azathioprine 60mg/5ml oral suspension (Special Order),Azathioprine 60mg/5ml oral liquid,suspension.oral
+amp,120971e11,12093e12,0802010G0AABIBI,Azathioprine 200mg/5ml oral suspension (Special Order),Azathioprine 200mg/5ml oral liquid,suspension.oral
+amp,12097e12,120933e11,0802010G0AABIBI,Azathioprine 200mg/5ml oral solution (Special Order),Azathioprine 200mg/5ml oral liquid,solution.oral
+amp,120807e11,120703e11,0802010G0AABJBJ,Azathioprine 175mg/5ml oral suspension (Special Order),Azathioprine 175mg/5ml oral liquid,suspension.oral
+amp,120806e11,120709e11,0802010G0AABJBJ,Azathioprine 175mg/5ml oral solution (Special Order),Azathioprine 175mg/5ml oral liquid,solution.oral
+amp,120969e11,120924e11,0802010G0AABKBK,Azathioprine 17mg/5ml oral suspension (Special Order),Azathioprine 17mg/5ml oral liquid,suspension.oral
+amp,120968e11,120927e11,0802010G0AABKBK,Azathioprine 17mg/5ml oral solution (Special Order),Azathioprine 17mg/5ml oral liquid,solution.oral
+amp,879151e10,874291e10,0802010G0AABPBP,Azathioprine 5mg capsules (Special Order),Azathioprine 5mg capsules,capsule.oral
+amp,879141e10,874321e10,0802010G0AABRBR,Azathioprine 30mg capsules (Special Order),Azathioprine 30mg capsules,capsule.oral
+amp,828251e10,826541e10,0802010G0AABSBS,Azathioprine 12mg/5ml oral solution (Special Order),Azathioprine 12mg/5ml oral liquid,solution.oral
+amp,828261e10,826621e10,0802010G0AABSBS,Azathioprine 12mg/5ml oral suspension (Special Order),Azathioprine 12mg/5ml oral liquid,suspension.oral
+amp,12222e12,122138e11,0802010G0AABTBT,Azathioprine 4mg/5ml oral suspension (Special Order),Azathioprine 4mg/5ml oral liquid,suspension.oral
+amp,122219e11,12216e12,0802010G0AABTBT,Azathioprine 4mg/5ml oral solution (Special Order),Azathioprine 4mg/5ml oral liquid,solution.oral
+amp,828231e10,826041e10,0802010G0AABXBX,Azathioprine 120mg/5ml oral solution (Special Order),Azathioprine 120mg/5ml oral liquid,solution.oral
+amp,828241e10,826081e10,0802010G0AABXBX,Azathioprine 120mg/5ml oral suspension (Special Order),Azathioprine 120mg/5ml oral liquid,suspension.oral
+amp,828291e10,826121e10,0802010G0AABYBY,Azathioprine 150mg/5ml oral solution (Special Order),Azathioprine 150mg/5ml oral liquid,solution.oral
+amp,828301e10,826291e10,0802010G0AABYBY,Azathioprine 150mg/5ml oral suspension (Special Order),Azathioprine 150mg/5ml oral liquid,suspension.oral
+amp,122222e11,122145e11,0802010G0AABZBZ,Azathioprine 70mg/5ml oral suspension (Special Order),Azathioprine 70mg/5ml oral liquid,suspension.oral
+amp,122221e11,122174e11,0802010G0AABZBZ,Azathioprine 70mg/5ml oral solution (Special Order),Azathioprine 70mg/5ml oral liquid,solution.oral
+amp,828351e10,826591e10,0802010G0AACBCB,Azathioprine 2.5mg/5ml oral solution (Special Order),Azathioprine 2.5mg/5ml oral liquid,solution.oral
+amp,828361e10,826781e10,0802010G0AACBCB,Azathioprine 2.5mg/5ml oral suspension (Special Order),Azathioprine 2.5mg/5ml oral liquid,suspension.oral
+amp,122226e11,122151e11,0802010G0AACCCC,Azathioprine 80mg/5ml oral suspension (Special Order),Azathioprine 80mg/5ml oral liquid,suspension.oral
+amp,122225e11,122181e11,0802010G0AACCCC,Azathioprine 80mg/5ml oral solution (Special Order),Azathioprine 80mg/5ml oral liquid,solution.oral
+amp,830771e10,829141e10,0802010G0AACDCD,Azathioprine 90mg/5ml oral solution (Special Order),Azathioprine 90mg/5ml oral liquid,solution.oral
+amp,830751e10,829221e10,0802010G0AACDCD,Azathioprine 90mg/5ml oral suspension (Special Order),Azathioprine 90mg/5ml oral liquid,suspension.oral
+amp,828271e10,826211e10,0802010G0AACECE,Azathioprine 13mg/5ml oral solution (Special Order),Azathioprine 13mg/5ml oral liquid,solution.oral
+amp,828281e10,826351e10,0802010G0AACECE,Azathioprine 13mg/5ml oral suspension (Special Order),Azathioprine 13mg/5ml oral liquid,suspension.oral
+amp,160359e11,160125e11,0802010G0AACGCG,Azathioprine 250mg/5ml oral solution (Special Order),Azathioprine 250mg/5ml oral liquid,solution.oral
+amp,16036e12,160147e11,0802010G0AACGCG,Azathioprine 250mg/5ml oral suspension (Special Order),Azathioprine 250mg/5ml oral liquid,suspension.oral
+amp,830841e10,827851e10,0802010G0AACHCH,Azathioprine 50mg/5ml oral suspension (Drug Tariff Special Order),Azathioprine 50mg/5ml oral suspension,suspension.oral
+amp,828411e10,826971e10,0802010G0AACICI,Azathioprine 25mg/5ml oral suspension (Drug Tariff Special Order),Azathioprine 25mg/5ml oral suspension,suspension.oral
+amp,828201e10,826011e10,0802010G0AACJCJ,Azathioprine 100mg/5ml oral suspension (Drug Tariff Special Order),Azathioprine 100mg/5ml oral suspension,suspension.oral
+amp,828391e10,826811e10,0802010G0AACKCK,Azathioprine 20mg/5ml oral suspension (Drug Tariff Special Order),Azathioprine 20mg/5ml oral suspension,suspension.oral
+amp,310021e11,31e15,0802010G0AACLCL,Azathioprine 65mg/5ml oral suspension (Special Order),Azathioprine 65mg/5ml oral suspension,suspension.oral
+amp,327071005,284711000000000,0802010G0BCAAAD,Imuran 25mg tablets (Aspen Pharma Trading Ltd),Imuran 25mg tablets,tablet.oral
+amp,327070006,675711000000000,0802010G0BCABAE,Imuran 50mg tablets (Aspen Pharma Trading Ltd),Imuran 50mg tablets,tablet.oral
+amp,327072003,906711000000000,0802010G0BCACAA,Imuran 50mg powder for solution for injection vials (Aspen Pharma Trading Ltd),Imuran 50mg powder for solution for injection vials,solutioninjection.intravenous
+amp,327070006,318611000000000,0802010G0BEAAAE,Immunoprin 50mg tablets (Ashbourne Pharmaceuticals Ltd),Immunoprin 50mg tablets,tablet.oral
+amp,327070006,26658e12,0802010G0BHAAAE,Azapress 50mg tablets (Ennogen Pharma Ltd),Azapress 50mg tablets,tablet.oral
+vmp,327072003,327072003,0802010G0AAAAAA,Azathioprine 50mg powder for solution for injection vials,Azathioprine 50mg powder for solution for injection vials,solutioninjection.intravenous
+vmp,327071005,327071005,0802010G0AAADAD,Azathioprine 25mg tablets,Azathioprine 25mg tablets,tablet.oral
+vmp,327070006,327070006,0802010G0AAAEAE,Azathioprine 50mg tablets,Azathioprine 50mg tablets,tablet.oral
+vmp,879131e10,879131e10,0802010G0AAAHAH,Azathioprine 10mg capsules,Azathioprine 10mg capsules,capsule.oral
+vmp,830851e10,830851e10,0802010G0AAAPAP,Azathioprine 50mg/5ml oral solution,Azathioprine 50mg/5ml oral solution,solution.oral
+vmp,830861e10,830861e10,0802010G0AAAQAQ,Azathioprine 40mg/5ml oral suspension,Azathioprine 40mg/5ml oral liquid,suspension.oral
+vmp,830871e10,830871e10,0802010G0AAAQAQ,Azathioprine 40mg/5ml oral solution,Azathioprine 40mg/5ml oral liquid,solution.oral
+vmp,828211e10,828211e10,0802010G0AAARAR,Azathioprine 10mg/5ml oral solution,Azathioprine 10mg/5ml oral liquid,solution.oral
+vmp,828221e10,828221e10,0802010G0AAARAR,Azathioprine 10mg/5ml oral suspension,Azathioprine 10mg/5ml oral liquid,suspension.oral
+vmp,828401e10,828401e10,0802010G0AAASAS,Azathioprine 25mg/5ml oral solution,Azathioprine 25mg/5ml oral solution,solution.oral
+vmp,830781e10,830781e10,0802010G0AAATAT,Azathioprine 75mg/5ml oral suspension,Azathioprine 75mg/5ml oral liquid,suspension.oral
+vmp,830791e10,830791e10,0802010G0AAATAT,Azathioprine 75mg/5ml oral solution,Azathioprine 75mg/5ml oral liquid,solution.oral
+vmp,828311e10,828311e10,0802010G0AAAUAU,Azathioprine 15mg/5ml oral solution,Azathioprine 15mg/5ml oral liquid,solution.oral
+vmp,828321e10,828321e10,0802010G0AAAUAU,Azathioprine 15mg/5ml oral suspension,Azathioprine 15mg/5ml oral liquid,suspension.oral
+vmp,828191e10,828191e10,0802010G0AAAVAV,Azathioprine 100mg/5ml oral solution,Azathioprine 100mg/5ml oral solution,solution.oral
+vmp,828381e10,828381e10,0802010G0AAAWAW,Azathioprine 20mg/5ml oral solution,Azathioprine 20mg/5ml oral solution,solution.oral
+vmp,120804e11,120804e11,0802010G0AAAXAX,Azathioprine 125mg/5ml oral solution,Azathioprine 125mg/5ml oral liquid,solution.oral
+vmp,120805e11,120805e11,0802010G0AAAXAX,Azathioprine 125mg/5ml oral suspension,Azathioprine 125mg/5ml oral liquid,suspension.oral
+vmp,830821e10,830821e10,0802010G0AAAYAY,Azathioprine 5mg/5ml oral suspension,Azathioprine 5mg/5ml oral liquid,suspension.oral
+vmp,830831e10,830831e10,0802010G0AAAYAY,Azathioprine 5mg/5ml oral solution,Azathioprine 5mg/5ml oral liquid,solution.oral
+vmp,122119e11,122119e11,0802010G0AABABA,Azathioprine 45mg/5ml oral suspension,Azathioprine 45mg/5ml oral liquid,suspension.oral
+vmp,122218e11,122218e11,0802010G0AABABA,Azathioprine 45mg/5ml oral solution,Azathioprine 45mg/5ml oral liquid,solution.oral
+vmp,122223e11,122223e11,0802010G0AABBBB,Azathioprine 7mg/5ml oral solution,Azathioprine 7mg/5ml oral liquid,solution.oral
+vmp,122224e11,122224e11,0802010G0AABBBB,Azathioprine 7mg/5ml oral suspension,Azathioprine 7mg/5ml oral liquid,suspension.oral
+vmp,828421e10,828421e10,0802010G0AABCBC,Azathioprine 30mg/5ml oral solution,Azathioprine 30mg/5ml oral liquid,solution.oral
+vmp,830881e10,830881e10,0802010G0AABCBC,Azathioprine 30mg/5ml oral suspension,Azathioprine 30mg/5ml oral liquid,suspension.oral
+vmp,828331e10,828331e10,0802010G0AABDBD,Azathioprine 17.5mg/5ml oral solution,Azathioprine 17.5mg/5ml oral liquid,solution.oral
+vmp,828341e10,828341e10,0802010G0AABDBD,Azathioprine 17.5mg/5ml oral suspension,Azathioprine 17.5mg/5ml oral liquid,suspension.oral
+vmp,120972e11,120972e11,0802010G0AABEBE,Azathioprine 35mg/5ml oral solution,Azathioprine 35mg/5ml oral liquid,solution.oral
+vmp,120973e11,120973e11,0802010G0AABEBE,Azathioprine 35mg/5ml oral suspension,Azathioprine 35mg/5ml oral liquid,suspension.oral
+vmp,122117e11,122117e11,0802010G0AABFBF,Azathioprine 37.5mg/5ml oral solution,Azathioprine 37.5mg/5ml oral liquid,solution.oral
+vmp,122118e11,122118e11,0802010G0AABFBF,Azathioprine 37.5mg/5ml oral suspension,Azathioprine 37.5mg/5ml oral liquid,suspension.oral
+vmp,830801e10,830801e10,0802010G0AABGBG,Azathioprine 60mg/5ml oral suspension,Azathioprine 60mg/5ml oral liquid,suspension.oral
+vmp,830811e10,830811e10,0802010G0AABGBG,Azathioprine 60mg/5ml oral solution,Azathioprine 60mg/5ml oral liquid,solution.oral
+vmp,12097e12,12097e12,0802010G0AABIBI,Azathioprine 200mg/5ml oral solution,Azathioprine 200mg/5ml oral liquid,solution.oral
+vmp,120971e11,120971e11,0802010G0AABIBI,Azathioprine 200mg/5ml oral suspension,Azathioprine 200mg/5ml oral liquid,suspension.oral
+vmp,120806e11,120806e11,0802010G0AABJBJ,Azathioprine 175mg/5ml oral solution,Azathioprine 175mg/5ml oral liquid,solution.oral
+vmp,120807e11,120807e11,0802010G0AABJBJ,Azathioprine 175mg/5ml oral suspension,Azathioprine 175mg/5ml oral liquid,suspension.oral
+vmp,120968e11,120968e11,0802010G0AABKBK,Azathioprine 17mg/5ml oral solution,Azathioprine 17mg/5ml oral liquid,solution.oral
+vmp,120969e11,120969e11,0802010G0AABKBK,Azathioprine 17mg/5ml oral suspension,Azathioprine 17mg/5ml oral liquid,suspension.oral
+vmp,879151e10,879151e10,0802010G0AABPBP,Azathioprine 5mg capsules,Azathioprine 5mg capsules,capsule.oral
+vmp,879141e10,879141e10,0802010G0AABRBR,Azathioprine 30mg capsules,Azathioprine 30mg capsules,capsule.oral
+vmp,828251e10,828251e10,0802010G0AABSBS,Azathioprine 12mg/5ml oral solution,Azathioprine 12mg/5ml oral liquid,solution.oral
+vmp,828261e10,828261e10,0802010G0AABSBS,Azathioprine 12mg/5ml oral suspension,Azathioprine 12mg/5ml oral liquid,suspension.oral
+vmp,122219e11,122219e11,0802010G0AABTBT,Azathioprine 4mg/5ml oral solution,Azathioprine 4mg/5ml oral liquid,solution.oral
+vmp,12222e12,12222e12,0802010G0AABTBT,Azathioprine 4mg/5ml oral suspension,Azathioprine 4mg/5ml oral liquid,suspension.oral
+vmp,828231e10,828231e10,0802010G0AABXBX,Azathioprine 120mg/5ml oral solution,Azathioprine 120mg/5ml oral liquid,solution.oral
+vmp,828241e10,828241e10,0802010G0AABXBX,Azathioprine 120mg/5ml oral suspension,Azathioprine 120mg/5ml oral liquid,suspension.oral
+vmp,828291e10,828291e10,0802010G0AABYBY,Azathioprine 150mg/5ml oral solution,Azathioprine 150mg/5ml oral liquid,solution.oral
+vmp,828301e10,828301e10,0802010G0AABYBY,Azathioprine 150mg/5ml oral suspension,Azathioprine 150mg/5ml oral liquid,suspension.oral
+vmp,122221e11,122221e11,0802010G0AABZBZ,Azathioprine 70mg/5ml oral solution,Azathioprine 70mg/5ml oral liquid,solution.oral
+vmp,122222e11,122222e11,0802010G0AABZBZ,Azathioprine 70mg/5ml oral suspension,Azathioprine 70mg/5ml oral liquid,suspension.oral
+vmp,828351e10,828351e10,0802010G0AACBCB,Azathioprine 2.5mg/5ml oral solution,Azathioprine 2.5mg/5ml oral liquid,solution.oral
+vmp,828361e10,828361e10,0802010G0AACBCB,Azathioprine 2.5mg/5ml oral suspension,Azathioprine 2.5mg/5ml oral liquid,suspension.oral
+vmp,122225e11,122225e11,0802010G0AACCCC,Azathioprine 80mg/5ml oral solution,Azathioprine 80mg/5ml oral liquid,solution.oral
+vmp,122226e11,122226e11,0802010G0AACCCC,Azathioprine 80mg/5ml oral suspension,Azathioprine 80mg/5ml oral liquid,suspension.oral
+vmp,830751e10,830751e10,0802010G0AACDCD,Azathioprine 90mg/5ml oral suspension,Azathioprine 90mg/5ml oral liquid,suspension.oral
+vmp,830771e10,830771e10,0802010G0AACDCD,Azathioprine 90mg/5ml oral solution,Azathioprine 90mg/5ml oral liquid,solution.oral
+vmp,828271e10,828271e10,0802010G0AACECE,Azathioprine 13mg/5ml oral solution,Azathioprine 13mg/5ml oral liquid,solution.oral
+vmp,828281e10,828281e10,0802010G0AACECE,Azathioprine 13mg/5ml oral suspension,Azathioprine 13mg/5ml oral liquid,suspension.oral
+vmp,160359e11,160359e11,0802010G0AACGCG,Azathioprine 250mg/5ml oral solution,Azathioprine 250mg/5ml oral liquid,solution.oral
+vmp,16036e12,16036e12,0802010G0AACGCG,Azathioprine 250mg/5ml oral suspension,Azathioprine 250mg/5ml oral liquid,suspension.oral
+vmp,830841e10,830841e10,0802010G0AACHCH,Azathioprine 50mg/5ml oral suspension,Azathioprine 50mg/5ml oral suspension,suspension.oral
+vmp,828411e10,828411e10,0802010G0AACICI,Azathioprine 25mg/5ml oral suspension,Azathioprine 25mg/5ml oral suspension,suspension.oral
+vmp,828201e10,828201e10,0802010G0AACJCJ,Azathioprine 100mg/5ml oral suspension,Azathioprine 100mg/5ml oral suspension,suspension.oral
+vmp,828391e10,828391e10,0802010G0AACKCK,Azathioprine 20mg/5ml oral suspension,Azathioprine 20mg/5ml oral suspension,suspension.oral
+vmp,310021e11,310021e11,0802010G0AACLCL,Azathioprine 65mg/5ml oral suspension,Azathioprine 65mg/5ml oral suspension,suspension.oral

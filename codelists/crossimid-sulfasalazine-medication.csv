@@ -1,0 +1,54 @@
+obj_type,vpid,snomed_id,bnf_code,dmd_name,bnf_name,form_route
+amp,317431008,7311000000000,0105010E0AAAAAA,Sulfasalazine 500mg tablets (A A H Pharmaceuticals Ltd),Sulfasalazine 500mg tablets,tablet.oral
+amp,317431008,236111000000000,0105010E0AAAAAA,Sulfasalazine 500mg tablets (Mylan),Sulfasalazine 500mg tablets,tablet.oral
+amp,317431008,236511000000000,0105010E0AAAAAA,Sulfasalazine 500mg tablets (Kent Pharmaceuticals Ltd),Sulfasalazine 500mg tablets,tablet.oral
+amp,317431008,245311000000000,0105010E0AAAAAA,Sulfasalazine 500mg tablets (Actavis UK Ltd),Sulfasalazine 500mg tablets,tablet.oral
+amp,317431008,681011000000000,0105010E0AAAAAA,Sulfasalazine 500mg tablets (Alliance Healthcare (Distribution) Ltd),Sulfasalazine 500mg tablets,tablet.oral
+amp,317431008,703681e10,0105010E0AAAAAA,Sulfasalazine 500mg tablets (IVAX Pharmaceuticals UK Ltd),Sulfasalazine 500mg tablets,tablet.oral
+amp,317431008,106497e11,0105010E0AAAAAA,Sulfasalazine 500mg tablets (Teva UK Ltd),Sulfasalazine 500mg tablets,tablet.oral
+amp,317431008,114276e11,0105010E0AAAAAA,Sulfasalazine 500mg tablets (Almus Pharmaceuticals Ltd),Sulfasalazine 500mg tablets,tablet.oral
+amp,317431008,137255e11,0105010E0AAAAAA,Sulfasalazine 500mg tablets (Ranbaxy (UK) Ltd),Sulfasalazine 500mg tablets,tablet.oral
+amp,317431008,178024e11,0105010E0AAAAAA,Sulfasalazine 500mg tablets (Phoenix Healthcare Distribution Ltd),Sulfasalazine 500mg tablets,tablet.oral
+amp,317431008,203272e11,0105010E0AAAAAA,Sulfasalazine 500mg tablets (Genesis Pharmaceuticals Ltd),Sulfasalazine 500mg tablets,tablet.oral
+amp,317431008,219034e11,0105010E0AAAAAA,Sulfasalazine 500mg tablets (Waymade Healthcare Plc),Sulfasalazine 500mg tablets,tablet.oral
+amp,317431008,289177e11,0105010E0AAAAAA,Sulfasalazine 500mg tablets (Crescent Pharma Ltd),Sulfasalazine 500mg tablets,tablet.oral
+amp,317431008,30118e12,0105010E0AAAAAA,Sulfasalazine 500mg tablets (DE Pharmaceuticals),Sulfasalazine 500mg tablets,tablet.oral
+amp,330040008,140911000000000,0105010E0AAABAB,Sulfasalazine 500mg gastro-resistant tablets (A A H Pharmaceuticals Ltd),Sulfasalazine 500mg gastro-resistant tablets,tabletgastro-resistant.oral
+amp,330040008,180711000000000,0105010E0AAABAB,Sulfasalazine 500mg gastro-resistant tablets (Kent Pharmaceuticals Ltd),Sulfasalazine 500mg gastro-resistant tablets,tabletgastro-resistant.oral
+amp,330040008,215611000000000,0105010E0AAABAB,Sulfasalazine 500mg gastro-resistant tablets (Actavis UK Ltd),Sulfasalazine 500mg gastro-resistant tablets,tabletgastro-resistant.oral
+amp,330040008,422811000000000,0105010E0AAABAB,Sulfasalazine 500mg gastro-resistant tablets (Alliance Healthcare (Distribution) Ltd),Sulfasalazine 500mg gastro-resistant tablets,tabletgastro-resistant.oral
+amp,330040008,910401e10,0105010E0AAABAB,Sulfasalazine 500mg gastro-resistant tablets (Mylan),Sulfasalazine 500mg gastro-resistant tablets,tabletgastro-resistant.oral
+amp,330040008,151771e11,0105010E0AAABAB,Sulfasalazine 500mg gastro-resistant tablets (Sigma Pharmaceuticals Plc),Sulfasalazine 500mg gastro-resistant tablets,tabletgastro-resistant.oral
+amp,330040008,178016e11,0105010E0AAABAB,Sulfasalazine 500mg gastro-resistant tablets (Phoenix Healthcare Distribution Ltd),Sulfasalazine 500mg gastro-resistant tablets,tabletgastro-resistant.oral
+amp,330040008,212993e11,0105010E0AAABAB,Sulfasalazine 500mg gastro-resistant tablets (Teva UK Ltd),Sulfasalazine 500mg gastro-resistant tablets,tabletgastro-resistant.oral
+amp,330040008,219024e11,0105010E0AAABAB,Sulfasalazine 500mg gastro-resistant tablets (Waymade Healthcare Plc),Sulfasalazine 500mg gastro-resistant tablets,tabletgastro-resistant.oral
+amp,330040008,301177e11,0105010E0AAABAB,Sulfasalazine 500mg gastro-resistant tablets (DE Pharmaceuticals),Sulfasalazine 500mg gastro-resistant tablets,tabletgastro-resistant.oral
+amp,330040008,309166e11,0105010E0AAABAB,Sulfasalazine 500mg gastro-resistant tablets (Mawdsley-Brooks & Company Ltd),Sulfasalazine 500mg gastro-resistant tablets,tabletgastro-resistant.oral
+amp,330040008,371508e11,0105010E0AAABAB,Sulfasalazine 500mg gastro-resistant tablets (Genesis Pharmaceuticals Ltd),Sulfasalazine 500mg gastro-resistant tablets,tabletgastro-resistant.oral
+amp,317430009,201439e11,0105010E0AAAEAE,Sulfasalazine 250mg/5ml oral suspension (Special Order),Sulfasalazine 250mg/5ml oral suspension,suspension.oral
+amp,133959e11,133897e11,0105010E0AAAJAJ,Sulfasalazine 500mg/5ml oral suspension (Special Order),Sulfasalazine 500mg/5ml oral suspension,suspension.oral
+amp,133957e11,133891e11,0105010E0AAAKAK,Sulfasalazine 125mg/5ml oral suspension (Special Order),Sulfasalazine 125mg/5ml oral suspension,suspension.oral
+amp,133958e11,133894e11,0105010E0AAALAL,Sulfasalazine 200mg/5ml oral suspension (Special Order),Sulfasalazine 200mg/5ml oral suspension,suspension.oral
+amp,133956e11,133888e11,0105010E0AAANAN,Sulfasalazine 100mg/5ml oral suspension (Special Order),Sulfasalazine 100mg/5ml oral suspension,suspension.oral
+amp,162474e11,162239e11,0105010E0AAAPAP,Sulfasalazine 250mg/5ml oral suspension sugar free (Rosemont Pharmaceuticals Ltd),Sulfasalazine 250mg/5ml oral suspension sugar free,suspension.oral
+amp,162474e11,166417e11,0105010E0AAAPAP,Sulfasalazine 250mg/5ml oral suspension sugar free (Alliance Healthcare (Distribution) Ltd),Sulfasalazine 250mg/5ml oral suspension sugar free,suspension.oral
+amp,162474e11,167338e11,0105010E0AAAPAP,Sulfasalazine 250mg/5ml oral suspension sugar free (A A H Pharmaceuticals Ltd),Sulfasalazine 250mg/5ml oral suspension sugar free,suspension.oral
+amp,162474e11,219031e11,0105010E0AAAPAP,Sulfasalazine 250mg/5ml oral suspension sugar free (Waymade Healthcare Plc),Sulfasalazine 250mg/5ml oral suspension sugar free,suspension.oral
+amp,162474e11,378165e11,0105010E0AAAPAP,Sulfasalazine 250mg/5ml oral suspension sugar free (DE Pharmaceuticals),Sulfasalazine 250mg/5ml oral suspension sugar free,suspension.oral
+amp,317431008,189511000000000,0105010E0BBAAAA,Salazopyrin 500mg tablets (Pfizer Ltd),Salazopyrin 500mg tablets,tablet.oral
+amp,330040008,198211000000000,0105010E0BBABAB,Salazopyrin EN-Tabs 500mg (Pfizer Ltd),Salazopyrin EN-Tabs 500mg,tabletgastro-resistant.oral
+amp,317432001,51611000000000,0105010E0BBACAC,Salazopyrin 500mg suppositories (Pfizer Ltd),Salazopyrin 500mg suppositories,suppository.rectal
+amp,317433006,426911000000000,0105010E0BBADAD,Salazopyrin 3g/100ml enema (Pfizer Ltd),Salazopyrin 3g/100ml enema,suspensionenema.rectal
+amp,317430009,40211000000000,0105010E0BBAEAE,Salazopyrin 250mg/5ml oral suspension (Pfizer Ltd),Salazopyrin 250mg/5ml oral suspension,suspension.oral
+amp,330040008,499211000000000,0105010E0BCABAB,Sulazine EC 500mg tablets (Genesis Pharmaceuticals Ltd),Sulazine EC 500mg tablets (Genesis Pharm),tabletgastro-resistant.oral
+amp,330040008,234472e11,0105010E0BCACAB,Sulazine EC 500mg tablets (Teva UK Ltd),Sulazine EC 500mg tablets (Teva),tabletgastro-resistant.oral
+vmp,317431008,317431008,0105010E0AAAAAA,Sulfasalazine 500mg tablets,Sulfasalazine 500mg tablets,tablet.oral
+vmp,330040008,330040008,0105010E0AAABAB,Sulfasalazine 500mg gastro-resistant tablets,Sulfasalazine 500mg gastro-resistant tablets,tabletgastro-resistant.oral
+vmp,317432001,317432001,0105010E0AAACAC,Sulfasalazine 500mg suppositories,Sulfasalazine 500mg suppositories,suppository.rectal
+vmp,317433006,317433006,0105010E0AAADAD,Sulfasalazine 3g/100ml retention enema,Sulfasalazine 3g/100ml retention enema,suspensionenema.rectal
+vmp,317430009,317430009,0105010E0AAAEAE,Sulfasalazine 250mg/5ml oral suspension,Sulfasalazine 250mg/5ml oral suspension,suspension.oral
+vmp,133959e11,133959e11,0105010E0AAAJAJ,Sulfasalazine 500mg/5ml oral suspension,Sulfasalazine 500mg/5ml oral suspension,suspension.oral
+vmp,133957e11,133957e11,0105010E0AAAKAK,Sulfasalazine 125mg/5ml oral suspension,Sulfasalazine 125mg/5ml oral suspension,suspension.oral
+vmp,133958e11,133958e11,0105010E0AAALAL,Sulfasalazine 200mg/5ml oral suspension,Sulfasalazine 200mg/5ml oral suspension,suspension.oral
+vmp,133956e11,133956e11,0105010E0AAANAN,Sulfasalazine 100mg/5ml oral suspension,Sulfasalazine 100mg/5ml oral suspension,suspension.oral
+vmp,162474e11,162474e11,0105010E0AAAPAP,Sulfasalazine 250mg/5ml oral suspension sugar free,Sulfasalazine 250mg/5ml oral suspension sugar free,suspension.oral

@@ -2,6 +2,29 @@ from cohortextractor import StudyDefinition, patients, codelist, codelist_from_c
 
 from codelists import *
 
+def first_diagnosis_in_period(dx_codelist):
+    return patients.with_these_clinical_events(
+        dx_codelist,
+        returning="date",
+        find_first_match_in_period=True,
+        include_month=True,
+        return_expectations={
+            "incidence": 0.2,
+            "date": {"earliest": "1950-01-01", "latest": "today"},
+        },
+    )
+
+def medication_count(med_codelist):
+    return patients.with_these_medications(
+        med_codelist,
+        between=["2019-09-01", "2020-02-29"],
+        returning="number_of_matches_in_period",
+        return_expectations={
+            "int": {"distribution": "normal", "mean": 3, "stddev": 2},
+            "incidence": 0.1,
+        },
+    )
+
 study = StudyDefinition(
     # Configure the expectations framework
     default_expectations={
@@ -69,128 +92,20 @@ study = StudyDefinition(
             "incidence": 0.75,
         },
     ),
-    # Disease codes
-    crohns_disease=patients.with_these_clinical_events(
-        crohns_disease_codes,
-        returning="date",
-        find_first_match_in_period=True,
-        include_month=True,
-        return_expectations={
-            "incidence": 0.2,
-            "date": {"earliest": "1950-01-01", "latest": "today"},
-        },
-    ),
-    ulcerative_colitis=patients.with_these_clinical_events(
-        ulcerative_colitis_codes,
-        returning="date",
-        find_first_match_in_period=True,
-        include_month=True,
-        return_expectations={
-            "incidence": 0.2,
-            "date": {"earliest": "1950-01-01", "latest": "today"},
-        },
-    ),
-    inflammatory_bowel_disease_unclassified=patients.with_these_clinical_events(
-        inflammatory_bowel_disease_unclassified_codes,
-        returning="date",
-        find_first_match_in_period=True,
-        include_month=True,
-        return_expectations={
-            "incidence": 0.2,
-            "date": {"earliest": "1950-01-01", "latest": "today"},
-        },
-    ),
-    psoriasis=patients.with_these_clinical_events(
-        psoriasis_codes,
-        returning="date",
-        find_first_match_in_period=True,
-        include_month=True,
-        return_expectations={
-            "incidence": 0.2,
-            "date": {"earliest": "1950-01-01", "latest": "today"},
-        },
-    ),
-    hidradenitis_suppurativa=patients.with_these_clinical_events(
-        hidradenitis_suppurativa_codes,
-        returning="date",
-        find_first_match_in_period=True,
-        include_month=True,
-        return_expectations={
-            "incidence": 0.2,
-            "date": {"earliest": "1950-01-01", "latest": "today"},
-        },
-    ),   
-    psoriatic_arthritis=patients.with_these_clinical_events(
-        psoriatic_arthritis_codes,
-        returning="date",
-        find_first_match_in_period=True,
-        include_month=True,
-        return_expectations={
-            "incidence": 0.2,
-            "date": {"earliest": "1950-01-01", "latest": "today"},
-        },
-    ),
-    rheumatoid_arthritis=patients.with_these_clinical_events(
-        rheumatoid_arthritis_codes,
-        returning="date",
-        find_first_match_in_period=True,
-        include_month=True,
-        return_expectations={
-            "incidence": 0.2,
-            "date": {"earliest": "1950-01-01", "latest": "today"},
-        },
-    ),
-    ankylosing_spondylitis=patients.with_these_clinical_events(
-        ankylosing_spondylitis_codes,
-        returning="date",
-        find_first_match_in_period=True,
-        include_month=True,
-        return_expectations={
-            "incidence": 0.2,
-            "date": {"earliest": "1950-01-01", "latest": "today"},
-        },
-    ),
-    chronic_cardiac_disease=patients.with_these_clinical_events(
-        chronic_cardiac_disease_codes,
-        returning="date",
-        find_first_match_in_period=True,
-        include_month=True,
-        return_expectations={
-            "incidence": 0.2,
-            "date": {"earliest": "1950-01-01", "latest": "today"},
-        },
-    ),
-    diabetes=patients.with_these_clinical_events(
-        diabetes_codes,
-        returning="date",
-        find_first_match_in_period=True,
-        include_month=True,
-        return_expectations={
-            "incidence": 0.2,
-            "date": {"earliest": "1950-01-01", "latest": "today"},
-        },
-    ),
-    hba1c_new=patients.with_these_clinical_events(
-        hba1c_new_codes,
-        returning="date",
-        find_first_match_in_period=True,
-        include_month=True,
-        return_expectations={
-            "incidence": 0.2,
-            "date": {"earliest": "1950-01-01", "latest": "today"},
-        },
-    ),
-    hba1c_old=patients.with_these_clinical_events(
-        hba1c_old_codes,
-        returning="date",
-        find_first_match_in_period=True,
-        include_month=True,
-        return_expectations={
-            "incidence": 0.2,
-            "date": {"earliest": "1950-01-01", "latest": "today"},
-        },
-    ),
+    # IMID disease codes
+    crohns_disease=first_diagnosis_in_period(crohns_disease_codes),
+    ulcerative_colitis=first_diagnosis_in_period(ulcerative_colitis_codes),
+    inflammatory_bowel_disease_unclassified=first_diagnosis_in_period(inflammatory_bowel_disease_unclassified_codes),
+    psoriasis=first_diagnosis_in_period(psoriasis_codes),
+    hidradenitis_suppurativa=first_diagnosis_in_period(hidradenitis_suppurativa_codes),
+    psoriatic_arthritis=first_diagnosis_in_period(psoriatic_arthritis_codes),
+    rheumatoid_arthritis=first_diagnosis_in_period(rheumatoid_arthritis_codes),
     
+    # Comorbidities
+    chronic_cardiac_disease=first_diagnosis_in_period(chronic_cardiac_disease_codes),
+    diabetes=first_diagnosis_in_period(diabetes_codes),
+    hba1c_new=first_diagnosis_in_period(hba1c_new_codes),
+    hba1c_old=first_diagnosis_in_period(hba1c_old_codes),
     hba1c_mmol_per_mol=patients.with_these_clinical_events(
         hba1c_new_codes,
         find_last_match_in_period=True,
@@ -218,98 +133,14 @@ study = StudyDefinition(
             "incidence": 0.95,
         },
     ),
-    
-    hypertension=patients.with_these_clinical_events(
-        hypertension_codes,
-        returning="date",
-        find_first_match_in_period=True,
-        include_month=True,
-        return_expectations={
-            "incidence": 0.2,
-            "date": {"earliest": "1950-01-01", "latest": "today"},
-        },
-    ),
-    chronic_respiratory_disease=patients.with_these_clinical_events(
-        chronic_respiratory_disease_codes,
-        returning="date",
-        find_first_match_in_period=True,
-        include_month=True,
-        return_expectations={
-            "incidence": 0.2,
-            "date": {"earliest": "1950-01-01", "latest": "today"},
-        },
-    ),
-    copd=patients.with_these_clinical_events(
-        copd_codes,
-        returning="date",
-        find_first_match_in_period=True,
-        include_month=True,
-        return_expectations={
-            "incidence": 0.2,
-            "date": {"earliest": "1950-01-01", "latest": "today"},
-        },
-    ),
-    chronic_liver_disease=patients.with_these_clinical_events(
-        chronic_liver_disease_codes,
-        returning="date",
-        find_first_match_in_period=True,
-        include_month=True,
-        return_expectations={
-            "incidence": 0.2,
-            "date": {"earliest": "1950-01-01", "latest": "today"},
-        },
-    ),
-    stroke=patients.with_these_clinical_events(
-        stroke_codes,
-        returning="date",
-        find_first_match_in_period=True,
-        include_month=True,
-        return_expectations={
-            "incidence": 0.2,
-            "date": {"earliest": "1950-01-01", "latest": "today"},
-        },
-    ),
-    lung_cancer=patients.with_these_clinical_events(
-        lung_cancer_codes,
-        returning="date",
-        find_first_match_in_period=True,
-        include_month=True,
-        return_expectations={
-            "incidence": 0.2,
-            "date": {"earliest": "1950-01-01", "latest": "today"},
-        },
-    ),
-    haem_cancer=patients.with_these_clinical_events(
-        haem_cancer_codes,
-        returning="date",
-        find_first_match_in_period=True,
-        include_month=True,
-        return_expectations={
-            "incidence": 0.2,
-            "date": {"earliest": "1950-01-01", "latest": "today"},
-        },
-    ),
-    other_cancer=patients.with_these_clinical_events(
-        other_cancer_codes,
-        returning="date",
-        find_first_match_in_period=True,
-        include_month=True,
-        return_expectations={
-            "incidence": 0.2,
-            "date": {"earliest": "1950-01-01", "latest": "today"},
-        },
-    ),
-    creatinine=patients.with_these_clinical_events(
-        creatinine_codes,
-        returning="date",
-        find_first_match_in_period=True,
-        include_month=True,
-        return_expectations={
-            "incidence": 0.2,
-            "date": {"earliest": "1950-01-01", "latest": "today"},
-        },
-    ),
-
+    hypertension=first_diagnosis_in_period(hypertension_codes),
+    chronic_respiratory_disease=first_diagnosis_in_period(chronic_respiratory_disease_codes),
+    copd=first_diagnosis_in_period(copd_codes),
+    chronic_liver_disease=first_diagnosis_in_period(chronic_liver_disease_codes),
+    stroke=first_diagnosis_in_period(stroke_codes),
+    lung_cancer=first_diagnosis_in_period(lung_cancer_codes),
+    haem_cancer=first_diagnosis_in_period(haem_cancer_codes),
+    other_cancer=first_diagnosis_in_period(other_cancer_codes),
     #CKD
     creatinine=patients.with_these_clinical_events(
         creatinine_codes,
@@ -324,7 +155,6 @@ study = StudyDefinition(
             "incidence": 0.95,
         },
     ),
-
     #### end stage renal disease codes incl. dialysis / transplant 
     esrf=patients.with_these_clinical_events(
         ckd_codes,
@@ -333,27 +163,8 @@ study = StudyDefinition(
         include_month=True,
         return_expectations={"date": {"latest": "2020-02-29"}},
     ),
-
-    ckd=patients.with_these_clinical_events(
-        ckd_codes,
-        returning="date",
-        find_first_match_in_period=True,
-        include_month=True,
-        return_expectations={
-            "incidence": 0.2,
-            "date": {"earliest": "1950-01-01", "latest": "today"},
-        },
-    ),
-    organ_transplant=patients.with_these_clinical_events(
-        organ_transplant_codes,
-        returning="date",
-        find_first_match_in_period=True,
-        include_month=True,
-        return_expectations={
-            "incidence": 0.2,
-            "date": {"earliest": "1950-01-01", "latest": "today"},
-        },
-    ),
+    ckd=first_diagnosis_in_period(ckd_codes),
+    organ_transplant=first_diagnosis_in_period(organ_transplant_codes),
     # https://github.com/ebmdatalab/tpp-sql-notebook/issues/10
     bmi=patients.most_recent_bmi(
         on_or_after="2010-02-01",
@@ -433,7 +244,6 @@ study = StudyDefinition(
         include_month=True,
         return_expectations={"date": {"latest": "2020-02-29"}},
     ),
-    
     ### GP CONSULTATION RATE
     gp_consult_count=patients.with_gp_consultations(
         between=["2019-03-01", "2020-02-29"],
@@ -447,87 +257,14 @@ study = StudyDefinition(
     has_consultation_history=patients.with_complete_gp_consultation_history_between(
         "2019-03-01", "2020-02-29", return_expectations={"incidence": 0.9},
     ),
-    
     # Medications
-    oral_prednisolone_count=patients.with_these_medications(
-        oral_pred_codes,
-        between=["2019-09-01", "2020-02-29"],
-        returning="number_of_matches_in_period",
-        return_expectations={
-            "int": {"distribution": "normal", "mean": 3, "stddev": 2},
-            "incidence": 0.1,
-        },
-    ),
-    anti_tnf_med_count=patients.with_these_medications(
-        anti_tnf_med_codes,
-        between=["2019-09-01", "2020-02-29"],
-        returning="number_of_matches_in_period",
-        return_expectations={
-            "int": {"distribution": "normal", "mean": 3, "stddev": 2},
-            "incidence": 0.1,
-        },
-    ),
-    anti_il6_med_count=patients.with_these_medications(
-        anti_il6_med_codes,
-        between=["2019-09-01", "2020-02-29"],
-        returning="number_of_matches_in_period",
-        return_expectations={
-            "int": {"distribution": "normal", "mean": 3, "stddev": 2},
-            "incidence": 0.1,
-        },
-    ),
-    anti_il12_23_med_count=patients.with_these_medications(
-        anti_il12_23_med_codes,
-        between=["2019-09-01", "2020-02-29"],
-        returning="number_of_matches_in_period",
-        return_expectations={
-            "int": {"distribution": "normal", "mean": 3, "stddev": 2},
-            "incidence": 0.1,
-        },
-    ),
-    anti_il1_med_count=patients.with_these_medications(
-        anti_il1_med_codes,
-        between=["2019-09-01", "2020-02-29"],
-        returning="number_of_matches_in_period",
-        return_expectations={
-            "int": {"distribution": "normal", "mean": 3, "stddev": 2},
-            "incidence": 0.1,
-        },
-    ),
-    anti_il4_med_count=patients.with_these_medications(
-        anti_il4_med_codes,
-        between=["2019-09-01", "2020-02-29"],
-        returning="number_of_matches_in_period",
-        return_expectations={
-            "int": {"distribution": "normal", "mean": 3, "stddev": 2},
-            "incidence": 0.1,
-        },
-    ),
-    jak_inhibitors_med_count=patients.with_these_medications(
-        jak_inhibitors_med_codes,
-        between=["2019-09-01", "2020-02-29"],
-        returning="number_of_matches_in_period",
-        return_expectations={
-            "int": {"distribution": "normal", "mean": 3, "stddev": 2},
-            "incidence": 0.1,
-        },
-    ),
-    standard_systemic_immunosuppressant_med_count=patients.with_these_medications(
-        standard_systemic_immunosuppressant_med_codes,
-        between=["2019-09-01", "2020-02-29"],
-        returning="number_of_matches_in_period",
-        return_expectations={
-            "int": {"distribution": "normal", "mean": 3, "stddev": 2},
-            "incidence": 0.1,
-        },
-    ),
-    rituximab_med_count=patients.with_these_medications(
-        rituximab_med_codes,
-        between=["2019-09-01", "2020-02-29"],
-        returning="number_of_matches_in_period",
-        return_expectations={
-            "int": {"distribution": "normal", "mean": 3, "stddev": 2},
-            "incidence": 0.1,
-        },
-    ),    
+    oral_prednisolone_count=medication_count(oral_pred_codes),
+    anti_tnf_med_code=medication_count(anti_tnf_med_codes),
+    anti_il6_med_code=medication_count(anti_il6_med_codes),
+    anti_il12_23_med_code=medication_count(anti_il12_23_med_codes),
+    anti_il1_med_code=medication_count(anti_il1_med_codes),
+    anti_il4_med_code=medication_count(anti_il4_med_codes),
+    jak_inhibitors_med_code=medication_count(jak_inhibitors_med_codes),
+    standard_systemic_immunosuppressant_med_code=medication_count(standard_systemic_immunosuppressant_med_codes),
+    rituximab_med_code=medication_count(rituximab_med_codes),    
 )

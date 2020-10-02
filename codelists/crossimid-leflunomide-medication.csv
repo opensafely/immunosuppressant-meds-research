@@ -1,0 +1,39 @@
+obj_type,vpid,snomed_id,bnf_code,dmd_name,bnf_name,form_route
+amp,330057007,181727e11,1001030L0AAAAAA,Leflunomide 10mg tablets (medac UK),Leflunomide 10mg tablets,tablet.oral
+amp,330057007,18342e12,1001030L0AAAAAA,Leflunomide 10mg tablets (Alliance Healthcare (Distribution) Ltd),Leflunomide 10mg tablets,tablet.oral
+amp,330057007,187568e11,1001030L0AAAAAA,Leflunomide 10mg tablets (A A H Pharmaceuticals Ltd),Leflunomide 10mg tablets,tablet.oral
+amp,330057007,188104e11,1001030L0AAAAAA,Leflunomide 10mg tablets (Teva UK Ltd),Leflunomide 10mg tablets,tablet.oral
+amp,330057007,197831e11,1001030L0AAAAAA,Leflunomide 10mg tablets (Actavis UK Ltd),Leflunomide 10mg tablets,tablet.oral
+amp,330057007,202902e11,1001030L0AAAAAA,Leflunomide 10mg tablets (Sandoz Ltd),Leflunomide 10mg tablets,tablet.oral
+amp,330057007,208395e11,1001030L0AAAAAA,Leflunomide 10mg tablets (Aspire Pharma Ltd),Leflunomide 10mg tablets,tablet.oral
+amp,330057007,209144e11,1001030L0AAAAAA,Leflunomide 10mg tablets (Zentiva),Leflunomide 10mg tablets,tablet.oral
+amp,330057007,22063e12,1001030L0AAAAAA,Leflunomide 10mg tablets (Waymade Healthcare Plc),Leflunomide 10mg tablets,tablet.oral
+amp,330057007,241167e11,1001030L0AAAAAA,Leflunomide 10mg tablets (Morningside Healthcare Ltd),Leflunomide 10mg tablets,tablet.oral
+amp,330057007,243631e11,1001030L0AAAAAA,Leflunomide 10mg tablets (DE Pharmaceuticals),Leflunomide 10mg tablets,tablet.oral
+amp,330057007,298844e11,1001030L0AAAAAA,Leflunomide 10mg tablets (Sigma Pharmaceuticals Plc),Leflunomide 10mg tablets,tablet.oral
+amp,330057007,30219e12,1001030L0AAAAAA,Leflunomide 10mg tablets (Mawdsley-Brooks & Company Ltd),Leflunomide 10mg tablets,tablet.oral
+amp,330057007,335924e11,1001030L0AAAAAA,Leflunomide 10mg tablets (Mylan),Leflunomide 10mg tablets,tablet.oral
+amp,330057007,375743e11,1001030L0AAAAAA,Leflunomide 10mg tablets (Relonchem Ltd),Leflunomide 10mg tablets,tablet.oral
+amp,330058002,181729e11,1001030L0AAABAB,Leflunomide 20mg tablets (medac UK),Leflunomide 20mg tablets,tablet.oral
+amp,330058002,183422e11,1001030L0AAABAB,Leflunomide 20mg tablets (Alliance Healthcare (Distribution) Ltd),Leflunomide 20mg tablets,tablet.oral
+amp,330058002,187572e11,1001030L0AAABAB,Leflunomide 20mg tablets (A A H Pharmaceuticals Ltd),Leflunomide 20mg tablets,tablet.oral
+amp,330058002,188126e11,1001030L0AAABAB,Leflunomide 20mg tablets (Teva UK Ltd),Leflunomide 20mg tablets,tablet.oral
+amp,330058002,197835e11,1001030L0AAABAB,Leflunomide 20mg tablets (Actavis UK Ltd),Leflunomide 20mg tablets,tablet.oral
+amp,330058002,202904e11,1001030L0AAABAB,Leflunomide 20mg tablets (Sandoz Ltd),Leflunomide 20mg tablets,tablet.oral
+amp,330058002,208398e11,1001030L0AAABAB,Leflunomide 20mg tablets (Aspire Pharma Ltd),Leflunomide 20mg tablets,tablet.oral
+amp,330058002,209146e11,1001030L0AAABAB,Leflunomide 20mg tablets (Zentiva),Leflunomide 20mg tablets,tablet.oral
+amp,330058002,220632e11,1001030L0AAABAB,Leflunomide 20mg tablets (Waymade Healthcare Plc),Leflunomide 20mg tablets,tablet.oral
+amp,330058002,241169e11,1001030L0AAABAB,Leflunomide 20mg tablets (Morningside Healthcare Ltd),Leflunomide 20mg tablets,tablet.oral
+amp,330058002,243633e11,1001030L0AAABAB,Leflunomide 20mg tablets (DE Pharmaceuticals),Leflunomide 20mg tablets,tablet.oral
+amp,330058002,298846e11,1001030L0AAABAB,Leflunomide 20mg tablets (Sigma Pharmaceuticals Plc),Leflunomide 20mg tablets,tablet.oral
+amp,330058002,335928e11,1001030L0AAABAB,Leflunomide 20mg tablets (Mylan),Leflunomide 20mg tablets,tablet.oral
+amp,330058002,375745e11,1001030L0AAABAB,Leflunomide 20mg tablets (Relonchem Ltd),Leflunomide 20mg tablets,tablet.oral
+amp,24408e12,243768e11,1001030L0AAADAD,Leflunomide 15mg tablets (medac UK),Leflunomide 15mg tablets,tablet.oral
+amp,24408e12,247752e11,1001030L0AAADAD,Leflunomide 15mg tablets (Alliance Healthcare (Distribution) Ltd),Leflunomide 15mg tablets,tablet.oral
+amp,330057007,499111000000000,1001030L0BBAAAA,Arava 10mg tablets (Sanofi),Arava 10mg tablets,tablet.oral
+amp,330058002,62411000000000,1001030L0BBABAB,Arava 20mg tablets (Sanofi),Arava 20mg tablets,tablet.oral
+amp,330059005,404111000000000,1001030L0BBACAC,Arava 100mg tablets (Sanofi),Arava 100mg tablets,tablet.oral
+vmp,330057007,330057007,1001030L0AAAAAA,Leflunomide 10mg tablets,Leflunomide 10mg tablets,tablet.oral
+vmp,330058002,330058002,1001030L0AAABAB,Leflunomide 20mg tablets,Leflunomide 20mg tablets,tablet.oral
+vmp,330059005,330059005,1001030L0AAACAC,Leflunomide 100mg tablets,Leflunomide 100mg tablets,tablet.oral
+vmp,24408e12,24408e12,1001030L0AAADAD,Leflunomide 15mg tablets,Leflunomide 15mg tablets,tablet.oral

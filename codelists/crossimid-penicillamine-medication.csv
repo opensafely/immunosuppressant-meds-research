@@ -1,0 +1,39 @@
+obj_type,vpid,snomed_id,bnf_code,dmd_name,bnf_name,form_route
+amp,330026007,483011000000000,1001030F0AAAEAE,Penicillamine 125mg tablets (Alliance Healthcare (Distribution) Ltd),Penicillamine 125mg tablets,tablet.oral
+amp,330026007,498611000000000,1001030F0AAAEAE,Penicillamine 125mg tablets (Kent Pharmaceuticals Ltd),Penicillamine 125mg tablets,tablet.oral
+amp,330026007,690211000000000,1001030F0AAAEAE,Penicillamine 125mg tablets (Teva UK Ltd),Penicillamine 125mg tablets,tablet.oral
+amp,330026007,745811000000000,1001030F0AAAEAE,Penicillamine 125mg tablets (Mylan),Penicillamine 125mg tablets,tablet.oral
+amp,330026007,841011000000000,1001030F0AAAEAE,Penicillamine 125mg tablets (Actavis UK Ltd),Penicillamine 125mg tablets,tablet.oral
+amp,330026007,900111000000000,1001030F0AAAEAE,Penicillamine 125mg tablets (A A H Pharmaceuticals Ltd),Penicillamine 125mg tablets,tablet.oral
+amp,330026007,179539e11,1001030F0AAAEAE,Penicillamine 125mg tablets (Phoenix Healthcare Distribution Ltd),Penicillamine 125mg tablets,tablet.oral
+amp,330026007,218425e11,1001030F0AAAEAE,Penicillamine 125mg tablets (Waymade Healthcare Plc),Penicillamine 125mg tablets,tablet.oral
+amp,330026007,299831e11,1001030F0AAAEAE,Penicillamine 125mg tablets (Sigma Pharmaceuticals Plc),Penicillamine 125mg tablets,tablet.oral
+amp,330026007,300747e11,1001030F0AAAEAE,Penicillamine 125mg tablets (DE Pharmaceuticals),Penicillamine 125mg tablets,tablet.oral
+amp,330027003,41411000000000,1001030F0AAAFAF,Penicillamine 250mg tablets (Mylan),Penicillamine 250mg tablets,tablet.oral
+amp,330027003,336111000000000,1001030F0AAAFAF,Penicillamine 250mg tablets (A A H Pharmaceuticals Ltd),Penicillamine 250mg tablets,tablet.oral
+amp,330027003,366611000000000,1001030F0AAAFAF,Penicillamine 250mg tablets (Teva UK Ltd),Penicillamine 250mg tablets,tablet.oral
+amp,330027003,764611000000000,1001030F0AAAFAF,Penicillamine 250mg tablets (Alliance Healthcare (Distribution) Ltd),Penicillamine 250mg tablets,tablet.oral
+amp,330027003,795511000000000,1001030F0AAAFAF,Penicillamine 250mg tablets (Actavis UK Ltd),Penicillamine 250mg tablets,tablet.oral
+amp,330027003,939011000000000,1001030F0AAAFAF,Penicillamine 250mg tablets (Kent Pharmaceuticals Ltd),Penicillamine 250mg tablets,tablet.oral
+amp,330027003,179541e11,1001030F0AAAFAF,Penicillamine 250mg tablets (Phoenix Healthcare Distribution Ltd),Penicillamine 250mg tablets,tablet.oral
+amp,330027003,218429e11,1001030F0AAAFAF,Penicillamine 250mg tablets (Waymade Healthcare Plc),Penicillamine 250mg tablets,tablet.oral
+amp,330027003,300749e11,1001030F0AAAFAF,Penicillamine 250mg tablets (DE Pharmaceuticals),Penicillamine 250mg tablets,tablet.oral
+amp,130051e11,129867e11,1001030F0AAAIAI,Penicillamine 250mg/5ml oral solution (Special Order),Penicillamine 250mg/5ml oral solution,solution.oral
+amp,13005e12,129861e11,1001030F0AAAJAJ,Penicillamine 125mg/5ml oral solution (Special Order),Penicillamine 125mg/5ml oral solution,solution.oral
+amp,130052e11,129876e11,1001030F0AAAKAK,Penicillamine 50mg/5ml oral solution (Special Order),Penicillamine 50mg/5ml oral solution,solution.oral
+amp,335962e11,335793e11,1001030F0AAALAL,Penicillamine 250mg/5ml oral suspension (Special Order),Penicillamine 250mg/5ml oral suspension,suspension.oral
+amp,330026007,98511000000000,1001030F0BBABAE,Distamine 125mg tablets (Alliance Pharmaceuticals Ltd),Distamine 125mg tablets,tablet.oral
+amp,330027003,13711000000000,1001030F0BBACAF,Distamine 250mg tablets (Alliance Pharmaceuticals Ltd),Distamine 250mg tablets,tablet.oral
+amp,372811e11,372701e11,1001030F0BDAAAM,Metalcaptase gastro-resistant 150mg tablets (Imported (Germany)),Metalcaptase gastro-resistant 150mg tablets,tabletgastro-resistant.oral
+amp,372815e11,372709e11,1001030F0BDABAN,Metalcaptase gastro-resistant 300mg tablets (Imported (Germany)),Metalcaptase gastro-resistant 300mg tablets,tabletgastro-resistant.oral
+amp,359245e11,679611000000000,1001030J0BBACAC,Myocrisin 10mg/0.5ml solution for injection ampoules (Sanofi),Myocrisin 10mg/0.5ml solution for injection ampoules,solutioninjection.intramuscular-deep
+amp,359246e11,494311000000000,1001030J0BBADAD,Myocrisin 20mg/0.5ml solution for injection ampoules (Sanofi),Myocrisin 20mg/0.5ml solution for injection ampoules,solutioninjection.intramuscular-deep
+amp,359247e11,786611000000000,1001030J0BBAEAE,Myocrisin 50mg/0.5ml solution for injection ampoules (Sanofi),Myocrisin 50mg/0.5ml solution for injection ampoules,solutioninjection.intramuscular-deep
+vmp,330026007,330026007,1001030F0AAAEAE,Penicillamine 125mg tablets,Penicillamine 125mg tablets,tablet.oral
+vmp,330027003,330027003,1001030F0AAAFAF,Penicillamine 250mg tablets,Penicillamine 250mg tablets,tablet.oral
+vmp,130051e11,130051e11,1001030F0AAAIAI,Penicillamine 250mg/5ml oral solution,Penicillamine 250mg/5ml oral solution,solution.oral
+vmp,13005e12,13005e12,1001030F0AAAJAJ,Penicillamine 125mg/5ml oral solution,Penicillamine 125mg/5ml oral solution,solution.oral
+vmp,130052e11,130052e11,1001030F0AAAKAK,Penicillamine 50mg/5ml oral solution,Penicillamine 50mg/5ml oral solution,solution.oral
+vmp,335962e11,335962e11,1001030F0AAALAL,Penicillamine 250mg/5ml oral suspension,Penicillamine 250mg/5ml oral suspension,suspension.oral
+vmp,372811e11,372811e11,1001030F0AAAMAM,Penicillamine gastro-resistant 150mg tablets,Penicillamine gastro-resistant 150mg tablets,tabletgastro-resistant.oral
+vmp,372815e11,372815e11,1001030F0AAANAN,Penicillamine gastro-resistant 300mg tablets,Penicillamine gastro-resistant 300mg tablets,tabletgastro-resistant.oral

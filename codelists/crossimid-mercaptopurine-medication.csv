@@ -1,0 +1,39 @@
+obj_type,vpid,snomed_id,bnf_code,dmd_name,bnf_name,form_route
+amp,326873001,225198e11,0801030L0AAAAAA,Mercaptopurine 50mg tablets (Aspen Pharma Trading Ltd),Mercaptopurine 50mg tablets,tablet.oral
+amp,326873001,226737e11,0801030L0AAAAAA,Mercaptopurine 50mg tablets (Alliance Healthcare (Distribution) Ltd),Mercaptopurine 50mg tablets,tablet.oral
+amp,326873001,34468e12,0801030L0AAAAAA,Mercaptopurine 50mg tablets (A A H Pharmaceuticals Ltd),Mercaptopurine 50mg tablets,tablet.oral
+amp,184306e11,18413e12,0801030L0AAABAB,Mercaptopurine 10mg tablets (Special Order),Mercaptopurine 10mg tablets,tablet.oral
+amp,184306e11,364765e11,0801030L0AAABAB,Mercaptopurine 10mg tablets (Imported (Germany)),Mercaptopurine 10mg tablets,tablet.oral
+amp,127016e11,126955e11,0801030L0AAACAC,Mercaptopurine 5mg/5ml oral suspension (Special Order),Mercaptopurine 5mg/5ml oral suspension,suspension.oral
+amp,127015e11,126953e11,0801030L0AAAFAF,Mercaptopurine 50mg/5ml oral suspension (Special Order),Mercaptopurine 50mg/5ml oral suspension,suspension.oral
+amp,879661e10,875971e10,0801030L0AAAGAG,Mercaptopurine 10mg capsules (Special Order),Mercaptopurine 10mg capsules,capsule.oral
+amp,866371e10,861341e10,0801030L0AAAHAH,Mercaptopurine 25mg/5ml oral suspension (Special Order),Mercaptopurine 25mg/5ml oral suspension,suspension.oral
+amp,127017e11,126962e11,0801030L0AAAIAI,Mercaptopurine 75mg/5ml oral suspension (Special Order),Mercaptopurine 75mg/5ml oral suspension,suspension.oral
+amp,205563e11,205386e11,0801030L0AAAJAJ,Mercaptopurine 25mg tablets (Special Order),Mercaptopurine 25mg tablets,tablet.oral
+amp,209211e11,208864e11,0801030L0AAAKAK,Mercaptopurine 45mg/5ml oral suspension (Special Order),Mercaptopurine 45mg/5ml oral suspension,suspension.oral
+amp,221546e11,221012e11,0801030L0AAALAL,Mercaptopurine 25mg capsules (Special Order),Mercaptopurine 25mg capsules,capsule.oral
+amp,283663e11,282791e11,0801030L0AAAMAM,Mercaptopurine 30mg capsules (Special Order),Mercaptopurine 30mg capsules,capsule.oral
+amp,284153e11,28397e12,0801030L0AAANAN,Mercaptopurine 75mg tablets (Special Order),Mercaptopurine 75mg tablets,tablet.oral
+amp,315353e11,315085e11,0801030L0AAAPAP,Mercaptopurine 75mg capsules (Special Order),Mercaptopurine 75mg capsules,capsule.oral
+amp,866361e10,861281e10,0801030L0AAAQAQ,Mercaptopurine 100mg/5ml oral suspension (Special Order),Mercaptopurine 20mg/ml oral suspension,suspension.oral
+amp,365957e11,365828e11,0801030L0AAARAR,Mercaptopurine 20mg capsules (Special Order),Mercaptopurine 20mg capsules,capsule.oral
+amp,369791e11,369599e11,0801030L0AAASAS,Mercaptopurine 12.5mg capsules (Special Order),Mercaptopurine 12.5mg capsules,capsule.oral
+amp,326873001,383291e10,0801030L0BBAAAA,Puri-Nethol 50mg tablets (Aspen Pharma Trading Ltd),Puri-Nethol 50mg tablets,tablet.oral
+amp,866361e10,219694e11,0801030L0BCABAQ,Xaluprine 20mg/ml oral suspension (Nova Laboratories Ltd),Xaluprine 20mg/ml oral suspension,suspension.oral
+amp,326873001,375721e11,0801030L0BDAAAA,Hanixol 50mg tablets (Fontus Health Ltd),Hanixol 50mg tablets,tablet.oral
+vmp,326873001,326873001,0801030L0AAAAAA,Mercaptopurine 50mg tablets,Mercaptopurine 50mg tablets,tablet.oral
+vmp,184306e11,184306e11,0801030L0AAABAB,Mercaptopurine 10mg tablets,Mercaptopurine 10mg tablets,tablet.oral
+vmp,127016e11,127016e11,0801030L0AAACAC,Mercaptopurine 5mg/5ml oral suspension,Mercaptopurine 5mg/5ml oral suspension,suspension.oral
+vmp,127015e11,127015e11,0801030L0AAAFAF,Mercaptopurine 50mg/5ml oral suspension,Mercaptopurine 50mg/5ml oral suspension,suspension.oral
+vmp,879661e10,879661e10,0801030L0AAAGAG,Mercaptopurine 10mg capsules,Mercaptopurine 10mg capsules,capsule.oral
+vmp,866371e10,866371e10,0801030L0AAAHAH,Mercaptopurine 25mg/5ml oral suspension,Mercaptopurine 25mg/5ml oral suspension,suspension.oral
+vmp,127017e11,127017e11,0801030L0AAAIAI,Mercaptopurine 75mg/5ml oral suspension,Mercaptopurine 75mg/5ml oral suspension,suspension.oral
+vmp,205563e11,205563e11,0801030L0AAAJAJ,Mercaptopurine 25mg tablets,Mercaptopurine 25mg tablets,tablet.oral
+vmp,209211e11,209211e11,0801030L0AAAKAK,Mercaptopurine 45mg/5ml oral suspension,Mercaptopurine 45mg/5ml oral suspension,suspension.oral
+vmp,221546e11,221546e11,0801030L0AAALAL,Mercaptopurine 25mg capsules,Mercaptopurine 25mg capsules,capsule.oral
+vmp,283663e11,283663e11,0801030L0AAAMAM,Mercaptopurine 30mg capsules,Mercaptopurine 30mg capsules,capsule.oral
+vmp,284153e11,284153e11,0801030L0AAANAN,Mercaptopurine 75mg tablets,Mercaptopurine 75mg tablets,tablet.oral
+vmp,315353e11,315353e11,0801030L0AAAPAP,Mercaptopurine 75mg capsules,Mercaptopurine 75mg capsules,capsule.oral
+vmp,866361e10,866361e10,0801030L0AAAQAQ,Mercaptopurine 20mg/ml oral suspension,Mercaptopurine 20mg/ml oral suspension,suspension.oral
+vmp,365957e11,365957e11,0801030L0AAARAR,Mercaptopurine 20mg capsules,Mercaptopurine 20mg capsules,capsule.oral
+vmp,369791e11,369791e11,0801030L0AAASAS,Mercaptopurine 12.5mg capsules,Mercaptopurine 12.5mg capsules,capsule.oral

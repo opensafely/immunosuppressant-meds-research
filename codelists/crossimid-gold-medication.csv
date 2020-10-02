@@ -1,0 +1,4 @@
+obj_type,vpid,snomed_id,bnf_code,dmd_name,bnf_name,form_route
+vmp,359245e11,359245e11,1001030J0AAACAC,Sodium aurothiomalate 10mg/0.5ml solution for injection ampoules,Sodium aurothiomalate 10mg/0.5ml inj ampoules,solutioninjection.intramuscular-deep
+vmp,359246e11,359246e11,1001030J0AAADAD,Sodium aurothiomalate 20mg/0.5ml solution for injection ampoules,Sodium aurothiomalate 20mg/0.5ml inj ampoules,solutioninjection.intramuscular-deep
+vmp,359247e11,359247e11,1001030J0AAAEAE,Sodium aurothiomalate 50mg/0.5ml solution for injection ampoules,Sodium aurothiomalate 50mg/0.5ml inj ampoules,solutioninjection.intramuscular-deep
