@@ -341,11 +341,7 @@ study = StudyDefinition(
         ("anti_il4", "crossimid-anti-il4-medication"),
         ("jak_inhibitors", "crossimid-jak-inhibitors-medication"),
         ("rituximab", "crossimid-rituximab-medication"),
-        ("anti_il1", "crossimid-anti-il1-medication"),
-        ("anti_il12-23", "crossimid-anti-il12-23-medication"),
-        ("anti_il4", "crossimid-anti-il4-medication"),
-        ("anti_il6", "crossimid-anti-il6-medication"),
-        ("anti_tnf", "crossimid-anti-tnf-medication"),
+        ("anti_integrin", "crossimid-anti-integrin-medication"),
         ("azathioprine", "crossimid-azathioprine-medication"),
         ("ciclosporin", "crossimid-ciclosporin-medication"),
         ("gold", "crossimid-gold-medication"),
@@ -355,7 +351,6 @@ study = StudyDefinition(
         ("methotrexate", "crossimid-methotrexate-medication"),
         ("mycophenolate", "crossimid-mycophenolate-medication"),
         ("penicillamine", "crossimid-penicillamine-medication"),
-        ("rituximab", "crossimid-rituximab-medication"),
         ("sulfasalazine", "crossimid-sulfasalazine-medication")
     ])
 )
