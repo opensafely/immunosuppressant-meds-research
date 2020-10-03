@@ -73,10 +73,15 @@ def medication_latest(med_codelist):
         },
     )
 
-# Takes a variable prefix and medication codelist filename (minus .csv)
-# Returns a dictionary suitable for unpacking into the main study definition
-# This will include all five of the items defined in the functions above
 def medication_counts_and_dates(var_name, med_codelist_file):
+    """
+    Generates dictionary of covariats for a medication including counts and dates
+    
+    Takes a variable prefix and medication codelist filename (minus .csv)
+    Returns a dictionary suitable for unpacking into the main study definition
+    This will include all five of the items defined in the functions above
+    """
+    
     definitions={}
     med_codelist=codelist_from_csv("codelists/" + med_codelist_file + ".csv", system="snomed", column="snomed_id")
     med_functions=[
@@ -90,10 +95,14 @@ def medication_counts_and_dates(var_name, med_codelist_file):
         definitions[var_name + "_" + suffix] = fun(med_codelist)
     return definitions
 
-# Takes a list of tuples of the form (variable prefix, medication codelist filename (minus .csv))
-# Returns a dictionary suitable for unpacking into the main study definition
-# For each tuple, this will include all of the items specified in `medication_counts_and_dates`
 def medication_counts_and_dates_all(meds_list):
+    """
+    Generate dictionary of covariates for list of medications including counts and dates
+    
+    Takes a list of tuples of the form (variable prefix, medication codelist filename (minus .csv))
+    Returns a dictionary suitable for unpacking into the main study definition
+    For each tuple, this will include all of the items specified in `medication_counts_and_dates`
+    """
     definitions={}
     for (var_name, med_codelist_file) in meds_list:
         definitions.update(medication_counts_and_dates(var_name, med_codelist_file))
