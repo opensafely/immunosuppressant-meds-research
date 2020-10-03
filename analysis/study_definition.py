@@ -14,16 +14,90 @@ def first_diagnosis_in_period(dx_codelist):
         },
     )
 
-def medication_count(med_codelist):
+def medication_count_3m_0m(med_codelist):
     return patients.with_these_medications(
         med_codelist,
-        between=["2019-09-01", "2020-02-29"],
+        between=["2019-12-01", "2020-02-29"],
         returning="number_of_matches_in_period",
         return_expectations={
             "int": {"distribution": "normal", "mean": 3, "stddev": 2},
             "incidence": 0.1,
         },
     )
+
+def medication_count_6m_3m(med_codelist):
+    return patients.with_these_medications(
+        med_codelist,
+        between=["2019-09-01", "2020-11-30"],
+        returning="number_of_matches_in_period",
+        return_expectations={
+            "int": {"distribution": "normal", "mean": 3, "stddev": 2},
+            "incidence": 0.1,
+        },
+    )
+
+def medication_count_12m_6m(med_codelist):
+    return patients.with_these_medications(
+        med_codelist,
+        between=["2019-03-01", "2020-08-31"],
+        returning="number_of_matches_in_period",
+        return_expectations={
+            "int": {"distribution": "normal", "mean": 3, "stddev": 2},
+            "incidence": 0.1,
+        },
+    )
+
+def medication_earliest(med_codelist):
+    return patients.with_these_medications(
+        med_codelist,
+        between=["2010-01-01", "2020-02-29"],
+        returning="date",
+        find_first_match_in_period=True,
+        include_month=True,
+        return_expectations={
+            "incidence": 0.2,
+            "date": {"earliest": "1950-01-01", "latest": "today"},
+        },
+    )
+
+def medication_latest(med_codelist):
+    return patients.with_these_medications(
+        med_codelist,
+        between=["2010-01-01", "2020-02-29"],
+        returning="date",
+        find_last_match_in_period=True,
+        include_month=True,
+        return_expectations={
+            "incidence": 0.2,
+            "date": {"earliest": "1950-01-01", "latest": "today"},
+        },
+    )
+
+# Takes a variable prefix and medication codelist filename (minus .csv)
+# Returns a dictionary suitable for unpacking into the main study definition
+# This will include all five of the items defined in the functions above
+def medication_counts_and_dates(var_name, med_codelist_file):
+    definitions={}
+    med_codelist=codelist_from_csv("codelists/" + med_codelist_file + ".csv", system="snomed", column="snomed_id")
+    med_functions=[
+        ("3m_0m", medication_count_3m_0m),
+        ("6m_3m", medication_count_6m_3m),
+        ("12m_6m", medication_count_12m_6m),
+        ("earliest", medication_earliest),
+        ("latest", medication_latest)
+    ]
+    for (suffix, fun) in med_functions:
+        definitions[var_name + "_" + suffix] = fun(med_codelist)
+    return definitions
+
+# Takes a list of tuples of the form (variable prefix, medication codelist filename (minus .csv))
+# Returns a dictionary suitable for unpacking into the main study definition
+# For each tuple, this will include all of the items specified in `medication_counts_and_dates`
+def medication_counts_and_dates_all(meds_list):
+    definitions={}
+    for (var_name, med_codelist_file) in meds_list:
+        definitions.update(medication_counts_and_dates(var_name, med_codelist_file))
+    return definitions
 
 study = StudyDefinition(
     # Configure the expectations framework
@@ -258,13 +332,30 @@ study = StudyDefinition(
         "2019-03-01", "2020-02-29", return_expectations={"incidence": 0.9},
     ),
     # Medications
-    oral_prednisolone_count=medication_count(oral_pred_codes),
-    anti_tnf_med_code=medication_count(anti_tnf_med_codes),
-    anti_il6_med_code=medication_count(anti_il6_med_codes),
-    anti_il12_23_med_code=medication_count(anti_il12_23_med_codes),
-    anti_il1_med_code=medication_count(anti_il1_med_codes),
-    anti_il4_med_code=medication_count(anti_il4_med_codes),
-    jak_inhibitors_med_code=medication_count(jak_inhibitors_med_codes),
-    standard_systemic_immunosuppressant_med_code=medication_count(standard_systemic_immunosuppressant_med_codes),
-    rituximab_med_code=medication_count(rituximab_med_codes),    
+    **medication_counts_and_dates_all([
+        ("oral_prednisolone", "opensafely-asthma-oral-prednisolone-medication"),
+        ("anti_tnf", "crossimid-anti-tnf-medication"),
+        ("anti_il6", "crossimid-anti-il6-medication"),
+        ("anti_il12-23", "crossimid-anti-il12-23-medication"),
+        ("anti_il1", "crossimid-anti-il1-medication"),
+        ("anti_il4", "crossimid-anti-il4-medication"),
+        ("jak_inhibitors", "crossimid-jak-inhibitors-medication"),
+        ("rituximab", "crossimid-rituximab-medication"),
+        ("anti_il1", "crossimid-anti-il1-medication"),
+        ("anti_il12-23", "crossimid-anti-il12-23-medication"),
+        ("anti_il4", "crossimid-anti-il4-medication"),
+        ("anti_il6", "crossimid-anti-il6-medication"),
+        ("anti_tnf", "crossimid-anti-tnf-medication"),
+        ("azathioprine", "crossimid-azathioprine-medication"),
+        ("ciclosporin", "crossimid-ciclosporin-medication"),
+        ("gold", "crossimid-gold-medication"),
+        ("jak_inhibitors", "crossimid-jak-inhibitors-medication"),
+        ("leflunomide", "crossimid-leflunomide-medication"),
+        ("mercaptopurine", "crossimid-mercaptopurine-medication"),
+        ("methotrexate", "crossimid-methotrexate-medication"),
+        ("mycophenolate", "crossimid-mycophenolate-medication"),
+        ("penicillamine", "crossimid-penicillamine-medication"),
+        ("rituximab", "crossimid-rituximab-medication"),
+        ("sulfasalazine", "crossimid-sulfasalazine-medication")
+    ])
 )
