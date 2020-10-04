@@ -56,7 +56,7 @@ def medication_earliest(med_codelist):
         include_month=True,
         return_expectations={
             "incidence": 0.2,
-            "date": {"earliest": "1950-01-01", "latest": "today"},
+            "date": {"earliest": "2010-01-01", "latest": "2020-02-29"},
         },
     )
 
@@ -69,7 +69,7 @@ def medication_latest(med_codelist):
         include_month=True,
         return_expectations={
             "incidence": 0.2,
-            "date": {"earliest": "1950-01-01", "latest": "today"},
+            "date": {"earliest": "2010-01-01", "latest": "2020-02-29"},
         },
     )
 
