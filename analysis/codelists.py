@@ -24,9 +24,6 @@ covid_pos_primcare_test = codelist_from_csv(
 )
 
 
-# MEDICATIONS - EXPOSURES
-
-
 # DEMOGRAPHIC CODELIST
 ethnicity_codes = codelist_from_csv(
     "codelists/opensafely-ethnicity.csv",
@@ -51,24 +48,27 @@ unclear_smoking_codes = codelist_from_csv(
 )
 
 # CLINICAL CONDITIONS CODELISTS
+atopic_dermatitis_codes = codelist_from_csv(
+    "crossimid-codelists/crossimid-atopic-dermatitis.csv", system="ctv3", column="CTV3ID"
+)
 crohns_disease_codes = codelist_from_csv(
-    "codelists/crossimid-crohns-disease.csv", system="ctv3", column="CTV3ID",
+    "crossimid-codelists/crossimid-crohns-disease.csv", system="ctv3", column="CTV3ID",
 )
 
 ulcerative_colitis_codes = codelist_from_csv(
-    "codelists/crossimid-ulcerative-colitis.csv", system="ctv3", column="CTV3ID",
+    "crossimid-codelists/crossimid-ulcerative-colitis.csv", system="ctv3", column="CTV3ID",
 )
 
 inflammatory_bowel_disease_unclassified_codes = codelist_from_csv(
-    "codelists/crossimid-inflammatory-bowel-disease-unclassified.csv", system="ctv3", column="CTV3ID",
+    "crossimid-codelists/crossimid-inflammatory-bowel-disease-unclassified.csv", system="ctv3", column="CTV3ID",
 )
 
 ankylosing_spondylitis_codes = codelist_from_csv(
-    "codelists/crossimid-ankylosing-spondylitis.csv", system="ctv3", column="CTV3ID",
+    "crossimid-codelists/crossimid-ankylosing-spondylitis.csv", system="ctv3", column="CTV3ID",
 )
 
 psoriasis_codes = codelist_from_csv(
-    "codelists/crossimid-psoriasis.csv", system="ctv3", column="CTV3ID",
+    "crossimid-codelists/crossimid-psoriasis.csv", system="ctv3", column="CTV3ID",
 )
 
 hidradenitis_suppurativa_codes = codelist_from_csv(
@@ -76,7 +76,7 @@ hidradenitis_suppurativa_codes = codelist_from_csv(
 )
 
 psoriatic_arthritis_codes = codelist_from_csv(
-    "codelists/crossimid-psoriatic-arthritis.csv", system="ctv3", column="CTV3ID",
+    "crossimid-codelists/crossimid-psoriatic-arthritis.csv", system="ctv3", column="CTV3ID",
 )
 
 rheumatoid_arthritis_codes = codelist_from_csv(

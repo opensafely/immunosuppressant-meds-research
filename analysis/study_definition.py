@@ -83,7 +83,11 @@ def medication_counts_and_dates(var_name, med_codelist_file):
     """
     
     definitions={}
-    med_codelist=codelist_from_csv("codelists/" + med_codelist_file + ".csv", system="snomed", column="snomed_id")
+    if (med_codelist_file[0:5] == "cross"):
+        med_codelist_file = "crossimid-codelists/" + med_codelist_file
+    else:
+        med_codelist_file = "codelists/" + med_codelist_file
+    med_codelist=codelist_from_csv(med_codelist_file + ".csv", system="snomed", column="snomed_id")
     med_functions=[
         ("3m_0m", medication_count_3m_0m),
         ("6m_3m", medication_count_6m_3m),
@@ -149,6 +153,35 @@ study = StudyDefinition(
         include_day=True,
         return_expectations={"date": {"earliest": "2020-03-01"}, "incidence": 0.1},
     ),
+    # COVID-19 outcomes
+    first_pos_test_sgss=patients.with_test_result_in_sgss(
+        pathogen="SARS-CoV-2",
+        test_result="positive",
+        find_first_match_in_period=True,
+        returning="date",
+        date_format="YYYY-MM-DD",
+        return_expectations={"date": {"earliest": "2020-01-01"}},
+    ),
+
+    first_pos_code_primcare=patients.with_these_clinical_events(
+        covid_pos_primcare_code,
+        returning="date",
+        find_first_match_in_period=True,
+        date_format="YYYY-MM-DD",
+        return_expectations={
+            "date": {"earliest": "2020-01-01", "latest": "today"}
+        },
+    ),
+
+    first_pos_test_primcare=patients.with_these_clinical_events(
+        covid_pos_primcare_test,
+        returning="date",
+        find_first_match_in_period=True,
+        date_format="YYYY-MM-DD",
+        return_expectations={
+            "date": {"earliest": "2020-01-01", "latest": "today"}
+        },
+    ),
     # The rest of the lines define the covariates with associated GitHub issues
     # https://github.com/ebmdatalab/tpp-sql-notebook/issues/33
     age=patients.age_as_of(
@@ -176,6 +209,7 @@ study = StudyDefinition(
         },
     ),
     # IMID disease codes
+    atopic_dermatitis=first_diagnosis_in_period(atopic_dermatitis_codes),
     crohns_disease=first_diagnosis_in_period(crohns_disease_codes),
     ulcerative_colitis=first_diagnosis_in_period(ulcerative_colitis_codes),
     inflammatory_bowel_disease_unclassified=first_diagnosis_in_period(inflammatory_bowel_disease_unclassified_codes),
@@ -360,6 +394,8 @@ study = StudyDefinition(
         ("methotrexate", "crossimid-methotrexate-medication"),
         ("mycophenolate", "crossimid-mycophenolate-medication"),
         ("penicillamine", "crossimid-penicillamine-medication"),
-        ("sulfasalazine", "crossimid-sulfasalazine-medication")
+        ("sulfasalazine", "crossimid-sulfasalazine-medication"),
+        ("mesalazine", "crossimid-mesalazine-medication"),
+        ("atopic_dermatitis_meds", "crossimid-atopic-dermatitis-medication")
     ])
 )
