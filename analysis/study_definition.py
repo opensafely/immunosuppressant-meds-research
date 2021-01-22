@@ -14,6 +14,11 @@ salbutamol_codes = codelist_from_csv(
 systolic_blood_pressure_codes = codelist(["2469."], system="ctv3")
 diastolic_blood_pressure_codes = codelist(["246A."], system="ctv3")
 
+immunosupressant_drug_names = codelist_from_csv(
+    "codelists/opensafely-immunosuppressant-drug-names.csv",
+    system = "high_cost_drugs"
+    column = "olddrugname")
+
 study = StudyDefinition(
     # Configure the expectations framework
     default_expectations={
@@ -137,4 +142,11 @@ study = StudyDefinition(
             "int": {"distribution": "normal", "mean": 8, "stddev": 2},
         },
     ),
+    # adding in high cost drugs information
+    drug_info = patients.with_high_cost_drugs(
+        drug_name_matches = immunosupressant_drug_names,
+        between = ["2019-01-01", "2019-03-31"],
+        returning = "binary_flag",
+        return_expectations={"incidence": 0.2},
+    )
 )
