@@ -14,68 +14,45 @@ def first_diagnosis_in_period(dx_codelist):
         },
     )
 
-def medication_count_3m_0m(med_codelist):
-    return patients.with_these_medications(
-        med_codelist,
-        between=["2019-12-01", "2020-02-29"],
-        returning="number_of_matches_in_period",
+def get_medication_for_dates(med_codelist, with_med_func, dates, return_count):
+    if (return_count):
+        returning="number_of_matches_in_period"
         return_expectations={
             "int": {"distribution": "normal", "mean": 3, "stddev": 2},
             "incidence": 0.1,
-        },
-    )
-
-def medication_count_6m_3m(med_codelist):
-    return patients.with_these_medications(
-        med_codelist,
-        between=["2019-09-01", "2020-11-30"],
-        returning="number_of_matches_in_period",
+        }
+    else:
+        returning="binary_flag"
         return_expectations={
-            "int": {"distribution": "normal", "mean": 3, "stddev": 2},
-            "incidence": 0.1,
-        },
-    )
-
-def medication_count_12m_6m(med_codelist):
-    return patients.with_these_medications(
+            "incidence": 0.1
+        }
+    return with_med_func(
         med_codelist,
-        between=["2019-03-01", "2020-08-31"],
-        returning="number_of_matches_in_period",
-        return_expectations={
-            "int": {"distribution": "normal", "mean": 3, "stddev": 2},
-            "incidence": 0.1,
-        },
+        between=dates,
+        returning=returning,
+        return_expectations=return_expectations
     )
 
-def medication_earliest(med_codelist):
-    return patients.with_these_medications(
+def get_medication_early_late(med_codelist, with_med_func, type):
+    if (type == "latest"):
+        med_params={"find_last_match_in_period": True}
+    else:
+        med_params={"find_first_match_in_period": True}        
+    return with_med_func(
         med_codelist,
         between=["2010-01-01", "2020-02-29"],
         returning="date",
-        find_first_match_in_period=True,
-        include_month=True,
+        **med_params,
+        date_format="YYYY-MM",
         return_expectations={
             "incidence": 0.2,
             "date": {"earliest": "2010-01-01", "latest": "2020-02-29"},
         },
     )
 
-def medication_latest(med_codelist):
-    return patients.with_these_medications(
-        med_codelist,
-        between=["2010-01-01", "2020-02-29"],
-        returning="date",
-        find_last_match_in_period=True,
-        include_month=True,
-        return_expectations={
-            "incidence": 0.2,
-            "date": {"earliest": "2010-01-01", "latest": "2020-02-29"},
-        },
-    )
-
-def medication_counts_and_dates(var_name, med_codelist_file):
+def medication_counts_and_dates(var_name, med_codelist_file, high_cost):
     """
-    Generates dictionary of covariats for a medication including counts and dates
+    Generates dictionary of covariats for a medication including counts (or binary flags for high cost drugs) and dates
     
     Takes a variable prefix and medication codelist filename (minus .csv)
     Returns a dictionary suitable for unpacking into the main study definition
@@ -87,16 +64,21 @@ def medication_counts_and_dates(var_name, med_codelist_file):
         med_codelist_file = "crossimid-codelists/" + med_codelist_file
     else:
         med_codelist_file = "codelists/" + med_codelist_file
-    med_codelist=codelist_from_csv(med_codelist_file + ".csv", system="snomed", column="snomed_id")
+    if (high_cost):
+        med_codelist=codelist_from_csv(med_codelist_file + ".csv", system="high_cost_drugs", column="olddrugname")
+        with_med_func=patients.with_high_cost_drugs
+    else:
+        med_codelist=codelist_from_csv(med_codelist_file + ".csv", system="snomed", column="snomed_id")
+        with_med_func=patients.with_these_medications
     med_functions=[
-        ("3m_0m", medication_count_3m_0m),
-        ("6m_3m", medication_count_6m_3m),
-        ("12m_6m", medication_count_12m_6m),
-        ("earliest", medication_earliest),
-        ("latest", medication_latest)
+        ("3m_0m", get_medication_for_dates, {"dates": ["2019-12-01", "2020-02-29"], "return_count": not high_cost}),
+        ("6m_3m", get_medication_for_dates, {"dates": ["2019-09-01", "2020-11-30"], "return_count": not high_cost}),
+        ("12m_6m", get_medication_for_dates, {"dates": ["2019-03-01", "2020-08-31"], "return_count": not high_cost}),
+        ("earliest", get_medication_early_late, {"type": "latest"}),
+        ("latest", get_medication_early_late, {"type": "earliest"})
     ]
-    for (suffix, fun) in med_functions:
-        definitions[var_name + "_" + suffix] = fun(med_codelist)
+    for (suffix, fun, params) in med_functions:
+        definitions[var_name + "_" + suffix] = fun(med_codelist, with_med_func, **params)
     return definitions
 
 def medication_counts_and_dates_all(meds_list):
@@ -108,8 +90,8 @@ def medication_counts_and_dates_all(meds_list):
     For each tuple, this will include all of the items specified in `medication_counts_and_dates`
     """
     definitions={}
-    for (var_name, med_codelist_file) in meds_list:
-        definitions.update(medication_counts_and_dates(var_name, med_codelist_file))
+    for (var_name, med_codelist_file, high_cost) in meds_list:
+        definitions.update(medication_counts_and_dates(var_name, med_codelist_file, high_cost))
     return definitions
 
 study = StudyDefinition(
@@ -131,13 +113,6 @@ study = StudyDefinition(
         find_first_match_in_period=True,
         return_expectations={"date": {"earliest": "2020-03-01"}, "incidence": 0.1},
     ),
-    died_date_cpns=patients.with_death_recorded_in_cpns(
-        on_or_before="2020-06-01",
-        returning="date_of_death",
-        include_month=True,
-        include_day=True,
-        return_expectations={"date": {"earliest": "2020-03-01"}},
-    ),
     died_ons_covid_flag_any=patients.with_these_codes_on_death_certificate(
         covid_identification, on_or_after="2020-03-01", match_only_underlying_cause=False,
         return_expectations={"date": {"earliest": "2020-03-01"}, "incidence": 0.1},
@@ -147,7 +122,7 @@ study = StudyDefinition(
         return_expectations={"date": {"earliest": "2020-03-01"}, "incidence": 0.1},
     ),
     died_date_ons=patients.died_from_any_cause(
-        on_or_after="2020-06-01",
+        on_or_after="2020-03-01",
         returning="date_of_death",
         include_month=True,
         include_day=True,
@@ -217,6 +192,7 @@ study = StudyDefinition(
     hidradenitis_suppurativa=first_diagnosis_in_period(hidradenitis_suppurativa_codes),
     psoriatic_arthritis=first_diagnosis_in_period(psoriatic_arthritis_codes),
     rheumatoid_arthritis=first_diagnosis_in_period(rheumatoid_arthritis_codes),
+    ankylosing_spondylitis=first_diagnosis_in_period(ankylosing_spondylitis_codes),
     
     # Comorbidities
     chronic_cardiac_disease=first_diagnosis_in_period(chronic_cardiac_disease_codes),
@@ -354,13 +330,13 @@ study = StudyDefinition(
             on_or_before="2020-02-29",
         ),
     ),
-    smoking_status_date=patients.with_these_clinical_events(
-        clear_smoking_codes,
-        on_or_before="2020-02-29",
-        return_last_date_in_period=True,
-        include_month=True,
-        return_expectations={"date": {"latest": "2020-02-29"}},
-    ),
+#    smoking_status_date=patients.with_these_clinical_events(
+#        clear_smoking_codes,
+#        on_or_before="2020-02-29",
+#        return_last_date_in_period=True,
+#        include_month=True,
+#        return_expectations={"date": {"latest": "2020-02-29"}},
+#    ),
     ### GP CONSULTATION RATE
     gp_consult_count=patients.with_gp_consultations(
         between=["2019-03-01", "2020-02-29"],
@@ -371,31 +347,44 @@ study = StudyDefinition(
             "incidence": 0.7,
         },
     ),
-    has_consultation_history=patients.with_complete_gp_consultation_history_between(
-        "2019-03-01", "2020-02-29", return_expectations={"incidence": 0.9},
-    ),
+#    has_consultation_history=patients.with_complete_gp_consultation_history_between(
+#        "2019-03-01", "2020-02-29", return_expectations={"incidence": 0.9},
+#    ),
     # Medications
+
     **medication_counts_and_dates_all([
-        ("oral_prednisolone", "opensafely-asthma-oral-prednisolone-medication"),
-        ("anti_tnf", "crossimid-anti-tnf-medication"),
-        ("anti_il6", "crossimid-anti-il6-medication"),
-        ("anti_il12-23", "crossimid-anti-il12-23-medication"),
-        ("anti_il1", "crossimid-anti-il1-medication"),
-        ("anti_il4", "crossimid-anti-il4-medication"),
-        ("jak_inhibitors", "crossimid-jak-inhibitors-medication"),
-        ("rituximab", "crossimid-rituximab-medication"),
-        ("anti_integrin", "crossimid-anti-integrin-medication"),
-        ("azathioprine", "crossimid-azathioprine-medication"),
-        ("ciclosporin", "crossimid-ciclosporin-medication"),
-        ("gold", "crossimid-gold-medication"),
-        ("jak_inhibitors", "crossimid-jak-inhibitors-medication"),
-        ("leflunomide", "crossimid-leflunomide-medication"),
-        ("mercaptopurine", "crossimid-mercaptopurine-medication"),
-        ("methotrexate", "crossimid-methotrexate-medication"),
-        ("mycophenolate", "crossimid-mycophenolate-medication"),
-        ("penicillamine", "crossimid-penicillamine-medication"),
-        ("sulfasalazine", "crossimid-sulfasalazine-medication"),
-        ("mesalazine", "crossimid-mesalazine-medication"),
-        ("atopic_dermatitis_meds", "crossimid-atopic-dermatitis-medication")
+        ("oral_prednisolone", "opensafely-asthma-oral-prednisolone-medication", False),
+        ("azathioprine", "crossimid-azathioprine-medication", False),
+        ("ciclosporin", "crossimid-ciclosporin-medication", False),
+        ("gold", "crossimid-gold-medication", False),
+        ("leflunomide", "crossimid-leflunomide-medication", False),
+        ("mercaptopurine", "crossimid-mercaptopurine-medication", False),
+        ("methotrexate", "crossimid-methotrexate-medication", False),
+        ("mycophenolate", "crossimid-mycophenolate-medication", False),
+        ("penicillamine", "crossimid-penicillamine-medication", False),
+        ("sulfasalazine", "crossimid-sulfasalazine-medication", False),
+        ("mesalazine", "crossimid-mesalazine-medication", False),
+        ("atopic_dermatitis_meds", "crossimid-atopic-dermatitis-medication", False),
+        ("bcell", "crossimid-bcell-drug-names", True),
+        ("il17", "crossimid-il17-drug-names", True),
+        ("il23", "crossimid-il23-drug-names", True),
+        ("il6", "crossimid-il6-drug-names", True),
+        ("jaki", "crossimid-jaki-drug-names", True),
+        ("vegf", "crossimid-vegf-drug-names", True),
+        ("abatacept", "crossimid-abatacept-drug-names", True),
+        ("adalimumab", "crossimid-adalimumab-drug-names", True),
+        ("alemtuzumab", "crossimid-alemtuzumab-drug-names", True),
+        ("anakinra", "crossimid-anakinra-drug-names", True),
+        ("anti_eosinophils", "crossimid-anti-eosinophils-drug-names", True),
+        ("belimumab", "crossimid-belimumab-drug-names", True),
+        ("certolizumab", "crossimid-certolizumab-drug-names", True),
+        ("dupilumab", "crossimid-dupilumab-drug-names", True),
+        ("etanercept", "crossimid-etanercept-drug-names", True),
+        ("golimumab", "crossimid-golimumab-drug-names", True),
+        ("infliximab", "crossimid-infliximab-drug-names", True),
+        ("integrins", "crossimid-integrins-drug-names", True),
+        ("mepolizumab", "crossimid-mepolizumab-drug-names", True),
+        ("omalizumab", "crossimid-omalizumab-drug-names", True),
+        ("ustekinumab", "crossimid-ustekinumab-drug-names", True)
     ])
 )
