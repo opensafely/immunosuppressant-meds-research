@@ -23,11 +23,11 @@ ssc install asdoc
 global datac = "/Users\K1517516\Dropbox\COVID\IMID\OpenSafely"
 
 
-import delimited "$datac\input.csv", clear
+import delimited "$datac\input (2).csv", clear
 
 * Open a log file
 cap log close
-log using $datac\cr_create_analysis_dataset, replace t
+*log using $datac\cr_create_analysis_dataset, replace t
 
 /* SET Index date ===========================================================*/
 global indexdate 			= "01/03/2020"
@@ -47,10 +47,12 @@ drop ckd
 foreach var of varlist 	 crohns_disease						///
 						 ulcerative_colitis					///
 						 ibd_uncla	                        ///
+						 atopic_dermatitis					///
 						 psoriasis							///
 						 hidradenitis_suppurativa			///
 						 psoriatic_arthritis				///
-						 rheumatoid_arthritis	            ///
+						 rheumatoid_arthritis				///
+						 ankylosing_spondylitis				///
 						 chronic_cardiac_disease			///
 						 hba1c_new							///
 						 hba1c_old							///
@@ -69,7 +71,6 @@ foreach var of varlist 	 crohns_disease						///
 						 creatinine_date      				///
 						 organ_transplant					///
 						 bmi_date_measured					///
-						 smoking_status_date				///
 						 oral_prednisolone_earliest			///
 						 oral_prednisolone_latest			///
 						 anti_tnf_earliest					///
@@ -106,7 +107,8 @@ foreach var of varlist 	 crohns_disease						///
 						 penicillamine_latest				///
 						 sulfasalazine_earliest				///
 						 sulfasalazine_latest				///
-						 {
+						 mesalazine_earliest				///
+						 mesalazine_latest	{
 						 	
 		capture confirm string variable `var'
 		if _rc!=0 {
@@ -130,7 +132,10 @@ foreach var of varlist 	 crohns_disease						///
 
 foreach var of varlist 	 icu_date_admitted					///
 						 died_date_cpns						///
-						 died_date_ons					{
+						 died_date_ons						///
+						 first_pos_test_sgss				///
+						 first_pos_test_primcare			///
+						 {
 						 
 		capture confirm string variable `var'
 		if _rc!=0 {
@@ -159,7 +164,6 @@ rename icu_date_admitted_date			icu_admitted_date
 rename died_date_cpns_date 		        died_cpns_date
 rename bmi_date_measured_date  			bmi_measured_date
 rename died_date_ons_date		        died_ons_date 
-rename smoking_status_date_date		    smoking_status_date
 rename creatinine_date_date				creatinine_measured_date
 rename hba1c_mmol_per_mol_date_date		hba1c_mmol_per_mol_date	
 rename hba1c_percentage_date_date		hba1c_percentage_date
@@ -169,8 +173,7 @@ rename hba1c_percentage_date_date		hba1c_percentage_date
 
 /* CREATE BINARY VARIABLES====================================================*/
 
-*there is already a smoking status variable
-rename smoking_status smoking_status2
+
 *  Make indicator variables for all conditions where relevant 
 
 
@@ -178,9 +181,11 @@ foreach var of varlist 	 crohns_disease_date				    ///
 						 ulcerative_colitis_date				///
 						 ibd_uncla_date	                        ///
 						 psoriasis_date							///
+						 atopic_dermatitis_date					///
 						 hidradenitis_suppurativa_date			///
 						 psoriatic_arthritis_date				///
 						 rheumatoid_arthritis_date	            ///
+						 ankylosing_spondylitis_date 			///
 						 chronic_cardiac_disease_date			///
 						 hypertension_date						///
 						 chronic_respiratory_disease_date		///
@@ -195,7 +200,6 @@ foreach var of varlist 	 crohns_disease_date				    ///
 						 creatinine_measured_date      		    ///
 						 organ_transplant_date					///
 						 bmi_measured_date					    ///
-						 smoking_status_date				    ///
 						 oral_prednisolone_earliest_date		///
 						 oral_prednisolone_latest_date			///
 						 anti_tnf_earliest_date					///
@@ -232,9 +236,13 @@ foreach var of varlist 	 crohns_disease_date				    ///
 						 penicillamine_latest_date				///
 						 sulfasalazine_earliest_date			///
 						 sulfasalazine_latest_date				///
+						 mesalazine_earliest_date				///
+						 mesalazine_latest_date					///	
 						 icu_admitted_date					    ///
 						 died_cpns_date						    ///
-						 died_ons_date						{
+						 died_ons_date							///
+						 first_pos_test_sgss_date				///
+						 first_pos_test_primcare_date	{
 	/* date ranges are applied in python, so presence of date indicates presence of 
 	  disease in the correct time frame */ 
 	local newvar =  substr("`var'", 1, length("`var'") - 5)
@@ -259,7 +267,6 @@ recode ethnicity 3=2 /* south asian to 2 */
 recode ethnicity 4=3 /* black to 3 */
 recode ethnicity 6=4 /* mixed to 4 */
 
-
 label define ethnicity 	1 "White"  					///
 						2 "South Asian"				///
 						3 "Black"  					///
@@ -267,6 +274,9 @@ label define ethnicity 	1 "White"  					///
 						5 "Other"					///
 						.u "Unknown"
 label values ethnicity ethnicity
+
+gen ethnicity2 = ethnicity
+replace ethnicity2 = . if ethnicity == .u
 
 * STP 
 rename stp stp_old
@@ -331,7 +341,7 @@ mkspline age = age, cubic nknots(4)
 
 * Recode strange values 
 replace bmi = . if bmi == 0 
-replace bmi = . if !inrange(bmi, 15, 50)
+replace bmi = . if !inrange(bmi, 10, 60)
 
 * Restrict to within 10 years of index and aged > 16 
 gen bmi_time = (date("$indexdate", "DMY") - bmi_measured_date)/365.25
@@ -380,14 +390,14 @@ order obese4cat, after(bmicat)
 * Smoking 
 label define smoke 1 "Never" 2 "Former" 3 "Current" .u "Unknown (.u)"
 
-gen     smoke = 1  if smoking_status2 == "N"
-replace smoke = 2  if smoking_status2 == "E"
-replace smoke = 3  if smoking_status2 == "S"
-replace smoke = .u if smoking_status2 == "M"
-replace smoke = .u if smoking_status2 == "" 
+gen     smoke = 1  if smoking_status == "N"
+replace smoke = 2  if smoking_status == "E"
+replace smoke = 3  if smoking_status == "S"
+replace smoke = .u if smoking_status == "M"
+replace smoke = .u if smoking_status == "" 
 
 label values smoke smoke
-drop smoking_status2
+drop smoking_status
 
 * Create non-missing 3-category variable for current smoking
 * Assumes missing smoking is never smoking 
@@ -542,12 +552,12 @@ label define diabcat 	1 "No diabetes" 			///
 						4 "Diabetes, no hba1c measure"
 label values diabcat diabcat
 
-* create cancer variable
+* create cancer *variable 'other cancer currently' includes carcinoma of the head and neck - need to confirm if this excludes NMSC
 gen cancer =0
 replace cancer =1 if lung_cancer ==1 | haem_cancer ==1 | other_cancer ==1
 
 *creat other comorbid variables
-gen other_comorbid =1 if chronic_cardiac_disease ==1
+gen combined_cv_comorbid =1 if chronic_cardiac_disease ==1 | stroke==1
 
 
 * Delete unneeded variables
@@ -561,9 +571,14 @@ drop hba1c_pct hba1c_percentage hba1c_mmol_per_mol
 *Rheum
 replace rheumatoid_arthritis =0 if psoriatic_arthritis_date > rheumatoid_arthritis_date & psoriatic_arthritis_date !=.
 replace psoriatic_arthritis	=0 if rheumatoid_arthritis_date > psoriatic_arthritis_date & rheumatoid_arthritis_date !=.
+replace ankylosing_spondylitis	=0 if ankylosing_spondylitis_date > ankylosing_spondylitis_date & ankylosing_spondylitis_date !=.
 *Derm
 replace psoriasis =0 if hidradenitis_suppurativa_date > psoriasis_date & hidradenitis_suppurativa_date !=.
+replace psoriasis =0 if atopic_dermatitis_date > psoriasis_date & atopic_dermatitis_date !=.
 replace hidradenitis_suppurativa =0 if psoriasis_date > hidradenitis_suppurativa_date & psoriasis_date !=.
+replace hidradenitis_suppurativa =0 if atopic_dermatitis_date > hidradenitis_suppurativa_date & atopic_dermatitis_date !=.
+replace atopic_dermatitis =0 if psoriasis_date > atopic_dermatitis_date & psoriasis_date !=.
+replace atopic_dermatitis =0 if hidradenitis_suppurativa_date > atopic_dermatitis_date & hidradenitis_suppurativa_date !=.
 *Gastro
 replace ibd_uncla =0 if ulcerative_colitis_date > ibd_uncla_date  & ulcerative_colitis_date !=.
 replace ibd_uncla =0 if crohns_disease_date > ibd_uncla_date  & crohns_disease_date !=.
@@ -572,10 +587,13 @@ replace ulcerative_colitis =0 if ibd_uncla_date > ulcerative_colitis_date & ibd_
 replace crohns_disease =0 if ulcerative_colitis_date > crohns_disease_date & ulcerative_colitis_date !=.
 replace crohns_disease =0 if ibd_uncla_date > crohns_disease_date & ibd_uncla_date !=.
 
+*consider the effect of patients diagnosed with imid post 1st March 2020
+*ignoring this will bias to null
+*diagnoses after 1st March have been culled via python code
 
 gen imid = .
-replace imid = 1 if rheumatoid_arthritis ==1 | psoriatic_arthritis ==1 | ibd_uncla ==1 | ulcerative_colitis ==1 | crohns_disease ==1 | psoriasis ==1 | hidradenitis_suppurativa ==1
-replace imid = 0 if rheumatoid_arthritis !=1 & psoriatic_arthritis !=1 & ibd_uncla !=1 & ulcerative_colitis !=1 & crohns_disease !=1 & psoriasis !=1 & hidradenitis_suppurativa !=1
+replace imid = 1 if rheumatoid_arthritis ==1 | psoriatic_arthritis ==1 | ankylosing_spondylitis==1 | ibd_uncla ==1 | ulcerative_colitis ==1 | crohns_disease ==1 | psoriasis ==1 | hidradenitis_suppurativa ==1
+replace imid = 0 if rheumatoid_arthritis !=1 & psoriatic_arthritis !=1 & ibd_uncla !=1 & ulcerative_colitis !=1 & crohns_disease !=1 & psoriasis !=1 & hidradenitis_suppurativa !=1 & ankylosing_spondylitis !=1
 
 label define imid 0 "Gen Pop" 1 "IMID"
 label values imid imid
@@ -587,19 +605,45 @@ recode imidtype .=1 if crohns_disease ==1
 recode imidtype .=1 if ibd_uncla ==1
 recode imidtype .=2 if rheumatoid_arthritis ==1 
 recode imidtype .=2 if psoriatic_arthritis ==1
+recode imidtype .=2 if ankylosing_spondylitis ==1
 recode imidtype .=3 if psoriasis ==1
 recode imidtype .=3 if hidradenitis_suppurativa ==1
+recode imidtype .=3 if atopic_dermatitis ==1
+
 
 label define imidtype 1"Bowel" 2"Joint" 3"Skin"
 label values imidtype imidtype
 
-/*don't have ax-spa currently 
-gen as_psoriasis_psa = .
-replace as_psoriasis_psa = 1 if psoriatic_arthritis ==1 | psoriasis ==1 | ax_spa ==1
-replace as_psoriasis_psa = 0 if psoriatic_arthritis !=1 & psoriasis !=1 & ax_spa !=1
-*/
+gen genbowel =1 if imidtype ==1
+replace genbowel =0 if imid ==0
+label define genbowel 0"Gen Pop" 1"Bowel" 
+label values genbowel genbowel
 
-/* Treatments =============*/
+gen genjoint =1 if imidtype ==2
+replace genjoint =0 if imid ==0
+label define genjoint 0"Gen Pop" 1"Joint" 
+label values genjoint genjoint
+
+gen genskin =1 if imidtype ==3
+replace genskin =0 if imid ==0
+label define genskin 0"Gen Pop" 1"Skin" 
+label values genskin genskin
+
+gen bowel =0
+replace bowel =1 if crohns_disease ==1 | ibd_uncla ==1 | ulcerative_colitis ==1
+
+gen skin =0
+replace skin =1 if psoriasis ==1 | hidradenitis_suppurativa ==1
+
+gen joint =0
+replace joint =1 if rheumatoid_arthritis ==1 | psoriatic_arthritis ==1 | ankylosing_spondylitis ==1
+
+* imiddetailed variable which is not exclusive
+
+
+label define imid_detailed 1"Ulcerative colitis" 
+
+
 
 *Loop to replace missing with 0
 foreach var of varlist  oral_prednisolone_3m_0m  ///
@@ -655,11 +699,37 @@ foreach var of varlist  oral_prednisolone_3m_0m  ///
 						penicillamine_12m_6m	 ///
 						sulfasalazine_3m_0m	     ///
 						sulfasalazine_6m_3m		 ///
-						sulfasalazine_12m_6m	{
+						sulfasalazine_12m_6m	 ///
+						mesalazine_3m_0m		 ///
+						mesalazine_6m_3m		 ///
+						mesalazine_12m_6m	{
 						
 						replace `var' =0 if `var' ==.
 						}
-												
+
+
+*Define those that started > or < 6 months prior to index date
+
+label define commence   0"Within last 6 months"	///
+						1"More than 6 months ago"
+								
+foreach var of varlist  anti_tnf_earliest_date    		///
+						anti_il1223_earliest_date 		///
+						jak_inhibitors_earliest_date  {
+						
+				gen `var'_com = 1 if `var'+180 < (date("$indexdate", "DMY"))
+				recode `var'_com .=0 if `var' !=.
+				label values `var'_com commence
+				order `var'_com, after(`var')					
+						}
+
+*stand sys drugs data are count, not binary!
+gen standsys =1 if azathioprine_3m_0m >=1 | azathioprine_6m_3m >=1 | ciclosporin_3m_0m >=1 |ciclosporin_6m_3m >=1 | leflunomide_3m_0m >=1 |leflunomide_6m_3m >=1 | mercaptopurine_3m_0m >=1 |mercaptopurine_6m_3m >=1 | methotrexate_3m_0m >=1 | methotrexate_6m_3m >=1 | mycophenolate_3m_0m >=1 | mycophenolate_6m_3m >=1 | sulfasalazine_3m_0m >=1 |sulfasalazine_6m_3m >=1 | mesalazine_3m_0m >=1 | mesalazine_6m_3m >=1
+replace standsys =. if imid !=1
+
+gen standsys3m =1 if azathioprine_3m_0m >=1 | ciclosporin_3m_0m >=1 | leflunomide_3m_0m >=1 | mercaptopurine_3m_0m >=1 | methotrexate_3m_0m >=1 | mycophenolate_3m_0m >=1 | sulfasalazine_3m_0m >=1  | mesalazine_3m_0m >=1
+replace standsys3m =. if imid !=1
+
 gen tnf =1 if anti_tnf_6m_3m !=0 | anti_tnf_3m_0m !=0
 replace tnf =. if imid !=1
 
@@ -671,12 +741,7 @@ label define tnfmono 	0 "TNF combination"  			///
 label values tnfmono tnfmono
 label var tnfmono "TNF strategy"
 
-gen standsys =1 if azathioprine_3m_0m ==1 | azathioprine_6m_3m ==1 | ciclosporin_3m_0m ==1 |ciclosporin_6m_3m ==1 | leflunomide_3m_0m ==1 |leflunomide_6m_3m ==1 | mercaptopurine_3m_0m ==1 |mercaptopurine_6m_3m ==1 | methotrexate_3m_0m ==1 |methotrexate_6m_3m ==1 | mycophenolate_3m_0m ==1 |mycophenolate_6m_3m ==1 | sulfasalazine_3m_0m ==1 |sulfasalazine_6m_3m ==1 
-replace standsys =. if imid !=1
-
-gen standsys3m =1 if azathioprine_3m_0m ==1 | ciclosporin_3m_0m ==1 | leflunomide_3m_0m ==1 | mercaptopurine_3m_0m ==1 | methotrexate_3m_0m ==1 | mycophenolate_3m_0m ==1 | sulfasalazine_3m_0m ==1  
-replace standsys3m =. if imid !=1
-
+*high cost drug data pull through as binary variable, not count
 gen standtnf =1 if tnf ==1
 replace standtnf =0 if standsys ==1 & tnf !=1
 
@@ -704,9 +769,37 @@ replace standjaki3m =0 if jak_inhibitors_3m_0m !=1 & standsys3m ==1
 gen ritux =1 if rituximab_3m_0m !=0 | rituximab_6m_3m !=0 | rituximab_12m_6m !=0
 replace ritux =. if rheumatoid_arthritis !=1
 
+gen standritux =1 if ritux ==1
+replace standritux =0 if standsys ==1 & ritux !=1
+
+gen standritux3m =1 if rituximab_3m_0m ==1
+replace standritux3m =0 if rituximab_3m_0m !=1 & standsys3m ==1
+
 gen il6 =1 if anti_il6_3m_0m !=0 | anti_il6_6m_3m !=0
 replace il6 =. if rheumatoid_arthritis !=1
 
+gen standil6 =1 if il6 ==1
+replace standil6 =0 if standsys ==1 & il6 !=1
+
+gen standil63m =1 if anti_il6_3m_0m ==1
+replace standil63m =0 if anti_il6_3m_0m !=1 & standsys3m ==1
+
+gen mesalazine =1 if mesalazine_3m_0m >=1 | mesalazine_6m_3m >=1
+replace mesalazine =. if imid !=1
+
+gen standmesalazine =1 if mesalazine >=1
+replace standmesalazine =0 if standsys ==1 & mesalazine ==0
+
+gen standmesalazine3m =1 if mesalazine_3m_0m >=1
+replace standmesalazine3m =0 if mesalazine_3m_0m ==0 & standsys3m ==1
+
+gen steroidcat = 0
+recode steroidcat =1 if oral_prednisolone_3m_0m >=1 & oral_prednisolone_3m_0m!=.
+
+
+
+*gen imiddrugcategory = (standard v highcost)
+*gen imiddrugcatdetail = (standard v high cost drug subgroupings)
 
 /* OUTCOME AND SURVIVAL TIME==================================================*/
 /*  Cohort entry and censor dates  */
@@ -717,14 +810,11 @@ format enter_date %td
 
 /*   Outcomes   */
 
-* Outcomes: itu admission, ONS-covid death CPNS-covid death 
-
-**********************?combine ONS and CPNS death
+* Outcomes: itu admission, ONS-covid death  
 
 * Add half-day buffer if outcome on indexdate
 replace died_ons_date=died_ons_date+0.5 if died_ons_date==enter_date
 replace icu_admitted_date=icu_admitted_date+0.5 if icu_admitted_date==enter_date
-
 
 * Date of Covid death in ONS
 gen died_ons_date_covid = died_ons_date if died_ons_covid_flag_any == 1
@@ -733,10 +823,16 @@ gen died_ons_date_covid = died_ons_date if died_ons_covid_flag_any == 1
 * If missing date of death resulting died_date will also be missing
 gen died_ons_date_noncovid = died_ons_date if died_ons_covid_flag_any != 1 
 
-*date of COVID ITU admission
-*********************************************need a covid diagnosis variable
+*date of COVID ITU admission ** issue we have is how we define an ITU admission as a COVID one. 
+gen icu_admit_diff = icu_admitted_date - first_pos_test_sgss_date
+replace icu_admit_diff =. if icu_admit_diff <-5
+gen icu_admit_date_covid = icu_admitted_date if icu_admit_diff <28 
 
-format died_ons_date_covid died_ons_date_noncovid  %td
+gen icu_or_death_covid_date = icu_admit_date_covid
+replace icu_or_death_covid_date = died_ons_date_covid if icu_admit_date_covid ==.
+gen icu_or_death_covid =1 if icu_or_death_covid_date !=.
+
+format died_ons_date_covid died_ons_date_noncovid icu_admit_date_covid icu_or_death_covid_date %td
 
 *Variables needed from Python: first_pos_test_sgss, mesalazine, AxSPA, AD, LOS (check resp excludes asthma)
 
@@ -752,74 +848,239 @@ summ died_ons_date, format
 *gen onscoviddeathcensor_date = r(max)-7
 
 /*Tables=====================================================================================*/
-*Table 1 - need to create grouping variable for diagnoses- wait for all diagnostic covariates. 
-table1_mc, by(*diagnosis*) total(before) onecol iqrmiddle(",") saving("$table1.xlsx", sheet("CombinedRaw")  cell(A1) sheetmodify keepcellfmt) ///
+*Table 1a - need to create grouping variable for diagnoses- wait for all diagnostic covariates. 
+table1_mc, by(imid) total(before) onecol iqrmiddle(",") saving("$tables.xlsx", sheet("Table1a")  cell(A1) sheetmodify keepcellfmt) ///
 	vars(agegroup cat %5.1f \ ///
 		 sex bin %5.1f \ ///
 		 bmicat cat %5.1f \ ///
+		 obese4cat cat %5.1f \ ///
 		 ethnicity cat %5.1f \ ///
 		 imd cat %5.1f \ ///
 		 smoke cat %5.1f \ ///
 		 chronic_cardiac_disease bin %5.1f \ /// 
+		 stroke bin %5.1f \ ///
+		 combined_cv_comorbid bin %5.1f \ ///
+		 hypertension bin %5.1f \ ///
 		 diabcat cat %5.1f \ ///
+		 ckd_egfr cat %5.1f \ ///
+		 esrf bin %5.1f \ ///
 		 gp_consult_count contn %5.1f \ ///
+		 steroidcat bin %5.1f \ ///
 		 oral_prednisolone_3m_0m contn %5.1f )
-		 
+*not pulling flu vaccine status (originally in protocol)
+
+*Table 1b - by imid type 
+table1_mc, by(imidtype) total(before) onecol iqrmiddle(",") saving("$tables.xlsx", sheet("Table1b")  cell(A1) sheetmodify keepcellfmt) ///
+	vars(agegroup cat %5.1f \ ///
+		 sex bin %5.1f \ ///
+		 bmicat cat %5.1f \ ///
+		 obese4cat cat %5.1f \ ///
+		 ethnicity cat %5.1f \ ///
+		 imd cat %5.1f \ ///
+		 smoke cat %5.1f \ ///
+		 chronic_cardiac_disease bin %5.1f \ /// 
+		 stroke bin %5.1f \ ///
+		 combined_cv_comorbid bin %5.1f \ ///
+		 hypertension bin %5.1f \ ///
+		 diabcat cat %5.1f \ ///
+		 ckd_egfr cat %5.1f \ ///
+		 esrf bin %5.1f \ ///
+		 gp_consult_count contn %5.1f \ ///
+		 steroidcat bin %5.1f \ ///
+		 oral_prednisolone_3m_0m contn %5.1f )
+/*
+*Table 1c - by imid type allowing contribution to multiple groups - expand groups
+table1_mc, by(imidtype) total(before) onecol iqrmiddle(",") saving("$tables.xlsx", sheet("Table1c")  cell(A1) sheetmodify keepcellfmt) ///
+	vars(agegroup cat %5.1f \ ///
+		 sex bin %5.1f \ ///
+		 bmicat cat %5.1f \ ///
+		 obese4cat cat %5.1f \ ///
+		 ethnicity cat %5.1f \ ///
+		 imd cat %5.1f \ ///
+		 smoke cat %5.1f \ ///
+		 chronic_cardiac_disease bin %5.1f \ /// 
+		 stroke bin %5.1f \ ///
+		 combined_cv_comorbid bin %5.1f \ ///
+		 hypertension bin %5.1f \ ///
+		 diabcat cat %5.1f \ ///
+		 ckd_egfr cat %5.1f \ ///
+		 esrf bin %5.1f \ ///
+		 gp_consult_count contn %5.1f \ ///
+		 steroidcat bin %5.1f \ ///
+		 oral_prednisolone_3m_0m contn %5.1f )
+
+*Table 1d - by imid type detailed - allow multiple group contribution
+table1_mc, by(imiddetailed) total(before) onecol iqrmiddle(",") saving("$tables.xlsx", sheet("Table1d")  cell(A1) sheetmodify keepcellfmt) ///
+	vars(agegroup cat %5.1f \ ///
+		 sex bin %5.1f \ ///
+		 bmicat cat %5.1f \ ///
+		 obese4cat cat %5.1f \ ///
+		 ethnicity cat %5.1f \ ///
+		 imd cat %5.1f \ ///
+		 smoke cat %5.1f \ ///
+		 chronic_cardiac_disease bin %5.1f \ /// 
+		 stroke bin %5.1f \ ///
+		 combined_cv_comorbid bin %5.1f \ ///
+		 hypertension bin %5.1f \ ///
+		 diabcat cat %5.1f \ ///
+		 ckd_egfr cat %5.1f \ ///
+		 esrf bin %5.1f \ ///
+		 gp_consult_count contn %5.1f \ ///
+		 steroidcat bin %5.1f \ ///
+		 oral_prednisolone_3m_0m contn %5.1f )
+*/
+	
+*Table 2a - high cost drugs (v non-high cost) - single group contribution only
+table1_mc, by(imiddrugcategory) total(before) onecol iqrmiddle(",") saving("$tables.xlsx", sheet("Table2a")  cell(A1) sheetmodify keepcellfmt) ///
+	vars(agegroup cat %5.1f \ ///
+		 sex bin %5.1f \ ///
+		 bmicat cat %5.1f \ ///
+		 obese4cat cat %5.1f \ ///
+		 ethnicity cat %5.1f \ ///
+		 imd cat %5.1f \ ///
+		 smoke cat %5.1f \ ///
+		 chronic_cardiac_disease bin %5.1f \ /// 
+		 stroke bin %5.1f \ ///
+		 combined_cv_comorbid bin %5.1f \ ///
+		 hypertension bin %5.1f \ ///
+		 diabcat cat %5.1f \ ///
+		 ckd_egfr cat %5.1f \ ///
+		 esrf bin %5.1f \ ///
+		 gp_consult_count contn %5.1f \ ///
+		 steroidcat bin %5.1f \ ///
+		 oral_prednisolone_3m_0m contn %5.1f )
+
+*Table 2b - high cost drugs (detailed) - single group contribution only
+table1_mc, by(imiddrugcatdetail) total(before) onecol iqrmiddle(",") saving("$tables.xlsx", sheet("Table2b")  cell(A1) sheetmodify keepcellfmt) ///
+	vars(agegroup cat %5.1f \ ///
+		 sex bin %5.1f \ ///
+		 bmicat cat %5.1f \ ///
+		 obese4cat cat %5.1f \ ///
+		 ethnicity cat %5.1f \ ///
+		 imd cat %5.1f \ ///
+		 smoke cat %5.1f \ ///
+		 chronic_cardiac_disease bin %5.1f \ /// 
+		 stroke bin %5.1f \ ///
+		 combined_cv_comorbid bin %5.1f \ ///
+		 hypertension bin %5.1f \ ///
+		 diabcat cat %5.1f \ ///
+		 ckd_egfr cat %5.1f \ ///
+		 esrf bin %5.1f \ ///
+		 gp_consult_count contn %5.1f \ ///
+		 steroidcat bin %5.1f \ ///
+		 oral_prednisolone_3m_0m contn %5.1f )
 
 /*Primary objective 1========================================================================*/
-stset died_ons_date, id(patient_id) failure(died_ons_covid_flag_any==1) origin(time enter_date) scale(365.25)  exit(died_ons_covid_flag_any==1 time mdy(10,01,2020))
+*generate censor date
+egen stop = min(died_ons_date, mdy(10,01,2020))
+
+stset died_ons_date, id(patient_id) failure(died_ons_covid_flag_any==1) origin(time enter_date) scale(365.25) ///
+		exit(died_ons_covid_flag_any==1 time stop)
+
 strate imid, per(1000) output(imid, replace)
+
 asdoc stcox imid i.agegroup male, save(outputs) title(primaryobjective1unadj) replace
 sts graph, by(imid) xtitle("Analysis time (years)") saving(primeob1_nonadj, replace)
 graph export "primeob1_nonadj.svg", as(svg) replace
-asdoc stcox imid i.agegroup male i.ethnicity i.imd bmicat i.imidtype chronic_cardiac_disease cancer i.diabcat oral_prednisolone_3m_0m, save(outputs) title(primaryobjective1adjusted) append
+
+*graph schoenfeld residuals - to be added here
+
+asdoc stcox imid i.agegroup male, save(outputs) title(primaryobjective1limitedadjusted) append
+
+asdoc stcox imid i.agegroup male i.ethnicity2 i.imd bmicat bowel skin joint chronic_cardiac_disease stroke cancer i.diabcat steroidcat, save(outputs) title(primaryobjective1adjusted_completecaseethnicity) append
+
+asdoc stcox imid i.agegroup male i.ethnicity i.imd bmicat i.imidtype chronic_cardiac_disease cancer stroke i.diabcat steroidcat, save(outputs) title(primaryobjective1adjusted) append
+
+asdoc stcox imid i.agegroup male i.imd bmicat bowel skin joint  chronic_cardiac_disease cancer stroke i.diabcat steroidcat, save(outputs) title(primaryobjective1adjusted_noethnicity) append
 
 /*Primary objective 1- Sensitivity analysis 1 ===========================*/
-asdoc stcox imid i.agegroup male i.ethnicity i.imd bmicat i.imidtype chronic_cardiac_disease cancer i.diabcat oral_prednisolone_3m_0m if gp_consult ==1, save(outputs) title(primaryobjective1sensitivity1) append
+asdoc stcox imid i.agegroup male i.ethnicity i.imd bmicat bowel skin joint  chronic_cardiac_disease cancer i.diabcat steroidcat if gp_consult ==1, save(outputs) title(primaryobjective1sensitivity1) append
 sts graph if gp_consult ==1, by(imid) xtitle("Analysis time (years)") saving(primeob1sens1, replace)
 graph export "primeob1sens1.svg", as(svg) replace
 
 /*Primary objective 1- Sensitivity analysis 2 ===========================*/
-asdoc stcox imid i.agegroup male i.ethnicity i.imd bmicat i.imidtype chronic_cardiac_disease cancer i.diabcat oral_prednisolone_3m_0m ckd chronic_liver_disease chronic_respiratory_disease, save(outputs) title(primaryobjective1sensitivity2) append
+asdoc stcox imid i.agegroup male i.ethnicity i.imd bmicat bowel skin joint  chronic_cardiac_disease stroke cancer i.diabcat steroidcat i.ckd chronic_liver_disease chronic_respiratory_disease, save(outputs) title(primaryobjective1sensitivity2) append
 
+
+/*Primary objective 1 Using death or ITU========================================================================*/ 
+egen stopicu = min(icu_or_death_covid_date, mdy(10,01,2020))
+
+stset icu_or_death_covid_date, id(patient_id) failure(icu_or_death_covid==1) origin(time enter_date) scale(365.25) ///
+		exit(icu_or_death_covid==1 time stop)
+
+strate imid, per(1000) output(imid, replace)
+asdoc stcox imid i.agegroup male, save(outputs) title(primaryobjective1limitedadjitudeath) replace
+
+sts graph, by(imid) xtitle("Analysis time (years)") saving(primeob1_nonadjitudeath, replace)
+graph export "primeob1_nonadj.svg", as(svg) replace
+
+asdoc stcox imid i.agegroup male i.imd bmicat bowel skin joint chronic_cardiac_disease stroke cancer i.diabcat steroidcat, save(outputs) title(primaryobjective1adjusteditudeath) append
+ 
+asdoc stcox imid i.agegroup male i.imd i.ethnicity2 bmicat bowel skin joint chronic_cardiac_disease stroke cancer i.diabcat steroidcat, save(outputs) title(primaryobjective1adjusteditudeath_ethnicity) append
+
+asdoc stcox imid i.agegroup male i.imd i.ethnicity bmicat bowel skin joint chronic_cardiac_disease stroke cancer i.diabcat steroidcat, save(outputs) title(primaryobjective1adjusteditudeath_ethnicity_nomiss) append
  
 /*Primary objective 2========================================================================*/
-
+stset died_ons_date, id(patient_id) failure(died_ons_covid_flag_any==1) origin(time enter_date) scale(365.25) ///
+		exit(died_ons_covid_flag_any==1 time stop)
+		
 *2a: TNF vs standard systemics
 
 strate standtnf, per(1000) output(standtnf,replace)
+
 asdoc stcox standtnf, save(outputs) title(primaryobjective2aunadj) append
+
 sts graph, by(standtnf) xtitle("Analysis time (years)") saving(primeob2a, replace)
 graph export "primeob2a.svg", as(svg) replace
-asdoc stcox standtnf i.agegroup male i.ethnicity i.imd bmicat i.imidtype chronic_cardiac_disease cancer i.diabcat oral_prednisolone_3m_0m, save(outputs) title(primaryobjective2aadjusted) append
 
-*2a sensitivity 1: TNF combo v monotherapy
-asdoc stcox tnfmono i.agegroup male i.ethnicity i.imd bmicat i.imidtype chronic_cardiac_disease cancer i.diabcat oral_prednisolone_3m_0m, save(outputs) title(primaryobjective2asensitivity1) append
+asdoc stcox standtnf i.agegroup male, save(outputs) title(primaryobjective2limitedadj) append
+
+asdoc stcox standtnf i.agegroup male i.imd bmicat bowel skin joint chronic_cardiac_disease stroke cancer i.diabcat steroidcat, save(outputs) title(primaryobjective2aadjusted) append
+
+*include ICU in composite now for 2a
+
+stset icu_or_death_covid_date, id(patient_id) failure(icu_or_death_covid==1) origin(time enter_date) scale(365.25) ///
+		exit(icu_or_death_covid==1 time stop)
+		
+strate standtnf, per(1000) output(standtnf,replace)
+asdoc stcox standtnf, save(outputs) title(primaryobjective2aunadj_inc_icu) append
+
+sts graph, by(standtnf) xtitle("Analysis time (years)") saving(primeob2a_inc_icu, replace)
+graph export "primeob2a.svg", as(svg) replace
+
+asdoc stcox standtnf i.agegroup male, save(outputs) title(primaryobjective2limitedadj_inc_icu) append
+
+asdoc stcox standtnf i.agegroup male i.imd bmicat bowel skin joint chronic_cardiac_disease stroke cancer i.diabcat steroidcat, save(outputs) title(primaryobjective2aadjusted_inc_icu) append
+
+
+*2a sensitivity 1: TNF combo v monotherapy (keep to just death or icu)
+asdoc stcox tnfmono i.agegroup male i.imd bmicat bowel skin joint chronic_cardiac_disease stroke cancer i.diabcat steroidcat, save(outputs) title(primaryobjective2asensitivity1) append
 
 *2a sensitivity 2: exclude GP non attenders
-asdoc stcox standtnf i.agegroup male i.ethnicity i.imd bmicat i.imidtype chronic_cardiac_disease cancer i.diabcat oral_prednisolone_3m_0m if gp_consult ==1, save(outputs) title(primaryobjective2asensitivity2) append
+asdoc stcox standtnf i.agegroup male i.imd bmicat bowel skin joint chronic_cardiac_disease stroke cancer i.diabcat steroidcat if gp_consult ==1, save(outputs) title(primaryobjective2asensitivity2) append
 
 *2a sensitivity 3: Additional confounders
-asdoc stcox standtnf i.agegroup male i.ethnicity i.imd bmicat i.imidtype chronic_cardiac_disease cancer i.diabcat oral_prednisolone_3m_0m  ckd chronic_liver_disease chronic_respiratory_disease, ///
+asdoc stcox standtnf i.agegroup male i.imd bmicat bowel skin joint chronic_cardiac_disease stroke cancer i.diabcat steroidcat i.ckd chronic_liver_disease chronic_respiratory_disease, ///
 	save(outputs) title(primaryobjective2asensitivity3) append
 
 *2a sensitivity 4: restricted exposure window
-asdoc stcox standtnf3m i.agegroup male i.ethnicity i.imd bmicat i.imidtype chronic_cardiac_disease cancer i.diabcat oral_prednisolone_3m_0m , save(outputs) title(primaryobjective2asensitivity4) append
+asdoc stcox standtnf3m i.agegroup male i.imd bmicat bowel skin joint chronic_cardiac_disease stroke cancer i.diabcat steroidcat, save(outputs) title(primaryobjective2asensitivity4) append
 
 *2a sensitivity 5: exclusion of infliximab- not available in dataset currently. 
 
-*2a sensitivity 6: covid positivity- not available in dataset currently. 
-stset sgss_covid_date, id(patient_id) failure(sgsscovidpos==1) origin(time enter_date) scale(365.25)  exit(sgsscovidpos==1 time mdy(10,01,2020))
-asdoc stcox standtnf i.agegroup male i.ethnicity i.imd bmicat i.imidtype chronic_cardiac_disease cancer i.diabcat oral_prednisolone_3m_0m, save(outputs) title(primaryobjective2sensitivity6) append
+/*
+*2a sensitivity 6: covid positivity- ?include primary care swabs or just sgss? 
+stset first_pos_test_sgss_date, id(patient_id) failure(first_pos_test_sgss==1) origin(time enter_date) scale(365.25)  exit(first_pos_test_sgss==1 time mdy(10,01,2020))
+asdoc stcox standtnf i.agegroup male i.ethnicity i.imd bmicat i.imidtype chronic_cardiac_disease cancer i.diabcat oral_prednisolone_3m_0m, save(outputs) title(primaryobjective2asensitivity6) append
+*/
 
 
 *2b: IL12_23 vs standard systemics
-stset died_ons_date, id(patient_id) failure(died_ons_covid_flag_any==1) origin(time enter_date) scale(365.25)  exit(died_ons_covid_flag_any==1 time mdy(10,01,2020))
+
 asdoc stcox standil1223, save(outputs) title(primaryobjective2bunadj) append
 sts graph, by(standil1223) xtitle("Analysis time (years)") saving(primeob2b, replace)
 graph export "primeob2b.svg", as(svg) replace
 asdoc stcox standil1223 i.agegroup male i.ethnicity i.imd bmicat i.imidtype chronic_cardiac_disease cancer i.diabcat oral_prednisolone_3m_0m, save(outputs) title(primaryobjective2badjusted) append
-
 
 *2b sensitivity 1: exclude GP non attenders
 asdoc stcox standil1223 i.agegroup male i.ethnicity i.imd bmicat i.imidtype chronic_cardiac_disease cancer i.diabcat oral_prednisolone_3m_0m if gp_consult ==1, save(outputs) title(primaryobjective2bsensitivity1) append
@@ -831,31 +1092,30 @@ asdoc stcox standil1223 i.agegroup male i.ethnicity i.imd bmicat i.imidtype chro
 *2b sensitivity 3: restricted exposure window
 asdoc stcox standil12233m i.agegroup male i.ethnicity i.imd bmicat i.imidtype chronic_cardiac_disease cancer i.diabcat oral_prednisolone_3m_0m , save(outputs) title(primaryobjective2bsensitivity3) append
 
-*2b sensitivity 4: covid positivity- not available in dataset currently. 
-stset sgss_covid_date, id(patient_id) failure(sgsscovidpos==1) origin(time enter_date) scale(365.25)  exit(sgsscovidpos==1 time mdy(10,01,2020))
+*2b sensitivity 4: covid positivity- ?include primary care swabs or just sgss?  
+stset first_pos_test_sgss_date, id(patient_id) failure(first_pos_test_sgss==1) origin(time enter_date) scale(365.25)  exit(first_pos_test_sgss==1 time mdy(10,01,2020))
 asdoc stcox standil1223 i.agegroup male i.ethnicity i.imd bmicat i.imidtype chronic_cardiac_disease cancer i.diabcat oral_prednisolone_3m_0m, save(outputs) title(primaryobjective2bsensitivity4) append
 
-*2c: Il17 vs standard systemics (Psoriasis, PsA and AxSpa only) - need AS variable to complete
+*2c: Il17 vs standard systemics (Psoriasis, PsA and AxSpa only) - need AS and il17 variable to complete
 
 *2d: Jaki vs standard systemics
-stset died_ons_date, id(patient_id) failure(died_ons_covid_flag_any==1) origin(time enter_date) scale(365.25)  exit(died_ons_covid_flag_any==1 time mdy(10,01,2020))
+
 asdoc stcox standjaki, save(outputs) title(primaryobjective2dunadj) append
 sts graph, by(standjaki) xtitle("Analysis time (years)") saving(primeob2d, replace)
 graph export "primeob2d.svg", as(svg) replace
 asdoc stcox standjaki i.agegroup male i.ethnicity i.imd bmicat i.imidtype chronic_cardiac_disease cancer i.diabcat oral_prednisolone_3m_0m, save(outputs) title(primaryobjective2dadjusted) append
 
-*2b sensitivity 1: exclude GP non attenders
+*2d sensitivity 1: exclude GP non attenders
 asdoc stcox standjaki i.agegroup male i.ethnicity i.imd bmicat i.imidtype chronic_cardiac_disease cancer i.diabcat oral_prednisolone_3m_0m if gp_consult ==1, save(outputs) title(primaryobjective2dsensitivity1) append
 
-*2b sensitivity 2: Additional confounders
+*2d sensitivity 2: Additional confounders
 asdoc stcox standjaki i.agegroup male i.ethnicity i.imd bmicat i.imidtype chronic_cardiac_disease cancer i.diabcat oral_prednisolone_3m_0m  ckd chronic_liver_disease chronic_respiratory_disease, ///
 	save(outputs) title(primaryobjective2dsensitivity2) append
 
-*2b sensitivity 3: restricted exposure window
-asdoc stcox standjaki3m i.agegroup male i.ethnicity i.imd bmicat i.imidtype chronic_cardiac_disease cancer i.diabcat oral_prednisolone_3m_0m , save(outputs) title(primaryobjective2csensitivity3) append
+*2d sensitivity 3: restricted exposure window
+asdoc stcox standjaki3m i.agegroup male i.ethnicity i.imd bmicat i.imidtype chronic_cardiac_disease cancer i.diabcat oral_prednisolone_3m_0m , save(outputs) title(primaryobjective2dsensitivity3) append
 
-*2b sensitivity 4: covid positivity- not available in dataset currently. 
-stset sgss_covid_date, id(patient_id) failure(sgsscovidpos==1) origin(time enter_date) scale(365.25)  exit(sgsscovidpos==1 time mdy(10,01,2020))
+*2d sensitivity 4: covid positivity- ?include primary care swabs or just sgss? 
+stset first_pos_test_sgss_date, id(patient_id) failure(first_pos_test_sgss==1) origin(time enter_date) scale(365.25)  exit(first_pos_test_sgss==1 time mdy(10,01,2020))
 asdoc stcox standjaki i.agegroup male i.ethnicity i.imd bmicat i.imidtype chronic_cardiac_disease cancer i.diabcat oral_prednisolone_3m_0m, save(outputs) title(primaryobjective2dsensitivity4) append
-
 
