@@ -90,9 +90,12 @@ study = StudyDefinition(
         "incidence": 0.1,
     },
     # This line defines the study population
-    population=patients.registered_with_one_practice_between(
-        "2019-03-01", "2020-03-01"
-    ),
+    population=population=patients.satisfying(
+        """
+        AND (age >=18 AND age <= 110)
+        AND has_follow_up 
+        AND (sex = "M" OR sex = "F")
+        """,
     # Outcomes
     icu_date_admitted=patients.admitted_to_icu(
         on_or_after="2020-03-01",
@@ -248,14 +251,6 @@ study = StudyDefinition(
             "category": {"ratios": {"STP1": 0.5, "STP2": 0.5}},
         },
     ),
-    msoa=patients.registered_practice_as_of(
-        "2020-03-01",
-        returning="msoa_code",
-        return_expectations={
-            "rate": "universal",
-            "category": {"ratios": {"MSOA1": 0.5, "MSOA2": 0.5}},
-        },
-    ),
     # https://github.com/ebmdatalab/tpp-sql-notebook/issues/52
     imd=patients.address_as_of(
         "2020-03-01",
@@ -264,14 +259,6 @@ study = StudyDefinition(
         return_expectations={
             "rate": "universal",
             "category": {"ratios": {"100": 0.1, "200": 0.2, "300": 0.7}},
-        },
-    ),
-    rural_urban=patients.address_as_of(
-        "2020-03-01",
-        returning="rural_urban_classification",
-        return_expectations={
-            "rate": "universal",
-            "category": {"ratios": {"rural": 0.1, "urban": 0.9}},
         },
     ),
     #SMOKING
