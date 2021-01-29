@@ -50,7 +50,7 @@ def get_medication_early_late(med_codelist, with_med_func, type):
         },
     )
 
-def medication_counts_and_dates(var_name, med_codelist_file, high_cost):
+def medication_counts_and_dates(var_name, med_codelist_file, high_cost, needs_6m_12m=False):
     """
     Generates dictionary of covariats for a medication including counts (or binary flags for high cost drugs) and dates
     
@@ -65,33 +65,21 @@ def medication_counts_and_dates(var_name, med_codelist_file, high_cost):
     else:
         med_codelist_file = "codelists/" + med_codelist_file
     if (high_cost):
-        med_codelist=codelist_from_csv(med_codelist_file + ".csv", system="high_cost_drugs", column="olddrugname")
+        # Temporary dummy codelist for high cost drugs while issue with special characters being fixed
+        # med_codelist=codelist_from_csv(med_codelist_file + ".csv", system="high_cost_drugs", column="olddrugname")
+        med_codelist=codelist_from_csv("crossimid-codelists/crossimid-dummy-drug-names.csv", system="high_cost_drugs", column="olddrugname")
         with_med_func=patients.with_high_cost_drugs
     else:
         med_codelist=codelist_from_csv(med_codelist_file + ".csv", system="snomed", column="snomed_id")
         with_med_func=patients.with_these_medications
     med_functions=[
         ("3m_0m", get_medication_for_dates, {"dates": ["2019-12-01", "2020-02-29"], "return_count": not high_cost}),
-        ("6m_3m", get_medication_for_dates, {"dates": ["2019-09-01", "2020-11-30"], "return_count": not high_cost}),
-        ("12m_6m", get_medication_for_dates, {"dates": ["2019-03-01", "2020-08-31"], "return_count": not high_cost}),
-        ("earliest", get_medication_early_late, {"type": "latest"}),
-        ("latest", get_medication_early_late, {"type": "earliest"})
+        ("6m_3m", get_medication_for_dates, {"dates": ["2019-09-01", "2020-11-30"], "return_count": not high_cost})
     ]
+    if (needs_6m_12m):
+      med_functions += [("12m_6m", get_medication_for_dates, {"dates": ["2019-03-01", "2020-08-31"], "return_count": not high_cost})]
     for (suffix, fun, params) in med_functions:
         definitions[var_name + "_" + suffix] = fun(med_codelist, with_med_func, **params)
-    return definitions
-
-def medication_counts_and_dates_all(meds_list):
-    """
-    Generate dictionary of covariates for list of medications including counts and dates
-    
-    Takes a list of tuples of the form (variable prefix, medication codelist filename (minus .csv))
-    Returns a dictionary suitable for unpacking into the main study definition
-    For each tuple, this will include all of the items specified in `medication_counts_and_dates`
-    """
-    definitions={}
-    for (var_name, med_codelist_file, high_cost) in meds_list:
-        definitions.update(medication_counts_and_dates(var_name, med_codelist_file, high_cost))
     return definitions
 
 study = StudyDefinition(
@@ -138,25 +126,7 @@ study = StudyDefinition(
         return_expectations={"date": {"earliest": "2020-01-01"}},
     ),
 
-    first_pos_code_primcare=patients.with_these_clinical_events(
-        covid_pos_primcare_code,
-        returning="date",
-        find_first_match_in_period=True,
-        date_format="YYYY-MM-DD",
-        return_expectations={
-            "date": {"earliest": "2020-01-01", "latest": "today"}
-        },
-    ),
 
-    first_pos_test_primcare=patients.with_these_clinical_events(
-        covid_pos_primcare_test,
-        returning="date",
-        find_first_match_in_period=True,
-        date_format="YYYY-MM-DD",
-        return_expectations={
-            "date": {"earliest": "2020-01-01", "latest": "today"}
-        },
-    ),
     # The rest of the lines define the covariates with associated GitHub issues
     # https://github.com/ebmdatalab/tpp-sql-notebook/issues/33
     age=patients.age_as_of(
@@ -352,39 +322,37 @@ study = StudyDefinition(
 #    ),
     # Medications
 
-    **medication_counts_and_dates_all([
-        ("oral_prednisolone", "opensafely-asthma-oral-prednisolone-medication", False),
-        ("azathioprine", "crossimid-azathioprine-medication", False),
-        ("ciclosporin", "crossimid-ciclosporin-medication", False),
-        ("gold", "crossimid-gold-medication", False),
-        ("leflunomide", "crossimid-leflunomide-medication", False),
-        ("mercaptopurine", "crossimid-mercaptopurine-medication", False),
-        ("methotrexate", "crossimid-methotrexate-medication", False),
-        ("mycophenolate", "crossimid-mycophenolate-medication", False),
-        ("penicillamine", "crossimid-penicillamine-medication", False),
-        ("sulfasalazine", "crossimid-sulfasalazine-medication", False),
-        ("mesalazine", "crossimid-mesalazine-medication", False),
-        ("atopic_dermatitis_meds", "crossimid-atopic-dermatitis-medication", False),
-        ("bcell", "crossimid-bcell-drug-names", True),
-        ("il17", "crossimid-il17-drug-names", True),
-        ("il23", "crossimid-il23-drug-names", True),
-        ("il6", "crossimid-il6-drug-names", True),
-        ("jaki", "crossimid-jaki-drug-names", True),
-        ("vegf", "crossimid-vegf-drug-names", True),
-        ("abatacept", "crossimid-abatacept-drug-names", True),
-        ("adalimumab", "crossimid-adalimumab-drug-names", True),
-        ("alemtuzumab", "crossimid-alemtuzumab-drug-names", True),
-        ("anakinra", "crossimid-anakinra-drug-names", True),
-        ("anti_eosinophils", "crossimid-anti-eosinophils-drug-names", True),
-        ("belimumab", "crossimid-belimumab-drug-names", True),
-        ("certolizumab", "crossimid-certolizumab-drug-names", True),
-        ("dupilumab", "crossimid-dupilumab-drug-names", True),
-        ("etanercept", "crossimid-etanercept-drug-names", True),
-        ("golimumab", "crossimid-golimumab-drug-names", True),
-        ("infliximab", "crossimid-infliximab-drug-names", True),
-        ("integrins", "crossimid-integrins-drug-names", True),
-        ("mepolizumab", "crossimid-mepolizumab-drug-names", True),
-        ("omalizumab", "crossimid-omalizumab-drug-names", True),
-        ("ustekinumab", "crossimid-ustekinumab-drug-names", True)
-    ])
+    **medication_counts_and_dates("oral_prednisolone", "opensafely-asthma-oral-prednisolone-medication", False),
+    **medication_counts_and_dates("azathioprine", "crossimid-azathioprine-medication", False),
+    **medication_counts_and_dates("ciclosporin", "crossimid-ciclosporin-medication", False),
+    **medication_counts_and_dates("gold", "crossimid-gold-medication", False),
+    **medication_counts_and_dates("leflunomide", "crossimid-leflunomide-medication", False),
+    **medication_counts_and_dates("mercaptopurine", "crossimid-mercaptopurine-medication", False),
+    **medication_counts_and_dates("methotrexate", "crossimid-methotrexate-medication", False),
+    **medication_counts_and_dates("mycophenolate", "crossimid-mycophenolate-medication", False),
+    **medication_counts_and_dates("penicillamine", "crossimid-penicillamine-medication", False),
+    **medication_counts_and_dates("sulfasalazine", "crossimid-sulfasalazine-medication", False),
+    **medication_counts_and_dates("mesalazine", "crossimid-mesalazine-medication", False),
+    **medication_counts_and_dates("atopic_dermatitis_meds", "crossimid-atopic-dermatitis-medication", False),
+    **medication_counts_and_dates("bcell", "crossimid-bcell-drug-names", True, True),
+    **medication_counts_and_dates("il17", "crossimid-il17-drug-names", True),
+    **medication_counts_and_dates("il23", "crossimid-il23-drug-names", True),
+    **medication_counts_and_dates("il6", "crossimid-il6-drug-names", True),
+    **medication_counts_and_dates("jaki", "crossimid-jaki-drug-names", True),
+    **medication_counts_and_dates("vegf", "crossimid-vegf-drug-names", True),
+    **medication_counts_and_dates("abatacept", "crossimid-abatacept-drug-names", True),
+    **medication_counts_and_dates("adalimumab", "crossimid-adalimumab-drug-names", True),
+    **medication_counts_and_dates("alemtuzumab", "crossimid-alemtuzumab-drug-names", True),
+    **medication_counts_and_dates("anakinra", "crossimid-anakinra-drug-names", True),
+    **medication_counts_and_dates("anti_eosinophils", "crossimid-anti-eosinophils-drug-names", True),
+    **medication_counts_and_dates("belimumab", "crossimid-belimumab-drug-names", True),
+    **medication_counts_and_dates("certolizumab", "crossimid-certolizumab-drug-names", True),
+    **medication_counts_and_dates("dupilumab", "crossimid-dupilumab-drug-names", True),
+    **medication_counts_and_dates("etanercept", "crossimid-etanercept-drug-names", True),
+    **medication_counts_and_dates("golimumab", "crossimid-golimumab-drug-names", True),
+    **medication_counts_and_dates("infliximab", "crossimid-infliximab-drug-names", True),
+    **medication_counts_and_dates("integrins", "crossimid-integrins-drug-names", True),
+    **medication_counts_and_dates("mepolizumab", "crossimid-mepolizumab-drug-names", True),
+    **medication_counts_and_dates("omalizumab", "crossimid-omalizumab-drug-names", True),
+    **medication_counts_and_dates("ustekinumab", "crossimid-ustekinumab-drug-names", True)
 )
