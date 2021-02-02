@@ -90,7 +90,7 @@ study = StudyDefinition(
         "incidence": 0.1,
     },
     # This line defines the study population
-    population=.registered_with_one_practice_between(
+    population=patients.registered_with_one_practice_between(
         "2019-03-01", "2020-03-01"
     ),
     # Outcomes
