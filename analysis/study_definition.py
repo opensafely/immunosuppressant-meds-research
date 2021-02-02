@@ -90,7 +90,7 @@ study = StudyDefinition(
         "incidence": 0.1,
     },
     # This line defines the study population
-    population=population=patients.satisfying(
+    population=patients.satisfying(
         """
         AND (age >=18 AND age <= 110)
         AND has_follow_up 
