@@ -90,9 +90,16 @@ study = StudyDefinition(
         "incidence": 0.1,
     },
     # This line defines the study population
-    population=patients.registered_with_one_practice_between(
-        "2019-03-01", "2020-03-01"
-    ),
+    population=patients.satisfying(
+            """
+            has_follow_up AND
+            (age >=18 AND age <= 110) AND
+            (sex = "M" OR sex = "F")
+            """,
+            has_follow_up=patients.registered_with_one_practice_between(
+                "2019-02-28", "2020-02-29"
+            )
+        ),
     # Outcomes
     icu_date_admitted=patients.admitted_to_icu(
         on_or_after="2020-03-01",
