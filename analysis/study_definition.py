@@ -66,8 +66,7 @@ def medication_counts_and_dates(var_name, med_codelist_file, high_cost, needs_6m
         med_codelist_file = "codelists/" + med_codelist_file
     if (high_cost):
         # Temporary dummy codelist for high cost drugs while issue with special characters being fixed
-        # med_codelist=codelist_from_csv(med_codelist_file + ".csv", system="high_cost_drugs", column="olddrugname")
-        med_codelist=codelist_from_csv("crossimid-codelists/crossimid-dummy-drug-names.csv", system="high_cost_drugs", column="olddrugname")
+        med_codelist=codelist_from_csv(med_codelist_file + ".csv", system="high_cost_drugs", column="olddrugname")
         with_med_func=patients.with_high_cost_drugs
     else:
         med_codelist=codelist_from_csv(med_codelist_file + ".csv", system="snomed", column="snomed_id")
