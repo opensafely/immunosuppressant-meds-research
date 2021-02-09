@@ -1,0 +1,10 @@
+readcode,medcode,readterm,CTV3ID
+M11..00,13223,Atopic dermatitis and related conditions,
+M111.00,1741,Atopic dermatitis/eczema,
+M112.00,610,Infantile eczema,
+M113.00,1240,Flexural eczema,
+M114.00,5869,Allergic (intrinsic) eczema,
+M115.00,38673,Besnier's prurigo,
+M11z.00,6180,Atopic dermatitis NOS,
+M12z100,230,Eczema NOS,
+Myu2200,22764,[X]Exacerbation of eczema,
