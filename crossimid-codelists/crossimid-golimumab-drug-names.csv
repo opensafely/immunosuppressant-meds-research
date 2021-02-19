@@ -1,7 +1,6 @@
 olddrugname
 (home) golimumab
 golimumab
-golimumab
 golimumab $ (homecare) pen
 golimumab (home delivery)
 golimumab (home delivery) (g-s)
@@ -9,8 +8,6 @@ golimumab (home delivery) 100 mg pre-filled pen
 golimumab (home delivery) 50 mg pre-filled pen
 golimumab (home) 100 mg injection pen
 golimumab (home) 50 mg injection pen
-golimumab (homecare)
-golimumab (homecare)
 golimumab (homecare)
 golimumab (homecare) 100 mg preloaded pen
 golimumab (homecare) 50 mg preloaded pen
@@ -35,13 +32,11 @@ golimumab [simponi] (homecare) 100 mg/1ml soln for inject pf disp device
 golimumab [simponi] (homecare) 50 mg/0.5ml soln for inject pf disp device
 golimumab 100 mg pre-filled pen
 golimumab 100mg/1ml solution for injection pre-filled disposable devices
-golimumab 100mg/1ml solution for injection pre-filled disposable devices
 golimumab 2 x 50mg (100mg injection) (homecare)
 golimumab 50 mg in 0.5ml pre-filled injection pen
 golimumab 50mg pen/syringe (homecare)
-golimumab 50mg/0.5ml pre-filled pen (1 pen) (homecare)  
+golimumab 50mg/0.5ml pre-filled pen (1 pen) (homecare)
 golimumab 50mg/0.5ml pre-filled pen(smartject)(hom
-golimumab 50mg/0.5ml solution for injection pre-filled disposable devices
 golimumab 50mg/0.5ml solution for injection pre-filled disposable devices
 golimumab 50mg/0.5ml solution for injection pre-filled syringes
 golimumab 50mg/0.5ml solution for injection pre-filled syringes 1 pre-filled disposable injection
@@ -59,9 +54,9 @@ hc golimumab 50 mg injection pre filled pen
 hc golimumab 50 mg injection prefilled syringe
 home golimumab 100mg-1ml pre-filled pen (smartject)
 home golimumab 100mg-1ml pre-filled pen(smartject)
-home golimumab 100mg  -1ml pre-filled pen (smartject)     
+home golimumab 100mg  -1ml pre-filled pen (smartject)
 home golimumab 100mg/1ml pre-filled pen (smartject
-home golimumab 100mg/1ml pre-filled pen (smartject)     
+home golimumab 100mg/1ml pre-filled pen (smartject)
 home golimumab 100mg/1ml pre-filled pen(smartject)
 homecare - golimumab auto injector pen
 homecare - golimumab auto injector pen 100 mg in 1ml injection
