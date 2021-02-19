@@ -16,7 +16,7 @@ opensafely/diabetes/2020-04-15
 opensafely/dmards/2020-06-23
 opensafely/ethnicity/2020-04-27
 opensafely/haematological-cancer/2020-04-15
-opensafely/hidradenitis-suppurativa/2020-08-03-draft
+opensafely/hidradenitis-suppurativa/2020-08-03
 opensafely/hypertension/2020-04-28
 opensafely/lung-cancer/2020-04-15
 opensafely/other-respiratory-conditions/2020-07-21
