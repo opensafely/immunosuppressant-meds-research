@@ -30,7 +30,7 @@ if (nrow(check_doubles) > 0) {
 
 hc_mapped %>% 
   group_by(drug = str_replace_all(hc_mapped$drug, " ", "-")) %>% 
-  group_walk(~write_csv(.x, glue("crossimid-{.y$drug}-drug-names.csv")))
+  group_walk(~write_csv(.x, glue("../crossimid-codelists/crossimid-{.y$drug}-drug-names.csv")))
 
 hc_metadata <- drug_mapping %>%
   group_by(drug_name = new_clean_drug, vtm) %>% 
@@ -74,19 +74,33 @@ if (update_gh) {
   new_issues <- hc_metadata %>% anti_join(issues_hcd, by = "title")
   
   if (nrow(new_issues) > 0) {
-    
+    walk2(new_issues$title, new_issues$gh_body, ~gh(glue("POST /repos/{repos}/issues"), title = .x, body = .y))
   }
   
-  add_refs <- function(number, drug_name, title) {
+  add_ref <- function(number, drug_name, title) {
+    stopifnot(length(number) == 1, length(drug_name) == 1, length(title) == 1)
+    current_comments <- gh(glue("GET /repos/{repos}/issues/{number}/comments"))
     ref_body <- glue(
-      "## References\n\n",
+      "## References\n<!--- Posted by make new druglists script --->\n",
       "- [GitHub issue: {title}](https://github.com/{repos}/issues/{number})\n",
-      "- [Script used to produce codelist](https://github.com/{repos}/tree/master/make_druglists/make_new_druglists_and_metadata.R)\n",
+      "- [Original STATA dofile](https://github.com/{repos}/issues/29)\n",
+      "- [R script used to produce codelist](https://github.com/{repos}/tree/master/make_druglists/make_new_druglists_and_metadata.R)\n",
       "- [Draft codelist: {drug_name}](https://github.com/{repos}/tree/master/crossimid-codelists/crossimid-{drug_name}-drug-names.csv)\n"
     )
-    gh(glue("POST /repos/{repos}/issues/{number}/comments"), body = ref_body)
+    existing_ref_comment <- current_comments %>% 
+      map_dfr(~tibble(id = .x$id, body = str_replace_all(.x$body, "\\r", ""))) %>% 
+      filter(str_detect(body, "^## References\n<!--- Posted by make new druglists script --->"))
+    if (nrow(existing_ref_comment) == 0) {
+      gh(glue("POST /repos/{repos}/issues/{number}/comments"), body = ref_body)
+    } else {
+      if (ref_body != existing_ref_comment$body[[1]])
+      gh(glue("PATCH /repos/{repos}/issues/comments/{existing_ref_comment$id[1]}"), body = ref_body)
+    }
   }
+  
+  pwalk(issues_hcd, add_ref)
 }
+
 
 unmapped <- hc_drug_names %>%
   anti_join(hc_mapped, by = c("DrugName" = "olddrugname"))
@@ -98,5 +112,5 @@ unmapped_words <- unmapped$DrugName %>%
   unique() %>% 
   sort()
 
-unmapped_mabs <- unmapped_words %>% 
-  str_subset("mab")
+unmapped_mabs_inibs <- unmapped_words %>% 
+  str_subset("mab|inib")
