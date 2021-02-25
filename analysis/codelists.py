@@ -39,15 +39,15 @@ atopic_dermatitis_codes = codelist_from_csv(
     "crossimid-codelists/crossimid-atopic-dermatitis.csv", system="ctv3", column="CTV3ID"
 )
 crohns_disease_codes = codelist_from_csv(
-    "crossimid-codelists/crossimid-crohns-disease.csv", system="ctv3", column="CTV3ID",
+    "codelists/opensafely-crohns-disease.csv", system="ctv3", column="code",
 )
 
 ulcerative_colitis_codes = codelist_from_csv(
-    "crossimid-codelists/crossimid-ulcerative-colitis.csv", system="ctv3", column="CTV3ID",
+    "codelists/opensafely-ulcerative-colitis.csv", system="ctv3", column="code",
 )
 
 inflammatory_bowel_disease_unclassified_codes = codelist_from_csv(
-    "crossimid-codelists/crossimid-inflammatory-bowel-disease-unclassified.csv", system="ctv3", column="CTV3ID",
+    "codelists/opensafely-inflammatory-bowel-disease-unclassified.csv", system="ctv3", column="code",
 )
 
 ankylosing_spondylitis_codes = codelist_from_csv(
@@ -63,7 +63,7 @@ hidradenitis_suppurativa_codes = codelist_from_csv(
 )
 
 psoriatic_arthritis_codes = codelist_from_csv(
-    "crossimid-codelists/crossimid-psoriatic-arthritis.csv", system="ctv3", column="CTV3ID",
+    "codelists/opensafely-psoriatic-arthritis.csv", system="snomed", column="id",
 )
 
 rheumatoid_arthritis_codes = codelist_from_csv(
