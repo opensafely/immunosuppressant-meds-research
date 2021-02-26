@@ -4,9 +4,6 @@ olddrugname
 """methotrexate - metoject (methotrexate) 15mg/0.3ml """
 """methotrexate - metoject (methotrexate) 20mg/0.4ml """
 """metoject (methotrexate) 10mg/0.2ml for injection """
-aseptic cost - methotrexate
-cyto methotrexate
-cyto methotrexate intrathecal injection
 h methotrexate 10mg in 0.2ml
 h methotrexate 12.5mg in 0.25ml
 h methotrexate 15mg in 0.3ml
@@ -84,36 +81,17 @@ methotrexate - metoject(methotrexate) 12.5mg/0.25ml for injection
 methotrexate - metoject(methotrexate) 17.5mg/0.35m
 methotrexate - metoject(methotrexate) 17.5mg/0.35ml for injection
 methotrexate  *
-methotrexate  bespoke bch iv infusion
 methotrexate  intramuscular injection *
-methotrexate  intrathecal injection
-methotrexate  intrathecal injection *
-methotrexate  intravenous infusion
-methotrexate  intravenous infusion *
-methotrexate  intravenous injection
-methotrexate  intravenous injection *
 methotrexate ! metoject pen 12.5mg
 methotrexate ! metoject pen 15mg
 methotrexate ! metoject service fee
 methotrexate (bi)
 methotrexate (bi) 10 mg injection 1 syringe stock dose
-methotrexate (bi) 12 mg intrathecal injection 1 syringe dose
-methotrexate (bi) 12.5 mg intrathecal injection 1 syringe dose
-methotrexate (bi) 2700 mg in sodium chloride 0.9% intravenous infusion 1 bag dose
 methotrexate (bi) 35 mg injection 1 syringe stock dose
-methotrexate (bi) 3600 mg in sodium chloride 0.9% intravenous infusion 1 bag dose
-methotrexate (bi) 4000 mg in sodium chloride 0.9% intravenous infusion 1 bag dose
-methotrexate (bi) 4125 mg in sodium chloride 0.9% intravenous infusion 1 bag dose
 methotrexate (bi) 50 mg injection 1 syringe stock dose
-methotrexate (bi) 5000 mg in sodium chloride 0.9% intravenous infusion 1 bag dose
-methotrexate (bi) 5500 mg in sodium chloride 0.9% intravenous infusion 1 bag dose
-methotrexate (bi) 6000 mg in sodium chloride 0.9% intravenous infusion 1 bag dose
-methotrexate (bi) 65 mg intravenous injection 1 syringe syringe
-methotrexate (cytos)
 methotrexate (homecare)
 methotrexate (homecare) 17.5mg
 methotrexate (homecare) 22.5mg
-methotrexate (intrathecal)
 methotrexate (methoject) 17.5 mg in 0.35ml pre-filled pen
 methotrexate (methotrexate  infusion)
 methotrexate (methotrexate  injection)
@@ -147,8 +125,6 @@ methotrexate (zlatal)
 methotrexate (zlatal) (pre-filled syringe)
 methotrexate (zlatal) 25 mg in 1ml injection 1 x 1ml prefilled syringe pack
 methotrexate .
-methotrexate ....mg  in n/s bag  iv use   civas
-methotrexate ....mg  in n/s bag  iv use   civas         aseptic fee
 methotrexate [unlicensed] 10 mg/5ml oral solution
 methotrexate 1 g in 10 ml injection
 methotrexate 1 g in 10ml injection
@@ -177,11 +153,7 @@ methotrexate 10mg/5ml sf oral solution
 methotrexate 10mg/5ml solution
 methotrexate 10mg/5ml solution (35ml)
 methotrexate 12.5 mg in 0.5ml injection
-methotrexate 12.5 mg in 5ml intrathecal syringe
 methotrexate 12.5mg in 0.25ml (metoject pen)
-methotrexate 12.5mg in 0.5ml intrathecal civas
-methotrexate 12.5mg in 0.5ml intrathecal civas          aseptic fee
-methotrexate 12.5mg intrathecal injection
 methotrexate 12.5mg prefilled pen
 methotrexate 12.5mg/0.25ml
 methotrexate 12.5mg/0.25ml pre-filled pen (1)
@@ -189,8 +161,6 @@ methotrexate 12.5mg/0.25ml solution for injection
 methotrexate 12.5mg/0.25ml solution for injection pre-filled disposable devices
 methotrexate 12.5mg/0.25ml solution for injection pre-filled syringes
 methotrexate 12.5mg/0.25ml syringe(homecare)
-methotrexate 12.5mg/0.5ml surety intrathecal syr
-methotrexate 12mg/0.48ml  surety intrathecal syr
 methotrexate 15 mg in 0.3ml injection
 methotrexate 15 mg in 0.3ml pre-filled injection pen
 methotrexate 15mg 0.3ml pre filled pen  homecare
@@ -213,14 +183,12 @@ methotrexate 1g in 40ml injection *
 methotrexate 1g/10ml injection (1 vial)
 methotrexate 1g/10ml solution for injection vials
 methotrexate 1g/10ml solution for injection vials 1 vial
-methotrexate 1mg intravenous injection
 methotrexate 1mg/1000ml sodium chloride 0.9%
 methotrexate 2 mg in 1ml oral solution
 methotrexate 2.5 mg tablets
 methotrexate 2.5 mg tablets *
 methotrexate 2.5 mg tablets 100 tablet pack
 methotrexate 2.5 mg tablets 24 tablet pack
-methotrexate 2.5 mg/ml intrathecal
 methotrexate 2.5mg tablets
 methotrexate 2.5mg tablets              benefit share
 methotrexate 2.5mg tablets (100 tabs)
@@ -301,14 +269,6 @@ methotrexate homecare nursing visit charge
 methotrexate homecare pen 20 m
 methotrexate i/m
 methotrexate im injection (patient use)
-methotrexate in 0.9 % sodium chloride 100 mg in 250ml intravenous infusion
-methotrexate in 0.9 % sodium chloride 1600 mg in 1000ml intravenous infusion
-methotrexate in 0.9 % sodium chloride 180 mg in 100ml intravenous infusion
-methotrexate in 0.9 % sodium chloride 450 mg in 250ml intravenous infusion
-methotrexate in 0.9 % sodium chloride 4500 mg in 1000ml intravenous infusion
-methotrexate in 0.9 % sodium chloride 6000 mg in 1000ml intravenous infusion
-methotrexate in 0.9 % sodium chloride 660 mg in 250ml intravenous infusion
-methotrexate in 0.9 % sodium chloride 900 mg in 1000ml intravenous infusion
 methotrexate in sodium chloride 0.9%
 methotrexate infusion in 0.9% n/s (patient use)
 methotrexate injection ............mg syringe
@@ -317,24 +277,6 @@ methotrexate injection 1g in 10ml
 methotrexate injection 25mg/0.5ml syringe
 methotrexate injection 50mg
 methotrexate injection 5g in 50ml
-methotrexate intra-thecal injection 12.5mg/5ml
-methotrexate intra-thecal injection 12mg/4.8ml
-methotrexate intra-thecal injection 5mg in 2ml
-methotrexate intrathecal
-methotrexate intrathecal 10mg/4ml
-methotrexate intrathecal 12.5mg/5ml
-methotrexate intrathecal 12mg/4.8ml
-methotrexate intrathecal 15mg/6ml (1)
-methotrexate intrathecal 6mg/2.4ml
-methotrexate intrathecal 8mg/3.2ml
-methotrexate intrathecal injection
-methotrexate intrathecal injection (patient use)
-methotrexate intrathecal syringe (25mg-ml) asu
-methotrexate intrathecal syringe (25mg/ml) asu
-methotrexate intravenous infusion
-methotrexate iv
-methotrexate iv infusion (patient use)
-methotrexate iv infusion!(patient)
 methotrexate metoject pen 10 mg in 0.2ml injection pre filled pen
 methotrexate metoject pen 12.5 mg in 0.25ml injection pre filled pen
 methotrexate metoject pen 15 mg in 0.3ml injection pre filled pen
@@ -378,8 +320,6 @@ methotrexate!50mg/2ml!injection
 methotrexate!50mg/2ml!injection (5 vials)
 methotrexate!5g/50ml!infusion
 methotrexate!5mg/2ml!injection
-methotrexate!injection intrathecal (patient)
-methotrexate!syringe (iv)
 methotrexate_(homecare) 10 mg in 0.2ml pre-filled injection pen
 methotrexate_(homecare) 12.5 mg in 0.25ml pre-filled injection pen
 methotrexate_(homecare) 15 mg in 0.3ml pre-filled injection pen
@@ -390,9 +330,6 @@ methotrexate_(homecare) 25 mg in 0.5ml pre-filled injection pen
 methotrexate_(homecare) 7.5 mg in 0.15ml pre-filled injection pen
 methotrexateinjection50mg
 methotrexateinjection5gin50ml
-methotrexateintra-thecalinjection12.5mg/5ml
-methotrexateintra-thecalinjection12mg/4.8ml
-methotrexateintra-thecalinjection5mgin2ml
 methotrexateoralmixture10mgin5ml
 methotrexatepre-filledpen12.5mg/0.25ml
 methotrexatepre-filledsyringe15mgin0.3ml

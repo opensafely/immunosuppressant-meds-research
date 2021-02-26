@@ -5,18 +5,26 @@ hc_drug_names <- read_csv("drug_name_unique.csv", col_types = cols(.default = co
   mutate(DrugName = tolower(DrugName)) %>% 
   distinct(DrugName)
 drug_mapping <- read_csv("druglist_mapping.csv")
+drug_exclude_regex <- read_csv("druglist_exclusions.csv")
 drug_mapping_regex <- drug_mapping %>% 
   group_by(new_clean_drug) %>% 
   summarise(
     drug_regex = paste(old_drug_name, collapse = "|")
-  )
+  ) %>% 
+  left_join(drug_exclude_regex, by = "new_clean_drug")
+
 
 hc_mapped <- pmap_dfr(
   drug_mapping_regex,
-  function(new_clean_drug, drug_regex) {
+  function(new_clean_drug, drug_regex, exclude_regex) {
+    olddrugnames <- str_subset(unique(hc_drug_names$DrugName), regex(drug_regex, ignore_case = TRUE))
+    if (!is.na(exclude_regex)) {
+      olddrugnames <- str_subset(olddrugnames, regex(exclude_regex, ignore_case = TRUE), negate = TRUE)
+    }
     tibble(
       drug = new_clean_drug,
-      olddrugname = str_subset(unique(hc_drug_names$DrugName), regex(drug_regex, ignore_case = TRUE)))
+      olddrugname = olddrugnames
+    )
   }
 )
 
@@ -33,11 +41,13 @@ hc_mapped %>%
   group_walk(~write_csv(.x, glue("../crossimid-codelists/crossimid-{.y$drug}-drug-names.csv")))
 
 hc_metadata <- drug_mapping %>%
+  filter(new_clean_drug %in% hc_mapped$drug) %>% 
   group_by(drug_name = new_clean_drug, vtm) %>% 
   summarise(
     drug_terms = paste0("- ", old_drug_name, collapse = "\n")
   ) %>% 
   mutate(
+    final_codelist = glue("high-cost-drugs-{drug_name}"),
     title = glue("*High cost drug codes* {drug_name}"),
     description = glue(
       "This is a list of all the unique values from the Drug Name variable in",
@@ -58,6 +68,7 @@ hc_metadata <- drug_mapping %>%
 
 update_gh <- FALSE
 if (update_gh) {
+  library(gh)
   repos <- "opensafely/immunosuppressant-meds-research"
 
   issues <- gh::gh(glue("GET /repos/{repos}/issues"), per_page = 50)
@@ -79,7 +90,7 @@ if (update_gh) {
   
   add_ref <- function(number, drug_name, title) {
     stopifnot(length(number) == 1, length(drug_name) == 1, length(title) == 1)
-    current_comments <- gh(glue("GET /repos/{repos}/issues/{number}/comments"))
+    current_comments <- gh::gh(glue("GET /repos/{repos}/issues/{number}/comments"))
     ref_body <- glue(
       "## References\n<!--- Posted by make new druglists script --->\n",
       "- [GitHub issue: {title}](https://github.com/{repos}/issues/{number})\n",
