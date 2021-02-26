@@ -1,7 +1,7 @@
 version: '3.0'
 
 expectations:
-  population_size: 500
+  population_size: 50000
 
 actions:
 
@@ -12,8 +12,23 @@ actions:
         cohort: output/input.csv
 
   run_model:
-    run: stata-mp:latest analysis/model.do
+    run: stata-mp:latest analysis/STATA_code.do
     needs: [generate_study_population]
     outputs:
       moderately_sensitive:
-        log: logs/model.log
+        log1: output/logs/cr_create_analysis_dataset.log 
+        data1: output/data/tables.xlsx
+        figure1: output/figures/primeob2d_NA.gph
+        figure2: output/figures/primeob2d.gph
+        figure3: output/figures/primeob2b_NA.gph
+        figure4: output/figures/primeob2b.gph
+        figure5: output/figures/primeob2a_inc_icu_NA.gph
+        figure6: output/figures/primeob2a_inc_icu.gph
+        figure7: output/figures/primeob2a_NA.gph
+        figure8: output/figures/primeob2a.gph
+        figure9: output/figures/primob1itudeath_NA.gph
+        figure10: output/figures/primeob1_nonadjitudeath.gph
+        figure11: output/figures/primob1sens1_NA.gph
+        figure12: output/figures/primeob1sens1.gph
+        figure13: output/figures/primob1_NA.gph
+        figure14: output/figures/primeob1_nonadj.gph
