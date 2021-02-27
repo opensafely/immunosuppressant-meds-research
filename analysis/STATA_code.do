@@ -14,7 +14,7 @@ OTHER OUTPUT: 			logfiles, printed to folder $Logdir
 USER-INSTALLED ADO: 	 
   (place .ado file(s) in analysis folder)						
 ==============================================================================*/
-sysdir set personal `c(pwd)'/extra_ados
+sysdir set PERSONAL `c(pwd)'/extra_ados
 *ssc install table1_mc 
 *ssc install blindschemes
 set scheme plotplainblind
