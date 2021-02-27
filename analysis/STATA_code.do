@@ -27,7 +27,7 @@ import delimited "$datac/input.csv", clear
 
 * Open a log file
 cap log close
-log using $datac\cr_create_analysis_dataset.log, replace 
+log using $datac/cr_create_analysis_dataset.log, replace 
 
 cd $datac
 
