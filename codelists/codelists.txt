@@ -31,12 +31,8 @@ opensafely/inflammatory-bowel-disease-unclassified/092ac6c0
 opensafely/psoriatic-arthritis/2020-10-21
 opensafely/high-cost-drugs-abatacept/07fc04eb
 opensafely/high-cost-drugs-adalimumab/6eec91b5
-opensafely/high-cost-drugs-aflibercept/55dd1e80
 opensafely/high-cost-drugs-alemtuzumab/3ccdab4b
-opensafely/high-cost-drugs-anakinra/23be3816
 opensafely/high-cost-drugs-baricitinib/0aaec4e1
-opensafely/high-cost-drugs-belimumab/719f51ab
-opensafely/high-cost-drugs-benralizumab/588fde76
 opensafely/high-cost-drugs-brodalumab/3f806b41
 opensafely/high-cost-drugs-certolizumab/2670f80c
 opensafely/high-cost-drugs-etanercept/0d6184d7
@@ -46,11 +42,6 @@ opensafely/high-cost-drugs-infliximab/42332b37
 opensafely/high-cost-drugs-ixekizumab/2923b802
 opensafely/high-cost-drugs-mepolizumab/101444cd
 opensafely/high-cost-drugs-methotrexate/7704d197
-opensafely/high-cost-drugs-natalizumab/5df55e62
-opensafely/high-cost-drugs-ocrelizumab/44e5eb2d
-opensafely/high-cost-drugs-omalizumab/2bd677f8
-opensafely/high-cost-drugs-ranibizumab/12c704c3
-opensafely/high-cost-drugs-reslizumab/79b7918d
 opensafely/high-cost-drugs-risankizumab/60a81e58
 opensafely/high-cost-drugs-rituximab/4798ab23
 opensafely/high-cost-drugs-sarilumab/2e8937ee
