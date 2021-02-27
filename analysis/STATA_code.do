@@ -40,7 +40,7 @@ rename inflammatory_bowel_disease_uncla ibd_uncla
 
 /* Drop variables not needed ================================================*/
 *calculating ckd from creat 
-drop ckd ethnicity_date alemtuzumab_3m_0m alemtuzumab_6m_3m mepolizumab_3m_0m mepolizumab_6m_3m anti_eosinophils_3m_0m anti_eosinophils_6m_3m belimumab_3m_0m belimumab_6m_3m omalizumab_3m_0m omalizumab_6m_3m
+drop ckd ethnicity_date
 
 /* CONVERT STRINGS TO DATE====================================================*/
 /* Comorb dates are given with month/year only, so adding day 15 to enable
@@ -545,39 +545,51 @@ label values joint joint
 *Loop to replace missing with 0
 foreach var of varlist  oral_prednisolone_3m_0m  ///
 						oral_prednisolone_6m_3m  /// 
-						adalimumab_3m_0m 		 ///
-						adalimumab_6m_3m		 ///
-						anakinra_3m_0m			 ///
-						anakinra_6m_3m			 ///
-						abatacept_3m_0m			 ///
-						abatacept_6m_3m			 ///
-						certolizumab_3m_0m		 ///
+						abatacept_3m_0m          ///
+						abatacept_6m_3m          ///
+						adalimumab_3m_0m         ///
+						adalimumab_6m_3m         ///
+						baricitinib_3m_0m        ///
+						baricitinib_6m_3m        ///
+						brodalumab_3m_0m         ///
+						brodalumab_6m_3m         ///
+						certolizumab_3m_0m       ///
 						certolizumab_6m_3m       ///
-						dupilumab_3m_0m			 ///
-						dupilumab_6m_3m			 ///
-						etanercept_3m_0m		 ///
-						etanercept_6m_3m		 ///
-						golimumab_3m_0m			 ///
-						golimumab_6m_3m  		 ///
-						infliximab_3m_0m		 ///
-						infliximab_6m_3m		 ///
-						ustekinumab_3m_0m		 ///
-						ustekinumab_6m_3m		 ///
-						il6_3m_0m			     ///
-						il6_6m_3m 			     ///
-						il23_3m_0m		         ///
-						il23_6m_3m 		         ///
-						il17_6m_3m				 ///
-						il17_3m_0m			     ///
-						jaki_3m_0m	 			 ///
-						jaki_6m_3m	 			 ///
-						vegf_3m_0m				 ///
-						vegf_6m_3m				 ///
-						bcell_3m_0m			 	 ///
-						bcell_6m_3m			     ///
-						bcell_12m_6m		     ///
-						integrins_3m_0m		     ///
-						integrins_6m_3m		     ///
+						etanercept_3m_0m         ///
+						etanercept_6m_3m         ///
+						golimumab_3m_0m          ///
+						golimumab_6m_3m          ///
+						guselkumab_3m_0m         ///
+						guselkumab_6m_3m         ///
+						infliximab_3m_0m         ///
+						infliximab_6m_3m         ///
+						ixekizumab_3m_0m         ///
+						ixekizumab_6m_3m         ///
+						mepolizumab_3m_0m        ///
+						mepolizumab_6m_3m        ///
+						methotrexate_hcd_3m_0m   ///
+						methotrexate_hcd_6m_3m   ///
+						risankizumab_3m_0m       ///
+						risankizumab_6m_3m       ///
+						rituximab_3m_0m          ///
+						rituximab_6m_3m          ///
+						rituximab_12m_6m         ///
+						sarilumab_3m_0m          ///
+						sarilumab_6m_3m          ///
+						secukinumab_3m_0m        ///
+						secukinumab_6m_3m        ///
+						tildrakizumab_3m_0m      ///
+						tildrakizumab_6m_3m      ///
+						tocilizumab_3m_0m        ///
+						tocilizumab_6m_3m        ///
+						tofacitinib_3m_0m        ///
+						tofacitinib_6m_3m        ///
+						upadacitinib_3m_0m       ///
+						upadacitinib_6m_3m       ///
+						ustekinumab_3m_0m        ///
+						ustekinumab_6m_3m        ///
+						vedolizumab_3m_0m        ///
+						vedolizumab_6m_3m        ///
 						azathioprine_3m_0m		 ///
 						azathioprine_6m_3m		 ///
 						ciclosporin_3m_0m		 ///
