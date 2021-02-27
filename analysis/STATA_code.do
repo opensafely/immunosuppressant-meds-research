@@ -21,7 +21,7 @@ set scheme plotplainblind
 *ssc install asdoc
 
 *global datac="/Users/markyates/Dropbox/COVID/IMID/OpenSafely"
-global datac = `c(pwd)'/output
+global datac = "output"
 
 import delimited "$datac/input.csv", clear
 
