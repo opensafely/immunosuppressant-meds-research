@@ -18,6 +18,7 @@ actions:
       moderately_sensitive:
         log1: output/logs/cr_create_analysis_dataset.log 
         data1: output/data/tables.xlsx
+        data2: output/data/outputs.doc
         figure1: output/figures/primeob2d_NA.gph
         figure2: output/figures/primeob2d.gph
         figure3: output/figures/primeob2b_NA.gph
