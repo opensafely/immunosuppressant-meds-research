@@ -16,7 +16,7 @@ actions:
     needs: [generate_study_population]
     outputs:
       moderately_sensitive:
-        log1: output/logs/cr_create_analysis_dataset.log 
+        log1: logs/cr_create_analysis_dataset.log 
         data1: output/data/tables.xlsx
         data2: output/data/outputs.doc
         figure1: output/figures/primeob2d_NA.gph

@@ -25,13 +25,13 @@ import delimited `c(pwd)'/output/input.csv, clear
 global projectdir `c(pwd)'
 di "$projectdir"
 
-global logdir "$projectdir/output/logs"
+global logdir "$projectdir/logs"
 di "$logdir"
 
 * Open a log file
 cap log close
 
-log using "$logdir/cr_create_analysis_dataset", replace t
+log using "$logdir/cr_create_analysis_dataset", replace
 
 * Set Ado file path
 adopath + "$projectdir/analysis/extra_ados"
