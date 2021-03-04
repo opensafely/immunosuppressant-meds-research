@@ -12,8 +12,8 @@
       "docker_image_id": "sha256:02156c1b7817411d7ac7b2b91f9452e32caf63947ab8b506ae86bdfe616fb009",
       "job_id": "5neqw2huucrvpgfr",
       "run_by_user": "arowan",
-      "created_at": "2021-03-04T10:16:29Z",
-      "completed_at": "2021-03-04T10:16:47Z"
+      "created_at": "2021-03-04T20:12:37Z",
+      "completed_at": "2021-03-04T20:13:21Z"
     },
     "run_model": {
       "state": "failed",
@@ -21,8 +21,8 @@
       "docker_image_id": "sha256:5a4bb3ecd807de29a18a01ffae01739415778f0b770cbd43d7140bb0017306f1",
       "job_id": "ktrmmoqx27azqqpw",
       "run_by_user": "arowan",
-      "created_at": "2021-03-04T15:45:05Z",
-      "completed_at": "2021-03-04T15:45:37Z"
+      "created_at": "2021-03-04T20:13:38Z",
+      "completed_at": "2021-03-04T20:15:00Z"
     }
   },
   "workspace": "immunosuppressant-meds-research",
