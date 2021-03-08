@@ -1139,7 +1139,7 @@ estimates save output\data\primaryobjective2dsensitivity1, replace
 
 *2d sensitivity 2: Additional confounders
 stcox standjaki i.agegroup male i.ethnicity i.imd bmicat bowel skin joint chronic_cardiac_disease cancer i.diabcat oral_prednisolone_3m_0m  ckd chronic_liver_disease chronic_respiratory_disease
-esimates save output\data\primaryobjective2dsensitivity2, replace
+estimates save output\data\primaryobjective2dsensitivity2, replace
 
 *2d sensitivity 3: restricted exposure window
 stcox standjaki3m i.agegroup male i.ethnicity i.imd bmicat bowel skin joint chronic_cardiac_disease cancer i.diabcat oral_prednisolone_3m_0m 
