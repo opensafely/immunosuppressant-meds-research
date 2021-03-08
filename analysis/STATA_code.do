@@ -498,8 +498,7 @@ replace psoriatic_arthritis	=0 if ankylosing_spondylitis_date > psoriatic_arthri
 replace ankylosing_spondylitis =0 if psoriatic_arthritis_date > ankylosing_spondylitis_date & psoriatic_arthritis_date !=.
 replace ankylosing_spondylitis =0 if rheumatoid_arthritis_date > ankylosing_spondylitis_date & rheumatoid_arthritis_date !=.
 
-
-****************************************************************************check : can AD trump other derm diagnoses whle not in study def? 
+ 
 *Derm
 replace psoriasis =0 if hidradenitis_suppurativa_date > psoriasis_date & hidradenitis_suppurativa_date !=.
 *replace psoriasis =0 if atopic_dermatitis_date > psoriasis_date & atopic_dermatitis_date !=.
@@ -736,7 +735,7 @@ format died_ons_date_covid died_ons_date_noncovid icu_admit_date_covid icu_or_de
 * Censoring dates for each outcome (largely, last date outcome data available, minus a lag window based on previous graphs)
 *death
 tw histogram died_ons_date, discrete width(2) frequency ytitle(Number of ONS deaths) xtitle(Date) scheme(meta) saving(out_death_freq, replace)
-graph export "out_death_freq.svg", as(svg) replace
+graph export "output\fugures\out_death_freq.svg", as(svg) replace
 graph close
 erase out_death_freq.gph
 summ died_ons_date, format
@@ -948,7 +947,8 @@ stset stop, id(patient_id) failure(died_ons_covid_flag_any==1) origin(time enter
 
 strate standtnf, per(1000) output(standtnf,replace)
 
-stcox standtnf, save(output\data\outputs) title(primaryobjective2aunadj) append
+stcox standtnf
+estimates save output\data\primaryobjective2aunadj, replace
 
 sts graph, by(standtnf) xtitle("Analysis time (years)") saving(primeob2a, replace)
 graph export "output\figures\primeob2a.svg", as(svg) replace
@@ -1057,7 +1057,7 @@ estimates save output\data\primaryobjective2bsensitivity2, replace
 
 *2b sensitivity 3: restricted exposure window
 stcox standil233m i.agegroup male i.ethnicity i.imd bmicat bowel skin joint chronic_cardiac_disease cancer i.diabcat oral_prednisolone_3m_0m 
-estimates save output\data\primaryobjective2bsensitivity3), replace
+estimates save output\data\primaryobjective2bsensitivity3, replace
 
 *2b sensitivity 4: covid positivity 
 stset stopswab, id(patient_id) failure(first_pos_test_sgss==1) origin(time enter_date) scale(365.25)  exit(first_pos_test_sgss==1 time mdy(10,01,2020))
@@ -1080,14 +1080,14 @@ stphtest, log detail
 stphtest, log plot(standil17) yline(0) 
 
 *if TVC significant, need to use models with tvc
-stcox standil17, tvc(standil17) save(output\data\outputs) title(primaryobjective2cTVCtest) append 
+stcox standil17, tvc(standil17) 
+estimates save output\data\primaryobjective2cTVCtest, replace 
 
 stcox standil17 i.agegroup male i.ethnicity i.imd bmicat bowel skin joint chronic_cardiac_disease cancer i.diabcat oral_prednisolone_3m_0m
 estimates save output\data\primaryobjective2cadjusted, replace
 
 *TVC Analysis
 stcox standil17 i.agegroup male i.ethnicity i.imd bmicat bowel skin joint chronic_cardiac_disease cancer i.diabcat oral_prednisolone_3m_0m, tvc(standil17) 
-
 estimates save output\data\primaryobjective2cadjustedTVC, replace
 
 *2c sensitivity 1: exclude GP non attenders
@@ -1096,7 +1096,7 @@ estimates save output\data\primaryobjective2csensitivity1, replace
 
 *2c sensitivity 2: Additional confounders
 stcox standil17 i.agegroup male i.ethnicity i.imd bmicat bowel skin joint chronic_cardiac_disease cancer i.diabcat oral_prednisolone_3m_0m  ckd chronic_liver_disease chronic_respiratory_disease 
-estimates save output\data\primaryobjective2csensitivity2), replace
+estimates save output\data\primaryobjective2csensitivity2, replace
 
 *2c sensitivity 3: restricted exposure window
 stcox standil173m i.agegroup male i.ethnicity i.imd bmicat bowel skin joint chronic_cardiac_disease cancer i.diabcat oral_prednisolone_3m_0m 
