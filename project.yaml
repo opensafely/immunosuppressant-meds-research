@@ -71,22 +71,22 @@ actions:
         data52: output/data/primaryobjective2dsensitivity2.ster
         data53: output/data/primaryobjective2dsensitivity3.ster
         data54: output/data/primaryobjective2dsensitivity4.ster
-        figure1: output/figures/primeob2d_NA.svg
-        figure2: output/figures/primeob2d.svg
-        figure3: output/figures/primeob2b_NA.svg
-        figure4: output/figures/primeob2b.svg
-        figure5: output/figures/primeob2a_inc_icu_NA.svg
-        figure6: output/figures/primeob2a_inc_icu.svg
-        figure7: output/figures/primeob2a_NA.svg
-        figure8: output/figures/primeob2a.svg
-        figure9: output/figures/primeob1_nonadjitudeath.svg
-        figure10: output/figures/primeob1sens1_NA.svg
-        figure11: output/figures/primeob1sens1.svg
-        figure12: output/figures/primeob1_NA.svg
-        figure13: output/figures/primeob1_nonadj.svg
-        figure14: output/figures/out_death_freq.svg
-        figure15: output/figures/primeob1_nonadjitudeath_NA.svg
-        figure16: output/figures/primeob2c.svg
-        figure17: output/figures/primeob2c_NA.svg
+        figure1: output/figures/primeob2d_NA.pdf
+        figure2: output/figures/primeob2d.pdf
+        figure3: output/figures/primeob2b_NA.pdf
+        figure4: output/figures/primeob2b.pdf
+        figure5: output/figures/primeob2a_inc_icu_NA.pdf
+        figure6: output/figures/primeob2a_inc_icu.pdf
+        figure7: output/figures/primeob2a_NA.pdf
+        figure8: output/figures/primeob2a.pdf
+        figure9: output/figures/primeob1_nonadjitudeath.pdf
+        figure10: output/figures/primeob1sens1_NA.pdf
+        figure11: output/figures/primeob1sens1.pdf
+        figure12: output/figures/primeob1_NA.pdf
+        figure13: output/figures/primeob1_nonadj.pdf
+        figure14: output/figures/out_death_freq.pdf
+        figure15: output/figures/primeob1_nonadjitudeath_NA.pdf
+        figure16: output/figures/primeob2c.pdf
+        figure17: output/figures/primeob2c_NA.pdf
     
         

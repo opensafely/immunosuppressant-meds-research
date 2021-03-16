@@ -735,15 +735,15 @@ format died_ons_date_covid died_ons_date_noncovid icu_admit_date_covid icu_or_de
 * Censoring dates for each outcome (largely, last date outcome data available, minus a lag window based on previous graphs)
 *death
 tw histogram died_ons_date, discrete width(2) frequency ytitle(Number of ONS deaths) xtitle(Date) scheme(meta) saving(out_death_freq, replace)
-graph export "output/figures/out_death_freq.svg", as(svg) replace
+graph export "output/figures/out_death_freq.pdf", as(pdf) replace
 graph close
-erase out_death_freq.svg
-summ died_ons_date, format
+erase out_death_freq.pdf
+summ died_ons_date, format 
 *gen onscoviddeathcensor_date = r(max)-7
 
 /*Tables=====================================================================================*/
 *Table 1a - 
-table1_mc, by(imid) total(before) onecol iqrmiddle(",") saving("output/data/tables.csv", sheet("Table1a")  cell(A1) sheetmodify keepcellfmt) ///
+table1_mc, by(imid) total(before) onecol iqrmiddle(",") saving("$projectdir/output/data/tables.csv", cell(A1) sheetmodify keepcellfmt) ///
 	vars(agegroup cat %5.1f \ ///
 		 male bin %5.1f \ ///
 		 bmicat cat %5.1f \ ///
@@ -764,7 +764,7 @@ table1_mc, by(imid) total(before) onecol iqrmiddle(",") saving("output/data/tabl
 
 
 *Table 1b - by imid type 
-table1_mc, by(joint) total(before) onecol iqrmiddle(",") saving("output/data/tables.csv", sheet("Table1bdetail")  cell(A1) sheetmodify keepcellfmt) ///
+table1_mc, by(joint) total(before) onecol iqrmiddle(",") saving("$projectdir/output/data/tables.csv", cell(A60) sheetmodify keepcellfmt) ///
 	vars(agegroup cat %5.1f \ ///
 		 male bin %5.1f \ ///
 		 bmicat cat %5.1f \ ///
@@ -788,7 +788,7 @@ table1_mc, by(joint) total(before) onecol iqrmiddle(",") saving("output/data/tab
 		 standil17 bin %5.1f \ ///
 		 standjaki bin %5.1f )
 		 
-table1_mc, by(skin) total(before) onecol iqrmiddle(",") saving("output/data/tables.csv", sheet("Table1bdetail")  cell(A70) sheetmodify keepcellfmt) ///
+table1_mc, by(skin) total(before) onecol iqrmiddle(",") saving("$projectdir/output/data/tables.csv", cell(A120) sheetmodify keepcellfmt) ///
 	vars(agegroup cat %5.1f \ ///
 		 male bin %5.1f \ ///
 		 bmicat cat %5.1f \ ///
@@ -810,7 +810,7 @@ table1_mc, by(skin) total(before) onecol iqrmiddle(",") saving("output/data/tabl
 		 standil23 bin %5.1f \ ///
 		 standil17 bin %5.1f )
 		 
-table1_mc, by(bowel) total(before) onecol iqrmiddle(",") saving("output/data/tables.csv", sheet("Table1bdetail")  cell(A140) sheetmodify keepcellfmt) ///
+table1_mc, by(bowel) total(before) onecol iqrmiddle(",") saving("$projectdir/output/data/tables.csv", cell(A180) sheetmodify keepcellfmt) ///
 	vars(agegroup cat %5.1f \ ///
 		 male bin %5.1f \ ///
 		 bmicat cat %5.1f \ ///
@@ -832,7 +832,7 @@ table1_mc, by(bowel) total(before) onecol iqrmiddle(",") saving("output/data/tab
 		 standjaki bin %5.1f )	
 	
 *Table 2a - high cost drugs (v non-high cost) - single group contribution only
-table1_mc, by(imiddrugcategory) total(before) onecol iqrmiddle(",") saving("output/data/tables.csv", sheet("Table2a")  cell(A1) sheetmodify keepcellfmt) ///
+table1_mc, by(imiddrugcategory) total(before) onecol iqrmiddle(",") saving("$projectdir/output/data/tables.csv", cell(A240) sheetmodify keepcellfmt) ///
 	vars(agegroup cat %5.1f \ ///
 		 male bin %5.1f \ ///
 		 bmicat cat %5.1f \ ///
@@ -865,9 +865,9 @@ strate imid, per(1000) output(imid, replace)
 stcox imid i.agegroup male
 estimates save output/data/primaryobjective1unadj, replace
 sts graph, by(imid) xtitle("Analysis time (years)") saving(primeob1_nonadj, replace)
-graph export "output/figures/primeob1_nonadj.svg", as(svg) replace
+graph export "output/figures/primeob1_nonadj.pdf", as(pdf) replace
 sts graph, cumhaz by (imid) xtitle("Analysis time (years)") tmax(0.58)  legend(order(1 "Gen Pop" 2 "IMID")) saving(primeob1_NA, replace)
-graph export "output/figures/primeob1_NA.svg", as(svg) replace
+graph export "output/figures/primeob1_NA.pdf", as(pdf) replace
 
 ** Testing assumptions of proportional hazard model
 stcox imid
@@ -906,9 +906,9 @@ estimates save output/data/primaryobjective1adjusted_noethnicityTVC, replace
 stcox imid i.agegroup male i.ethnicity i.imd bmicat bowel skin joint  chronic_cardiac_disease cancer i.diabcat steroidcat if gp_consult ==1
 estimates save output/data/primaryobjective1sensitivity1, replace
 sts graph if gp_consult ==1, by(imid) xtitle("Analysis time (years)") saving(primeob1sens1, replace)
-graph export "output/figures/primeob1sens1.svg", as(svg) replace
+graph export "output/figures/primeob1sens1.pdf", as(pdf) replace
 sts graph if gp_consult ==1, cumhaz by (imid) xtitle("Analysis time (years)") tmax(0.58)  legend(order(1 "Gen Pop" 2 "IMID")) saving(primob1sens1_NA, replace)
-graph export "output/figures/primeob1sens1_NA.svg", as(svg) replace
+graph export "output/figures/primeob1sens1_NA.pdf", as(pdf) replace
 
 /*Primary objective 1- Sensitivity analysis 2 ===========================*/
 stcox imid i.agegroup male i.ethnicity i.imd bmicat bowel skin joint  chronic_cardiac_disease stroke cancer i.diabcat steroidcat i.ckd chronic_liver_disease chronic_respiratory_disease
@@ -926,9 +926,9 @@ stcox imid i.agegroup male
 estimates save output/data/primaryobjective1limitedadjitudeath, replace
 
 sts graph, by(imid) xtitle("Analysis time (years)") saving(primeob1_nonadjitudeath, replace)
-graph export "output/figures/primeob1_nonadjitudeath.svg", as(svg) replace
+graph export "output/figures/primeob1_nonadjitudeath.pdf", as(pdf) replace
 sts graph, cumhaz by (imid) xtitle("Analysis time (years)") tmax(0.58) legend(order(1 "Gen Pop" 2 "IMID")) saving(primeob1_nonadjitudeath_NA, replace)
-graph export "output/figures/primeob1_nonadjitudeath_NA.svg", as(svg) replace
+graph export "output/figures/primeob1_nonadjitudeath_NA.pdf", as(pdf) replace
 
 stcox imid i.agegroup male i.imd bmicat bowel skin joint chronic_cardiac_disease stroke cancer i.diabcat steroidcat
 estimates save output/data/primaryobjective1adjusteditudeath, replace
@@ -951,9 +951,9 @@ stcox standtnf
 estimates save output/data/primaryobjective2aunadj, replace
 
 sts graph, by(standtnf) xtitle("Analysis time (years)") saving(primeob2a, replace)
-graph export "output/figures/primeob2a.svg", as(svg) replace
+graph export "output/figures/primeob2a.pdf", as(pdf) replace
 sts graph, cumhaz by(standtnf) xtitle("Analysis time (years)") tmax(0.58) legend(order(1 "Standard Systemic" 2 "TNF")) saving(primeob2a_NA, replace)
-graph export "output/figures/primeob2a_NA.svg", as(svg) replace
+graph export "output/figures/primeob2a_NA.pdf", as(pdf) replace
 
 ** Testing assumptions of proportional hazard model
 stcox standtnf
@@ -985,9 +985,9 @@ stcox standtnf
 estimates save output/data/primaryobjective2aunadj_inc_icu, replace
 
 sts graph, by(standtnf) xtitle("Analysis time (years)") saving(primeob2a_inc_icu, replace)
-graph export "output/figures/primeob2a_inc_icu.svg", as(svg) replace
+graph export "output/figures/primeob2a_inc_icu.pdf", as(pdf) replace
 sts graph, cumhaz by(standtnf) xtitle("Analysis time (years)") tmax(0.58) legend(order(1 "Standard Systemic" 2 "TNF")) saving(primeob2a_inc_icu_NA, replace)
-graph export "output/figures/primeob2a_inc_icu_NA.svg", as(svg) replace
+graph export "output/figures/primeob2a_inc_icu_NA.pdf", as(pdf) replace
 
 stcox standtnf i.agegroup male
 estimates save output/data/primaryobjective2limitedadj_inc_icu, replace
@@ -1026,9 +1026,9 @@ estimates save output/data/primaryobjective2asensitivity6, replace
 stcox standil23
 estimates save output/data/primaryobjective2bunadj, replace
 sts graph, by(standil23) xtitle("Analysis time (years)") saving(primeob2b, replace)
-graph export "output/figures/primeob2b.svg", as(svg) replace
+graph export "output/figures/primeob2b.pdf", as(pdf) replace
 sts graph, cumhaz by(standil23) xtitle("Analysis time (years)") tmax(0.58) legend(order(1 "Standard Systemic" 2 "il23")) saving(primeob2b_NA, replace)
-graph export "output/figures/primeob2b_NA.svg", as(svg) replace
+graph export "output/figures/primeob2b_NA.pdf", as(pdf) replace
 
 ** Testing assumptions of proportional hazard model
 stcox standil23
@@ -1069,9 +1069,9 @@ estimates save output/data/primaryobjective2bsensitivity4, replace
 stcox standil17, 
 estimates save output/data/primaryobjective2cunadj, replace
 sts graph, by(standil17) xtitle("Analysis time (years)") saving(primeob2b, replace)
-graph export "output/figures/primeob2c.svg", as(svg) replace
+graph export "output/figures/primeob2c.pdf", as(pdf) replace
 sts graph, cumhaz by(standil17) xtitle("Analysis time (years)") tmax(0.58) legend(order(1 "Standard Systemic" 2 "il17"))  saving(primeob2b_NA, replace)
-graph export "output/figures/primeob2c_NA.svg", as(svg) replace
+graph export "output/figures/primeob2c_NA.pdf", as(pdf) replace
 
 ** Testing assumptions of proportional hazard model
 stcox standil17
@@ -1112,9 +1112,9 @@ estimates save output/data/primaryobjective2csensitivity4, replace
 stcox standjaki
 estimates save output/data/primaryobjective2dunadj, replace
 sts graph, by(standjaki) xtitle("Analysis time (years)") saving(primeob2d, replace)
-graph export "output/figures/primeob2d.svg", as(svg) replace
+graph export "output/figures/primeob2d.pdf", as(pdf) replace
 sts graph, cumhaz by(standjaki) xtitle("Analysis time (years)") tmax(0.58) legend(order(1 "Standard Systemic" 2 "JAKi")) saving(primeob2d_NA, replace)
-graph export "output/figures/primeob2d_NA.svg", as(svg) replace
+graph export "output/figures/primeob2d_NA.pdf", as(pdf) replace
 
 ** Testing assumptions of proportional hazard model
 stcox standjaki
