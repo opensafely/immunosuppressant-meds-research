@@ -737,8 +737,8 @@ format died_ons_date_covid died_ons_date_noncovid icu_admit_date_covid icu_or_de
 tw histogram died_ons_date, discrete width(2) frequency ytitle(Number of ONS deaths) xtitle(Date) scheme(meta) saving(out_death_freq, replace)
 graph export "output/figures/out_death_freq.pdf", as(pdf) replace
 graph close
-erase out_death_freq.pdf
-summ died_ons_date, format 
+/* erase out_death_freq.pdf
+summ died_ons_date, format */
 *gen onscoviddeathcensor_date = r(max)-7
 
 /*Tables=====================================================================================*/

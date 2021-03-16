@@ -4,6 +4,290 @@
       "created_by_action": "run_model",
       "privacy_level": "moderately_sensitive"
     },
+    "output/data/primaryobjective1TVCtest.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective1adjusted.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective1adjustedTVC.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective1adjusted_completecaseethnicity.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective1adjusted_completecaseethnicityTVC.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective1adjusted_noethnicity.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective1adjusted_noethnicityTVC.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective1adjusteditudeath.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective1adjusteditudeath_ethnicity.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective1adjusteditudeath_ethnicity_nomiss.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective1limitedadjitudeath.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective1limitedadjusted.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective1sensitivity1.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective1sensitivity2.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective1unadj.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2aTVCtest.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2aadjusted.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2aadjustedTVC.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2aadjusted_inc_icu.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2alimitedadj.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2asensitivity1.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2asensitivity2.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2asensitivity3.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2asensitivity4.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2asensitivity5.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2asensitivity6.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2aunadj.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2aunadj_inc_icu.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2bTVCtest.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2badjusted.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2badjustedTVC.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2bsensitivity1.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2bsensitivity2.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2bsensitivity3.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2bsensitivity4.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2bunadj.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2cTVCtest.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2cadjusted.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2cadjustedTVC.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2csensitivity1.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2csensitivity2.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2csensitivity3.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2csensitivity4.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2cunadj.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2dTVCtest.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2dadjusted.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2dadjustedTVC.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2dsensitivity1.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2dsensitivity2.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2dsensitivity3.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2dsensitivity4.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2dunadj.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/primaryobjective2limitedadj_inc_icu.ster": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/tables.csv": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/out_death_freq.pdf": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/primeob1_NA.pdf": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/primeob1_nonadj.pdf": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/primeob1_nonadjitudeath.pdf": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/primeob1_nonadjitudeath_NA.pdf": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/primeob1sens1.pdf": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/primeob1sens1_NA.pdf": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/primeob2a.pdf": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/primeob2a_NA.pdf": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/primeob2a_inc_icu.pdf": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/primeob2a_inc_icu_NA.pdf": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/primeob2b.pdf": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/primeob2b_NA.pdf": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/primeob2c.pdf": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/primeob2c_NA.pdf": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/primeob2d.pdf": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/primeob2d_NA.pdf": {
+      "created_by_action": "run_model",
+      "privacy_level": "moderately_sensitive"
+    },
     "output/input.csv": {
       "created_by_action": "generate_study_population",
       "privacy_level": "highly_sensitive"
@@ -16,17 +300,17 @@
       "docker_image_id": "sha256:02156c1b7817411d7ac7b2b91f9452e32caf63947ab8b506ae86bdfe616fb009",
       "job_id": "5neqw2huucrvpgfr",
       "run_by_user": "arowan",
-      "created_at": "2021-03-12T11:01:50Z",
-      "completed_at": "2021-03-12T11:02:07Z"
+      "created_at": "2021-03-16T09:00:43Z",
+      "completed_at": "2021-03-16T09:00:59Z"
     },
     "run_model": {
-      "state": "failed",
+      "state": "succeeded",
       "commit": "none",
       "docker_image_id": "sha256:5a4bb3ecd807de29a18a01ffae01739415778f0b770cbd43d7140bb0017306f1",
       "job_id": "ktrmmoqx27azqqpw",
       "run_by_user": "arowan",
-      "created_at": "2021-03-16T08:47:21Z",
-      "completed_at": "2021-03-16T08:47:34Z"
+      "created_at": "2021-03-16T09:01:10Z",
+      "completed_at": "2021-03-16T09:02:38Z"
     }
   },
   "workspace": "immunosuppressant-meds-research",
