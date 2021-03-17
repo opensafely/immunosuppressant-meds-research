@@ -50,7 +50,6 @@ drop ckd ethnicity_date mepolizumab_3m_0m mepolizumab_6m_3m vedolizumab_3m_0m ve
 foreach var of varlist 	 crohns_disease						///
 						 ulcerative_colitis					///
 						 ibd_uncla	                        ///
-						 atopic_dermatitis					///
 						 psoriasis							///
 						 hidradenitis_suppurativa			///
 						 psoriatic_arthritis				///
@@ -143,7 +142,6 @@ foreach var of varlist 	 crohns_disease_date				    ///
 						 ulcerative_colitis_date				///
 						 ibd_uncla_date	                        ///
 						 psoriasis_date							///
-						 atopic_dermatitis_date					///
 						 hidradenitis_suppurativa_date			///
 						 psoriatic_arthritis_date				///
 						 rheumatoid_arthritis_date	            ///
@@ -504,8 +502,8 @@ replace psoriasis =0 if hidradenitis_suppurativa_date > psoriasis_date & hidrade
 *replace psoriasis =0 if atopic_dermatitis_date > psoriasis_date & atopic_dermatitis_date !=.
 replace hidradenitis_suppurativa =0 if psoriasis_date > hidradenitis_suppurativa_date & psoriasis_date !=.
 *replace hidradenitis_suppurativa =0 if atopic_dermatitis_date > hidradenitis_suppurativa_date & atopic_dermatitis_date !=.
-replace atopic_dermatitis =0 if psoriasis_date > atopic_dermatitis_date & psoriasis_date !=.
-replace atopic_dermatitis =0 if hidradenitis_suppurativa_date > atopic_dermatitis_date & hidradenitis_suppurativa_date !=.
+* replace atopic_dermatitis =0 if psoriasis_date > atopic_dermatitis_date & psoriasis_date !=.
+* replace atopic_dermatitis =0 if hidradenitis_suppurativa_date > atopic_dermatitis_date & hidradenitis_suppurativa_date !=.
 
 *Gastro
 replace ibd_uncla =0 if ulcerative_colitis_date > ibd_uncla_date  & ulcerative_colitis_date !=.
