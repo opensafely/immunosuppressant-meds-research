@@ -11,82 +11,62 @@ actions:
       highly_sensitive:
         cohort: output/input.csv
 
-  run_model:
-    run: stata-mp:latest analysis/STATA_code.do
+  create_cohorts:
+    run: stata-mp:latest analysis/000_define_covariates.do
     needs: [generate_study_population]
     outputs:
-      moderately_sensitive:
-        log1: logs/cr_create_analysis_dataset.smcl 
-        data1: output/data/tables.csv
-        data2: output/data/primaryobjective1unadj.ster
-        data3: output/data/primaryobjective1TVCtest.ster
-        data4: output/data/primaryobjective1limitedadjusted.ster
-        data5: output/data/primaryobjective1adjusted_completecaseethnicity.ster
-        data6: output/data/primaryobjective1adjusted.ster
-        data7: output/data/primaryobjective1adjusted_noethnicity.ster
-        data8: output/data/primaryobjective1adjusted_completecaseethnicityTVC.ster
-        data9: output/data/primaryobjective1adjustedTVC.ster
-        data10: output/data/primaryobjective1adjusted_noethnicityTVC.ster
-        data11: output/data/primaryobjective1sensitivity1.ster
-        data12: output/data/primaryobjective1sensitivity2.ster
-        data13: output/data/primaryobjective1limitedadjitudeath.ster
-        data14: output/data/primaryobjective1adjusteditudeath.ster
-        data15: output/data/primaryobjective1adjusteditudeath_ethnicity.ster
-        data16: output/data/primaryobjective1adjusteditudeath_ethnicity_nomiss.ster
-        data17: output/data/primaryobjective2aunadj.ster
-        data18: output/data/primaryobjective2aTVCtest.ster
-        data19: output/data/primaryobjective2alimitedadj.ster
-        data20: output/data/primaryobjective2aadjusted.ster
-        data21: output/data/primaryobjective2aadjustedTVC.ster
-        data22: output/data/primaryobjective2aunadj_inc_icu.ster
-        data23: output/data/primaryobjective2limitedadj_inc_icu.ster
-        data24: output/data/primaryobjective2aadjusted_inc_icu.ster
-        data25: output/data/primaryobjective2asensitivity1.ster
-        data26: output/data/primaryobjective2asensitivity2.ster
-        data27: output/data/primaryobjective2asensitivity3.ster
-        data28: output/data/primaryobjective2asensitivity4.ster
-        data29: output/data/primaryobjective2asensitivity5.ster
-        data30: output/data/primaryobjective2asensitivity6.ster
-        data31: output/data/primaryobjective2bunadj.ster
-        data32: output/data/primaryobjective2bTVCtest.ster
-        data33: output/data/primaryobjective2badjusted.ster
-        data34: output/data/primaryobjective2badjustedTVC.ster
-        data35: output/data/primaryobjective2bsensitivity1.ster
-        data36: output/data/primaryobjective2bsensitivity2.ster
-        data37: output/data/primaryobjective2bsensitivity3.ster
-        data38: output/data/primaryobjective2bsensitivity4.ster
-        data39: output/data/primaryobjective2cunadj.ster
-        data40: output/data/primaryobjective2cTVCtest.ster
-        data41: output/data/primaryobjective2cadjusted.ster
-        data42: output/data/primaryobjective2cadjustedTVC.ster
-        data43: output/data/primaryobjective2csensitivity1.ster
-        data44: output/data/primaryobjective2csensitivity2.ster
-        data45: output/data/primaryobjective2csensitivity3.ster
-        data46: output/data/primaryobjective2csensitivity4.ster
-        data47: output/data/primaryobjective2dunadj.ster
-        data48: output/data/primaryobjective2dTVCtest.ster
-        data49: output/data/primaryobjective2dadjusted.ster
-        data50: output/data/primaryobjective2dadjustedTVC.ster
-        data51: output/data/primaryobjective2dsensitivity1.ster
-        data52: output/data/primaryobjective2dsensitivity2.ster
-        data53: output/data/primaryobjective2dsensitivity3.ster
-        data54: output/data/primaryobjective2dsensitivity4.ster
-        figure1: output/figures/primeob2d_NA.pdf
-        figure2: output/figures/primeob2d.pdf
-        figure3: output/figures/primeob2b_NA.pdf
-        figure4: output/figures/primeob2b.pdf
-        figure5: output/figures/primeob2a_inc_icu_NA.pdf
-        figure6: output/figures/primeob2a_inc_icu.pdf
-        figure7: output/figures/primeob2a_NA.pdf
-        figure8: output/figures/primeob2a.pdf
-        figure9: output/figures/primeob1_nonadjitudeath.pdf
-        figure10: output/figures/primeob1sens1_NA.pdf
-        figure11: output/figures/primeob1sens1.pdf
-        figure12: output/figures/primeob1_NA.pdf
-        figure13: output/figures/primeob1_nonadj.pdf
-        figure14: output/figures/out_death_freq.pdf
-        figure15: output/figures/primeob1_nonadjitudeath_NA.pdf
-        figure16: output/figures/primeob2c.pdf
-        figure17: output/figures/primeob2c_NA.pdf
-    
+	highly_sensitive:
+	   log1: logs/start_create_analysis_dataset.smcl 
+	   analysis_dataset1: output/file_imid
+	   analysis_dataset2: output/file_joint
+	   analysis_dataset3: output/file_skin
+	   analysis_dataset4: output/file_bowel
+	   analysis_dataset5: output/file_imiddrugcategory
+	   analysis_dataset6: output/file_standtnf
+	   analysis_dataset7: output/file_standtnf3m
+	   analysis_dataset8: output/file_tnfmono
+	   analysis_dataset9: output/file_standil6
+	   analysis_dataset10: output/file_standil17
+	   analysis_dataset11: output/file_standil23
+	   analysis_dataset12: output/file_standjak
+	   analysis_dataset13: output/file_standritux
+
+   run_baseline_tables:
+      run: stata-mp:latest analysis/100_baseline_characteristics.do
+      needs: [create_cohorts]
+      outputs:
+	highly sensitive:
+	   log2: logs/descriptive_tables.smcl 
+	   data1: output/data/tables.csv
+
+   run_cox_models:
+      run: stata-mp:latest analysis/200_cox_models.do
+      needs: [create_cohorts]
+      outputs:
+	highly sensitive:
+	   log3: logs/cox_models.smcl 
+	   data2: output/data/cox_model_summary.dta
+
+   run_survival_curves:
+      run: stata-mp:latest analysis/300_survival_curves.do
+      needs: [create_cohorts]
+      outputs:
+	log4: logs/graphs.smcl 
+	figure1: output/figures/survcurv_imiddrugcategory_icu.svg
+	figure2: output/figures/imiddrugcategory_graph.gph	figure3: output/figures/survcurv_imiddrugcategory_died.svg
+	figure4: output/figures/survcurv_bowel_icu.svg
+	figure5: output/figures/bowel_graph.gph
+	figure6: output/figures/survcurv_bowel_died.svg
+	figure7: output/figures/survcurv_skin_icu.svg
+	figure8: output/figures/skin_graph.gph
+	figure9: output/figures/survcurv_skin_died.svg
+	figure10: output/figures/survcurv_joint_icu.svg
+	figure11: output/figures/joint_graph.gph
+	figure12: output/figures/survcurv_joint_died.svg
+	figure13: output/figures/survcurv_imid_icu.svg
+	figure14: output/figures/imid_graph.gph
+	figure15: output/figures/survcurv_imid_died.svg
+
+
+
         
