@@ -159,7 +159,7 @@ study = StudyDefinition(
         },
     ),
     # IMID disease codes
-    atopic_dermatitis=first_diagnosis_in_period(atopic_dermatitis_codes),
+    # atopic_dermatitis=first_diagnosis_in_period(atopic_dermatitis_codes),
     crohns_disease=first_diagnosis_in_period(crohns_disease_codes),
     ulcerative_colitis=first_diagnosis_in_period(ulcerative_colitis_codes),
     inflammatory_bowel_disease_unclassified=first_diagnosis_in_period(inflammatory_bowel_disease_unclassified_codes),
