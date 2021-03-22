@@ -11,15 +11,48 @@ actions:
       highly_sensitive:
         cohort: output/input.csv
 
-  run_model:
-    run: stata-mp:latest analysis/STATA_code.do
+  create_cohorts:
+    run: stata-mp:latest analysis/000_define_covariates.do
     needs: [generate_study_population]
     outputs:
-      moderately_sensitive:
-        log1: logs/cr_create_analysis_dataset.smcl 
-        data1: output/data/tables.csv
-        data2: output/data/cox_model_summary.dta
-        figure1: output/figures/survcurv_imiddrugcategory_icu.svg
+	highly_sensitive:
+	   log1: logs/start_create_analysis_dataset.smcl 
+	   analysis_dataset1: output/file_imid
+	   analysis_dataset2: output/file_joint
+	   analysis_dataset3: output/file_skin
+	   analysis_dataset4: output/file_bowel
+	   analysis_dataset5: output/file_imiddrugcategory
+	   analysis_dataset6: output/file_standtnf
+	   analysis_dataset7: output/file_standtnf3m
+	   analysis_dataset8: output/file_tnfmono
+	   analysis_dataset9: output/file_standil6
+	   analysis_dataset10: output/file_standil17
+	   analysis_dataset11: output/file_standil23
+	   analysis_dataset12: output/file_standjak
+	   analysis_dataset13: output/file_standritux
+
+   run_baseline_tables:
+      run: stata-mp:latest analysis/100_baseline_characteristics.do
+      needs: [create_cohorts]
+      outputs:
+	highly sensitive:
+	   log2: logs/descriptive_tables.smcl 
+	   data1: output/data/tables.csv
+
+   run_cox_models:
+      run: stata-mp:latest analysis/200_cox_models.do
+      needs: [create_cohorts]
+      outputs:
+	highly sensitive:
+	   log3: logs/cox_models.smcl 
+	   data2: output/data/cox_model_summary.dta
+
+   run_survival_curves:
+      run: stata-mp:latest analysis/300_survival_curves.do
+      needs: [create_cohorts]
+      outputs:
+	log4: logs/graphs.smcl 
+	figure1: output/figures/survcurv_imiddrugcategory_icu.svg
 	figure2: output/figures/imiddrugcategory_graph.gph	figure3: output/figures/survcurv_imiddrugcategory_died.svg
 	figure4: output/figures/survcurv_bowel_icu.svg
 	figure5: output/figures/bowel_graph.gph
@@ -33,5 +66,7 @@ actions:
 	figure13: output/figures/survcurv_imid_icu.svg
 	figure14: output/figures/imid_graph.gph
 	figure15: output/figures/survcurv_imid_died.svg
+
+
 
         
