@@ -35,9 +35,9 @@ unclear_smoking_codes = codelist_from_csv(
 )
 
 # CLINICAL CONDITIONS CODELISTS
-atopic_dermatitis_codes = codelist_from_csv(
-    "crossimid-codelists/crossimid-atopic-dermatitis.csv", system="ctv3", column="CTV3ID"
-)
+#atopic_dermatitis_codes = codelist_from_csv(
+    #"crossimid-codelists/crossimid-atopic-dermatitis.csv", system="ctv3", column="CTV3ID"
+#)
 crohns_disease_codes = codelist_from_csv(
     "codelists/opensafely-crohns-disease.csv", system="ctv3", column="code",
 )
