@@ -28,7 +28,7 @@ log using "$logdir/cox_models", replace
 * Set Ado file path
 adopath + "$projectdir/analysis/extra_ados"
 
-global projectdir $projectdir/
+global projectdir $projectdir/outputs
 
 /* SET Index date ===========================================================*/
 global indexdate 			= "01/03/2020"
@@ -51,7 +51,7 @@ tempname coxoutput
 
 foreach f in $files {
 		
-	use $homedir/file_`f', replace
+	use $projectdir/file_`f', replace
 
 	*generate censor date
 	gen diecensor = mdy(10,01,2020)

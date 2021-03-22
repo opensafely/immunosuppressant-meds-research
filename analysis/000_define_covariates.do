@@ -743,6 +743,8 @@ graph close
 summ died_ons_date, format */
 *gen onscoviddeathcensor_date = r(max)-7
 
+
+
 foreach var in imid joint skin bowel imiddrugcategory standtnf standtnf3m tnfmono  standil6 standil17 standil23 standjaki standritux {
 	preserve
 	drop if `var' ==.
