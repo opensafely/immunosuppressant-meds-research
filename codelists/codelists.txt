@@ -41,9 +41,9 @@ opensafely/high-cost-drugs-guselkumab/5b429e6c
 opensafely/high-cost-drugs-infliximab/42332b37
 opensafely/high-cost-drugs-ixekizumab/2923b802
 opensafely/high-cost-drugs-mepolizumab/101444cd
-opensafely/high-cost-drugs-methotrexate/7704d197
+opensafely/high-cost-drugs-methotrexate/70d89e1c
 opensafely/high-cost-drugs-risankizumab/60a81e58
-opensafely/high-cost-drugs-rituximab/4798ab23
+opensafely/high-cost-drugs-rituximab/57c92ae7
 opensafely/high-cost-drugs-sarilumab/2e8937ee
 opensafely/high-cost-drugs-secukinumab/1579c4b9
 opensafely/high-cost-drugs-tildrakizumab/7c6a5183

@@ -322,7 +322,7 @@ study = StudyDefinition(
     **medication_counts_and_dates("penicillamine", "crossimid-penicillamine-medication", False),
     **medication_counts_and_dates("sulfasalazine", "crossimid-sulfasalazine-medication", False),
     **medication_counts_and_dates("mesalazine", "crossimid-mesalazine-medication", False),
-    **medication_counts_and_dates("atopic_dermatitis_meds", "crossimid-atopic-dermatitis-medication", False),
+   # **medication_counts_and_dates("atopic_dermatitis_meds", "crossimid-atopic-dermatitis-medication", False),
     **medication_counts_and_dates("abatacept", "opensafely-high-cost-drugs-abatacept", True),
     **medication_counts_and_dates("adalimumab", "opensafely-high-cost-drugs-adalimumab", True),
     **medication_counts_and_dates("baricitinib", "opensafely-high-cost-drugs-baricitinib", True),
