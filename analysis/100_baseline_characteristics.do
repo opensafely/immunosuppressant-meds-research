@@ -205,7 +205,7 @@ table1_mc, by(standil17) total(before) onecol iqrmiddle(",") saving("$projectdir
 		 oral_prednisolone_3m_0m contn %5.1f )
 
 *2d IMID only: JAKi vs standard systemic 
-table1_mc, by(jaki) total(before) onecol iqrmiddle(",") saving("$projectdir/output/data/tables.csv", cell(A240) sheetmodify keepcellfmt) ///
+table1_mc, by(standjaki) total(before) onecol iqrmiddle(",") saving("$projectdir/output/data/tables.csv", cell(A240) sheetmodify keepcellfmt) ///
 	vars(agegroup cat %5.1f \ ///
 		 male bin %5.1f \ ///
 		 bmicat cat %5.1f \ ///
