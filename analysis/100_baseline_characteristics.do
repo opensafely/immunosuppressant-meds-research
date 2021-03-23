@@ -12,7 +12,7 @@ USER-INSTALLED ADO:
   (place .ado file(s) in analysis folder)						
 ==============================================================================*/
 
-import delimited `c(pwd)'/output/input.csv, clear
+* import delimited `c(pwd)'/output/input.csv, clear
 
 * set filepaths
 
@@ -145,7 +145,7 @@ table1_mc, by(imiddrugcategory) total(before) onecol iqrmiddle(",") saving("$pro
 		 oral_prednisolone_3m_0m contn %5.1f )
 
 *2a IMID only: TNFi vs standard systemic
-table1_mc, by(standtnf) total(before) onecol iqrmiddle(",") saving("$projectdir/output/data/tables.csv", cell(A240) sheetmodify keepcellfmt) ///
+table1_mc, by(standtnf) total(before) onecol iqrmiddle(",") saving("$projectdir/output/data/tables.csv", cell(A300) sheetmodify keepcellfmt) ///
 	vars(agegroup cat %5.1f \ ///
 		 male bin %5.1f \ ///
 		 bmicat cat %5.1f \ ///
@@ -165,7 +165,7 @@ table1_mc, by(standtnf) total(before) onecol iqrmiddle(",") saving("$projectdir/
 		 oral_prednisolone_3m_0m contn %5.1f )
 
 *2b IMID only:  IL-12/23i vs standard systemic
-table1_mc, by(standil23) total(before) onecol iqrmiddle(",") saving("$projectdir/output/data/tables.csv", cell(A240) sheetmodify keepcellfmt) ///
+table1_mc, by(standil23) total(before) onecol iqrmiddle(",") saving("$projectdir/output/data/tables.csv", cell(A360) sheetmodify keepcellfmt) ///
 	vars(agegroup cat %5.1f \ ///
 		 male bin %5.1f \ ///
 		 bmicat cat %5.1f \ ///
@@ -185,7 +185,7 @@ table1_mc, by(standil23) total(before) onecol iqrmiddle(",") saving("$projectdir
 		 oral_prednisolone_3m_0m contn %5.1f )
 
 *2c Psoriasis, PsA, AS only: IL-17i vs standard systemic
-table1_mc, by(standil17) total(before) onecol iqrmiddle(",") saving("$projectdir/output/data/tables.csv", cell(A240) sheetmodify keepcellfmt) ///
+table1_mc, by(standil17) total(before) onecol iqrmiddle(",") saving("$projectdir/output/data/tables.csv", cell(A420) sheetmodify keepcellfmt) ///
 	vars(agegroup cat %5.1f \ ///
 		 male bin %5.1f \ ///
 		 bmicat cat %5.1f \ ///
@@ -205,7 +205,7 @@ table1_mc, by(standil17) total(before) onecol iqrmiddle(",") saving("$projectdir
 		 oral_prednisolone_3m_0m contn %5.1f )
 
 *2d IMID only: JAKi vs standard systemic 
-table1_mc, by(jaki) total(before) onecol iqrmiddle(",") saving("$projectdir/output/data/tables.csv", cell(A240) sheetmodify keepcellfmt) ///
+table1_mc, by(standjaki) total(before) onecol iqrmiddle(",") saving("$projectdir/output/data/tables.csv", cell(A480) sheetmodify keepcellfmt) ///
 	vars(agegroup cat %5.1f \ ///
 		 male bin %5.1f \ ///
 		 bmicat cat %5.1f \ ///
@@ -224,8 +224,8 @@ table1_mc, by(jaki) total(before) onecol iqrmiddle(",") saving("$projectdir/outp
 		 steroidcat bin %5.1f \ ///
 		 oral_prednisolone_3m_0m contn %5.1f )
 
-*2!e IMID only: RTX vs standard systemic
-table1_mc, by(standritux) total(before) onecol iqrmiddle(",") saving("$projectdir/output/data/tables.csv", cell(A240) sheetmodify keepcellfmt) ///
+*2e IMID only: RTX vs standard systemic
+table1_mc, by(standritux) total(before) onecol iqrmiddle(",") saving("$projectdir/output/data/tables.csv", cell(A540) sheetmodify keepcellfmt) ///
 	vars(agegroup cat %5.1f \ ///
 		 male bin %5.1f \ ///
 		 bmicat cat %5.1f \ ///

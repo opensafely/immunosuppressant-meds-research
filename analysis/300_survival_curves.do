@@ -25,11 +25,6 @@ log using "$logdir/graphs", replace
 * Set Ado file path
 adopath + "$projectdir/analysis/extra_ados"
 
-//the following path lines need confirmation...
-
-global projectdir $projectdir/outputs
-global graphs $projectdir/outputs/figures
-
 
 /* SET Index date ===========================================================*/
 global indexdate 			= "01/03/2020"
@@ -40,7 +35,7 @@ global files imid joint skin bowel imiddrugcategory
 
 foreach f in $files {
 		
-	use $projectdir/file_`f', replace
+	use $projectdir/output/data/file_`f', replace
 
 	*generate censor date
 	gen diecensor = mdy(10,01,2020)
@@ -62,9 +57,9 @@ foreach f in $files {
 			stcurve, haz at1(`f'=0) at2(`f'=1) title("") range(0 180) xtitle("Analysis time (years)") ///
 			legend(order(1 "Comparator" 2 "Exposed") rows(2) symxsize(*0.4) size(small)) ///
 			ylabel(,angle(horizontal)) plotregion(color(white)) graphregion(color(white)) ///
-			ytitle("Survival Probability" ) xtitle("Time (Days)" ) saving($graphs/`f'_graph, replace)
+			ytitle("Survival Probability" ) xtitle("Time (Days)" ) saving($projectdir/output/figures/`f'_graph, replace)
 	
-	graph export $graphs/survcurv_`f'_`fail'.svg , as(svg) replace
+	graph export $projectdir/output/figures/survcurv_`f'_`fail'.svg , as(svg) replace
 
 	}
 }

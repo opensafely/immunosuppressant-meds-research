@@ -1,0 +1,574 @@
+{smcl}
+{txt}{sf}{ul off}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/workspace/logs/graphs.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}22 Mar 2021, 18:29:38
+{txt}
+{com}. 
+. * Set Ado file path
+. adopath + "$projectdir/analysis/extra_ados"
+{txt}  [1]  (BASE)      "{res}/usr/local/stata/ado/base/{txt}"
+  [2]  (SITE)      "{res}/usr/local/ado/{txt}"
+  [3]              "{res}.{txt}"
+  [4]  (PERSONAL)  "{res}~/ado/personal/{txt}"
+  [5]  (PLUS)      "{res}~/ado/plus/{txt}"
+  [6]  (OLDPLACE)  "{res}~/ado/{txt}"
+  [7]              "{res}/workspace/analysis/extra_ados{txt}"
+
+{com}. 
+. 
+. /* SET Index date ===========================================================*/
+. global indexdate                        = "01/03/2020"
+{txt}
+{com}. 
+. global crude
+{txt}
+{com}. 
+. global files imid joint skin bowel imiddrugcategory 
+{txt}
+{com}. 
+. foreach f in $files {c -(}
+{txt}  2{com}.                 
+.         use $projectdir/output/data/file_`f', replace
+{txt}  3{com}. 
+.         *generate censor date
+.         gen diecensor = mdy(10,01,2020)
+{txt}  4{com}.         format diecensor %td
+{txt}  5{com}.         egen stopdied = rmin(died_ons_date diecensor)
+{txt}  6{com}.         egen stopicu = rmin(icu_or_death_covid_date diecensor)
+{txt}  7{com}. 
+.         gen faildied = died_ons_covid_flag_any
+{txt}  8{com}.         gen failicu = icu_or_death_covid
+{txt}  9{com}. 
+.         gen exitdied = died_ons_covid_flag_any
+{txt} 10{com}.         gen exiticu = icu_or_death_covid
+{txt} 11{com}. 
+.         foreach fail in died icu {c -(}
+{txt} 12{com}. 
+.                 stset stop`fail', id(patient_id) failure(fail`fail'==1) origin(time enter_date)  enter(time enter_date)
+{txt} 13{com}.                                                                 
+.                         stcox `f' 
+{txt} 14{com}.                         stcurve, haz at1(`f'=0) at2(`f'=1) title("") range(0 180) xtitle("Analysis time (years)") ///
+>                         legend(order(1 "Comparator" 2 "Exposed") rows(2) symxsize(*0.4) size(small)) ///
+>                         ylabel(,angle(horizontal)) plotregion(color(white)) graphregion(color(white)) ///
+>                         ytitle("Survival Probability" ) xtitle("Time (Days)" ) saving($projectdir/output/figures/`f'_graph, replace)
+{txt} 15{com}.         
+.         graph export $projectdir/output/figures/survcurv_`f'_`fail'.svg , as(svg) replace
+{txt} 16{com}. 
+.         {c )-}
+{txt} 17{com}. {c )-}
+{txt}(38,906 missing values generated)
+(38,906 missing values generated)
+
+                id:  {res}patient_id
+     {txt}failure event:  {res}faildied == 1
+{txt}obs. time interval:  {res}(stopdied[_n-1], stopdied]
+{txt} enter on or after:  {res}time enter_date
+{txt} exit on or before:  {res}failure
+    {txt}t for analysis:  {res}(time-origin)
+            {txt}origin:  {res}time enter_date
+
+{txt}{hline 78}
+{res}     39,307{txt}  total observations
+{res}          0{txt}  exclusions
+{hline 78}
+{res}     39,307{txt}  observations remaining, representing
+{res}     39,307{txt}  subjects
+{res}      3,927{txt}  failures in single-failure-per-subject data
+{res}  8,216,756{txt}  total analysis time at risk and under observation
+                                                at risk from t = {res}        0
+                                     {txt}earliest observed entry t = {res}        0
+                                          {txt}last observed exit t = {res}      214
+
+         {txt}failure _d:  {res}faildied == 1
+   {txt}analysis time _t:  {res}(stopdied-origin)
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Iteration 0:   log likelihood = {res}-41344.879
+{txt}Iteration 1:   log likelihood = {res}-41344.557
+{txt}Iteration 2:   log likelihood = {res}-41344.557
+{txt}Refining estimates:
+Iteration 0:   log likelihood = {res}-41344.557
+
+{txt}Cox regression -- Breslow method for ties
+
+No. of subjects = {res}      39,307                  {txt}Number of obs    =  {res}    39,307
+{txt}No. of failures = {res}       3,927
+{txt}Time at risk    = {res}     8216756
+                                                {txt}LR chi2({res}1{txt})       =  {res}      0.64
+{txt}Log likelihood  =   {res}-41344.557                  {txt}Prob > chi2      =  {res}    0.4220
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}          _t{col 14}{c |} Haz. Ratio{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 8}imid {c |}{col 14}{res}{space 2} .9666425{col 26}{space 2} .0406954{col 37}{space 1}   -0.81{col 46}{space 3}0.420{col 54}{space 4}  .890083{col 67}{space 3} 1.049787
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}(note: file /workspace/output/figures/imid_graph.gph not found)
+{res}{txt}(file /workspace/output/figures/imid_graph.gph saved)
+(note: file /workspace/output/figures/survcurv_imid_died.svg not found)
+(file /workspace/output/figures/survcurv_imid_died.svg written in SVG format)
+
+                id:  {res}patient_id
+     {txt}failure event:  {res}failicu == 1
+{txt}obs. time interval:  {res}(stopicu[_n-1], stopicu]
+{txt} enter on or after:  {res}time enter_date
+{txt} exit on or before:  {res}failure
+    {txt}t for analysis:  {res}(time-origin)
+            {txt}origin:  {res}time enter_date
+
+{txt}{hline 78}
+{res}     39,307{txt}  total observations
+{res}          0{txt}  exclusions
+{hline 78}
+{res}     39,307{txt}  observations remaining, representing
+{res}     39,307{txt}  subjects
+{res}        401{txt}  failures in single-failure-per-subject data
+{res}  8,391,077{txt}  total analysis time at risk and under observation
+                                                at risk from t = {res}        0
+                                     {txt}earliest observed entry t = {res}        0
+                                          {txt}last observed exit t = {res}      214
+
+         {txt}failure _d:  {res}failicu == 1
+   {txt}analysis time _t:  {res}(stopicu-origin)
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Iteration 0:   log likelihood = {res}-4240.6873
+{txt}Iteration 1:   log likelihood = {res}-4240.1186
+{txt}Iteration 2:   log likelihood = {res}-4240.1174
+{txt}Refining estimates:
+Iteration 0:   log likelihood = {res}-4240.1174
+
+{txt}Cox regression -- Breslow method for ties
+
+No. of subjects = {res}      39,307                  {txt}Number of obs    =  {res}    39,307
+{txt}No. of failures = {res}         401
+{txt}Time at risk    = {res}     8391077
+                                                {txt}LR chi2({res}1{txt})       =  {res}      1.14
+{txt}Log likelihood  =   {res}-4240.1174                  {txt}Prob > chi2      =  {res}    0.2857
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}          _t{col 14}{c |} Haz. Ratio{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 8}imid {c |}{col 14}{res}{space 2} .8710862{col 26}{space 2} .1109902{col 37}{space 1}   -1.08{col 46}{space 3}0.279{col 54}{space 4} .6785854{col 67}{space 3} 1.118196
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}(file /workspace/output/figures/imid_graph.gph saved)
+(note: file /workspace/output/figures/survcurv_imid_icu.svg not found)
+(file /workspace/output/figures/survcurv_imid_icu.svg written in SVG format)
+(38,906 missing values generated)
+(38,906 missing values generated)
+
+                id:  {res}patient_id
+     {txt}failure event:  {res}faildied == 1
+{txt}obs. time interval:  {res}(stopdied[_n-1], stopdied]
+{txt} enter on or after:  {res}time enter_date
+{txt} exit on or before:  {res}failure
+    {txt}t for analysis:  {res}(time-origin)
+            {txt}origin:  {res}time enter_date
+
+{txt}{hline 78}
+{res}     39,307{txt}  total observations
+{res}          0{txt}  exclusions
+{hline 78}
+{res}     39,307{txt}  observations remaining, representing
+{res}     39,307{txt}  subjects
+{res}      3,927{txt}  failures in single-failure-per-subject data
+{res}  8,216,756{txt}  total analysis time at risk and under observation
+                                                at risk from t = {res}        0
+                                     {txt}earliest observed entry t = {res}        0
+                                          {txt}last observed exit t = {res}      214
+
+         {txt}failure _d:  {res}faildied == 1
+   {txt}analysis time _t:  {res}(stopdied-origin)
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Iteration 0:   log likelihood = {res}-41344.879
+{txt}Iteration 1:   log likelihood = {res}-41344.755
+{txt}Iteration 2:   log likelihood = {res}-41344.755
+{txt}Refining estimates:
+Iteration 0:   log likelihood = {res}-41344.755
+
+{txt}Cox regression -- Breslow method for ties
+
+No. of subjects = {res}      39,307                  {txt}Number of obs    =  {res}    39,307
+{txt}No. of failures = {res}       3,927
+{txt}Time at risk    = {res}     8216756
+                                                {txt}LR chi2({res}1{txt})       =  {res}      0.25
+{txt}Log likelihood  =   {res}-41344.755                  {txt}Prob > chi2      =  {res}    0.6189
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}          _t{col 14}{c |} Haz. Ratio{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 7}joint {c |}{col 14}{res}{space 2} .9842436{col 26}{space 2} .0314327{col 37}{space 1}   -0.50{col 46}{space 3}0.619{col 54}{space 4} .9245251{col 67}{space 3}  1.04782
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}(note: file /workspace/output/figures/joint_graph.gph not found)
+{res}{txt}(file /workspace/output/figures/joint_graph.gph saved)
+(note: file /workspace/output/figures/survcurv_joint_died.svg not found)
+(file /workspace/output/figures/survcurv_joint_died.svg written in SVG format)
+
+                id:  {res}patient_id
+     {txt}failure event:  {res}failicu == 1
+{txt}obs. time interval:  {res}(stopicu[_n-1], stopicu]
+{txt} enter on or after:  {res}time enter_date
+{txt} exit on or before:  {res}failure
+    {txt}t for analysis:  {res}(time-origin)
+            {txt}origin:  {res}time enter_date
+
+{txt}{hline 78}
+{res}     39,307{txt}  total observations
+{res}          0{txt}  exclusions
+{hline 78}
+{res}     39,307{txt}  observations remaining, representing
+{res}     39,307{txt}  subjects
+{res}        401{txt}  failures in single-failure-per-subject data
+{res}  8,391,077{txt}  total analysis time at risk and under observation
+                                                at risk from t = {res}        0
+                                     {txt}earliest observed entry t = {res}        0
+                                          {txt}last observed exit t = {res}      214
+
+         {txt}failure _d:  {res}failicu == 1
+   {txt}analysis time _t:  {res}(stopicu-origin)
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Iteration 0:   log likelihood = {res}-4240.6873
+{txt}Iteration 1:   log likelihood = {res}-4240.6873
+{txt}Refining estimates:
+Iteration 0:   log likelihood = {res}-4240.6873
+
+{txt}Cox regression -- Breslow method for ties
+
+No. of subjects = {res}      39,307                  {txt}Number of obs    =  {res}    39,307
+{txt}No. of failures = {res}         401
+{txt}Time at risk    = {res}     8391077
+                                                {txt}LR chi2({res}1{txt})       =  {res}      0.00
+{txt}Log likelihood  =   {res}-4240.6873                  {txt}Prob > chi2      =  {res}    0.9976
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}          _t{col 14}{c |} Haz. Ratio{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 7}joint {c |}{col 14}{res}{space 2} .9997034{col 26}{space 2} .0998832{col 37}{space 1}   -0.00{col 46}{space 3}0.998{col 54}{space 4} .8219118{col 67}{space 3} 1.215954
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}(file /workspace/output/figures/joint_graph.gph saved)
+(note: file /workspace/output/figures/survcurv_joint_icu.svg not found)
+(file /workspace/output/figures/survcurv_joint_icu.svg written in SVG format)
+(38,906 missing values generated)
+(38,906 missing values generated)
+
+                id:  {res}patient_id
+     {txt}failure event:  {res}faildied == 1
+{txt}obs. time interval:  {res}(stopdied[_n-1], stopdied]
+{txt} enter on or after:  {res}time enter_date
+{txt} exit on or before:  {res}failure
+    {txt}t for analysis:  {res}(time-origin)
+            {txt}origin:  {res}time enter_date
+
+{txt}{hline 78}
+{res}     39,307{txt}  total observations
+{res}          0{txt}  exclusions
+{hline 78}
+{res}     39,307{txt}  observations remaining, representing
+{res}     39,307{txt}  subjects
+{res}      3,927{txt}  failures in single-failure-per-subject data
+{res}  8,216,756{txt}  total analysis time at risk and under observation
+                                                at risk from t = {res}        0
+                                     {txt}earliest observed entry t = {res}        0
+                                          {txt}last observed exit t = {res}      214
+
+         {txt}failure _d:  {res}faildied == 1
+   {txt}analysis time _t:  {res}(stopdied-origin)
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Iteration 0:   log likelihood = {res}-41344.879
+{txt}Iteration 1:   log likelihood = {res} -41343.91
+{txt}Iteration 2:   log likelihood = {res} -41343.91
+{txt}Refining estimates:
+Iteration 0:   log likelihood = {res} -41343.91
+
+{txt}Cox regression -- Breslow method for ties
+
+No. of subjects = {res}      39,307                  {txt}Number of obs    =  {res}    39,307
+{txt}No. of failures = {res}       3,927
+{txt}Time at risk    = {res}     8216756
+                                                {txt}LR chi2({res}1{txt})       =  {res}      1.94
+{txt}Log likelihood  =   {res} -41343.91                  {txt}Prob > chi2      =  {res}    0.1638
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}          _t{col 14}{c |} Haz. Ratio{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 8}skin {c |}{col 14}{res}{space 2} .9545681{col 26}{space 2} .0319496{col 37}{space 1}   -1.39{col 46}{space 3}0.165{col 54}{space 4} .8939579{col 67}{space 3} 1.019288
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}(note: file /workspace/output/figures/skin_graph.gph not found)
+{res}{txt}(file /workspace/output/figures/skin_graph.gph saved)
+(note: file /workspace/output/figures/survcurv_skin_died.svg not found)
+(file /workspace/output/figures/survcurv_skin_died.svg written in SVG format)
+
+                id:  {res}patient_id
+     {txt}failure event:  {res}failicu == 1
+{txt}obs. time interval:  {res}(stopicu[_n-1], stopicu]
+{txt} enter on or after:  {res}time enter_date
+{txt} exit on or before:  {res}failure
+    {txt}t for analysis:  {res}(time-origin)
+            {txt}origin:  {res}time enter_date
+
+{txt}{hline 78}
+{res}     39,307{txt}  total observations
+{res}          0{txt}  exclusions
+{hline 78}
+{res}     39,307{txt}  observations remaining, representing
+{res}     39,307{txt}  subjects
+{res}        401{txt}  failures in single-failure-per-subject data
+{res}  8,391,077{txt}  total analysis time at risk and under observation
+                                                at risk from t = {res}        0
+                                     {txt}earliest observed entry t = {res}        0
+                                          {txt}last observed exit t = {res}      214
+
+         {txt}failure _d:  {res}failicu == 1
+   {txt}analysis time _t:  {res}(stopicu-origin)
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Iteration 0:   log likelihood = {res}-4240.6873
+{txt}Iteration 1:   log likelihood = {res} -4240.293
+{txt}Iteration 2:   log likelihood = {res}-4240.2929
+{txt}Refining estimates:
+Iteration 0:   log likelihood = {res}-4240.2929
+
+{txt}Cox regression -- Breslow method for ties
+
+No. of subjects = {res}      39,307                  {txt}Number of obs    =  {res}    39,307
+{txt}No. of failures = {res}         401
+{txt}Time at risk    = {res}     8391077
+                                                {txt}LR chi2({res}1{txt})       =  {res}      0.79
+{txt}Log likelihood  =   {res}-4240.2929                  {txt}Prob > chi2      =  {res}    0.3745
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}          _t{col 14}{c |} Haz. Ratio{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 8}skin {c |}{col 14}{res}{space 2}  .910982{col 26}{space 2} .0960925{col 37}{space 1}   -0.88{col 46}{space 3}0.377{col 54}{space 4} .7408377{col 67}{space 3} 1.120202
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}(file /workspace/output/figures/skin_graph.gph saved)
+(note: file /workspace/output/figures/survcurv_skin_icu.svg not found)
+(file /workspace/output/figures/survcurv_skin_icu.svg written in SVG format)
+(38,906 missing values generated)
+(38,906 missing values generated)
+
+                id:  {res}patient_id
+     {txt}failure event:  {res}faildied == 1
+{txt}obs. time interval:  {res}(stopdied[_n-1], stopdied]
+{txt} enter on or after:  {res}time enter_date
+{txt} exit on or before:  {res}failure
+    {txt}t for analysis:  {res}(time-origin)
+            {txt}origin:  {res}time enter_date
+
+{txt}{hline 78}
+{res}     39,307{txt}  total observations
+{res}          0{txt}  exclusions
+{hline 78}
+{res}     39,307{txt}  observations remaining, representing
+{res}     39,307{txt}  subjects
+{res}      3,927{txt}  failures in single-failure-per-subject data
+{res}  8,216,756{txt}  total analysis time at risk and under observation
+                                                at risk from t = {res}        0
+                                     {txt}earliest observed entry t = {res}        0
+                                          {txt}last observed exit t = {res}      214
+
+         {txt}failure _d:  {res}faildied == 1
+   {txt}analysis time _t:  {res}(stopdied-origin)
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Iteration 0:   log likelihood = {res}-41344.879
+{txt}Iteration 1:   log likelihood = {res}-41344.846
+{txt}Iteration 2:   log likelihood = {res}-41344.846
+{txt}Refining estimates:
+Iteration 0:   log likelihood = {res}-41344.846
+
+{txt}Cox regression -- Breslow method for ties
+
+No. of subjects = {res}      39,307                  {txt}Number of obs    =  {res}    39,307
+{txt}No. of failures = {res}       3,927
+{txt}Time at risk    = {res}     8216756
+                                                {txt}LR chi2({res}1{txt})       =  {res}      0.07
+{txt}Log likelihood  =   {res}-41344.846                  {txt}Prob > chi2      =  {res}    0.7961
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}          _t{col 14}{c |} Haz. Ratio{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 7}bowel {c |}{col 14}{res}{space 2} .9917828{col 26}{space 2} .0316686{col 37}{space 1}   -0.26{col 46}{space 3}0.796{col 54}{space 4} .9316158{col 67}{space 3} 1.055836
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}(note: file /workspace/output/figures/bowel_graph.gph not found)
+{res}{txt}(file /workspace/output/figures/bowel_graph.gph saved)
+(note: file /workspace/output/figures/survcurv_bowel_died.svg not found)
+(file /workspace/output/figures/survcurv_bowel_died.svg written in SVG format)
+
+                id:  {res}patient_id
+     {txt}failure event:  {res}failicu == 1
+{txt}obs. time interval:  {res}(stopicu[_n-1], stopicu]
+{txt} enter on or after:  {res}time enter_date
+{txt} exit on or before:  {res}failure
+    {txt}t for analysis:  {res}(time-origin)
+            {txt}origin:  {res}time enter_date
+
+{txt}{hline 78}
+{res}     39,307{txt}  total observations
+{res}          0{txt}  exclusions
+{hline 78}
+{res}     39,307{txt}  observations remaining, representing
+{res}     39,307{txt}  subjects
+{res}        401{txt}  failures in single-failure-per-subject data
+{res}  8,391,077{txt}  total analysis time at risk and under observation
+                                                at risk from t = {res}        0
+                                     {txt}earliest observed entry t = {res}        0
+                                          {txt}last observed exit t = {res}      214
+
+         {txt}failure _d:  {res}failicu == 1
+   {txt}analysis time _t:  {res}(stopicu-origin)
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Iteration 0:   log likelihood = {res}-4240.6873
+{txt}Iteration 1:   log likelihood = {res}-4240.6665
+{txt}Iteration 2:   log likelihood = {res}-4240.6665
+{txt}Refining estimates:
+Iteration 0:   log likelihood = {res}-4240.6665
+
+{txt}Cox regression -- Breslow method for ties
+
+No. of subjects = {res}      39,307                  {txt}Number of obs    =  {res}    39,307
+{txt}No. of failures = {res}         401
+{txt}Time at risk    = {res}     8391077
+                                                {txt}LR chi2({res}1{txt})       =  {res}      0.04
+{txt}Log likelihood  =   {res}-4240.6665                  {txt}Prob > chi2      =  {res}    0.8383
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}          _t{col 14}{c |} Haz. Ratio{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 7}bowel {c |}{col 14}{res}{space 2} 1.020593{col 26}{space 2} .1019475{col 37}{space 1}    0.20{col 46}{space 3}0.838{col 54}{space 4} .8391233{col 67}{space 3} 1.241308
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}(file /workspace/output/figures/bowel_graph.gph saved)
+(note: file /workspace/output/figures/survcurv_bowel_icu.svg not found)
+(file /workspace/output/figures/survcurv_bowel_icu.svg written in SVG format)
+(31,887 missing values generated)
+(31,887 missing values generated)
+
+                id:  {res}patient_id
+     {txt}failure event:  {res}faildied == 1
+{txt}obs. time interval:  {res}(stopdied[_n-1], stopdied]
+{txt} enter on or after:  {res}time enter_date
+{txt} exit on or before:  {res}failure
+    {txt}t for analysis:  {res}(time-origin)
+            {txt}origin:  {res}time enter_date
+
+{txt}{hline 78}
+{res}     32,206{txt}  total observations
+{res}          0{txt}  exclusions
+{hline 78}
+{res}     32,206{txt}  observations remaining, representing
+{res}     32,206{txt}  subjects
+{res}      3,191{txt}  failures in single-failure-per-subject data
+{res}  6,733,491{txt}  total analysis time at risk and under observation
+                                                at risk from t = {res}        0
+                                     {txt}earliest observed entry t = {res}        0
+                                          {txt}last observed exit t = {res}      214
+
+         {txt}failure _d:  {res}faildied == 1
+   {txt}analysis time _t:  {res}(stopdied-origin)
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Iteration 0:   log likelihood = {res}-32961.243
+{txt}Iteration 1:   log likelihood = {res}-32961.186
+{txt}Iteration 2:   log likelihood = {res}-32961.186
+{txt}Refining estimates:
+Iteration 0:   log likelihood = {res}-32961.186
+
+{txt}Cox regression -- Breslow method for ties
+
+No. of subjects = {res}      32,206                  {txt}Number of obs    =  {res}    32,206
+{txt}No. of failures = {res}       3,191
+{txt}Time at risk    = {res}     6733491
+                                                {txt}LR chi2({res}1{txt})       =  {res}      0.11
+{txt}Log likelihood  =   {res}-32961.186                  {txt}Prob > chi2      =  {res}    0.7364
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}          _t{col 14}{c |} Haz. Ratio{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+imiddrugca~y {c |}{col 14}{res}{space 2} 1.027085{col 26}{space 2} .0818753{col 37}{space 1}    0.34{col 46}{space 3}0.737{col 54}{space 4}   .87852{col 67}{space 3} 1.200773
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}(note: file /workspace/output/figures/imiddrugcategory_graph.gph not found)
+{res}{txt}(file /workspace/output/figures/imiddrugcategory_graph.gph saved)
+(note: file /workspace/output/figures/survcurv_imiddrugcategory_died.svg not found)
+(file /workspace/output/figures/survcurv_imiddrugcategory_died.svg written in SVG format)
+
+                id:  {res}patient_id
+     {txt}failure event:  {res}failicu == 1
+{txt}obs. time interval:  {res}(stopicu[_n-1], stopicu]
+{txt} enter on or after:  {res}time enter_date
+{txt} exit on or before:  {res}failure
+    {txt}t for analysis:  {res}(time-origin)
+            {txt}origin:  {res}time enter_date
+
+{txt}{hline 78}
+{res}     32,206{txt}  total observations
+{res}          0{txt}  exclusions
+{hline 78}
+{res}     32,206{txt}  observations remaining, representing
+{res}     32,206{txt}  subjects
+{res}        319{txt}  failures in single-failure-per-subject data
+{res}  6,876,142{txt}  total analysis time at risk and under observation
+                                                at risk from t = {res}        0
+                                     {txt}earliest observed entry t = {res}        0
+                                          {txt}last observed exit t = {res}      214
+
+         {txt}failure _d:  {res}failicu == 1
+   {txt}analysis time _t:  {res}(stopicu-origin)
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Iteration 0:   log likelihood = {res}-3309.9906
+{txt}Iteration 1:   log likelihood = {res}-3309.7112
+{txt}Iteration 2:   log likelihood = {res}-3309.7093
+{txt}Iteration 3:   log likelihood = {res}-3309.7093
+{txt}Refining estimates:
+Iteration 0:   log likelihood = {res}-3309.7093
+
+{txt}Cox regression -- Breslow method for ties
+
+No. of subjects = {res}      32,206                  {txt}Number of obs    =  {res}    32,206
+{txt}No. of failures = {res}         319
+{txt}Time at risk    = {res}     6876142
+                                                {txt}LR chi2({res}1{txt})       =  {res}      0.56
+{txt}Log likelihood  =   {res}-3309.7093                  {txt}Prob > chi2      =  {res}    0.4533
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}          _t{col 14}{c |} Haz. Ratio{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+imiddrugca~y {c |}{col 14}{res}{space 2}  1.21997{col 26}{space 2} .3334498{col 37}{space 1}    0.73{col 46}{space 3}0.467{col 54}{space 4}  .713992{col 67}{space 3} 2.084514
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}(file /workspace/output/figures/imiddrugcategory_graph.gph saved)
+(note: file /workspace/output/figures/survcurv_imiddrugcategory_icu.svg not found)
+(file /workspace/output/figures/survcurv_imiddrugcategory_icu.svg written in SVG format)
+
+{com}. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}/workspace/logs/graphs.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}22 Mar 2021, 18:29:55
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}

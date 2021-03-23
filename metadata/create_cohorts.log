@@ -1,0 +1,28 @@
+
+
+state: succeeded
+commit: none
+docker_image_id: sha256:5a4bb3ecd807de29a18a01ffae01739415778f0b770cbd43d7140bb0017306f1
+job_id: sflz7nbxvepznprs
+run_by_user: arowan
+created_at: 2021-03-23T09:29:07Z
+started_at: 2021-03-23T09:30:26Z
+completed_at: 2021-03-23T09:30:36Z
+
+Completed successfully
+
+outputs:
+  logs/start_create_analysis_dataset.smcl  - highly_sensitive
+  output/data/file_bowel.dta               - highly_sensitive
+  output/data/file_imid.dta                - highly_sensitive
+  output/data/file_imiddrugcategory.dta    - highly_sensitive
+  output/data/file_joint.dta               - highly_sensitive
+  output/data/file_skin.dta                - highly_sensitive
+  output/data/file_standil17.dta           - highly_sensitive
+  output/data/file_standil23.dta           - highly_sensitive
+  output/data/file_standil6.dta            - highly_sensitive
+  output/data/file_standjaki.dta           - highly_sensitive
+  output/data/file_standritux.dta          - highly_sensitive
+  output/data/file_standtnf.dta            - highly_sensitive
+  output/data/file_standtnf3m.dta          - highly_sensitive
+  output/data/file_tnfmono.dta             - highly_sensitive

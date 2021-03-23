@@ -15,57 +15,58 @@ actions:
     run: stata-mp:latest analysis/000_define_covariates.do
     needs: [generate_study_population]
     outputs:
-	highly_sensitive:
-	   log1: logs/start_create_analysis_dataset.smcl 
-	   analysis_dataset1: output/file_imid
-	   analysis_dataset2: output/file_joint
-	   analysis_dataset3: output/file_skin
-	   analysis_dataset4: output/file_bowel
-	   analysis_dataset5: output/file_imiddrugcategory
-	   analysis_dataset6: output/file_standtnf
-	   analysis_dataset7: output/file_standtnf3m
-	   analysis_dataset8: output/file_tnfmono
-	   analysis_dataset9: output/file_standil6
-	   analysis_dataset10: output/file_standil17
-	   analysis_dataset11: output/file_standil23
-	   analysis_dataset12: output/file_standjak
-	   analysis_dataset13: output/file_standritux
+      highly_sensitive:
+        log1: logs/start_create_analysis_dataset.smcl 
+        data1: output/data/file_imid.dta
+        data2: output/data/file_joint.dta
+        data3: output/data/file_skin.dta
+        data4: output/data/file_bowel.dta
+        data5: output/data/file_imiddrugcategory.dta
+        data6: output/data/file_standtnf.dta
+        data7: output/data/file_standtnf3m.dta
+        data8: output/data/file_tnfmono.dta
+        data9: output/data/file_standil6.dta
+        data10: output/data/file_standil17.dta
+        data11: output/data/file_standil23.dta
+        data12: output/data/file_standjaki.dta
+        data13: output/data/file_standritux.dta
 
-   run_baseline_tables:
-      run: stata-mp:latest analysis/100_baseline_characteristics.do
-      needs: [create_cohorts]
-      outputs:
-	highly sensitive:
-	   log2: logs/descriptive_tables.smcl 
-	   data1: output/data/tables.csv
+  run_baseline_tables:
+    run: stata-mp:latest analysis/100_baseline_characteristics.do
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log2: logs/descriptive_tables.smcl 
+        data14: output/data/tables.csv
 
-   run_cox_models:
-      run: stata-mp:latest analysis/200_cox_models.do
-      needs: [create_cohorts]
-      outputs:
-	highly sensitive:
-	   log3: logs/cox_models.smcl 
-	   data2: output/data/cox_model_summary.dta
+  run_cox_models:
+    run: stata-mp:latest analysis/200_cox_models.do
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log3: logs/cox_models.smcl 
+        data15: output/data/cox_model_summary.dta
 
-   run_survival_curves:
-      run: stata-mp:latest analysis/300_survival_curves.do
-      needs: [create_cohorts]
-      outputs:
-	log4: logs/graphs.smcl 
-	figure1: output/figures/survcurv_imiddrugcategory_icu.svg
-	figure2: output/figures/imiddrugcategory_graph.gph	figure3: output/figures/survcurv_imiddrugcategory_died.svg
-	figure4: output/figures/survcurv_bowel_icu.svg
-	figure5: output/figures/bowel_graph.gph
-	figure6: output/figures/survcurv_bowel_died.svg
-	figure7: output/figures/survcurv_skin_icu.svg
-	figure8: output/figures/skin_graph.gph
-	figure9: output/figures/survcurv_skin_died.svg
-	figure10: output/figures/survcurv_joint_icu.svg
-	figure11: output/figures/joint_graph.gph
-	figure12: output/figures/survcurv_joint_died.svg
-	figure13: output/figures/survcurv_imid_icu.svg
-	figure14: output/figures/imid_graph.gph
-	figure15: output/figures/survcurv_imid_died.svg
+  run_survival_curves:
+    run: stata-mp:latest analysis/300_survival_curves.do
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log4: logs/graphs.smcl 
+        figure1: output/figures/survcurv_imiddrugcategory_icu.svg
+        figure2: output/figures/imiddrugcategory_graph.gph        figure3: output/figures/survcurv_imiddrugcategory_died.svg
+        figure4: output/figures/survcurv_bowel_icu.svg
+        figure5: output/figures/bowel_graph.gph
+        figure6: output/figures/survcurv_bowel_died.svg
+        figure7: output/figures/survcurv_skin_icu.svg
+        figure8: output/figures/skin_graph.gph
+        figure9: output/figures/survcurv_skin_died.svg
+        figure10: output/figures/survcurv_joint_icu.svg
+        figure11: output/figures/joint_graph.gph
+        figure12: output/figures/survcurv_joint_died.svg
+        figure13: output/figures/survcurv_imid_icu.svg
+        figure14: output/figures/imid_graph.gph
+        figure15: output/figures/survcurv_imid_died.svg
 
 
 

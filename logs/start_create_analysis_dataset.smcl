@@ -1,0 +1,1395 @@
+{smcl}
+{txt}{sf}{ul off}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/workspace/logs/start_create_analysis_dataset.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}23 Mar 2021, 09:30:28
+{txt}
+{com}. 
+. * Set Ado file path
+. adopath + "$projectdir/analysis/extra_ados"
+{txt}  [1]  (BASE)      "{res}/usr/local/stata/ado/base/{txt}"
+  [2]  (SITE)      "{res}/usr/local/ado/{txt}"
+  [3]              "{res}.{txt}"
+  [4]  (PERSONAL)  "{res}~/ado/personal/{txt}"
+  [5]  (PLUS)      "{res}~/ado/plus/{txt}"
+  [6]  (OLDPLACE)  "{res}~/ado/{txt}"
+  [7]              "{res}/workspace/analysis/extra_ados{txt}"
+
+{com}. 
+. /* SET Index date ===========================================================*/
+. global indexdate                        = "01/03/2020"
+{txt}
+{com}. 
+. /* RENAME VARIABLES===========================================================*/
+. 
+. rename inflammatory_bowel_disease_uncla ibd_uncla
+{res}{txt}
+{com}. 
+. /* Drop variables not needed ================================================*/
+. *calculating ckd from creat 
+. drop ckd ethnicity_date mepolizumab_3m_0m mepolizumab_6m_3m vedolizumab_3m_0m vedolizumab_6m_3m
+{txt}
+{com}. 
+. /* CONVERT STRINGS TO DATE====================================================*/
+. /* Comorb dates are given with month/year only, so adding day 15 to enable
+>    them to be processed as dates */
+. 
+. foreach var of varlist   crohns_disease                                         ///
+>                                                  ulcerative_colitis                                     ///
+>                                                  ibd_uncla                              ///
+>                                                  psoriasis                                                      ///
+>                                                  hidradenitis_suppurativa                       ///
+>                                                  psoriatic_arthritis                            ///
+>                                                  rheumatoid_arthritis                           ///
+>                                                  ankylosing_spondylitis                         ///
+>                                                  chronic_cardiac_disease                        ///
+>                                                  hba1c_new                                                      ///
+>                                                  hba1c_old                                                      ///
+>                                                  hba1c_mmol_per_mol_date                        ///
+>                                                  hba1c_percentage_date                          ///
+>                                                  diabetes                                                       ///
+>                                                  hypertension                                           ///
+>                                                  chronic_respiratory_disease            ///
+>                                                  esrf                                                           ///
+>                                                  copd                                                           ///
+>                                                  chronic_liver_disease                          ///
+>                                                  stroke                                                         ///
+>                                                  lung_cancer                                            ///
+>                                                  haem_cancer                                            ///
+>                                                  other_cancer                                           ///
+>                                                  creatinine_date                                ///
+>                                                  organ_transplant                                       ///
+>                                                  bmi_date_measured                              {c -(}
+{txt}  2{com}.                                                         
+.                 capture confirm string variable `var'
+{txt}  3{com}.                 if _rc!=0 {c -(}
+{txt}  4{com}.                         assert `var'==.
+{txt}  5{com}.                         rename `var' `var'_date
+{txt}  6{com}.                 {c )-}
+{txt}  7{com}.         
+.                 else {c -(}
+{txt}  8{com}.                                 replace `var' = `var' + "-15"
+{txt}  9{com}.                                 rename `var' `var'_dstr
+{txt} 10{com}.                                 replace `var'_dstr = " " if `var'_dstr == "-15"
+{txt} 11{com}.                                 gen `var'_date = date(`var'_dstr, "YMD") 
+{txt} 12{com}.                                 order `var'_date, after(`var'_dstr)
+{txt} 13{com}.                                 drop `var'_dstr
+{txt} 14{com}.                 {c )-}
+{txt} 15{com}.         
+.         format `var'_date %td
+{txt} 16{com}. {c )-}
+{txt}variable {bf}crohns_disease{sf} was {bf}{res}str7{sf}{txt} now {bf}{res}str10{sf}
+{txt}(50,000 real changes made)
+{res}{txt}(40,000 real changes made)
+(40,000 missing values generated)
+variable {bf}ulcerative_colitis{sf} was {bf}{res}str7{sf}{txt} now {bf}{res}str10{sf}
+{txt}(50,000 real changes made)
+{res}{txt}(40,000 real changes made)
+(40,000 missing values generated)
+variable {bf}ibd_uncla{sf} was {bf}{res}str7{sf}{txt} now {bf}{res}str10{sf}
+{txt}(50,000 real changes made)
+{res}{txt}(40,000 real changes made)
+(40,000 missing values generated)
+variable {bf}psoriasis{sf} was {bf}{res}str7{sf}{txt} now {bf}{res}str10{sf}
+{txt}(50,000 real changes made)
+{res}{txt}(40,000 real changes made)
+(40,000 missing values generated)
+variable {bf}hidradenitis_suppurativa{sf} was {bf}{res}str7{sf}{txt} now {bf}{res}str10{sf}
+{txt}(50,000 real changes made)
+{res}{txt}(40,000 real changes made)
+(40,000 missing values generated)
+variable {bf}psoriatic_arthritis{sf} was {bf}{res}str7{sf}{txt} now {bf}{res}str10{sf}
+{txt}(50,000 real changes made)
+{res}{txt}(40,000 real changes made)
+(40,000 missing values generated)
+variable {bf}rheumatoid_arthritis{sf} was {bf}{res}str7{sf}{txt} now {bf}{res}str10{sf}
+{txt}(50,000 real changes made)
+{res}{txt}(40,000 real changes made)
+(40,000 missing values generated)
+variable {bf}ankylosing_spondylitis{sf} was {bf}{res}str7{sf}{txt} now {bf}{res}str10{sf}
+{txt}(50,000 real changes made)
+{res}{txt}(40,000 real changes made)
+(40,000 missing values generated)
+variable {bf}chronic_cardiac_disease{sf} was {bf}{res}str7{sf}{txt} now {bf}{res}str10{sf}
+{txt}(50,000 real changes made)
+{res}{txt}(40,000 real changes made)
+(40,000 missing values generated)
+variable {bf}hba1c_new{sf} was {bf}{res}str7{sf}{txt} now {bf}{res}str10{sf}
+{txt}(50,000 real changes made)
+{res}{txt}(40,000 real changes made)
+(40,000 missing values generated)
+variable {bf}hba1c_old{sf} was {bf}{res}str7{sf}{txt} now {bf}{res}str10{sf}
+{txt}(50,000 real changes made)
+{res}{txt}(40,000 real changes made)
+(40,000 missing values generated)
+variable {bf}hba1c_mmol_per_mol_date{sf} was {bf}{res}str7{sf}{txt} now {bf}{res}str10{sf}
+{txt}(50,000 real changes made)
+{res}{txt}(2,500 real changes made)
+(2,500 missing values generated)
+variable {bf}hba1c_percentage_date{sf} was {bf}{res}str7{sf}{txt} now {bf}{res}str10{sf}
+{txt}(50,000 real changes made)
+{res}{txt}(2,500 real changes made)
+(2,500 missing values generated)
+variable {bf}diabetes{sf} was {bf}{res}str7{sf}{txt} now {bf}{res}str10{sf}
+{txt}(50,000 real changes made)
+{res}{txt}(40,000 real changes made)
+(40,000 missing values generated)
+variable {bf}hypertension{sf} was {bf}{res}str7{sf}{txt} now {bf}{res}str10{sf}
+{txt}(50,000 real changes made)
+{res}{txt}(40,000 real changes made)
+(40,000 missing values generated)
+variable {bf}chronic_respiratory_disease{sf} was {bf}{res}str7{sf}{txt} now {bf}{res}str10{sf}
+{txt}(50,000 real changes made)
+{res}{txt}(40,000 real changes made)
+(40,000 missing values generated)
+variable {bf}esrf{sf} was {bf}{res}str7{sf}{txt} now {bf}{res}str10{sf}
+{txt}(50,000 real changes made)
+{res}{txt}(45,000 real changes made)
+(45,000 missing values generated)
+variable {bf}copd{sf} was {bf}{res}str7{sf}{txt} now {bf}{res}str10{sf}
+{txt}(50,000 real changes made)
+{res}{txt}(40,000 real changes made)
+(40,000 missing values generated)
+variable {bf}chronic_liver_disease{sf} was {bf}{res}str7{sf}{txt} now {bf}{res}str10{sf}
+{txt}(50,000 real changes made)
+{res}{txt}(40,000 real changes made)
+(40,000 missing values generated)
+variable {bf}stroke{sf} was {bf}{res}str7{sf}{txt} now {bf}{res}str10{sf}
+{txt}(50,000 real changes made)
+{res}{txt}(40,000 real changes made)
+(40,000 missing values generated)
+variable {bf}lung_cancer{sf} was {bf}{res}str7{sf}{txt} now {bf}{res}str10{sf}
+{txt}(50,000 real changes made)
+{res}{txt}(40,000 real changes made)
+(40,000 missing values generated)
+variable {bf}haem_cancer{sf} was {bf}{res}str7{sf}{txt} now {bf}{res}str10{sf}
+{txt}(50,000 real changes made)
+{res}{txt}(40,000 real changes made)
+(40,000 missing values generated)
+variable {bf}other_cancer{sf} was {bf}{res}str7{sf}{txt} now {bf}{res}str10{sf}
+{txt}(50,000 real changes made)
+{res}{txt}(40,000 real changes made)
+(40,000 missing values generated)
+variable {bf}creatinine_date{sf} was {bf}{res}str7{sf}{txt} now {bf}{res}str10{sf}
+{txt}(50,000 real changes made)
+{res}{txt}(2,500 real changes made)
+(2,500 missing values generated)
+variable {bf}organ_transplant{sf} was {bf}{res}str7{sf}{txt} now {bf}{res}str10{sf}
+{txt}(50,000 real changes made)
+{res}{txt}(40,000 real changes made)
+(40,000 missing values generated)
+variable {bf}bmi_date_measured{sf} was {bf}{res}str7{sf}{txt} now {bf}{res}str10{sf}
+{txt}(50,000 real changes made)
+{res}{txt}(20,000 real changes made)
+(20,000 missing values generated)
+
+{com}. 
+. /*conversion for dates with day already included*/
+. 
+. foreach var of varlist   icu_date_admitted                                      ///
+>                                                  died_date_ons                                          ///
+>                                                  first_pos_test_sgss                            ///
+>                                                  {c -(}
+{txt}  2{com}.                                                  
+.                 capture confirm string variable `var'
+{txt}  3{com}.                 if _rc!=0 {c -(}
+{txt}  4{com}.                         assert `var'==.
+{txt}  5{com}.                         rename `var' `var'_date
+{txt}  6{com}.                 {c )-}
+{txt}  7{com}.         
+.                 else {c -(}
+{txt}  8{com}.                                 rename `var' `var'_dstr
+{txt}  9{com}.                                 gen `var'_date = date(`var'_dstr, "YMD") 
+{txt} 10{com}.                                 order `var'_date, after(`var'_dstr)
+{txt} 11{com}.                                 drop `var'_dstr
+{txt} 12{com}.                                 gen `var'_date15 = `var'_date+15
+{txt} 13{com}.                                 order `var'_date15, after(`var'_date)
+{txt} 14{com}.                                 drop `var'_date
+{txt} 15{com}.                                 rename `var'_date15 `var'_date
+{txt} 16{com}.                 {c )-}
+{txt} 17{com}.         
+.         format `var'_date %td
+{txt} 18{com}. {c )-}
+{res}{txt}(45,000 missing values generated)
+(45,000 missing values generated)
+{res}{txt}(45,000 missing values generated)
+(45,000 missing values generated)
+{res}{txt}(45,000 missing values generated)
+(45,000 missing values generated)
+{res}{txt}
+{com}.                                                  
+. 
+. /* RENAME VARAIBLES===========================================================*/
+. *  An extra 'date' added to the end of some variable names, remove 
+. rename icu_date_admitted_date                   icu_admitted_date                       
+{res}{txt}
+{com}. rename bmi_date_measured_date                   bmi_measured_date
+{res}{txt}
+{com}. rename died_date_ons_date                       died_ons_date 
+{res}{txt}
+{com}. rename creatinine_date_date                             creatinine_measured_date
+{res}{txt}
+{com}. rename hba1c_mmol_per_mol_date_date             hba1c_mmol_per_mol_date 
+{res}{txt}
+{com}. rename hba1c_percentage_date_date               hba1c_percentage_date
+{res}{txt}
+{com}. 
+. 
+. * Some names too long for loops below, shorten
+. 
+. /* CREATE BINARY VARIABLES====================================================*/
+. 
+. 
+. *  Make indicator variables for all conditions where relevant 
+. 
+. 
+. foreach var of varlist   crohns_disease_date                                ///
+>                                                  ulcerative_colitis_date                                ///
+>                                                  ibd_uncla_date                         ///
+>                                                  psoriasis_date                                                 ///
+>                                                  hidradenitis_suppurativa_date                  ///
+>                                                  psoriatic_arthritis_date                               ///
+>                                                  rheumatoid_arthritis_date                  ///
+>                                                  ankylosing_spondylitis_date                    ///
+>                                                  chronic_cardiac_disease_date                   ///
+>                                                  hypertension_date                                              ///
+>                                                  chronic_respiratory_disease_date               ///
+>                                                  copd_date                                                              ///
+>                                                  chronic_liver_disease_date                             ///
+>                                                  stroke_date                                                    ///
+>                                                  lung_cancer_date                                               ///
+>                                                  haem_cancer_date                                               ///
+>                                                  other_cancer_date                                              ///
+>                                                  diabetes_date                                                  ///
+>                                                  esrf_date                                                              ///
+>                                                  creatinine_measured_date                   ///
+>                                                  organ_transplant_date                                  ///
+>                                                  bmi_measured_date                                          ///
+>                                                  icu_admitted_date                                          ///
+>                                                  died_ons_date                                                  ///
+>                                                  first_pos_test_sgss_date       {c -(}
+{txt}  2{com}.         /* date ranges are applied in python, so presence of date indicates presence of 
+>           disease in the correct time frame */ 
+.         local newvar =  substr("`var'", 1, length("`var'") - 5)
+{txt}  3{com}.         gen `newvar' = (`var'!=. )
+{txt}  4{com}.         order `newvar', after(`var')
+{txt}  5{com}. {c )-}
+{txt}
+{com}. 
+. /* CREATE VARIABLES===========================================================*/
+. 
+. /* DEMOGRAPHICS */ 
+. 
+. * Sex
+. gen male = 1 if sex == "M"
+{txt}(25,505 missing values generated)
+
+{com}. replace male = 0 if sex == "F"
+{txt}(25,505 real changes made)
+
+{com}. 
+. * Ethnicity
+. replace ethnicity = .u if ethnicity == .
+{txt}(12,500 real changes made, 12,500 to missing)
+
+{com}. 
+. *rearrange in order of prevalence
+. recode ethnicity 2=6 /* mixed to 6 */
+{txt}(ethnicity: 0 changes made)
+
+{com}. recode ethnicity 3=2 /* south asian to 2 */
+{txt}(ethnicity: 3896 changes made)
+
+{com}. recode ethnicity 4=3 /* black to 3 */
+{txt}(ethnicity: 0 changes made)
+
+{com}. recode ethnicity 6=4 /* mixed to 4 */
+{txt}(ethnicity: 0 changes made)
+
+{com}. 
+. label define ethnicity  1 "White"                                       ///
+>                                                 2 "South Asian"                         ///
+>                                                 3 "Black"                                       ///
+>                                                 4 "Mixed"                                       ///
+>                                                 5 "Other"                                       ///
+>                                                 .u "Unknown"
+{txt}
+{com}. label values ethnicity ethnicity
+{txt}
+{com}. 
+. //On reflection - this code below is probably not changing anything 
+. //.u in Stata will handle missingness in the same manner
+. //gen ethnicity2 = ethnicity
+. //replace ethnicity2 = . if ethnicity == .u
+. 
+. * STP 
+. rename stp stp_old
+{res}{txt}
+{com}. bysort stp_old: gen stp = 1 if _n==1
+{txt}(49,998 missing values generated)
+
+{com}. replace stp = sum(stp)
+{txt}(49,999 real changes made)
+
+{com}. drop stp_old
+{txt}
+{com}. 
+. /*  IMD  */
+. * Group into 5 groups
+. rename imd imd_o
+{res}{txt}
+{com}. egen imd = cut(imd_o), group(5) icodes
+{txt}
+{com}. 
+. * add one to create groups 1 - 5 
+. replace imd = imd + 1
+{txt}(50,000 real changes made)
+
+{com}. 
+. * - 1 is missing, should be excluded from population 
+. replace imd = .u if imd_o == -1
+{txt}(0 real changes made)
+
+{com}. drop imd_o
+{txt}
+{com}. 
+. * Reverse the order (so high is more deprived)
+. recode imd 5 = 1 4 = 2 3 = 3 2 = 4 1 = 5 .u = .u
+{txt}(imd: 50000 changes made)
+
+{com}. 
+. label define imd 1 "1 least deprived" 2 "2" 3 "3" 4 "4" 5 "5 most deprived" .u "Unknown"
+{txt}
+{com}. label values imd imd 
+{txt}
+{com}. 
+. /*  Age variables  */ 
+. ********works if ages 18 and over
+. * Create categorised age
+. drop if age<18 & age !=.
+{txt}(10,693 observations deleted)
+
+{com}. drop if age>109 & age !=.
+{txt}(0 observations deleted)
+
+{com}. 
+. recode age 18/39.9999 = 1 /// 
+>            40/49.9999 = 2 ///
+>                    50/59.9999 = 3 ///
+>                60/69.9999 = 4 ///
+>                    70/79.9999 = 5 ///
+>                    80/max = 6, gen(agegroup) 
+{txt}(39307 differences between age and agegroup)
+
+{com}. 
+. label define agegroup   1 "18-<40" ///
+>                                                 2 "40-<50" ///
+>                                                 3 "50-<60" ///
+>                                                 4 "60-<70" ///
+>                                                 5 "70-<80" ///
+>                                                 6 "80+"
+{txt}
+{com}.                                                 
+. label values agegroup agegroup
+{txt}
+{com}. 
+. * Create binary age
+. recode age min/69.999 = 0 ///
+>            70/max = 1, gen(age70)
+{txt}(39307 differences between age and age70)
+
+{com}. 
+. * Check there are no missing ages
+. assert age < .
+{txt}
+{com}. assert agegroup < .
+{txt}
+{com}. assert age70 < .
+{txt}
+{com}. 
+. * Create restricted cubic splines for age
+. mkspline age = age, cubic nknots(4)
+{txt}
+{com}. 
+. /*  Body Mass Index  */
+. * NB: watch for missingness
+. 
+. * Recode strange values 
+. replace bmi = . if bmi == 0 
+{txt}(15,750 real changes made, 15,750 to missing)
+
+{com}. replace bmi = . if !inrange(bmi, 10, 60)
+{txt}(300 real changes made, 300 to missing)
+
+{com}. 
+. * Restrict to within 10 years of index and aged > 16 
+. gen bmi_time = (date("$indexdate", "DMY") - bmi_measured_date)/365.25
+{txt}(15,750 missing values generated)
+
+{com}. gen bmi_age = age - bmi_time
+{txt}(15,750 missing values generated)
+
+{com}. 
+. replace bmi = . if bmi_age < 16 
+{txt}(16,786 real changes made, 16,786 to missing)
+
+{com}. replace bmi = . if bmi_time > 10 & bmi_time != . 
+{txt}(4,445 real changes made, 4,445 to missing)
+
+{com}. 
+. * Set to missing if no date, and vice versa 
+. replace bmi = . if bmi_measured_date == . 
+{txt}(0 real changes made)
+
+{com}. replace bmi_measured_date = . if bmi == . 
+{txt}(21,531 real changes made, 21,531 to missing)
+
+{com}. replace bmi_measured_date = . if bmi == . 
+{txt}(0 real changes made)
+
+{com}. 
+. gen     bmicat = .
+{txt}(39,307 missing values generated)
+
+{com}. recode  bmicat . = 1 if bmi < 18.5
+{txt}(bmicat: 85 changes made)
+
+{com}. recode  bmicat . = 2 if bmi < 25
+{txt}(bmicat: 210 changes made)
+
+{com}. recode  bmicat . = 3 if bmi < 30
+{txt}(bmicat: 328 changes made)
+
+{com}. recode  bmicat . = 4 if bmi < 35
+{txt}(bmicat: 389 changes made)
+
+{com}. recode  bmicat . = 5 if bmi < 40
+{txt}(bmicat: 404 changes made)
+
+{com}. recode  bmicat . = 6 if bmi < .
+{txt}(bmicat: 610 changes made)
+
+{com}. replace bmicat = .u if bmi >= .
+{txt}(37,281 real changes made, 37,281 to missing)
+
+{com}. 
+. label define bmicat 1 "Underweight (<18.5)"     ///
+>                                         2 "Normal (18.5-24.9)"          ///
+>                                         3 "Overweight (25-29.9)"        ///
+>                                         4 "Obese I (30-34.9)"           ///
+>                                         5 "Obese II (35-39.9)"          ///
+>                                         6 "Obese III (40+)"                     ///
+>                                         .u "Unknown (.u)"
+{txt}
+{com}.                                         
+. label values bmicat bmicat
+{txt}
+{com}. 
+. * Create less  granular categorisation
+. recode bmicat 1/3 .u = 1 4 = 2 5 = 3 6 = 4, gen(obese4cat)
+{txt}(39222 differences between bmicat and obese4cat)
+
+{com}. 
+. label define obese4cat  1 "No record of obesity"        ///
+>                                                 2 "Obese I (30-34.9)"           ///
+>                                                 3 "Obese II (35-39.9)"          ///
+>                                                 4 "Obese III (40+)"             
+{txt}
+{com}. 
+. label values obese4cat obese4cat
+{txt}
+{com}. order obese4cat, after(bmicat)
+{txt}
+{com}. 
+. /*  Smoking  */
+. 
+. * Smoking 
+. label define smoke 1 "Never" 2 "Former" 3 "Current" .u "Unknown (.u)"
+{txt}
+{com}. 
+. gen     smoke = 1  if smoking_status == "N"
+{txt}(38,529 missing values generated)
+
+{com}. replace smoke = 2  if smoking_status == "E"
+{txt}(393 real changes made)
+
+{com}. replace smoke = 3  if smoking_status == "S"
+{txt}(2,388 real changes made)
+
+{com}. replace smoke = .u if smoking_status == "M"
+{txt}(393 real changes made, 393 to missing)
+
+{com}. replace smoke = .u if smoking_status == "" 
+{txt}(35,355 real changes made, 35,355 to missing)
+
+{com}. 
+. label values smoke smoke
+{txt}
+{com}. drop smoking_status
+{txt}
+{com}. 
+. * Create non-missing 3-category variable for current smoking
+. * Assumes missing smoking is never smoking 
+. recode smoke .u = 1, gen(smoke_nomiss)
+{txt}(35748 differences between smoke and smoke_nomiss)
+
+{com}. order smoke_nomiss, after(smoke)
+{txt}
+{com}. label values smoke_nomiss smoke
+{txt}
+{com}. 
+. 
+. /* CLINICAL COMORBIDITIES */ 
+. 
+. /* GP consultation rate */ 
+. replace gp_consult_count = 0 if gp_consult_count <1 
+{txt}(188 real changes made)
+
+{com}. 
+. * those with no count assumed to have no visits 
+. replace gp_consult_count = 0 if gp_consult_count == . 
+{txt}(0 real changes made)
+
+{com}. gen gp_consult = (gp_consult_count >=1)
+{txt}
+{com}. 
+. 
+. /* eGFR */
+. 
+. * Set implausible creatinine values to missing (Note: zero changed to missing)
+. replace creatinine = . if !inrange(creatinine, 20, 3000) 
+{txt}(11,759 real changes made, 11,759 to missing)
+
+{com}. 
+. * Remove creatinine dates if no measurements, and vice versa 
+. 
+. replace creatinine = . if creatinine_measured_date == . 
+{txt}(0 real changes made)
+
+{com}. replace creatinine_measured_date = . if creatinine == . 
+{txt}(9,785 real changes made, 9,785 to missing)
+
+{com}. 
+. 
+. * Divide by 88.4 (to convert umol/l to mg/dl)
+. gen SCr_adj = creatinine/88.4
+{txt}(11,759 missing values generated)
+
+{com}. 
+. gen min = .
+{txt}(39,307 missing values generated)
+
+{com}. replace min = SCr_adj/0.7 if male==0
+{txt}(14,095 real changes made)
+
+{com}. replace min = SCr_adj/0.9 if male==1
+{txt}(13,453 real changes made)
+
+{com}. replace min = min^-0.329  if male==0
+{txt}(14,095 real changes made)
+
+{com}. replace min = min^-0.411  if male==1
+{txt}(13,453 real changes made)
+
+{com}. replace min = 1 if min<1
+{txt}(24,293 real changes made)
+
+{com}. 
+. gen max=.
+{txt}(39,307 missing values generated)
+
+{com}. replace max=SCr_adj/0.7 if male==0
+{txt}(14,095 real changes made)
+
+{com}. replace max=SCr_adj/0.9 if male==1
+{txt}(13,453 real changes made)
+
+{com}. replace max=max^-1.209
+{txt}(27,548 real changes made)
+
+{com}. replace max=1 if max>1
+{txt}(15,014 real changes made)
+
+{com}. 
+. gen egfr=min*max*141
+{txt}(11,759 missing values generated)
+
+{com}. replace egfr=egfr*(0.993^age)
+{txt}(27,548 real changes made)
+
+{com}. replace egfr=egfr*1.018 if male==0
+{txt}(14,095 real changes made)
+
+{com}. label var egfr "egfr calculated using CKD-EPI formula with no eth"
+{txt}
+{com}. 
+. * Categorise into ckd stages
+. egen egfr_cat_all = cut(egfr), at(0, 15, 30, 45, 60, 5000)
+{txt}(11759 missing values generated)
+
+{com}. recode egfr_cat_all 0 = 5 15 = 4 30 = 3 45 = 2 60 = 0, generate(ckd_egfr)
+{txt}(27548 differences between egfr_cat_all and ckd_egfr)
+
+{com}. 
+. /* 
+> 0 "No CKD, eGFR>60"     or missing -- have been shown reasonable in CPRD
+> 2 "stage 3a, eGFR 45-59" 
+> 3 "stage 3b, eGFR 30-44" 
+> 4 "stage 4, eGFR 15-29" 
+> 5 "stage 5, eGFR <15"
+> */
+. 
+. gen egfr_cat = .
+{txt}(39,307 missing values generated)
+
+{com}. recode egfr_cat . = 3 if egfr < 30
+{txt}(egfr_cat: 15374 changes made)
+
+{com}. recode egfr_cat . = 2 if egfr < 60
+{txt}(egfr_cat: 6119 changes made)
+
+{com}. recode egfr_cat . = 1 if egfr < .
+{txt}(egfr_cat: 6055 changes made)
+
+{com}. replace egfr_cat = .u if egfr >= .
+{txt}(11,759 real changes made, 11,759 to missing)
+
+{com}. 
+. label define egfr_cat   1 ">=60"                ///
+>                                                 2 "30-59"               ///
+>                                                 3 "<30"                 ///
+>                                                 .u "Unknown (.u)"
+{txt}
+{com}.                                         
+. label values egfr_cat egfr_cat
+{txt}
+{com}. 
+. *if missing eGFR, assume normal
+. 
+. gen egfr_cat_nomiss = egfr_cat
+{txt}(11,759 missing values generated)
+
+{com}. replace egfr_cat_nomiss = 1 if egfr_cat == .u
+{txt}(11,759 real changes made)
+
+{com}. 
+. label define egfr_cat_nomiss    1 ">=60/missing"        ///
+>                                                                 2 "30-59"                       ///
+>                                                                 3 "<30" 
+{txt}
+{com}. label values egfr_cat_nomiss egfr_cat_nomiss
+{txt}
+{com}. 
+. gen egfr_date = creatinine_measured_date
+{txt}(11,759 missing values generated)
+
+{com}. format egfr_date %td
+{txt}
+{com}. 
+. * Add in end stage renal failure and create a single CKD variable 
+. * Missing assumed to not have CKD 
+. gen ckd = 0
+{txt}
+{com}. replace ckd = 1 if ckd_egfr != . & ckd_egfr >= 1
+{txt}(21,493 real changes made)
+
+{com}. replace ckd = 1 if esrf == 1
+{txt}(1,753 real changes made)
+
+{com}. 
+. label define ckd 0 "No CKD" 1 "CKD"
+{txt}
+{com}. label values ckd ckd
+{txt}
+{com}. label var ckd "CKD stage calc without eth"
+{txt}
+{com}. 
+. * Create date (most recent measure prior to index)
+. gen temp1_ckd_date = creatinine_measured_date if ckd_egfr >=1
+{txt}(17,814 missing values generated)
+
+{com}. gen temp2_ckd_date = esrf_date if esrf == 1
+{txt}(35,380 missing values generated)
+
+{com}. gen ckd_date = max(temp1_ckd_date,temp2_ckd_date) 
+{txt}(16,061 missing values generated)
+
+{com}. format ckd_date %td 
+{txt}
+{com}. 
+. /* HbA1c */
+. 
+. /*  Diabetes severity  */
+. 
+. * Set zero or negative to missing
+. replace hba1c_percentage   = . if hba1c_percentage <= 0
+{txt}(2,186 real changes made, 2,186 to missing)
+
+{com}. replace hba1c_mmol_per_mol = . if hba1c_mmol_per_mol <= 0
+{txt}(2,802 real changes made, 2,802 to missing)
+
+{com}. 
+. * Set most recent values of >15 months prior to index to missing
+. replace hba1c_percentage   = . if (date("$indexdate", "DMY") - hba1c_percentage_date) > 15*30 & hba1c_percentage_date != .
+{txt}(36,750 real changes made, 36,750 to missing)
+
+{com}. replace hba1c_mmol_per_mol = . if (date("$indexdate", "DMY") - hba1c_mmol_per_mol_date) > 15*30 & hba1c_mmol_per_mol_date != .
+{txt}(36,159 real changes made, 36,159 to missing)
+
+{com}. 
+. * Clean up dates
+. replace hba1c_percentage_date = . if hba1c_percentage == .
+{txt}(36,980 real changes made, 36,980 to missing)
+
+{com}. replace hba1c_mmol_per_mol_date = . if hba1c_mmol_per_mol == .
+{txt}(36,990 real changes made, 36,990 to missing)
+
+{com}. 
+. /* Express  HbA1c as percentage  */ 
+. 
+. * Express all values as perecentage 
+. noi summ hba1c_percentage hba1c_mmol_per_mol 
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+hba1c_per~ge {c |}{res}        371    4.943501    1.901547   .2393207   10.52716
+{txt}hba1c_mmol~l {c |}{res}        346    41.19757    20.47848   1.505925   107.4618
+{txt}
+{com}. gen     hba1c_pct = hba1c_percentage 
+{txt}(38,936 missing values generated)
+
+{com}. replace hba1c_pct = (hba1c_mmol_per_mol/10.929)+2.15 if hba1c_mmol_per_mol<. 
+{txt}(346 real changes made)
+
+{com}. 
+. * Valid % range between 0-20  
+. replace hba1c_pct = . if !inrange(hba1c_pct, 0, 20) 
+{txt}(0 real changes made)
+
+{com}. replace hba1c_pct = round(hba1c_pct, 0.1)
+{txt}(716 real changes made)
+
+{com}. 
+. /* Categorise hba1c and diabetes  */
+. 
+. * Group hba1c
+. gen     hba1ccat = 0 if hba1c_pct <  6.5
+{txt}(38,806 missing values generated)
+
+{com}. replace hba1ccat = 1 if hba1c_pct >= 6.5  & hba1c_pct < 7.5
+{txt}(112 real changes made)
+
+{com}. replace hba1ccat = 2 if hba1c_pct >= 7.5  & hba1c_pct < 8
+{txt}(27 real changes made)
+
+{com}. replace hba1ccat = 3 if hba1c_pct >= 8    & hba1c_pct < 9
+{txt}(46 real changes made)
+
+{com}. replace hba1ccat = 4 if hba1c_pct >= 9    & hba1c_pct !=.
+{txt}(30 real changes made)
+
+{com}. label define hba1ccat 0 "<6.5%" 1">=6.5-7.4" 2">=7.5-7.9" 3">=8-8.9" 4">=9"
+{txt}
+{com}. label values hba1ccat hba1ccat
+{txt}
+{com}. 
+. * Create diabetes, split by control/not
+. gen     diabcat = 1 if diabetes==0
+{txt}(7,878 missing values generated)
+
+{com}. replace diabcat = 2 if diabetes==1 & inlist(hba1ccat, 0, 1)
+{txt}(125 real changes made)
+
+{com}. replace diabcat = 3 if diabetes==1 & inlist(hba1ccat, 2, 3, 4)
+{txt}(25 real changes made)
+
+{com}. replace diabcat = 4 if diabetes==1 & !inlist(hba1ccat, 0, 1, 2, 3, 4)
+{txt}(7,728 real changes made)
+
+{com}. 
+. label define diabcat    1 "No diabetes"                         ///
+>                                                 2 "Controlled diabetes"         ///
+>                                                 3 "Uncontrolled diabetes"       ///
+>                                                 4 "Diabetes, no hba1c measure"
+{txt}
+{com}. label values diabcat diabcat
+{txt}
+{com}. 
+. * create cancer *variable 'other cancer currently' includes carcinoma of the head and neck - need to confirm if this excludes NMSC
+. gen cancer =0
+{txt}
+{com}. replace cancer =1 if lung_cancer ==1 | haem_cancer ==1 | other_cancer ==1
+{txt}(19,292 real changes made)
+
+{com}. 
+. *creat other comorbid variables
+. gen combined_cv_comorbid =1 if chronic_cardiac_disease ==1 | stroke==1
+{txt}(25,115 missing values generated)
+
+{com}. 
+. 
+. * Delete unneeded variables
+. drop hba1c_pct hba1c_percentage hba1c_mmol_per_mol
+{txt}
+{com}. 
+. *************************************************************************************************
+. /* POPULATIONS =============================================================*/
+. 
+. /* Diagnosis =============*/
+. *include only most recent diagnosis within each specialty
+. *Rheum
+. replace rheumatoid_arthritis =0 if psoriatic_arthritis_date > rheumatoid_arthritis_date & psoriatic_arthritis_date !=.
+{txt}(802 real changes made)
+
+{com}. replace rheumatoid_arthritis =0 if ankylosing_spondylitis_date > rheumatoid_arthritis_date & ankylosing_spondylitis_date !=.
+{txt}(691 real changes made)
+
+{com}. replace psoriatic_arthritis     =0 if rheumatoid_arthritis_date > psoriatic_arthritis_date & rheumatoid_arthritis_date !=.
+{txt}(795 real changes made)
+
+{com}. replace psoriatic_arthritis     =0 if ankylosing_spondylitis_date > psoriatic_arthritis_date & ankylosing_spondylitis_date !=.
+{txt}(675 real changes made)
+
+{com}. replace ankylosing_spondylitis =0 if psoriatic_arthritis_date > ankylosing_spondylitis_date & psoriatic_arthritis_date !=.
+{txt}(795 real changes made)
+
+{com}. replace ankylosing_spondylitis =0 if rheumatoid_arthritis_date > ankylosing_spondylitis_date & rheumatoid_arthritis_date !=.
+{txt}(700 real changes made)
+
+{com}. 
+.  
+. *Derm
+. replace psoriasis =0 if hidradenitis_suppurativa_date > psoriasis_date & hidradenitis_suppurativa_date !=.
+{txt}(771 real changes made)
+
+{com}. *replace psoriasis =0 if atopic_dermatitis_date > psoriasis_date & atopic_dermatitis_date !=.
+. replace hidradenitis_suppurativa =0 if psoriasis_date > hidradenitis_suppurativa_date & psoriasis_date !=.
+{txt}(795 real changes made)
+
+{com}. *replace hidradenitis_suppurativa =0 if atopic_dermatitis_date > hidradenitis_suppurativa_date & atopic_dermatitis_date !=.
+. *replace atopic_dermatitis =0 if psoriasis_date > atopic_dermatitis_date & psoriasis_date !=.
+. *replace atopic_dermatitis =0 if hidradenitis_suppurativa_date > atopic_dermatitis_date & hidradenitis_suppurativa_date !=.
+. 
+. *Gastro
+. replace ibd_uncla =0 if ulcerative_colitis_date > ibd_uncla_date  & ulcerative_colitis_date !=.
+{txt}(771 real changes made)
+
+{com}. replace ibd_uncla =0 if crohns_disease_date > ibd_uncla_date  & crohns_disease_date !=.
+{txt}(721 real changes made)
+
+{com}. replace ulcerative_colitis =0 if crohns_disease_date > ulcerative_colitis_date & crohns_disease_date !=.
+{txt}(794 real changes made)
+
+{com}. replace ulcerative_colitis =0 if ibd_uncla_date > ulcerative_colitis_date & ibd_uncla_date !=.
+{txt}(712 real changes made)
+
+{com}. replace crohns_disease =0 if ulcerative_colitis_date > crohns_disease_date & ulcerative_colitis_date !=.
+{txt}(811 real changes made)
+
+{com}. replace crohns_disease =0 if ibd_uncla_date > crohns_disease_date & ibd_uncla_date !=.
+{txt}(673 real changes made)
+
+{com}. 
+. *consider the effect of patients diagnosed with imid post 1st March 2020
+. *ignoring this will bias to null
+. *diagnoses after 1st March have been culled via python code
+. 
+. gen imid = .
+{txt}(39,307 missing values generated)
+
+{com}. replace imid = 1 if rheumatoid_arthritis ==1 | psoriatic_arthritis ==1 | ankylosing_spondylitis==1 | ibd_uncla ==1 | ulcerative_colitis ==1 | crohns_disease ==1 | psoriasis ==1 | hidradenitis_suppurativa ==1
+{txt}(32,653 real changes made)
+
+{com}. replace imid = 0 if rheumatoid_arthritis !=1 & psoriatic_arthritis !=1 & ibd_uncla !=1 & ulcerative_colitis !=1 & crohns_disease !=1 & psoriasis !=1 & hidradenitis_suppurativa !=1 & ankylosing_spondylitis !=1
+{txt}(6,654 real changes made)
+
+{com}. 
+. label define imid 0 "Gen Pop" 1 "IMID"
+{txt}
+{com}. label values imid imid
+{txt}
+{com}. 
+. gen bowel =0
+{txt}
+{com}. replace bowel =1 if crohns_disease ==1 | ibd_uncla ==1 | ulcerative_colitis ==1
+{txt}(19,109 real changes made)
+
+{com}. label define bowel 0 "Gen Pop" 1 "Bowel"
+{txt}
+{com}. label values bowel bowel
+{txt}
+{com}. 
+. gen skin =0
+{txt}
+{com}. replace skin =1 if psoriasis ==1 | hidradenitis_suppurativa ==1
+{txt}(14,163 real changes made)
+
+{com}. label define skin 0 "Gen Pop" 1 "Skin"
+{txt}
+{com}. label values skin skin
+{txt}
+{com}. 
+. gen joint =0
+{txt}
+{com}. replace joint =1 if rheumatoid_arthritis ==1 | psoriatic_arthritis ==1 | ankylosing_spondylitis ==1
+{txt}(19,119 real changes made)
+
+{com}. label define joint 0 "Gen Pop" 1 "Joint"
+{txt}
+{com}. label values joint joint
+{txt}
+{com}. 
+. 
+. *Loop to replace missing with 0
+. foreach var of varlist  oral_prednisolone_3m_0m  ///
+>                                                 oral_prednisolone_6m_3m  /// 
+>                                                 adalimumab_3m_0m                 ///
+>                                                 adalimumab_6m_3m                 ///
+>                                                 abatacept_3m_0m                  ///
+>                                                 abatacept_6m_3m                  ///
+>                                                 certolizumab_3m_0m               ///
+>                                                 certolizumab_6m_3m       ///
+>                                                 etanercept_3m_0m                 ///
+>                                                 etanercept_6m_3m                 ///
+>                                                 golimumab_3m_0m                  ///
+>                                                 golimumab_6m_3m                  ///
+>                                                 infliximab_3m_0m                 ///
+>                                                 infliximab_6m_3m                 ///
+>                                                 sarilumab_3m_0m                  ///
+>                                                 sarilumab_6m_3m                  ///
+>                                                 tocilizumab_3m_0m                ///
+>                                                 tocilizumab_6m_3m                ///
+>                                                 ustekinumab_3m_0m                ///
+>                                                 ustekinumab_6m_3m                ///
+>                                                 guselkumab_3m_0m                 ///
+>                                                 guselkumab_6m_3m                 ///
+>                                                 tildrakizumab_3m_0m      ///
+>                                                 tildrakizumab_6m_3m      ///
+>                                                 risankizumab_3m_0m               ///
+>                                                 risankizumab_6m_3m               ///
+>                                                 secukinumab_3m_0m                ///
+>                                                 secukinumab_6m_3m                ///
+>                                                 ixekizumab_3m_0m                 ///
+>                                                 ixekizumab_6m_3m                 ///
+>                                                 brodalumab_3m_0m                 ///
+>                                                 brodalumab_6m_3m                 ///
+>                                                 baricitinib_3m_0m                ///
+>                                                 baricitinib_6m_3m                ///
+>                                                 tofacitinib_3m_0m                ///
+>                                                 tofacitinib_6m_3m                ///
+>                                                 rituximab_12m_6m                 ///
+>                                                 rituximab_6m_3m                  ///
+>                                                 rituximab_3m_0m                  ///
+>                                                 azathioprine_3m_0m               ///
+>                                                 azathioprine_6m_3m               ///
+>                                                 ciclosporin_3m_0m                ///
+>                                                 ciclosporin_6m_3m                ///
+>                                                 gold_3m_0m                               ///
+>                                                 gold_6m_3m                               ///
+>                                                 leflunomide_3m_0m                ///
+>                                                 leflunomide_6m_3m                ///
+>                                                 mercaptopurine_3m_0m     ///
+>                                                 mercaptopurine_6m_3m     ///
+>                                                 methotrexate_3m_0m               ///
+>                                                 methotrexate_6m_3m               ///
+>                                                 methotrexate_hcd_3m_0m   ///    
+>                                                 methotrexate_hcd_6m_3m   ///
+>                                                 mycophenolate_3m_0m              ///
+>                                                 mycophenolate_6m_3m              ///
+>                                                 penicillamine_3m_0m              ///
+>                                                 penicillamine_6m_3m              ///
+>                                                 sulfasalazine_3m_0m          ///
+>                                                 sulfasalazine_6m_3m              ///
+>                                                 mesalazine_3m_0m                 ///
+>                                                 mesalazine_6m_3m        {c -(}
+{txt}  2{com}.                                                 
+.                                                 replace `var' =0 if `var' ==.
+{txt}  3{com}.                                                 {c )-}
+{txt}(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+
+{com}. 
+. 
+. *stand sys drugs data are count, not binary!
+. gen standsys =1 if azathioprine_3m_0m >=1 | azathioprine_6m_3m >=1 | ciclosporin_3m_0m >=1 |ciclosporin_6m_3m >=1 | leflunomide_3m_0m >=1 |leflunomide_6m_3m >=1 | mercaptopurine_3m_0m >=1 |mercaptopurine_6m_3m >=1 | methotrexate_3m_0m >=1 | methotrexate_6m_3m >=1 | methotrexate_hcd_3m_0m >=1 | methotrexate_hcd_6m_3m >=1 | mycophenolate_3m_0m >=1 | mycophenolate_6m_3m >=1 | sulfasalazine_3m_0m >=1 |sulfasalazine_6m_3m >=1 | mesalazine_3m_0m >=1 | mesalazine_6m_3m >=1
+{txt}(7,790 missing values generated)
+
+{com}. replace standsys =. if imid !=1
+{txt}(5,358 real changes made, 5,358 to missing)
+
+{com}. 
+. gen standsys3m =1 if azathioprine_3m_0m >=1 | ciclosporin_3m_0m >=1 | leflunomide_3m_0m >=1 | mercaptopurine_3m_0m >=1 | methotrexate_3m_0m >=1 | methotrexate_hcd_3m_0m >=1 | mycophenolate_3m_0m >=1 | sulfasalazine_3m_0m >=1  | mesalazine_3m_0m >=1
+{txt}(17,493 missing values generated)
+
+{com}. replace standsys3m =. if imid !=1
+{txt}(3,716 real changes made, 3,716 to missing)
+
+{com}. 
+. gen tnf =1 if adalimumab_6m_3m !=0 | adalimumab_3m_0m !=0 | certolizumab_6m_3m !=0 | certolizumab_3m_0m !=0 | etanercept_6m_3m !=0 | etanercept_3m_0m !=0 | golimumab_6m_3m !=0 | golimumab_3m_0m !=0 | infliximab_6m_3m !=0 | infliximab_3m_0m !=0
+{txt}(13,737 missing values generated)
+
+{com}. replace tnf =. if imid !=1
+{txt}(4,382 real changes made, 4,382 to missing)
+
+{com}. 
+. gen tnfmono =1 if tnf==1 & standsys !=1
+{txt}(35,110 missing values generated)
+
+{com}. recode tnfmono .=0 if tnf==1 & standsys ==1
+{txt}(tnfmono: 16991 changes made)
+
+{com}. 
+. label define tnfmono    0 "TNF combination"                     ///
+>                                                 1 "TNF monotherapy"     
+{txt}
+{com}. label values tnfmono tnfmono
+{txt}
+{com}. label var tnfmono "TNF strategy"
+{txt}
+{com}. 
+. *high cost drug data pull through as binary variable, not count
+. gen standtnf =1 if tnf ==1
+{txt}(18,119 missing values generated)
+
+{com}. replace standtnf =0 if standsys ==1 & tnf !=1
+{txt}(9,168 real changes made)
+
+{com}. 
+. gen standtnf3m =1 if adalimumab_3m_0m ==1 | certolizumab_3m_0m ==1 | etanercept_3m_0m ==1 | golimumab_3m_0m ==1 | infliximab_3m_0m ==1
+{txt}(23,271 missing values generated)
+
+{com}. replace standtnf3m =0 if adalimumab_3m_0m !=1 & certolizumab_3m_0m !=1 & etanercept_3m_0m !=1 & golimumab_3m_0m !=1 & infliximab_3m_0m !=1 & standsys3m ==1
+{txt}(10,711 real changes made)
+
+{com}.                                 
+. gen il23 =1 if ustekinumab_3m_0m !=0 | ustekinumab_6m_3m !=0 | guselkumab_3m_0m !=0 | guselkumab_6m_3m !=0 | tildrakizumab_3m_0m !=0 | tildrakizumab_6m_3m !=0 | risankizumab_3m_0m !=0 | risankizumab_6m_3m !=0 
+{txt}(16,890 missing values generated)
+
+{com}. replace il23 =. if imid !=1
+{txt}(3,843 real changes made, 3,843 to missing)
+
+{com}. 
+. gen standil23 =1 if il23 ==1
+{txt}(20,733 missing values generated)
+
+{com}. replace standil23 =0 if standsys ==1 & il23 !=1
+{txt}(11,255 real changes made)
+
+{com}. 
+. gen standil233m =1 if ustekinumab_3m_0m ==1 | guselkumab_3m_0m ==1 | tildrakizumab_3m_0m ==1 | risankizumab_3m_0m ==1 
+{txt}(25,755 missing values generated)
+
+{com}. replace standil233m =0 if ustekinumab_3m_0m !=1 & guselkumab_3m_0m !=1 & tildrakizumab_3m_0m !=1 & risankizumab_3m_0m !=1 & standsys3m ==1
+{txt}(11,799 real changes made)
+
+{com}. 
+. gen jaki =1 if baricitinib_3m_0m !=0 | baricitinib_6m_3m !=0 | tofacitinib_3m_0m !=0 | tofacitinib_6m_3m !=0 
+{txt}(25,699 missing values generated)
+
+{com}. replace jaki =. if imid !=1
+{txt}(2,248 real changes made, 2,248 to missing)
+
+{com}. 
+. gen standjaki =1 if jaki ==1
+{txt}(27,947 missing values generated)
+
+{com}. replace standjaki =0 if standsys ==1 & jaki !=1
+{txt}(17,068 real changes made)
+
+{com}. 
+. gen standjaki3m =1 if baricitinib_3m_0m ==1 | tofacitinib_3m_0m ==1 
+{txt}(31,823 missing values generated)
+
+{com}. replace standjaki3m =0 if baricitinib_3m_0m !=1 & tofacitinib_3m_0m !=1 & standsys3m ==1
+{txt}(14,590 real changes made)
+
+{com}. 
+. gen ritux =1 if rituximab_3m_0m !=0 | rituximab_6m_3m !=0 | rituximab_12m_6m !=0
+{txt}(28,549 missing values generated)
+
+{com}. replace ritux =. if rheumatoid_arthritis !=1
+{txt}(8,998 real changes made, 8,998 to missing)
+
+{com}. 
+. gen standritux =1 if ritux ==1
+{txt}(37,547 missing values generated)
+
+{com}. replace standritux =0 if standsys ==1 & ritux !=1
+{txt}(24,746 real changes made)
+
+{com}. 
+. gen standritux3m =1 if rituximab_3m_0m ==1
+{txt}(35,365 missing values generated)
+
+{com}. replace standritux3m =0 if rituximab_3m_0m !=1 & standsys3m ==1
+{txt}(16,284 real changes made)
+
+{com}. 
+. gen il6 =1 if sarilumab_3m_0m !=0 | sarilumab_6m_3m !=0 | tocilizumab_3m_0m !=0 | tocilizumab_6m_3m !=0
+{txt}(25,839 missing values generated)
+
+{com}. replace il6 =. if rheumatoid_arthritis !=1
+{txt}(11,282 real changes made, 11,282 to missing)
+
+{com}. 
+. gen standil6 =1 if il6 ==1
+{txt}(37,121 missing values generated)
+
+{com}. replace standil6 =0 if standsys ==1 & il6 !=1
+{txt}(24,415 real changes made)
+
+{com}. 
+. gen standil63m =1 if sarilumab_3m_0m ==1 | tocilizumab_3m_0m ==1
+{txt}(31,859 missing values generated)
+
+{com}. replace standil63m =0 if sarilumab_3m_0m !=1 & tocilizumab_3m_0m !=1 & standsys3m ==1
+{txt}(14,693 real changes made)
+
+{com}. 
+. gen il17 =1 if secukinumab_3m_0m !=0 | secukinumab_6m_3m !=0 | ixekizumab_3m_0m !=0 | ixekizumab_6m_3m !=0 | brodalumab_3m_0m !=0 | brodalumab_6m_3m !=0 
+{txt}(20,881 missing values generated)
+
+{com}. replace il17 =. if psoriatic_arthritis !=1 & ankylosing_spondylitis !=1 & psoriasis !=1
+{txt}(10,222 real changes made, 10,222 to missing)
+
+{com}. 
+. gen standil17 =1 if il17 ==1
+{txt}(31,103 missing values generated)
+
+{com}. replace standil17 =0 if standsys ==1 & il17 !=1
+{txt}(19,528 real changes made)
+
+{com}. 
+. gen standil173m =1 if secukinumab_3m_0m ==1 | ixekizumab_3m_0m ==1 | brodalumab_3m_0m ==1 
+{txt}(28,576 missing values generated)
+
+{com}. replace standil173m =0 if secukinumab_3m_0m !=1 & ixekizumab_3m_0m !=1 & brodalumab_3m_0m !=1 & standsys3m ==1
+{txt}(13,160 real changes made)
+
+{com}. 
+. gen mesalazine =1 if mesalazine_3m_0m >=1 | mesalazine_6m_3m >=1
+{txt}(33,045 missing values generated)
+
+{com}. replace mesalazine =. if imid !=1
+{txt}(1,061 real changes made, 1,061 to missing)
+
+{com}. 
+. gen standmesalazine =1 if mesalazine >=1
+{txt}
+{com}. replace standmesalazine =0 if standsys ==1 & mesalazine ==0
+{txt}(0 real changes made)
+
+{com}. 
+. gen standmesalazine3m =1 if mesalazine_3m_0m >=1
+{txt}(36,035 missing values generated)
+
+{com}. replace standmesalazine3m =0 if mesalazine_3m_0m ==0 & standsys3m ==1
+{txt}(15,352 real changes made)
+
+{com}. 
+. gen steroidcat = 0
+{txt}
+{com}. replace steroidcat =1 if oral_prednisolone_3m_0m >=1 & oral_prednisolone_3m_0m!=.
+{txt}(3,308 real changes made)
+
+{com}. 
+. *gen imiddrugcategory = (standard v highcost)
+. gen imiddrugcategory = 1 if standtnf ==1 | standil23 ==1 | standjaki ==1 | standritux ==1 | standil6 ==1 | standil17 ==1
+{txt}(8,808 missing values generated)
+
+{com}. recode imiddrugcategory .=0 if standsys ==1 
+{txt}(imiddrugcategory: 1707 changes made)
+
+{com}. 
+. 
+. /* OUTCOME AND SURVIVAL TIME==================================================*/
+. /*  Cohort entry and censor dates  */
+. 
+. * Date of cohort entry, 1 Mar 2020
+. gen enter_date = date("$indexdate", "DMY")
+{txt}
+{com}. format enter_date %td
+{txt}
+{com}. 
+. /*   Outcomes   */
+. 
+. * Outcomes: itu admission, ONS-covid death  
+. 
+. * Add half-day buffer if outcome on indexdate
+. replace died_ons_date=died_ons_date+0.5 if died_ons_date==enter_date
+{txt}(0 real changes made)
+
+{com}. replace icu_admitted_date=icu_admitted_date+0.5 if icu_admitted_date==enter_date
+{txt}(0 real changes made)
+
+{com}. 
+. * Date of Covid death in ONS
+. gen died_ons_date_covid = died_ons_date if died_ons_covid_flag_any == 1
+{txt}(38,932 missing values generated)
+
+{com}. 
+. * Date of non-COVID death in ONS 
+. * If missing date of death resulting died_date will also be missing
+. gen died_ons_date_noncovid = died_ons_date if died_ons_covid_flag_any != 1 
+{txt}(35,738 missing values generated)
+
+{com}. 
+. *date of COVID ITU admission ** issue we have is how we define an ITU admission as a COVID one. 
+. gen icu_admit_diff = icu_admitted_date - first_pos_test_sgss_date
+{txt}(38,922 missing values generated)
+
+{com}. replace icu_admit_diff =. if icu_admit_diff <-5
+{txt}(176 real changes made, 176 to missing)
+
+{com}. gen icu_admit_date_covid = icu_admitted_date if icu_admit_diff <28 
+{txt}(39,280 missing values generated)
+
+{com}. 
+. gen icu_or_death_covid_date = icu_admit_date_covid
+{txt}(39,280 missing values generated)
+
+{com}. replace icu_or_death_covid_date = died_ons_date_covid if icu_admit_date_covid ==.
+{txt}(374 real changes made)
+
+{com}. gen icu_or_death_covid =1 if icu_or_death_covid_date !=.
+{txt}(38,906 missing values generated)
+
+{com}. 
+. format died_ons_date_covid died_ons_date_noncovid icu_admit_date_covid icu_or_death_covid_date %td
+{txt}
+{com}. 
+. 
+. /* CENSORING */
+. /* SET FU DATES===============================================================*/ 
+. * Censoring dates for each outcome (largely, last date outcome data available, minus a lag window based on previous graphs)
+. *death
+. tw histogram died_ons_date, discrete width(2) frequency ytitle(Number of ONS deaths) xtitle(Date) scheme(meta) saving(out_death_freq, replace)
+{res}{txt}(note: file out_death_freq.gph not found)
+{res}{txt}(file out_death_freq.gph saved)
+
+{com}. graph export "output/figures/out_death_freq.pdf", as(pdf) replace
+{txt}(file output/figures/out_death_freq.pdf written in PDF format)
+
+{com}. graph close
+{txt}
+{com}. /* erase out_death_freq.pdf
+> summ died_ons_date, format */
+. *gen onscoviddeathcensor_date = r(max)-7
+. 
+. 
+. 
+. foreach var in imid joint skin bowel imiddrugcategory standtnf standtnf3m tnfmono  standil6 standil17 standil23 standjaki standritux {c -(}
+{txt}  2{com}.         preserve
+{txt}  3{com}.         drop if `var' ==.
+{txt}  4{com}.         save $projectdir/output/data/file_`var', replace        
+{txt}  5{com}.         restore
+{txt}  6{com}. {c )-}
+{txt}(0 observations deleted)
+(note: file /workspace/output/data/file_imid.dta not found)
+file /workspace/output/data/file_imid.dta saved
+(0 observations deleted)
+(note: file /workspace/output/data/file_joint.dta not found)
+file /workspace/output/data/file_joint.dta saved
+(0 observations deleted)
+(note: file /workspace/output/data/file_skin.dta not found)
+file /workspace/output/data/file_skin.dta saved
+(0 observations deleted)
+(note: file /workspace/output/data/file_bowel.dta not found)
+file /workspace/output/data/file_bowel.dta saved
+(7,101 observations deleted)
+(note: file /workspace/output/data/file_imiddrugcategory.dta not found)
+file /workspace/output/data/file_imiddrugcategory.dta saved
+(8,951 observations deleted)
+(note: file /workspace/output/data/file_standtnf.dta not found)
+file /workspace/output/data/file_standtnf.dta saved
+(12,560 observations deleted)
+(note: file /workspace/output/data/file_standtnf3m.dta not found)
+file /workspace/output/data/file_standtnf3m.dta saved
+(18,119 observations deleted)
+(note: file /workspace/output/data/file_tnfmono.dta not found)
+file /workspace/output/data/file_tnfmono.dta saved
+(12,706 observations deleted)
+(note: file /workspace/output/data/file_standil6.dta not found)
+file /workspace/output/data/file_standil6.dta saved
+(11,575 observations deleted)
+(note: file /workspace/output/data/file_standil17.dta not found)
+file /workspace/output/data/file_standil17.dta saved
+(9,478 observations deleted)
+(note: file /workspace/output/data/file_standil23.dta not found)
+file /workspace/output/data/file_standil23.dta saved
+(10,879 observations deleted)
+(note: file /workspace/output/data/file_standjaki.dta not found)
+file /workspace/output/data/file_standjaki.dta saved
+(12,801 observations deleted)
+(note: file /workspace/output/data/file_standritux.dta not found)
+file /workspace/output/data/file_standritux.dta saved
+
+{com}. 
+. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}/workspace/logs/start_create_analysis_dataset.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}23 Mar 2021, 09:30:32
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}

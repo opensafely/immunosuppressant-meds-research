@@ -11,7 +11,7 @@ USER-INSTALLED ADO:
   (place .ado file(s) in analysis folder)						
 ==============================================================================*/
 
-import delimited `c(pwd)'/output/input.csv, clear
+* import delimited `c(pwd)'/output/input.csv, clear
 
 * set filepaths
 
@@ -28,7 +28,6 @@ log using "$logdir/cox_models", replace
 * Set Ado file path
 adopath + "$projectdir/analysis/extra_ados"
 
-global projectdir $projectdir/outputs
 
 /* SET Index date ===========================================================*/
 global indexdate 			= "01/03/2020"
@@ -47,11 +46,11 @@ tempname coxoutput
 	postfile `coxoutput' str20(cohort) str20(model) str20(failure) ///
 		ptime_exposed events_exposed rate_exposed /// 
 		ptime_comparator events_comparator rate_comparator hr lc uc ///
-		using cox_model_summary, replace						
+		using $projectdir/output/data/cox_model_summary, replace						
 
 foreach f in $files {
 		
-	use $projectdir/file_`f', replace
+	use $projectdir/output/data/file_`f', replace
 
 	*generate censor date
 	gen diecensor = mdy(10,01,2020)

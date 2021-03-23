@@ -1,8 +1,80 @@
 {
   "files": {
+    "logs/cox_models.smcl": {
+      "created_by_action": "run_cox_models",
+      "privacy_level": "moderately_sensitive"
+    },
     "logs/cr_create_analysis_dataset.smcl": {
       "created_by_action": "run_model",
       "privacy_level": "moderately_sensitive"
+    },
+    "logs/descriptive_tables.smcl": {
+      "created_by_action": "run_baseline_tables",
+      "privacy_level": "moderately_sensitive"
+    },
+    "logs/graphs.smcl": {
+      "created_by_action": "run_survival_curves",
+      "privacy_level": "moderately_sensitive"
+    },
+    "logs/start_create_analysis_dataset.smcl": {
+      "created_by_action": "create_cohorts",
+      "privacy_level": "highly_sensitive"
+    },
+    "output/data/cox_model_summary.dta": {
+      "created_by_action": "run_cox_models",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/file_bowel.dta": {
+      "created_by_action": "create_cohorts",
+      "privacy_level": "highly_sensitive"
+    },
+    "output/data/file_imid.dta": {
+      "created_by_action": "create_cohorts",
+      "privacy_level": "highly_sensitive"
+    },
+    "output/data/file_imiddrugcategory.dta": {
+      "created_by_action": "create_cohorts",
+      "privacy_level": "highly_sensitive"
+    },
+    "output/data/file_joint.dta": {
+      "created_by_action": "create_cohorts",
+      "privacy_level": "highly_sensitive"
+    },
+    "output/data/file_skin.dta": {
+      "created_by_action": "create_cohorts",
+      "privacy_level": "highly_sensitive"
+    },
+    "output/data/file_standil17.dta": {
+      "created_by_action": "create_cohorts",
+      "privacy_level": "highly_sensitive"
+    },
+    "output/data/file_standil23.dta": {
+      "created_by_action": "create_cohorts",
+      "privacy_level": "highly_sensitive"
+    },
+    "output/data/file_standil6.dta": {
+      "created_by_action": "create_cohorts",
+      "privacy_level": "highly_sensitive"
+    },
+    "output/data/file_standjaki.dta": {
+      "created_by_action": "create_cohorts",
+      "privacy_level": "highly_sensitive"
+    },
+    "output/data/file_standritux.dta": {
+      "created_by_action": "create_cohorts",
+      "privacy_level": "highly_sensitive"
+    },
+    "output/data/file_standtnf.dta": {
+      "created_by_action": "create_cohorts",
+      "privacy_level": "highly_sensitive"
+    },
+    "output/data/file_standtnf3m.dta": {
+      "created_by_action": "create_cohorts",
+      "privacy_level": "highly_sensitive"
+    },
+    "output/data/file_tnfmono.dta": {
+      "created_by_action": "create_cohorts",
+      "privacy_level": "highly_sensitive"
     },
     "output/data/primaryobjective1TVCtest.ster": {
       "created_by_action": "run_model",
@@ -217,7 +289,23 @@
       "privacy_level": "moderately_sensitive"
     },
     "output/data/tables.csv": {
-      "created_by_action": "run_model",
+      "created_by_action": "run_baseline_tables",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/bowel_graph.gph": {
+      "created_by_action": "run_survival_curves",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/imid_graph.gph": {
+      "created_by_action": "run_survival_curves",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/imiddrugcategory_graph.gph": {
+      "created_by_action": "run_survival_curves",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/joint_graph.gph": {
+      "created_by_action": "run_survival_curves",
       "privacy_level": "moderately_sensitive"
     },
     "output/figures/out_death_freq.pdf": {
@@ -288,21 +376,56 @@
       "created_by_action": "run_model",
       "privacy_level": "moderately_sensitive"
     },
+    "output/figures/skin_graph.gph": {
+      "created_by_action": "run_survival_curves",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/survcurv_bowel_died.svg": {
+      "created_by_action": "run_survival_curves",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/survcurv_bowel_icu.svg": {
+      "created_by_action": "run_survival_curves",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/survcurv_imid_died.svg": {
+      "created_by_action": "run_survival_curves",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/survcurv_imid_icu.svg": {
+      "created_by_action": "run_survival_curves",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/survcurv_imiddrugcategory_died.svg": {
+      "created_by_action": "run_survival_curves",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/survcurv_imiddrugcategory_icu.svg": {
+      "created_by_action": "run_survival_curves",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/survcurv_joint_died.svg": {
+      "created_by_action": "run_survival_curves",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/survcurv_joint_icu.svg": {
+      "created_by_action": "run_survival_curves",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/survcurv_skin_died.svg": {
+      "created_by_action": "run_survival_curves",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/survcurv_skin_icu.svg": {
+      "created_by_action": "run_survival_curves",
+      "privacy_level": "moderately_sensitive"
+    },
     "output/input.csv": {
       "created_by_action": "generate_study_population",
       "privacy_level": "highly_sensitive"
     }
   },
   "actions": {
-    "generate_study_population": {
-      "state": "succeeded",
-      "commit": "none",
-      "docker_image_id": "sha256:02156c1b7817411d7ac7b2b91f9452e32caf63947ab8b506ae86bdfe616fb009",
-      "job_id": "5neqw2huucrvpgfr",
-      "run_by_user": "arowan",
-      "created_at": "2021-03-17T13:49:44Z",
-      "completed_at": "2021-03-17T13:50:02Z"
-    },
     "run_model": {
       "state": "succeeded",
       "commit": "none",
@@ -311,6 +434,51 @@
       "run_by_user": "arowan",
       "created_at": "2021-03-17T13:53:28Z",
       "completed_at": "2021-03-17T13:55:22Z"
+    },
+    "generate_study_population": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:02156c1b7817411d7ac7b2b91f9452e32caf63947ab8b506ae86bdfe616fb009",
+      "job_id": "5neqw2huucrvpgfr",
+      "run_by_user": "arowan",
+      "created_at": "2021-03-22T17:14:45Z",
+      "completed_at": "2021-03-22T17:15:59Z"
+    },
+    "run_cox_models": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:5a4bb3ecd807de29a18a01ffae01739415778f0b770cbd43d7140bb0017306f1",
+      "job_id": "lhzgqs4qy7zh43lt",
+      "run_by_user": "arowan",
+      "created_at": "2021-03-22T17:57:41Z",
+      "completed_at": "2021-03-22T18:04:12Z"
+    },
+    "run_survival_curves": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:5a4bb3ecd807de29a18a01ffae01739415778f0b770cbd43d7140bb0017306f1",
+      "job_id": "qokn4qe5mrz5jj4m",
+      "run_by_user": "arowan",
+      "created_at": "2021-03-22T18:28:03Z",
+      "completed_at": "2021-03-22T18:29:59Z"
+    },
+    "create_cohorts": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:5a4bb3ecd807de29a18a01ffae01739415778f0b770cbd43d7140bb0017306f1",
+      "job_id": "sflz7nbxvepznprs",
+      "run_by_user": "arowan",
+      "created_at": "2021-03-23T09:29:07Z",
+      "completed_at": "2021-03-23T09:30:36Z"
+    },
+    "run_baseline_tables": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:5a4bb3ecd807de29a18a01ffae01739415778f0b770cbd43d7140bb0017306f1",
+      "job_id": "xz7riqnrv537wv7u",
+      "run_by_user": "arowan",
+      "created_at": "2021-03-23T09:31:14Z",
+      "completed_at": "2021-03-23T09:33:45Z"
     }
   },
   "workspace": "immunosuppressant-meds-research",
