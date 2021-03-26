@@ -3,7 +3,7 @@
       name:  {res}<unnamed>
        {txt}log:  {res}/workspace/logs/cox_models.smcl
   {txt}log type:  {res}smcl
- {txt}opened on:  {res}22 Mar 2021, 17:59:25
+ {txt}opened on:  {res}26 Mar 2021, 14:57:29
 {txt}
 {com}. 
 . * Set Ado file path
@@ -14103,7 +14103,7 @@ Controlle..  {c |}{col 14}{res}{space 2} 4.726919{col 26}{space 2} 4.022686{col 
       {txt}name:  {res}<unnamed>
        {txt}log:  {res}/workspace/logs/cox_models.smcl
   {txt}log type:  {res}smcl
- {txt}closed on:  {res}22 Mar 2021, 18:04:08
+ {txt}closed on:  {res}26 Mar 2021, 15:02:49
 {txt}{.-}
 {smcl}
 {txt}{sf}{ul off}

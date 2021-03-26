@@ -3,7 +3,7 @@
       name:  {res}<unnamed>
        {txt}log:  {res}/workspace/logs/descriptive_tables.smcl
   {txt}log type:  {res}smcl
- {txt}opened on:  {res}23 Mar 2021, 09:33:09
+ {txt}opened on:  {res}26 Mar 2021, 14:36:25
 {txt}
 {com}. 
 . * Set Ado file path
@@ -1448,7 +1448,7 @@ Data are presented as mean (SD) for continuous measures, and n (%) for categoric
       {txt}name:  {res}<unnamed>
        {txt}log:  {res}/workspace/logs/descriptive_tables.smcl
   {txt}log type:  {res}smcl
- {txt}closed on:  {res}23 Mar 2021, 09:33:41
+ {txt}closed on:  {res}26 Mar 2021, 14:37:01
 {txt}{.-}
 {smcl}
 {txt}{sf}{ul off}
