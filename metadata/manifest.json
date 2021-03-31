@@ -4,6 +4,14 @@
       "created_by_action": "run_cox_models",
       "privacy_level": "moderately_sensitive"
     },
+    "logs/cox_models_imid.smcl": {
+      "created_by_action": "run_cox_models_imid",
+      "privacy_level": "moderately_sensitive"
+    },
+    "logs/cox_models_standil23.smcl": {
+      "created_by_action": "run_cox_models_standil23",
+      "privacy_level": "moderately_sensitive"
+    },
     "logs/cr_create_analysis_dataset.smcl": {
       "created_by_action": "run_model",
       "privacy_level": "moderately_sensitive"
@@ -22,6 +30,14 @@
     },
     "output/data/cox_model_summary.dta": {
       "created_by_action": "run_cox_models",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/cox_model_summary_imid.dta": {
+      "created_by_action": "run_cox_models_imid",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/data/cox_model_summary_standil23.dta": {
+      "created_by_action": "run_cox_models_standil23",
       "privacy_level": "moderately_sensitive"
     },
     "output/data/file_bowel.dta": {
@@ -435,24 +451,6 @@
       "created_at": "2021-03-17T13:53:28Z",
       "completed_at": "2021-03-17T13:55:22Z"
     },
-    "generate_study_population": {
-      "state": "succeeded",
-      "commit": "none",
-      "docker_image_id": "sha256:02156c1b7817411d7ac7b2b91f9452e32caf63947ab8b506ae86bdfe616fb009",
-      "job_id": "5neqw2huucrvpgfr",
-      "run_by_user": "arowan",
-      "created_at": "2021-03-22T17:14:45Z",
-      "completed_at": "2021-03-22T17:15:59Z"
-    },
-    "run_cox_models": {
-      "state": "succeeded",
-      "commit": "none",
-      "docker_image_id": "sha256:5a4bb3ecd807de29a18a01ffae01739415778f0b770cbd43d7140bb0017306f1",
-      "job_id": "lhzgqs4qy7zh43lt",
-      "run_by_user": "arowan",
-      "created_at": "2021-03-22T17:57:41Z",
-      "completed_at": "2021-03-22T18:04:12Z"
-    },
     "run_survival_curves": {
       "state": "succeeded",
       "commit": "none",
@@ -471,14 +469,50 @@
       "created_at": "2021-03-23T09:29:07Z",
       "completed_at": "2021-03-23T09:30:36Z"
     },
+    "generate_study_population": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:02156c1b7817411d7ac7b2b91f9452e32caf63947ab8b506ae86bdfe616fb009",
+      "job_id": "5neqw2huucrvpgfr",
+      "run_by_user": "arowan",
+      "created_at": "2021-03-26T14:32:16Z",
+      "completed_at": "2021-03-26T14:34:05Z"
+    },
     "run_baseline_tables": {
       "state": "succeeded",
       "commit": "none",
       "docker_image_id": "sha256:5a4bb3ecd807de29a18a01ffae01739415778f0b770cbd43d7140bb0017306f1",
       "job_id": "xz7riqnrv537wv7u",
       "run_by_user": "arowan",
-      "created_at": "2021-03-23T09:31:14Z",
-      "completed_at": "2021-03-23T09:33:45Z"
+      "created_at": "2021-03-26T14:34:28Z",
+      "completed_at": "2021-03-26T14:37:04Z"
+    },
+    "run_cox_models": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:5a4bb3ecd807de29a18a01ffae01739415778f0b770cbd43d7140bb0017306f1",
+      "job_id": "lhzgqs4qy7zh43lt",
+      "run_by_user": "arowan",
+      "created_at": "2021-03-26T14:55:21Z",
+      "completed_at": "2021-03-26T15:02:53Z"
+    },
+    "run_cox_models_imid": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:5a4bb3ecd807de29a18a01ffae01739415778f0b770cbd43d7140bb0017306f1",
+      "job_id": "b36xdn6wi2ot3y2l",
+      "run_by_user": "arowan",
+      "created_at": "2021-03-26T15:03:30Z",
+      "completed_at": "2021-03-26T15:05:50Z"
+    },
+    "run_cox_models_standil23": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:5a4bb3ecd807de29a18a01ffae01739415778f0b770cbd43d7140bb0017306f1",
+      "job_id": "tvz4sgkv37q3t4dc",
+      "run_by_user": "arowan",
+      "created_at": "2021-03-26T16:05:44Z",
+      "completed_at": "2021-03-26T16:07:47Z"
     }
   },
   "workspace": "immunosuppressant-meds-research",

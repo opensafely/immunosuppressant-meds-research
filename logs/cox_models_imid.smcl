@@ -1,0 +1,1212 @@
+{smcl}
+{txt}{sf}{ul off}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/workspace/logs/cox_models_imid.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}26 Mar 2021, 15:05:14
+{txt}
+{com}. 
+. * Set Ado file path
+. adopath + "$projectdir/analysis/extra_ados"
+{txt}  [1]  (BASE)      "{res}/usr/local/stata/ado/base/{txt}"
+  [2]  (SITE)      "{res}/usr/local/ado/{txt}"
+  [3]              "{res}.{txt}"
+  [4]  (PERSONAL)  "{res}~/ado/personal/{txt}"
+  [5]  (PLUS)      "{res}~/ado/plus/{txt}"
+  [6]  (OLDPLACE)  "{res}~/ado/{txt}"
+  [7]              "{res}/workspace/analysis/extra_ados{txt}"
+
+{com}. 
+. 
+. /* SET Index date ===========================================================*/
+. global indexdate                        = "01/03/2020"
+{txt}
+{com}. 
+. global crude
+{txt}
+{com}. 
+. global agesex i.agegroup male
+{txt}
+{com}. 
+. global adjusted_main i.agegroup male i.ethnicity i.imd bmicat bowel skin joint chronic_cardiac_disease cancer stroke i.diabcat steroidcat 
+{txt}
+{com}. 
+. global adjusted_extra i.agegroup male i.ethnicity i.imd bmicat bowel skin joint chronic_cardiac_disease cancer stroke i.diabcat steroidcat i.ckd chronic_liver_disease chronic_respiratory_disease
+{txt}
+{com}. 
+. 
+. tempname coxoutput
+{txt}
+{com}.         postfile `coxoutput' str20(cohort) str20(model) str20(failure) ///
+>                 ptime_exposed events_exposed rate_exposed /// 
+>                 ptime_comparator events_comparator rate_comparator hr lc uc ///
+>                 using $projectdir/output/data/cox_model_summary_$files, replace                                         
+{txt}(note: file /workspace/output/data/cox_model_summary_imid.dta not found)
+
+{com}. 
+. 
+.                 
+. use $projectdir/output/data/file_$files, replace
+{txt}
+{com}. 
+. *generate censor date
+. gen diecensor = mdy(10,01,2020)
+{txt}
+{com}. format diecensor %td
+{txt}
+{com}.         
+. egen stopdied = rmin(died_ons_date diecensor)
+{txt}
+{com}. egen stopicu = rmin(icu_or_death_covid_date diecensor)
+{txt}
+{com}. egen stopswab = rmin(first_pos_test_sgss_date diecensor)
+{txt}
+{com}. 
+. gen faildied = died_ons_covid_flag_any
+{txt}
+{com}. gen failicu = icu_or_death_covid
+{txt}(38,906 missing values generated)
+
+{com}. gen failswab = first_pos_test_sgss
+{txt}
+{com}.         
+. gen exitdied = died_ons_covid_flag_any
+{txt}
+{com}. gen exiticu = icu_or_death_covid
+{txt}(38,906 missing values generated)
+
+{com}. gen exitswab = first_pos_test_sgss 
+{txt}
+{com}.          
+. 
+. foreach fail in died icu swab {c -(}
+{txt}  2{com}. 
+.         stset stop`fail', id(patient_id) failure(fail`fail'==1) origin(time enter_date)  enter(time enter_date) scale(365.25) 
+{txt}  3{com}.                                                 
+.         foreach model in crude agesex adjusted_main adjusted_extra {c -(}
+{txt}  4{com}.                                 
+.                 stcox $files $`model', vce(robust)
+{txt}  5{com}.                                         matrix b = r(table)
+{txt}  6{com}.                                         local hr = b[1,1]
+{txt}  7{com}.                                         local lc = b[5,1]
+{txt}  8{com}.                                         local uc = b[6,1]
+{txt}  9{com}. 
+.                 stptime if $files == 1
+{txt} 10{com}.                                         local rate_exposed = `r(rate)'
+{txt} 11{com}.                                         local ptime_exposed = `r(ptime)'
+{txt} 12{com}.                                         local events_exposed .
+{txt} 13{com}.                                         if `r(failures)' == 0 | `r(failures)' > 5 local events_exposed `r(failures)'
+{txt} 14{com}.                                                 
+.                 stptime if $files == 0
+{txt} 15{com}.                                         local rate_comparator = `r(rate)'
+{txt} 16{com}.                                         local ptime_comparator = `r(ptime)'
+{txt} 17{com}.                                         local events_comparator .
+{txt} 18{com}.                                         if `r(failures)' == 0 | `r(failures)' > 5 local events_comparator `r(failures)'
+{txt} 19{com}. 
+.                 post `coxoutput' ("$files") ("`model'") ("`fail'") (`ptime_exposed') (`events_exposed') (`rate_exposed') ///
+>                                         (`ptime_comparator') (`events_comparator') (`rate_comparator') ///
+>                                         (`hr') (`lc') (`uc')
+{txt} 20{com}.         {c )-}
+{txt} 21{com}. {c )-}
+
+                {txt}id:  {res}patient_id
+     {txt}failure event:  {res}faildied == 1
+{txt}obs. time interval:  {res}(stopdied[_n-1], stopdied]
+{txt} enter on or after:  {res}time enter_date
+{txt} exit on or before:  {res}failure
+    {txt}t for analysis:  {res}(time-origin)/365.25
+            {txt}origin:  {res}time enter_date
+
+{txt}{hline 78}
+{res}     39,307{txt}  total observations
+{res}          0{txt}  exclusions
+{hline 78}
+{res}     39,307{txt}  observations remaining, representing
+{res}     39,307{txt}  subjects
+{res}      3,927{txt}  failures in single-failure-per-subject data
+{res} 22,496.252{txt}  total analysis time at risk and under observation
+                                                at risk from t = {res}        0
+                                     {txt}earliest observed entry t = {res}        0
+                                          {txt}last observed exit t = {res} .5859001
+
+         {txt}failure _d:  {res}faildied == 1
+   {txt}analysis time _t:  {res}(stopdied-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Iteration 0:   log pseudolikelihood = {res}-41344.879
+{txt}Iteration 1:   log pseudolikelihood = {res}-41344.557
+{txt}Iteration 2:   log pseudolikelihood = {res}-41344.557
+{txt}Refining estimates:
+Iteration 0:   log pseudolikelihood = {res}-41344.557
+
+{txt}Cox regression -- Breslow method for ties
+
+No. of subjects      = {res}      39,307             {txt}Number of obs    =  {res}    39,307
+{txt}No. of failures      = {res}       3,927
+{txt}Time at risk         = {res} 22496.25188
+                                                {txt}Wald chi2({res}1{txt})     =  {res}      0.72
+{txt}Log pseudolikelihood =   {res}-41344.557             {txt}Prob > chi2      =  {res}    0.3964
+
+{txt}{ralign 78:(Std. Err. adjusted for {res:39,307} clusters in patient_id)}
+{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26}    Robust
+{col 1}          _t{col 14}{c |} Haz. Ratio{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 8}imid {c |}{col 14}{res}{space 2} .9666425{col 26}{space 2} .0386678{col 37}{space 1}   -0.85{col 46}{space 3}0.396{col 54}{space 4} .8937498{col 67}{space 3}  1.04548
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+         failure _d:  {res}faildied == 1
+   {txt}analysis time _t:  {res}(stopdied-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Cohort{col 12}{c |}{col 15}person-time{col 29}failures{col 45}rate{col 52}[95% Conf. Interval]
+{hline 11}{c +}{hline 59}
+     total{col 12}{c |}{col 16}{res} 18689.087{col 29}    3244{col 39} .17357723{col 51} .1677057{col 63} .1796543
+
+         {txt}failure _d:  {res}faildied == 1
+   {txt}analysis time _t:  {res}(stopdied-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Cohort{col 12}{c |}{col 15}person-time{col 29}failures{col 45}rate{col 52}[95% Conf. Interval]
+{hline 11}{c +}{hline 59}
+     total{col 12}{c |}{col 16}{res}  3807.165{col 29}     683{col 39} .17939858{col 51} .1664365{col 63} .1933701
+
+         {txt}failure _d:  {res}faildied == 1
+   {txt}analysis time _t:  {res}(stopdied-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Iteration 0:   log pseudolikelihood = {res}-41344.879
+{txt}Iteration 1:   log pseudolikelihood = {res}-41342.636
+{txt}Iteration 2:   log pseudolikelihood = {res}-41342.636
+{txt}Refining estimates:
+Iteration 0:   log pseudolikelihood = {res}-41342.636
+
+{txt}Cox regression -- Breslow method for ties
+
+No. of subjects      = {res}      39,307             {txt}Number of obs    =  {res}    39,307
+{txt}No. of failures      = {res}       3,927
+{txt}Time at risk         = {res} 22496.25188
+                                                {txt}Wald chi2({res}7{txt})     =  {res}      4.89
+{txt}Log pseudolikelihood =   {res}-41342.636             {txt}Prob > chi2      =  {res}    0.6732
+
+{txt}{ralign 78:(Std. Err. adjusted for {res:39,307} clusters in patient_id)}
+{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26}    Robust
+{col 1}          _t{col 14}{c |} Haz. Ratio{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 8}imid {c |}{col 14}{res}{space 2}  .966542{col 26}{space 2}  .038658{col 37}{space 1}   -0.85{col 46}{space 3}0.395{col 54}{space 4} .8936674{col 67}{space 3} 1.045359
+{txt}{space 12} {c |}
+{space 4}agegroup {c |}
+{space 5}40-<50  {c |}{col 14}{res}{space 2} .9530683{col 26}{space 2} .0430804{col 37}{space 1}   -1.06{col 46}{space 3}0.288{col 54}{space 4} .8722645{col 67}{space 3} 1.041358
+{txt}{space 5}50-<60  {c |}{col 14}{res}{space 2} .9575282{col 26}{space 2} .0425404{col 37}{space 1}   -0.98{col 46}{space 3}0.329{col 54}{space 4} .8776775{col 67}{space 3} 1.044644
+{txt}{space 5}60-<70  {c |}{col 14}{res}{space 2} .9686359{col 26}{space 2} .0468348{col 37}{space 1}   -0.66{col 46}{space 3}0.510{col 54}{space 4} .8810566{col 67}{space 3} 1.064921
+{txt}{space 5}70-<80  {c |}{col 14}{res}{space 2} .9084686{col 26}{space 2} .0492753{col 37}{space 1}   -1.77{col 46}{space 3}0.077{col 54}{space 4} .8168471{col 67}{space 3} 1.010367
+{txt}{space 8}80+  {c |}{col 14}{res}{space 2} .9323079{col 26}{space 2} .0618971{col 37}{space 1}   -1.06{col 46}{space 3}0.291{col 54}{space 4} .8185535{col 67}{space 3} 1.061871
+{txt}{space 12} {c |}
+{space 8}male {c |}{col 14}{res}{space 2} 1.011059{col 26}{space 2} .0306995{col 37}{space 1}    0.36{col 46}{space 3}0.717{col 54}{space 4} .9526447{col 67}{space 3} 1.073056
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+         failure _d:  {res}faildied == 1
+   {txt}analysis time _t:  {res}(stopdied-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Cohort{col 12}{c |}{col 15}person-time{col 29}failures{col 45}rate{col 52}[95% Conf. Interval]
+{hline 11}{c +}{hline 59}
+     total{col 12}{c |}{col 16}{res} 18689.087{col 29}    3244{col 39} .17357723{col 51} .1677057{col 63} .1796543
+
+         {txt}failure _d:  {res}faildied == 1
+   {txt}analysis time _t:  {res}(stopdied-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Cohort{col 12}{c |}{col 15}person-time{col 29}failures{col 45}rate{col 52}[95% Conf. Interval]
+{hline 11}{c +}{hline 59}
+     total{col 12}{c |}{col 16}{res}  3807.165{col 29}     683{col 39} .17939858{col 51} .1664365{col 63} .1933701
+
+         {txt}failure _d:  {res}faildied == 1
+   {txt}analysis time _t:  {res}(stopdied-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Iteration 0:   log pseudolikelihood = {res}-935.46699
+{txt}Iteration 1:   log pseudolikelihood = {res} -923.1664
+{txt}Iteration 2:   log pseudolikelihood = {res}-922.88265
+{txt}Iteration 3:   log pseudolikelihood = {res}-922.84241
+{txt}Iteration 4:   log pseudolikelihood = {res}-922.82766
+{txt}Iteration 5:   log pseudolikelihood = {res}-922.82223
+{txt}Iteration 6:   log pseudolikelihood = {res}-922.82023
+{txt}Iteration 7:   log pseudolikelihood = {res} -922.8195
+{txt}Iteration 8:   log pseudolikelihood = {res}-922.81923
+{txt}Iteration 9:   log pseudolikelihood = {res}-922.81913
+{txt}Iteration 10:  log pseudolikelihood = {res}-922.81909
+{txt}Iteration 11:  log pseudolikelihood = {res}-922.81908
+{txt}Iteration 12:  log pseudolikelihood = {res}-922.81907
+{txt}Iteration 13:  log pseudolikelihood = {res}-922.81907
+{txt}Iteration 14:  log pseudolikelihood = {res}-922.81907
+{txt}Iteration 15:  log pseudolikelihood = {res}-922.81907
+{txt}Iteration 16:  log pseudolikelihood = {res}-922.81907
+{txt}Iteration 17:  log pseudolikelihood = {res}-922.81907
+{txt}Iteration 18:  log pseudolikelihood = {res}-922.81907
+{txt}Iteration 19:  log pseudolikelihood = {res}-922.81907
+{txt}Iteration 20:  log pseudolikelihood = {res}-922.81907
+{txt}Iteration 21:  log pseudolikelihood = {res}-922.81907
+{txt}Iteration 22:  log pseudolikelihood = {res}-922.81907
+{txt}Iteration 23:  log pseudolikelihood = {res}-922.81907
+{txt}Iteration 24:  log pseudolikelihood = {res}-922.81907
+{txt}Iteration 25:  log pseudolikelihood = {res}-922.81907
+{txt}Iteration 26:  log pseudolikelihood = {res}-922.81907
+{txt}Iteration 27:  log pseudolikelihood = {res}-922.81907
+{txt}Iteration 28:  log pseudolikelihood = {res}-922.81907
+{txt}Iteration 29:  log pseudolikelihood = {res}-922.81907
+{txt}Iteration 30:  log pseudolikelihood = {res}-922.81907
+{txt}Iteration 31:  log pseudolikelihood = {res}-922.81907
+{txt}Iteration 32:  log pseudolikelihood = {res}-922.81907
+{txt}Iteration 33:  log pseudolikelihood = {res}-922.81907
+{txt}Iteration 34:  log pseudolikelihood = {res}-922.81907
+{txt}Refining estimates:
+Iteration 0:   log pseudolikelihood = {res}-922.81907
+{txt}Iteration 1:   log pseudolikelihood = {res}-922.81907
+{txt}Iteration 2:   log pseudolikelihood = {res}-922.81907
+
+{txt}Cox regression -- Breslow method for ties
+
+No. of subjects      = {res}       1,472             {txt}Number of obs    =  {res}     1,472
+{txt}No. of failures      = {res}         129
+{txt}Time at risk         = {res} 842.9431896
+                                                {txt}Wald chi2({res}22{txt})    =  {res}   5072.32
+{txt}Log pseudolikelihood =   {res}-922.81907             {txt}Prob > chi2      =  {res}    0.0000
+
+{txt}{ralign 78:(Std. Err. adjusted for {res:1,472} clusters in patient_id)}
+{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26}    Robust
+{col 1}          _t{col 14}{c |} Haz. Ratio{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 8}imid {c |}{col 14}{res}{space 2} .8982641{col 26}{space 2} .2799678{col 37}{space 1}   -0.34{col 46}{space 3}0.731{col 54}{space 4} .4876458{col 67}{space 3}  1.65464
+{txt}{space 12} {c |}
+{space 4}agegroup {c |}
+{space 5}40-<50  {c |}{col 14}{res}{space 2} .9373467{col 26}{space 2} .2439411{col 37}{space 1}   -0.25{col 46}{space 3}0.804{col 54}{space 4} .5628311{col 67}{space 3}  1.56107
+{txt}{space 5}50-<60  {c |}{col 14}{res}{space 2} 1.063666{col 26}{space 2} .2689871{col 37}{space 1}    0.24{col 46}{space 3}0.807{col 54}{space 4} .6479593{col 67}{space 3} 1.746075
+{txt}{space 5}60-<70  {c |}{col 14}{res}{space 2}  1.33512{col 26}{space 2} .3156356{col 37}{space 1}    1.22{col 46}{space 3}0.222{col 54}{space 4} .8400162{col 67}{space 3} 2.122036
+{txt}{space 5}70-<80  {c |}{col 14}{res}{space 2} .9685733{col 26}{space 2} .2791967{col 37}{space 1}   -0.11{col 46}{space 3}0.912{col 54}{space 4} .5505146{col 67}{space 3} 1.704104
+{txt}{space 8}80+  {c |}{col 14}{res}{space 2}  .664036{col 26}{space 2} .3036302{col 37}{space 1}   -0.90{col 46}{space 3}0.371{col 54}{space 4} .2710067{col 67}{space 3} 1.627059
+{txt}{space 12} {c |}
+{space 8}male {c |}{col 14}{res}{space 2} .8925045{col 26}{space 2} .1497105{col 37}{space 1}   -0.68{col 46}{space 3}0.498{col 54}{space 4} .6424335{col 67}{space 3} 1.239917
+{txt}{space 12} {c |}
+{space 3}ethnicity {c |}
+South Asian  {c |}{col 14}{res}{space 2} 1.551503{col 26}{space 2} .3471599{col 37}{space 1}    1.96{col 46}{space 3}0.050{col 54}{space 4} 1.000668{col 67}{space 3} 2.405554
+{txt}{space 6}Other  {c |}{col 14}{res}{space 2} .8978759{col 26}{space 2} .2674621{col 37}{space 1}   -0.36{col 46}{space 3}0.718{col 54}{space 4} .5007924{col 67}{space 3} 1.609811
+{txt}{space 12} {c |}
+{space 9}imd {c |}
+{space 10}4  {c |}{col 14}{res}{space 2} 1.175563{col 26}{space 2} .2285207{col 37}{space 1}    0.83{col 46}{space 3}0.405{col 54}{space 4} .8031167{col 67}{space 3} 1.720732
+{txt}5 most de..  {c |}{col 14}{res}{space 2} 1.196008{col 26}{space 2} .3425042{col 37}{space 1}    0.63{col 46}{space 3}0.532{col 54}{space 4} .6822968{col 67}{space 3} 2.096501
+{txt}{space 12} {c |}
+{space 6}bmicat {c |}{col 14}{res}{space 2} .9730015{col 26}{space 2} .0522481{col 37}{space 1}   -0.51{col 46}{space 3}0.610{col 54}{space 4} .8758016{col 67}{space 3} 1.080989
+{txt}{space 7}bowel {c |}{col 14}{res}{space 2} .6531312{col 26}{space 2} .1327081{col 37}{space 1}   -2.10{col 46}{space 3}0.036{col 54}{space 4}  .438578{col 67}{space 3} .9726441
+{txt}{space 8}skin {c |}{col 14}{res}{space 2} 1.055758{col 26}{space 2} .2092339{col 37}{space 1}    0.27{col 46}{space 3}0.784{col 54}{space 4} .7159292{col 67}{space 3} 1.556892
+{txt}{space 7}joint {c |}{col 14}{res}{space 2} 1.089766{col 26}{space 2} .2292512{col 37}{space 1}    0.41{col 46}{space 3}0.683{col 54}{space 4} .7215529{col 67}{space 3}  1.64588
+{txt}chronic_c~se {c |}{col 14}{res}{space 2}  .676116{col 26}{space 2} .1620756{col 37}{space 1}   -1.63{col 46}{space 3}0.103{col 54}{space 4} .4226441{col 67}{space 3} 1.081602
+{txt}{space 6}cancer {c |}{col 14}{res}{space 2} .7731247{col 26}{space 2} .1289088{col 37}{space 1}   -1.54{col 46}{space 3}0.123{col 54}{space 4} .5575996{col 67}{space 3} 1.071955
+{txt}{space 6}stroke {c |}{col 14}{res}{space 2}  .852029{col 26}{space 2}  .190232{col 37}{space 1}   -0.72{col 46}{space 3}0.473{col 54}{space 4} .5500562{col 67}{space 3}  1.31978
+{txt}{space 12} {c |}
+{space 5}diabcat {c |}
+Controlle..  {c |}{col 14}{res}{space 2} 1.96e-16{col 26}{space 2} 1.19e-16{col 37}{space 1}  -59.74{col 46}{space 3}0.000{col 54}{space 4} 5.98e-17{col 67}{space 3} 6.42e-16
+{txt}Uncontrol..  {c |}{col 14}{res}{space 2} 1.69e-16{col 26}{space 2} 1.82e-16{col 37}{space 1}  -33.61{col 46}{space 3}0.000{col 54}{space 4} 2.03e-17{col 67}{space 3} 1.40e-15
+{txt}Diabetes,..  {c |}{col 14}{res}{space 2} .5658157{col 26}{space 2} .1465389{col 37}{space 1}   -2.20{col 46}{space 3}0.028{col 54}{space 4} .3405844{col 67}{space 3} .9399942
+{txt}{space 12} {c |}
+{space 2}steroidcat {c |}{col 14}{res}{space 2} 1.033867{col 26}{space 2} .2795551{col 37}{space 1}    0.12{col 46}{space 3}0.902{col 54}{space 4} .6085579{col 67}{space 3} 1.756416
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+         failure _d:  {res}faildied == 1
+   {txt}analysis time _t:  {res}(stopdied-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Cohort{col 12}{c |}{col 15}person-time{col 29}failures{col 45}rate{col 52}[95% Conf. Interval]
+{hline 11}{c +}{hline 59}
+     total{col 12}{c |}{col 16}{res} 18689.087{col 29}    3244{col 39} .17357723{col 51} .1677057{col 63} .1796543
+
+         {txt}failure _d:  {res}faildied == 1
+   {txt}analysis time _t:  {res}(stopdied-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Cohort{col 12}{c |}{col 15}person-time{col 29}failures{col 45}rate{col 52}[95% Conf. Interval]
+{hline 11}{c +}{hline 59}
+     total{col 12}{c |}{col 16}{res}  3807.165{col 29}     683{col 39} .17939858{col 51} .1664365{col 63} .1933701
+
+         {txt}failure _d:  {res}faildied == 1
+   {txt}analysis time _t:  {res}(stopdied-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Iteration 0:   log pseudolikelihood = {res}-935.46699
+{txt}Iteration 1:   log pseudolikelihood = {res}-923.08445
+{txt}Iteration 2:   log pseudolikelihood = {res}-922.79308
+{txt}Iteration 3:   log pseudolikelihood = {res}-922.75312
+{txt}Iteration 4:   log pseudolikelihood = {res}-922.73847
+{txt}Iteration 5:   log pseudolikelihood = {res}-922.73308
+{txt}Iteration 6:   log pseudolikelihood = {res}-922.73109
+{txt}Iteration 7:   log pseudolikelihood = {res}-922.73036
+{txt}Iteration 8:   log pseudolikelihood = {res} -922.7301
+{txt}Iteration 9:   log pseudolikelihood = {res}   -922.73
+{txt}Iteration 10:  log pseudolikelihood = {res}-922.72996
+{txt}Iteration 11:  log pseudolikelihood = {res}-922.72995
+{txt}Iteration 12:  log pseudolikelihood = {res}-922.72994
+{txt}Iteration 13:  log pseudolikelihood = {res}-922.72994
+{txt}Iteration 14:  log pseudolikelihood = {res}-922.72994
+{txt}Iteration 15:  log pseudolikelihood = {res}-922.72994
+{txt}Iteration 16:  log pseudolikelihood = {res}-922.72994
+{txt}Iteration 17:  log pseudolikelihood = {res}-922.72994
+{txt}Iteration 18:  log pseudolikelihood = {res}-922.72994
+{txt}Iteration 19:  log pseudolikelihood = {res}-922.72994
+{txt}Iteration 20:  log pseudolikelihood = {res}-922.72994
+{txt}Iteration 21:  log pseudolikelihood = {res}-922.72994
+{txt}Iteration 22:  log pseudolikelihood = {res}-922.72994
+{txt}Iteration 23:  log pseudolikelihood = {res}-922.72994
+{txt}Iteration 24:  log pseudolikelihood = {res}-922.72994
+{txt}Iteration 25:  log pseudolikelihood = {res}-922.72994
+{txt}Iteration 26:  log pseudolikelihood = {res}-922.72994
+{txt}Iteration 27:  log pseudolikelihood = {res}-922.72994
+{txt}Iteration 28:  log pseudolikelihood = {res}-922.72994
+{txt}Iteration 29:  log pseudolikelihood = {res}-922.72994
+{txt}Iteration 30:  log pseudolikelihood = {res}-922.72994
+{txt}Iteration 31:  log pseudolikelihood = {res}-922.72994
+{txt}Iteration 32:  log pseudolikelihood = {res}-922.72994
+{txt}Iteration 33:  log pseudolikelihood = {res}-922.72994
+{txt}Iteration 34:  log pseudolikelihood = {res}-922.72994
+{txt}Iteration 35:  log pseudolikelihood = {res}-922.72994
+{txt}Iteration 36:  log pseudolikelihood = {res}-922.72994
+{txt}Iteration 37:  log pseudolikelihood = {res}-922.72994
+{txt}Iteration 38:  log pseudolikelihood = {res}-922.72994
+{txt}Iteration 39:  log pseudolikelihood = {res}-922.72994
+{txt}Iteration 40:  log pseudolikelihood = {res}-922.72994
+{txt}Iteration 41:  log pseudolikelihood = {res}-922.72994
+{txt}Iteration 42:  log pseudolikelihood = {res}-922.72994
+{txt}Iteration 43:  log pseudolikelihood = {res}-922.72994
+{txt}Refining estimates:
+Iteration 0:   log pseudolikelihood = {res}-922.72994
+
+{txt}Cox regression -- Breslow method for ties
+
+No. of subjects      = {res}       1,472             {txt}Number of obs    =  {res}     1,472
+{txt}No. of failures      = {res}         129
+{txt}Time at risk         = {res} 842.9431896
+                                                {txt}Wald chi2({res}23{txt})    =  {res}     27.31
+{txt}Log pseudolikelihood =   {res}-922.72994             {txt}Prob > chi2      =  {res}    0.2431
+
+{txt}{ralign 78:(Std. Err. adjusted for {res:1,472} clusters in patient_id)}
+{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26}    Robust
+{col 1}          _t{col 14}{c |} Haz. Ratio{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 8}imid {c |}{col 14}{res}{space 2} .8995602{col 26}{space 2} .2809317{col 37}{space 1}   -0.34{col 46}{space 3}0.735{col 54}{space 4} .4877541{col 67}{space 3}  1.65905
+{txt}{space 12} {c |}
+{space 4}agegroup {c |}
+{space 5}40-<50  {c |}{col 14}{res}{space 2} .9309735{col 26}{space 2} .2431143{col 37}{space 1}   -0.27{col 46}{space 3}0.784{col 54}{space 4} .5580263{col 67}{space 3} 1.553174
+{txt}{space 5}50-<60  {c |}{col 14}{res}{space 2} 1.063197{col 26}{space 2} .2692742{col 37}{space 1}    0.24{col 46}{space 3}0.809{col 54}{space 4}  .647189{col 67}{space 3} 1.746611
+{txt}{space 5}60-<70  {c |}{col 14}{res}{space 2} 1.332595{col 26}{space 2} .3160368{col 37}{space 1}    1.21{col 46}{space 3}0.226{col 54}{space 4} .8371976{col 67}{space 3} 2.121134
+{txt}{space 5}70-<80  {c |}{col 14}{res}{space 2} .9713039{col 26}{space 2} .2794284{col 37}{space 1}   -0.10{col 46}{space 3}0.919{col 54}{space 4} .5526857{col 67}{space 3} 1.706994
+{txt}{space 8}80+  {c |}{col 14}{res}{space 2} .6665006{col 26}{space 2}  .304831{col 37}{space 1}   -0.89{col 46}{space 3}0.375{col 54}{space 4} .2719535{col 67}{space 3} 1.633452
+{txt}{space 12} {c |}
+{space 8}male {c |}{col 14}{res}{space 2} .8910626{col 26}{space 2} .1503538{col 37}{space 1}   -0.68{col 46}{space 3}0.494{col 54}{space 4}  .640148{col 67}{space 3} 1.240327
+{txt}{space 12} {c |}
+{space 3}ethnicity {c |}
+South Asian  {c |}{col 14}{res}{space 2} 1.551528{col 26}{space 2} .3467178{col 37}{space 1}    1.97{col 46}{space 3}0.049{col 54}{space 4} 1.001251{col 67}{space 3} 2.404233
+{txt}{space 6}Other  {c |}{col 14}{res}{space 2} .8988953{col 26}{space 2} .2673098{col 37}{space 1}   -0.36{col 46}{space 3}0.720{col 54}{space 4} .5018597{col 67}{space 3} 1.610037
+{txt}{space 12} {c |}
+{space 9}imd {c |}
+{space 10}4  {c |}{col 14}{res}{space 2} 1.173841{col 26}{space 2} .2282642{col 37}{space 1}    0.82{col 46}{space 3}0.410{col 54}{space 4} .8018357{col 67}{space 3} 1.718436
+{txt}5 most de..  {c |}{col 14}{res}{space 2} 1.192663{col 26}{space 2} .3409109{col 37}{space 1}    0.62{col 46}{space 3}0.538{col 54}{space 4} .6810986{col 67}{space 3} 2.088456
+{txt}{space 12} {c |}
+{space 6}bmicat {c |}{col 14}{res}{space 2} .9736512{col 26}{space 2} .0526803{col 37}{space 1}   -0.49{col 46}{space 3}0.622{col 54}{space 4} .8756858{col 67}{space 3} 1.082576
+{txt}{space 7}bowel {c |}{col 14}{res}{space 2} .6514023{col 26}{space 2} .1325748{col 37}{space 1}   -2.11{col 46}{space 3}0.035{col 54}{space 4} .4371303{col 67}{space 3} .9707058
+{txt}{space 8}skin {c |}{col 14}{res}{space 2} 1.053344{col 26}{space 2} .2086337{col 37}{space 1}    0.26{col 46}{space 3}0.793{col 54}{space 4} .7144544{col 67}{space 3}  1.55298
+{txt}{space 7}joint {c |}{col 14}{res}{space 2} 1.085129{col 26}{space 2} .2289811{col 37}{space 1}    0.39{col 46}{space 3}0.699{col 54}{space 4} .7175679{col 67}{space 3} 1.640966
+{txt}chronic_c~se {c |}{col 14}{res}{space 2} .6760989{col 26}{space 2} .1624554{col 37}{space 1}   -1.63{col 46}{space 3}0.103{col 54}{space 4} .4221634{col 67}{space 3} 1.082779
+{txt}{space 6}cancer {c |}{col 14}{res}{space 2} .7755575{col 26}{space 2} .1305711{col 37}{space 1}   -1.51{col 46}{space 3}0.131{col 54}{space 4} .5575805{col 67}{space 3} 1.078749
+{txt}{space 6}stroke {c |}{col 14}{res}{space 2} .8510995{col 26}{space 2} .1895096{col 37}{space 1}   -0.72{col 46}{space 3}0.469{col 54}{space 4} .5501081{col 67}{space 3} 1.316778
+{txt}{space 12} {c |}
+{space 5}diabcat {c |}
+Controlle..  {c |}{col 14}{res}{space 2} 1.74e-19{col 26}{space 2}        .{col 37}{space 1}       .{col 46}{space 3}    .{col 54}{space 4}        .{col 67}{space 3}        .
+{txt}Uncontrol..  {c |}{col 14}{res}{space 2} 4.20e-19{col 26}{space 2}        .{col 37}{space 1}       .{col 46}{space 3}    .{col 54}{space 4}        .{col 67}{space 3}        .
+{txt}Diabetes,..  {c |}{col 14}{res}{space 2} .5630388{col 26}{space 2} .1448063{col 37}{space 1}   -2.23{col 46}{space 3}0.026{col 54}{space 4} .3401107{col 67}{space 3} .9320867
+{txt}{space 12} {c |}
+{space 2}steroidcat {c |}{col 14}{res}{space 2} 1.031532{col 26}{space 2} .2801851{col 37}{space 1}    0.11{col 46}{space 3}0.909{col 54}{space 4} .6057302{col 67}{space 3} 1.756655
+{txt}{space 12} {c |}
+{space 9}ckd {c |}
+{space 8}CKD  {c |}{col 14}{res}{space 2} .9407035{col 26}{space 2} .1631281{col 37}{space 1}   -0.35{col 46}{space 3}0.724{col 54}{space 4} .6696459{col 67}{space 3} 1.321479
+{txt}chronic_l~se {c |}{col 14}{res}{space 2} 1.038793{col 26}{space 2}  .215922{col 37}{space 1}    0.18{col 46}{space 3}0.855{col 54}{space 4} .6911931{col 67}{space 3}   1.5612
+{txt}chronic_r~se {c |}{col 14}{res}{space 2} .9595806{col 26}{space 2}  .205619{col 37}{space 1}   -0.19{col 46}{space 3}0.847{col 54}{space 4} .6305013{col 67}{space 3} 1.460417
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+         failure _d:  {res}faildied == 1
+   {txt}analysis time _t:  {res}(stopdied-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Cohort{col 12}{c |}{col 15}person-time{col 29}failures{col 45}rate{col 52}[95% Conf. Interval]
+{hline 11}{c +}{hline 59}
+     total{col 12}{c |}{col 16}{res} 18689.087{col 29}    3244{col 39} .17357723{col 51} .1677057{col 63} .1796543
+
+         {txt}failure _d:  {res}faildied == 1
+   {txt}analysis time _t:  {res}(stopdied-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Cohort{col 12}{c |}{col 15}person-time{col 29}failures{col 45}rate{col 52}[95% Conf. Interval]
+{hline 11}{c +}{hline 59}
+     total{col 12}{c |}{col 16}{res}  3807.165{col 29}     683{col 39} .17939858{col 51} .1664365{col 63} .1933701
+
+                {txt}id:  {res}patient_id
+     {txt}failure event:  {res}failicu == 1
+{txt}obs. time interval:  {res}(stopicu[_n-1], stopicu]
+{txt} enter on or after:  {res}time enter_date
+{txt} exit on or before:  {res}failure
+    {txt}t for analysis:  {res}(time-origin)/365.25
+            {txt}origin:  {res}time enter_date
+
+{txt}{hline 78}
+{res}     39,307{txt}  total observations
+{res}          0{txt}  exclusions
+{hline 78}
+{res}     39,307{txt}  observations remaining, representing
+{res}     39,307{txt}  subjects
+{res}        401{txt}  failures in single-failure-per-subject data
+{res} 22,973.517{txt}  total analysis time at risk and under observation
+                                                at risk from t = {res}        0
+                                     {txt}earliest observed entry t = {res}        0
+                                          {txt}last observed exit t = {res} .5859001
+
+         {txt}failure _d:  {res}failicu == 1
+   {txt}analysis time _t:  {res}(stopicu-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Iteration 0:   log pseudolikelihood = {res}-4240.6873
+{txt}Iteration 1:   log pseudolikelihood = {res}-4240.1186
+{txt}Iteration 2:   log pseudolikelihood = {res}-4240.1174
+{txt}Refining estimates:
+Iteration 0:   log pseudolikelihood = {res}-4240.1174
+
+{txt}Cox regression -- Breslow method for ties
+
+No. of subjects      = {res}      39,307             {txt}Number of obs    =  {res}    39,307
+{txt}No. of failures      = {res}         401
+{txt}Time at risk         = {res} 22973.51677
+                                                {txt}Wald chi2({res}1{txt})     =  {res}      1.18
+{txt}Log pseudolikelihood =   {res}-4240.1174             {txt}Prob > chi2      =  {res}    0.2780
+
+{txt}{ralign 78:(Std. Err. adjusted for {res:39,307} clusters in patient_id)}
+{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26}    Robust
+{col 1}          _t{col 14}{c |} Haz. Ratio{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 8}imid {c |}{col 14}{res}{space 2} .8710862{col 26}{space 2} .1108281{col 37}{space 1}   -1.08{col 46}{space 3}0.278{col 54}{space 4}  .678833{col 67}{space 3} 1.117788
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+         failure _d:  {res}failicu == 1
+   {txt}analysis time _t:  {res}(stopicu-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Cohort{col 12}{c |}{col 15}person-time{col 29}failures{col 45}rate{col 52}[95% Conf. Interval]
+{hline 11}{c +}{hline 59}
+     total{col 12}{c |}{col 16}{res} 19086.048{col 29}     325{col 39} .01702815{col 51} .0152739{col 63} .0189838
+
+         {txt}failure _d:  {res}failicu == 1
+   {txt}analysis time _t:  {res}(stopicu-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Cohort{col 12}{c |}{col 15}person-time{col 29}failures{col 45}rate{col 52}[95% Conf. Interval]
+{hline 11}{c +}{hline 59}
+     total{col 12}{c |}{col 16}{res} 3887.4689{col 29}      76{col 39}    .01955{col 51} .0156137{col 63} .0244786
+
+         {txt}failure _d:  {res}failicu == 1
+   {txt}analysis time _t:  {res}(stopicu-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Iteration 0:   log pseudolikelihood = {res}-4240.6873
+{txt}Iteration 1:   log pseudolikelihood = {res}-4233.7302
+{txt}Iteration 2:   log pseudolikelihood = {res}-4233.6864
+{txt}Iteration 3:   log pseudolikelihood = {res}-4233.6863
+{txt}Refining estimates:
+Iteration 0:   log pseudolikelihood = {res}-4233.6863
+
+{txt}Cox regression -- Breslow method for ties
+
+No. of subjects      = {res}      39,307             {txt}Number of obs    =  {res}    39,307
+{txt}No. of failures      = {res}         401
+{txt}Time at risk         = {res} 22973.51677
+                                                {txt}Wald chi2({res}7{txt})     =  {res}     12.82
+{txt}Log pseudolikelihood =   {res}-4233.6863             {txt}Prob > chi2      =  {res}    0.0767
+
+{txt}{ralign 78:(Std. Err. adjusted for {res:39,307} clusters in patient_id)}
+{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26}    Robust
+{col 1}          _t{col 14}{c |} Haz. Ratio{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 8}imid {c |}{col 14}{res}{space 2} .8700485{col 26}{space 2} .1106853{col 37}{space 1}   -1.09{col 46}{space 3}0.274{col 54}{space 4} .6780409{col 67}{space 3} 1.116429
+{txt}{space 12} {c |}
+{space 4}agegroup {c |}
+{space 5}40-<50  {c |}{col 14}{res}{space 2} .8734396{col 26}{space 2}  .131819{col 37}{space 1}   -0.90{col 46}{space 3}0.370{col 54}{space 4} .6497855{col 67}{space 3} 1.174075
+{txt}{space 5}50-<60  {c |}{col 14}{res}{space 2} .9314605{col 26}{space 2} .1351729{col 37}{space 1}   -0.49{col 46}{space 3}0.625{col 54}{space 4} .7008719{col 67}{space 3} 1.237913
+{txt}{space 5}60-<70  {c |}{col 14}{res}{space 2}  1.13627{col 26}{space 2} .1675312{col 37}{space 1}    0.87{col 46}{space 3}0.386{col 54}{space 4} .8510998{col 67}{space 3} 1.516988
+{txt}{space 5}70-<80  {c |}{col 14}{res}{space 2} .6616584{col 26}{space 2} .1317853{col 37}{space 1}   -2.07{col 46}{space 3}0.038{col 54}{space 4} .4478126{col 67}{space 3} .9776227
+{txt}{space 8}80+  {c |}{col 14}{res}{space 2} .7761984{col 26}{space 2} .1802307{col 37}{space 1}   -1.09{col 46}{space 3}0.275{col 54}{space 4} .4924097{col 67}{space 3} 1.223542
+{txt}{space 12} {c |}
+{space 8}male {c |}{col 14}{res}{space 2} 1.243161{col 26}{space 2} .1245219{col 37}{space 1}    2.17{col 46}{space 3}0.030{col 54}{space 4} 1.021566{col 67}{space 3} 1.512824
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+         failure _d:  {res}failicu == 1
+   {txt}analysis time _t:  {res}(stopicu-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Cohort{col 12}{c |}{col 15}person-time{col 29}failures{col 45}rate{col 52}[95% Conf. Interval]
+{hline 11}{c +}{hline 59}
+     total{col 12}{c |}{col 16}{res} 19086.048{col 29}     325{col 39} .01702815{col 51} .0152739{col 63} .0189838
+
+         {txt}failure _d:  {res}failicu == 1
+   {txt}analysis time _t:  {res}(stopicu-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Cohort{col 12}{c |}{col 15}person-time{col 29}failures{col 45}rate{col 52}[95% Conf. Interval]
+{hline 11}{c +}{hline 59}
+     total{col 12}{c |}{col 16}{res} 3887.4689{col 29}      76{col 39}    .01955{col 51} .0156137{col 63} .0244786
+
+         {txt}failure _d:  {res}failicu == 1
+   {txt}analysis time _t:  {res}(stopicu-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Iteration 0:   log pseudolikelihood = {res}-72.927453
+{txt}Iteration 1:   log pseudolikelihood = {res}-63.585286
+{txt}Iteration 2:   log pseudolikelihood = {res}-61.375618
+{txt}Iteration 3:   log pseudolikelihood = {res}-60.684063
+{txt}Iteration 4:   log pseudolikelihood = {res}-60.435929
+{txt}Iteration 5:   log pseudolikelihood = {res} -60.34535
+{txt}Iteration 6:   log pseudolikelihood = {res}-60.312122
+{txt}Iteration 7:   log pseudolikelihood = {res}-60.299911
+{txt}Iteration 8:   log pseudolikelihood = {res} -60.29542
+{txt}Iteration 9:   log pseudolikelihood = {res}-60.293768
+{txt}Iteration 10:  log pseudolikelihood = {res}-60.293161
+{txt}Iteration 11:  log pseudolikelihood = {res}-60.292937
+{txt}Iteration 12:  log pseudolikelihood = {res}-60.292855
+{txt}Iteration 13:  log pseudolikelihood = {res}-60.292825
+{txt}Iteration 14:  log pseudolikelihood = {res}-60.292814
+{txt}Iteration 15:  log pseudolikelihood = {res} -60.29281
+{txt}Iteration 16:  log pseudolikelihood = {res}-60.292808
+{txt}Iteration 17:  log pseudolikelihood = {res}-60.292808
+{txt}Iteration 18:  log pseudolikelihood = {res}-60.292807
+{txt}Iteration 19:  log pseudolikelihood = {res}-60.292807
+{txt}Iteration 20:  log pseudolikelihood = {res}-60.292807
+{txt}Iteration 21:  log pseudolikelihood = {res}-60.292807
+{txt}Iteration 22:  log pseudolikelihood = {res}-60.292807
+{txt}Iteration 23:  log pseudolikelihood = {res}-60.292807
+{txt}Iteration 24:  log pseudolikelihood = {res}-60.292807
+{txt}Iteration 25:  log pseudolikelihood = {res}-60.292807
+{txt}Iteration 26:  log pseudolikelihood = {res}-60.292807
+{txt}Iteration 27:  log pseudolikelihood = {res}-60.292807
+{txt}Iteration 28:  log pseudolikelihood = {res}-60.292807
+{txt}Iteration 29:  log pseudolikelihood = {res}-60.292807
+{txt}Iteration 30:  log pseudolikelihood = {res}-60.292807
+{txt}Iteration 31:  log pseudolikelihood = {res}-60.292807
+{txt}Iteration 32:  log pseudolikelihood = {res}-60.292807
+{txt}Iteration 33:  log pseudolikelihood = {res}-60.292807
+{txt}Iteration 34:  log pseudolikelihood = {res}-60.292807
+{txt}Refining estimates:
+Iteration 0:   log pseudolikelihood = {res}-60.292807
+{txt}Iteration 1:   log pseudolikelihood = {res}-60.292807
+
+{txt}Cox regression -- Breslow method for ties
+
+No. of subjects      = {res}       1,472             {txt}Number of obs    =  {res}     1,472
+{txt}No. of failures      = {res}          10
+{txt}Time at risk         = {res} 861.7878166
+                                                {txt}Wald chi2({res}22{txt})    =  {res}  12328.02
+{txt}Log pseudolikelihood =   {res}-60.292807             {txt}Prob > chi2      =  {res}    0.0000
+
+{txt}{ralign 78:(Std. Err. adjusted for {res:1,472} clusters in patient_id)}
+{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26}    Robust
+{col 1}          _t{col 14}{c |} Haz. Ratio{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 8}imid {c |}{col 14}{res}{space 2} 1.864496{col 26}{space 2} 2.136356{col 37}{space 1}    0.54{col 46}{space 3}0.587{col 54}{space 4} .1973545{col 67}{space 3} 17.61472
+{txt}{space 12} {c |}
+{space 4}agegroup {c |}
+{space 5}40-<50  {c |}{col 14}{res}{space 2} .8822568{col 26}{space 2} .7183476{col 37}{space 1}   -0.15{col 46}{space 3}0.878{col 54}{space 4} .1788682{col 67}{space 3}  4.35168
+{txt}{space 5}50-<60  {c |}{col 14}{res}{space 2} 3.66e-16{col 26}{space 2} 1.80e-16{col 37}{space 1}  -72.35{col 46}{space 3}0.000{col 54}{space 4} 1.40e-16{col 67}{space 3} 9.59e-16
+{txt}{space 5}60-<70  {c |}{col 14}{res}{space 2} .9276703{col 26}{space 2}  .793976{col 37}{space 1}   -0.09{col 46}{space 3}0.930{col 54}{space 4} .1733269{col 67}{space 3} 4.965025
+{txt}{space 5}70-<80  {c |}{col 14}{res}{space 2} 3.34e-16{col 26}{space 2} 1.76e-16{col 37}{space 1}  -67.87{col 46}{space 3}0.000{col 54}{space 4} 1.19e-16{col 67}{space 3} 9.36e-16
+{txt}{space 8}80+  {c |}{col 14}{res}{space 2} .9277486{col 26}{space 2} .9685604{col 37}{space 1}   -0.07{col 46}{space 3}0.943{col 54}{space 4} .1198904{col 67}{space 3} 7.179204
+{txt}{space 12} {c |}
+{space 8}male {c |}{col 14}{res}{space 2} 1.035319{col 26}{space 2} .7049633{col 37}{space 1}    0.05{col 46}{space 3}0.959{col 54}{space 4} .2725709{col 67}{space 3} 3.932504
+{txt}{space 12} {c |}
+{space 3}ethnicity {c |}
+South Asian  {c |}{col 14}{res}{space 2} 1.753598{col 26}{space 2} 1.422433{col 37}{space 1}    0.69{col 46}{space 3}0.489{col 54}{space 4} .3576657{col 67}{space 3} 8.597714
+{txt}{space 6}Other  {c |}{col 14}{res}{space 2} 7.39e-16{col 26}{space 2} 2.78e-16{col 37}{space 1}  -92.53{col 46}{space 3}0.000{col 54}{space 4} 3.54e-16{col 67}{space 3} 1.55e-15
+{txt}{space 12} {c |}
+{space 9}imd {c |}
+{space 10}4  {c |}{col 14}{res}{space 2} 1.160794{col 26}{space 2} .9563897{col 37}{space 1}    0.18{col 46}{space 3}0.856{col 54}{space 4} .2309097{col 67}{space 3} 5.835371
+{txt}5 most de..  {c |}{col 14}{res}{space 2} 5.08e-16{col 26}{space 2} 2.54e-16{col 37}{space 1}  -70.36{col 46}{space 3}0.000{col 54}{space 4} 1.91e-16{col 67}{space 3} 1.36e-15
+{txt}{space 12} {c |}
+{space 6}bmicat {c |}{col 14}{res}{space 2}  .976946{col 26}{space 2} .1936396{col 37}{space 1}   -0.12{col 46}{space 3}0.906{col 54}{space 4} .6624524{col 67}{space 3} 1.440743
+{txt}{space 7}bowel {c |}{col 14}{res}{space 2} .5182548{col 26}{space 2} .4872133{col 37}{space 1}   -0.70{col 46}{space 3}0.484{col 54}{space 4} .0820967{col 67}{space 3} 3.271607
+{txt}{space 8}skin {c |}{col 14}{res}{space 2} .3449156{col 26}{space 2} .3332934{col 37}{space 1}   -1.10{col 46}{space 3}0.271{col 54}{space 4} .0519031{col 67}{space 3} 2.292094
+{txt}{space 7}joint {c |}{col 14}{res}{space 2} .3334516{col 26}{space 2} .2847504{col 37}{space 1}   -1.29{col 46}{space 3}0.198{col 54}{space 4}  .062539{col 67}{space 3} 1.777931
+{txt}chronic_c~se {c |}{col 14}{res}{space 2} 1.336718{col 26}{space 2} .9833458{col 37}{space 1}    0.39{col 46}{space 3}0.693{col 54}{space 4} .3161259{col 67}{space 3} 5.652224
+{txt}{space 6}cancer {c |}{col 14}{res}{space 2} .4654745{col 26}{space 2} .2941012{col 37}{space 1}   -1.21{col 46}{space 3}0.226{col 54}{space 4} .1349213{col 67}{space 3} 1.605873
+{txt}{space 6}stroke {c |}{col 14}{res}{space 2} 4.47e-16{col 26}{space 2} 1.66e-16{col 37}{space 1}  -95.24{col 46}{space 3}0.000{col 54}{space 4} 2.16e-16{col 67}{space 3} 9.26e-16
+{txt}{space 12} {c |}
+{space 5}diabcat {c |}
+Controlle..  {c |}{col 14}{res}{space 2} 2.11e-16{col 26}{space 2} 2.31e-16{col 37}{space 1}  -32.96{col 46}{space 3}0.000{col 54}{space 4} 2.46e-17{col 67}{space 3} 1.80e-15
+{txt}Uncontrol..  {c |}{col 14}{res}{space 2} .2084407{col 26}{space 2}  .407924{col 37}{space 1}   -0.80{col 46}{space 3}0.423{col 54}{space 4} .0044994{col 67}{space 3} 9.656206
+{txt}Diabetes,..  {c |}{col 14}{res}{space 2} 4.57e-16{col 26}{space 2} 1.55e-16{col 37}{space 1} -103.89{col 46}{space 3}0.000{col 54}{space 4} 2.35e-16{col 67}{space 3} 8.90e-16
+{txt}{space 12} {c |}
+{space 2}steroidcat {c |}{col 14}{res}{space 2} .8454037{col 26}{space 2} 1.025848{col 37}{space 1}   -0.14{col 46}{space 3}0.890{col 54}{space 4} .0783755{col 67}{space 3} 9.119014
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+         failure _d:  {res}failicu == 1
+   {txt}analysis time _t:  {res}(stopicu-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Cohort{col 12}{c |}{col 15}person-time{col 29}failures{col 45}rate{col 52}[95% Conf. Interval]
+{hline 11}{c +}{hline 59}
+     total{col 12}{c |}{col 16}{res} 19086.048{col 29}     325{col 39} .01702815{col 51} .0152739{col 63} .0189838
+
+         {txt}failure _d:  {res}failicu == 1
+   {txt}analysis time _t:  {res}(stopicu-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Cohort{col 12}{c |}{col 15}person-time{col 29}failures{col 45}rate{col 52}[95% Conf. Interval]
+{hline 11}{c +}{hline 59}
+     total{col 12}{c |}{col 16}{res} 3887.4689{col 29}      76{col 39}    .01955{col 51} .0156137{col 63} .0244786
+
+         {txt}failure _d:  {res}failicu == 1
+   {txt}analysis time _t:  {res}(stopicu-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Iteration 0:   log pseudolikelihood = {res}-72.927453
+{txt}Iteration 1:   log pseudolikelihood = {res}-60.632635
+{txt}Iteration 2:   log pseudolikelihood = {res}-57.999525
+{txt}Iteration 3:   log pseudolikelihood = {res}-57.204785
+{txt}Iteration 4:   log pseudolikelihood = {res}-56.917942
+{txt}Iteration 5:   log pseudolikelihood = {res}-56.812887
+{txt}Iteration 6:   log pseudolikelihood = {res}-56.774298
+{txt}Iteration 7:   log pseudolikelihood = {res}-56.760109
+{txt}Iteration 8:   log pseudolikelihood = {res} -56.75489
+{txt}Iteration 9:   log pseudolikelihood = {res} -56.75297
+{txt}Iteration 10:  log pseudolikelihood = {res}-56.752264
+{txt}Iteration 11:  log pseudolikelihood = {res}-56.752004
+{txt}Iteration 12:  log pseudolikelihood = {res}-56.751908
+{txt}Iteration 13:  log pseudolikelihood = {res}-56.751873
+{txt}Iteration 14:  log pseudolikelihood = {res} -56.75186
+{txt}Iteration 15:  log pseudolikelihood = {res}-56.751856
+{txt}Iteration 16:  log pseudolikelihood = {res}-56.751854
+{txt}Iteration 17:  log pseudolikelihood = {res}-56.751853
+{txt}Iteration 18:  log pseudolikelihood = {res}-56.751853
+{txt}Iteration 19:  log pseudolikelihood = {res}-56.751853
+{txt}Iteration 20:  log pseudolikelihood = {res}-56.751853
+{txt}Iteration 21:  log pseudolikelihood = {res}-56.751853
+{txt}Iteration 22:  log pseudolikelihood = {res}-56.751853
+{txt}Iteration 23:  log pseudolikelihood = {res}-56.751853
+{txt}Iteration 24:  log pseudolikelihood = {res}-56.751853
+{txt}Iteration 25:  log pseudolikelihood = {res}-56.751853
+{txt}Iteration 26:  log pseudolikelihood = {res}-56.751853
+{txt}Iteration 27:  log pseudolikelihood = {res}-56.751853
+{txt}Iteration 28:  log pseudolikelihood = {res}-56.751853
+{txt}Iteration 29:  log pseudolikelihood = {res}-56.751853
+{txt}Iteration 30:  log pseudolikelihood = {res}-56.751853
+{txt}Iteration 31:  log pseudolikelihood = {res}-56.751853
+{txt}Iteration 32:  log pseudolikelihood = {res}-56.751853
+{txt}Iteration 33:  log pseudolikelihood = {res}-56.751853
+{txt}Iteration 34:  log pseudolikelihood = {res}-56.751853
+{txt}Iteration 35:  log pseudolikelihood = {res}-56.751853
+{txt}Iteration 36:  log pseudolikelihood = {res}-56.751853
+{txt}Iteration 37:  log pseudolikelihood = {res}-56.751853
+{txt}Iteration 38:  log pseudolikelihood = {res}-56.751853
+{txt}Iteration 39:  log pseudolikelihood = {res}-56.751853
+{txt}Refining estimates:
+Iteration 0:   log pseudolikelihood = {res}-56.751853
+{txt}Iteration 1:   log pseudolikelihood = {res}-56.751853
+
+{txt}Cox regression -- Breslow method for ties
+
+No. of subjects      = {res}       1,472             {txt}Number of obs    =  {res}     1,472
+{txt}No. of failures      = {res}          10
+{txt}Time at risk         = {res} 861.7878166
+                                                {txt}Wald chi2({res}23{txt})    =  {res}  15814.88
+{txt}Log pseudolikelihood =   {res}-56.751853             {txt}Prob > chi2      =  {res}    0.0000
+
+{txt}{ralign 78:(Std. Err. adjusted for {res:1,472} clusters in patient_id)}
+{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26}    Robust
+{col 1}          _t{col 14}{c |} Haz. Ratio{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 8}imid {c |}{col 14}{res}{space 2} 1.711664{col 26}{space 2} 1.933494{col 37}{space 1}    0.48{col 46}{space 3}0.634{col 54}{space 4}  .187026{col 67}{space 3} 15.66516
+{txt}{space 12} {c |}
+{space 4}agegroup {c |}
+{space 5}40-<50  {c |}{col 14}{res}{space 2} .7843672{col 26}{space 2} .5977153{col 37}{space 1}   -0.32{col 46}{space 3}0.750{col 54}{space 4} .1761465{col 67}{space 3} 3.492728
+{txt}{space 5}50-<60  {c |}{col 14}{res}{space 2} 2.65e-18{col 26}{space 2} 1.19e-18{col 37}{space 1}  -90.22{col 46}{space 3}0.000{col 54}{space 4} 1.10e-18{col 67}{space 3} 6.39e-18
+{txt}{space 5}60-<70  {c |}{col 14}{res}{space 2} 1.039023{col 26}{space 2} .9089171{col 37}{space 1}    0.04{col 46}{space 3}0.965{col 54}{space 4} .1870726{col 67}{space 3}  5.77085
+{txt}{space 5}70-<80  {c |}{col 14}{res}{space 2} 2.17e-18{col 26}{space 2} 1.23e-18{col 37}{space 1}  -71.72{col 46}{space 3}0.000{col 54}{space 4} 7.14e-19{col 67}{space 3} 6.60e-18
+{txt}{space 8}80+  {c |}{col 14}{res}{space 2} 1.109478{col 26}{space 2} 1.144032{col 37}{space 1}    0.10{col 46}{space 3}0.920{col 54}{space 4} .1470302{col 67}{space 3} 8.372031
+{txt}{space 12} {c |}
+{space 8}male {c |}{col 14}{res}{space 2}  1.17451{col 26}{space 2} .8398022{col 37}{space 1}    0.22{col 46}{space 3}0.822{col 54}{space 4} .2892195{col 67}{space 3} 4.769643
+{txt}{space 12} {c |}
+{space 3}ethnicity {c |}
+South Asian  {c |}{col 14}{res}{space 2} 1.589548{col 26}{space 2} 1.343181{col 37}{space 1}    0.55{col 46}{space 3}0.583{col 54}{space 4} .3033901{col 67}{space 3} 8.328098
+{txt}{space 6}Other  {c |}{col 14}{res}{space 2} 4.85e-18{col 26}{space 2} 2.06e-18{col 37}{space 1}  -93.70{col 46}{space 3}0.000{col 54}{space 4} 2.11e-18{col 67}{space 3} 1.12e-17
+{txt}{space 12} {c |}
+{space 9}imd {c |}
+{space 10}4  {c |}{col 14}{res}{space 2} 1.205751{col 26}{space 2} 1.005997{col 37}{space 1}    0.22{col 46}{space 3}0.823{col 54}{space 4} .2350029{col 67}{space 3} 6.186463
+{txt}5 most de..  {c |}{col 14}{res}{space 2} 3.11e-18{col 26}{space 2} 1.58e-18{col 37}{space 1}  -79.26{col 46}{space 3}0.000{col 54}{space 4} 1.15e-18{col 67}{space 3} 8.44e-18
+{txt}{space 12} {c |}
+{space 6}bmicat {c |}{col 14}{res}{space 2} .9976008{col 26}{space 2} .1901792{col 37}{space 1}   -0.01{col 46}{space 3}0.990{col 54}{space 4} .6865728{col 67}{space 3} 1.449529
+{txt}{space 7}bowel {c |}{col 14}{res}{space 2} .6579814{col 26}{space 2} .6153054{col 37}{space 1}   -0.45{col 46}{space 3}0.654{col 54}{space 4} .1052495{col 67}{space 3} 4.113458
+{txt}{space 8}skin {c |}{col 14}{res}{space 2} .3682075{col 26}{space 2} .3467439{col 37}{space 1}   -1.06{col 46}{space 3}0.289{col 54}{space 4} .0581446{col 67}{space 3} 2.331717
+{txt}{space 7}joint {c |}{col 14}{res}{space 2} .3135657{col 26}{space 2} .2903903{col 37}{space 1}   -1.25{col 46}{space 3}0.210{col 54}{space 4}  .051055{col 67}{space 3} 1.925832
+{txt}chronic_c~se {c |}{col 14}{res}{space 2} 1.417117{col 26}{space 2}  1.22603{col 37}{space 1}    0.40{col 46}{space 3}0.687{col 54}{space 4} .2600054{col 67}{space 3} 7.723768
+{txt}{space 6}cancer {c |}{col 14}{res}{space 2} .5116696{col 26}{space 2} .3579496{col 37}{space 1}   -0.96{col 46}{space 3}0.338{col 54}{space 4} .1298712{col 67}{space 3} 2.015887
+{txt}{space 6}stroke {c |}{col 14}{res}{space 2} 2.55e-18{col 26}{space 2} 1.03e-18{col 37}{space 1} -100.41{col 46}{space 3}0.000{col 54}{space 4} 1.16e-18{col 67}{space 3} 5.63e-18
+{txt}{space 12} {c |}
+{space 5}diabcat {c |}
+Controlle..  {c |}{col 14}{res}{space 2} 6.14e-18{col 26}{space 2}        .{col 37}{space 1}       .{col 46}{space 3}    .{col 54}{space 4}        .{col 67}{space 3}        .
+{txt}Uncontrol..  {c |}{col 14}{res}{space 2} .1838707{col 26}{space 2}        .{col 37}{space 1}       .{col 46}{space 3}    .{col 54}{space 4}        .{col 67}{space 3}        .
+{txt}Diabetes,..  {c |}{col 14}{res}{space 2} 3.34e-18{col 26}{space 2} 1.18e-18{col 37}{space 1} -113.83{col 46}{space 3}0.000{col 54}{space 4} 1.67e-18{col 67}{space 3} 6.68e-18
+{txt}{space 12} {c |}
+{space 2}steroidcat {c |}{col 14}{res}{space 2} .8916143{col 26}{space 2} 1.102669{col 37}{space 1}   -0.09{col 46}{space 3}0.926{col 54}{space 4} .0789745{col 67}{space 3} 10.06624
+{txt}{space 12} {c |}
+{space 9}ckd {c |}
+{space 8}CKD  {c |}{col 14}{res}{space 2} .4086126{col 26}{space 2} .2846151{col 37}{space 1}   -1.28{col 46}{space 3}0.199{col 54}{space 4} .1043316{col 67}{space 3} 1.600323
+{txt}chronic_l~se {c |}{col 14}{res}{space 2} 2.74e-18{col 26}{space 2} 1.09e-18{col 37}{space 1} -101.67{col 46}{space 3}0.000{col 54}{space 4} 1.26e-18{col 67}{space 3} 5.97e-18
+{txt}chronic_r~se {c |}{col 14}{res}{space 2} .3592719{col 26}{space 2} .3583324{col 37}{space 1}   -1.03{col 46}{space 3}0.305{col 54}{space 4} .0508683{col 67}{space 3} 2.537458
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+         failure _d:  {res}failicu == 1
+   {txt}analysis time _t:  {res}(stopicu-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Cohort{col 12}{c |}{col 15}person-time{col 29}failures{col 45}rate{col 52}[95% Conf. Interval]
+{hline 11}{c +}{hline 59}
+     total{col 12}{c |}{col 16}{res} 19086.048{col 29}     325{col 39} .01702815{col 51} .0152739{col 63} .0189838
+
+         {txt}failure _d:  {res}failicu == 1
+   {txt}analysis time _t:  {res}(stopicu-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Cohort{col 12}{c |}{col 15}person-time{col 29}failures{col 45}rate{col 52}[95% Conf. Interval]
+{hline 11}{c +}{hline 59}
+     total{col 12}{c |}{col 16}{res} 3887.4689{col 29}      76{col 39}    .01955{col 51} .0156137{col 63} .0244786
+
+                {txt}id:  {res}patient_id
+     {txt}failure event:  {res}failswab == 1
+{txt}obs. time interval:  {res}(stopswab[_n-1], stopswab]
+{txt} enter on or after:  {res}time enter_date
+{txt} exit on or before:  {res}failure
+    {txt}t for analysis:  {res}(time-origin)/365.25
+            {txt}origin:  {res}time enter_date
+
+{txt}{hline 78}
+{res}     39,307{txt}  total observations
+{res}        418{txt}  observations end on or before enter()
+{hline 78}
+{res}     38,889{txt}  observations remaining, representing
+{res}     38,889{txt}  subjects
+{res}      3,513{txt}  failures in single-failure-per-subject data
+{res} 22,239.754{txt}  total analysis time at risk and under observation
+                                                at risk from t = {res}        0
+                                     {txt}earliest observed entry t = {res}        0
+                                          {txt}last observed exit t = {res} .5859001
+
+         {txt}failure _d:  {res}failswab == 1
+   {txt}analysis time _t:  {res}(stopswab-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Iteration 0:   log pseudolikelihood = {res}-37000.729
+{txt}Iteration 1:   log pseudolikelihood = {res}-37000.213
+{txt}Iteration 2:   log pseudolikelihood = {res}-37000.213
+{txt}Refining estimates:
+Iteration 0:   log pseudolikelihood = {res}-37000.213
+
+{txt}Cox regression -- Breslow method for ties
+
+No. of subjects      = {res}      38,889             {txt}Number of obs    =  {res}    38,889
+{txt}No. of failures      = {res}       3,513
+{txt}Time at risk         = {res} 22239.75359
+                                                {txt}Wald chi2({res}1{txt})     =  {res}      1.07
+{txt}Log pseudolikelihood =   {res}-37000.213             {txt}Prob > chi2      =  {res}    0.3018
+
+{txt}{ralign 78:(Std. Err. adjusted for {res:38,889} clusters in patient_id)}
+{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26}    Robust
+{col 1}          _t{col 14}{c |} Haz. Ratio{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 8}imid {c |}{col 14}{res}{space 2} .9557482{col 26}{space 2}  .041892{col 37}{space 1}   -1.03{col 46}{space 3}0.302{col 54}{space 4} .8770693{col 67}{space 3} 1.041485
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+         failure _d:  {res}failswab == 1
+   {txt}analysis time _t:  {res}(stopswab-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Cohort{col 12}{c |}{col 15}person-time{col 29}failures{col 45}rate{col 52}[95% Conf. Interval]
+{hline 11}{c +}{hline 59}
+     total{col 12}{c |}{col 16}{res} 18468.296{col 29}    2895{col 39} .15675513{col 51} .1511478{col 63} .1625705
+
+         {txt}failure _d:  {res}failswab == 1
+   {txt}analysis time _t:  {res}(stopswab-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Cohort{col 12}{c |}{col 15}person-time{col 29}failures{col 45}rate{col 52}[95% Conf. Interval]
+{hline 11}{c +}{hline 59}
+     total{col 12}{c |}{col 16}{res} 3771.4579{col 29}     618{col 39} .16386236{col 51} .1514394{col 63} .1773044
+
+         {txt}failure _d:  {res}failswab == 1
+   {txt}analysis time _t:  {res}(stopswab-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Iteration 0:   log pseudolikelihood = {res}-37000.729
+{txt}Iteration 1:   log pseudolikelihood = {res}-36995.963
+{txt}Iteration 2:   log pseudolikelihood = {res}-36995.959
+{txt}Refining estimates:
+Iteration 0:   log pseudolikelihood = {res}-36995.959
+
+{txt}Cox regression -- Breslow method for ties
+
+No. of subjects      = {res}      38,889             {txt}Number of obs    =  {res}    38,889
+{txt}No. of failures      = {res}       3,513
+{txt}Time at risk         = {res} 22239.75359
+                                                {txt}Wald chi2({res}7{txt})     =  {res}     10.08
+{txt}Log pseudolikelihood =   {res}-36995.959             {txt}Prob > chi2      =  {res}    0.1841
+
+{txt}{ralign 78:(Std. Err. adjusted for {res:38,889} clusters in patient_id)}
+{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26}    Robust
+{col 1}          _t{col 14}{c |} Haz. Ratio{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 8}imid {c |}{col 14}{res}{space 2} .9551922{col 26}{space 2}  .041865{col 37}{space 1}   -1.05{col 46}{space 3}0.296{col 54}{space 4} .8765638{col 67}{space 3} 1.040874
+{txt}{space 12} {c |}
+{space 4}agegroup {c |}
+{space 5}40-<50  {c |}{col 14}{res}{space 2} .9666034{col 26}{space 2} .0488567{col 37}{space 1}   -0.67{col 46}{space 3}0.502{col 54}{space 4} .8754364{col 67}{space 3} 1.067264
+{txt}{space 5}50-<60  {c |}{col 14}{res}{space 2} 1.095295{col 26}{space 2} .0521229{col 37}{space 1}    1.91{col 46}{space 3}0.056{col 54}{space 4} .9977553{col 67}{space 3}  1.20237
+{txt}{space 5}60-<70  {c |}{col 14}{res}{space 2}  1.03718{col 26}{space 2} .0548157{col 37}{space 1}    0.69{col 46}{space 3}0.490{col 54}{space 4} .9351205{col 67}{space 3} 1.150379
+{txt}{space 5}70-<80  {c |}{col 14}{res}{space 2} .9369445{col 26}{space 2} .0562165{col 37}{space 1}   -1.09{col 46}{space 3}0.278{col 54}{space 4} .8329941{col 67}{space 3} 1.053867
+{txt}{space 8}80+  {c |}{col 14}{res}{space 2} .9484432{col 26}{space 2} .0698972{col 37}{space 1}   -0.72{col 46}{space 3}0.473{col 54}{space 4} .8208815{col 67}{space 3} 1.095827
+{txt}{space 12} {c |}
+{space 8}male {c |}{col 14}{res}{space 2} 1.001274{col 26}{space 2} .0334413{col 37}{space 1}    0.04{col 46}{space 3}0.970{col 54}{space 4} .9378299{col 67}{space 3} 1.069011
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+         failure _d:  {res}failswab == 1
+   {txt}analysis time _t:  {res}(stopswab-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Cohort{col 12}{c |}{col 15}person-time{col 29}failures{col 45}rate{col 52}[95% Conf. Interval]
+{hline 11}{c +}{hline 59}
+     total{col 12}{c |}{col 16}{res} 18468.296{col 29}    2895{col 39} .15675513{col 51} .1511478{col 63} .1625705
+
+         {txt}failure _d:  {res}failswab == 1
+   {txt}analysis time _t:  {res}(stopswab-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Cohort{col 12}{c |}{col 15}person-time{col 29}failures{col 45}rate{col 52}[95% Conf. Interval]
+{hline 11}{c +}{hline 59}
+     total{col 12}{c |}{col 16}{res} 3771.4579{col 29}     618{col 39} .16386236{col 51} .1514394{col 63} .1773044
+
+         {txt}failure _d:  {res}failswab == 1
+   {txt}analysis time _t:  {res}(stopswab-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Iteration 0:   log pseudolikelihood = {res}-906.34113
+{txt}Iteration 1:   log pseudolikelihood = {res}-897.21438
+{txt}Iteration 2:   log pseudolikelihood = {res}-896.78312
+{txt}Iteration 3:   log pseudolikelihood = {res}-896.75146
+{txt}Iteration 4:   log pseudolikelihood = {res}-896.74867
+{txt}Iteration 5:   log pseudolikelihood = {res}-896.74772
+{txt}Iteration 6:   log pseudolikelihood = {res}-896.74737
+{txt}Iteration 7:   log pseudolikelihood = {res}-896.74725
+{txt}Iteration 8:   log pseudolikelihood = {res} -896.7472
+{txt}Iteration 9:   log pseudolikelihood = {res}-896.74718
+{txt}Iteration 10:  log pseudolikelihood = {res}-896.74718
+{txt}Iteration 11:  log pseudolikelihood = {res}-896.74717
+{txt}Iteration 12:  log pseudolikelihood = {res}-896.74717
+{txt}Iteration 13:  log pseudolikelihood = {res}-896.74717
+{txt}Iteration 14:  log pseudolikelihood = {res}-896.74717
+{txt}Iteration 15:  log pseudolikelihood = {res}-896.74717
+{txt}Iteration 16:  log pseudolikelihood = {res}-896.74717
+{txt}Iteration 17:  log pseudolikelihood = {res}-896.74717
+{txt}Iteration 18:  log pseudolikelihood = {res}-896.74717
+{txt}Iteration 19:  log pseudolikelihood = {res}-896.74717
+{txt}Iteration 20:  log pseudolikelihood = {res}-896.74717
+{txt}Iteration 21:  log pseudolikelihood = {res}-896.74717
+{txt}Iteration 22:  log pseudolikelihood = {res}-896.74717
+{txt}Iteration 23:  log pseudolikelihood = {res}-896.74717
+{txt}Iteration 24:  log pseudolikelihood = {res}-896.74717
+{txt}Iteration 25:  log pseudolikelihood = {res}-896.74717
+{txt}Iteration 26:  log pseudolikelihood = {res}-896.74717
+{txt}Iteration 27:  log pseudolikelihood = {res}-896.74717
+{txt}Iteration 28:  log pseudolikelihood = {res}-896.74717
+{txt}Iteration 29:  log pseudolikelihood = {res}-896.74717
+{txt}Refining estimates:
+Iteration 0:   log pseudolikelihood = {res}-896.74717
+{txt}Iteration 1:   log pseudolikelihood = {res}-896.74717
+{txt}Iteration 2:   log pseudolikelihood = {res}-896.74717
+
+{txt}Cox regression -- Breslow method for ties
+
+No. of subjects      = {res}       1,458             {txt}Number of obs    =  {res}     1,458
+{txt}No. of failures      = {res}         125
+{txt}Time at risk         = {res} 836.0301164
+                                                {txt}Wald chi2({res}22{txt})    =  {res}    983.85
+{txt}Log pseudolikelihood =   {res}-896.74717             {txt}Prob > chi2      =  {res}    0.0000
+
+{txt}{ralign 78:(Std. Err. adjusted for {res:1,458} clusters in patient_id)}
+{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26}    Robust
+{col 1}          _t{col 14}{c |} Haz. Ratio{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 8}imid {c |}{col 14}{res}{space 2}   .84807{col 26}{space 2} .2912984{col 37}{space 1}   -0.48{col 46}{space 3}0.631{col 54}{space 4} .4325713{col 67}{space 3} 1.662669
+{txt}{space 12} {c |}
+{space 4}agegroup {c |}
+{space 5}40-<50  {c |}{col 14}{res}{space 2} .9349058{col 26}{space 2} .2423086{col 37}{space 1}   -0.26{col 46}{space 3}0.795{col 54}{space 4} .5625404{col 67}{space 3} 1.553753
+{txt}{space 5}50-<60  {c |}{col 14}{res}{space 2} 1.079773{col 26}{space 2} .2723333{col 37}{space 1}    0.30{col 46}{space 3}0.761{col 54}{space 4} .6586397{col 67}{space 3} 1.770178
+{txt}{space 5}60-<70  {c |}{col 14}{res}{space 2} .5343701{col 26}{space 2} .1784984{col 37}{space 1}   -1.88{col 46}{space 3}0.061{col 54}{space 4} .2776584{col 67}{space 3} 1.028427
+{txt}{space 5}70-<80  {c |}{col 14}{res}{space 2} .7830089{col 26}{space 2} .2377673{col 37}{space 1}   -0.81{col 46}{space 3}0.421{col 54}{space 4} .4318094{col 67}{space 3} 1.419846
+{txt}{space 8}80+  {c |}{col 14}{res}{space 2} .7274245{col 26}{space 2} .3177314{col 37}{space 1}   -0.73{col 46}{space 3}0.466{col 54}{space 4} .3090239{col 67}{space 3} 1.712316
+{txt}{space 12} {c |}
+{space 8}male {c |}{col 14}{res}{space 2} .8331479{col 26}{space 2} .1499265{col 37}{space 1}   -1.01{col 46}{space 3}0.310{col 54}{space 4} .5855269{col 67}{space 3} 1.185489
+{txt}{space 12} {c |}
+{space 3}ethnicity {c |}
+South Asian  {c |}{col 14}{res}{space 2} 1.184288{col 26}{space 2} .3239178{col 37}{space 1}    0.62{col 46}{space 3}0.536{col 54}{space 4} .6928555{col 67}{space 3} 2.024285
+{txt}{space 6}Other  {c |}{col 14}{res}{space 2} 1.346456{col 26}{space 2} .3720307{col 37}{space 1}    1.08{col 46}{space 3}0.282{col 54}{space 4} .7834335{col 67}{space 3} 2.314101
+{txt}{space 12} {c |}
+{space 9}imd {c |}
+{space 10}4  {c |}{col 14}{res}{space 2} 1.426976{col 26}{space 2} .2961418{col 37}{space 1}    1.71{col 46}{space 3}0.087{col 54}{space 4} .9500922{col 67}{space 3} 2.143223
+{txt}5 most de..  {c |}{col 14}{res}{space 2} 1.248501{col 26}{space 2} .3679569{col 37}{space 1}    0.75{col 46}{space 3}0.451{col 54}{space 4} .7006866{col 67}{space 3} 2.224611
+{txt}{space 12} {c |}
+{space 6}bmicat {c |}{col 14}{res}{space 2} .9361315{col 26}{space 2} .0542939{col 37}{space 1}   -1.14{col 46}{space 3}0.255{col 54}{space 4} .8355428{col 67}{space 3}  1.04883
+{txt}{space 7}bowel {c |}{col 14}{res}{space 2} 1.221061{col 26}{space 2}  .276964{col 37}{space 1}    0.88{col 46}{space 3}0.379{col 54}{space 4} .7828273{col 67}{space 3} 1.904623
+{txt}{space 8}skin {c |}{col 14}{res}{space 2} .9138927{col 26}{space 2} .1850882{col 37}{space 1}   -0.44{col 46}{space 3}0.657{col 54}{space 4} .6144742{col 67}{space 3} 1.359211
+{txt}{space 7}joint {c |}{col 14}{res}{space 2}  1.19307{col 26}{space 2} .2561587{col 37}{space 1}    0.82{col 46}{space 3}0.411{col 54}{space 4}  .783264{col 67}{space 3} 1.817287
+{txt}chronic_c~se {c |}{col 14}{res}{space 2} 1.156813{col 26}{space 2} .2503147{col 37}{space 1}    0.67{col 46}{space 3}0.501{col 54}{space 4} .7569684{col 67}{space 3} 1.767864
+{txt}{space 6}cancer {c |}{col 14}{res}{space 2} 1.253102{col 26}{space 2} .2277353{col 37}{space 1}    1.24{col 46}{space 3}0.214{col 54}{space 4} .8775896{col 67}{space 3} 1.789293
+{txt}{space 6}stroke {c |}{col 14}{res}{space 2} .9426927{col 26}{space 2} .2084204{col 37}{space 1}   -0.27{col 46}{space 3}0.790{col 54}{space 4} .6111919{col 67}{space 3} 1.453994
+{txt}{space 12} {c |}
+{space 5}diabcat {c |}
+Controlle..  {c |}{col 14}{res}{space 2} 3.764797{col 26}{space 2}  3.42777{col 37}{space 1}    1.46{col 46}{space 3}0.145{col 54}{space 4} .6320336{col 67}{space 3} 22.42554
+{txt}Uncontrol..  {c |}{col 14}{res}{space 2} 4.07e-14{col 26}{space 2} 4.50e-14{col 37}{space 1}  -27.89{col 46}{space 3}0.000{col 54}{space 4} 4.66e-15{col 67}{space 3} 3.55e-13
+{txt}Diabetes,..  {c |}{col 14}{res}{space 2} 1.387152{col 26}{space 2}  .289455{col 37}{space 1}    1.57{col 46}{space 3}0.117{col 54}{space 4}  .921521{col 67}{space 3} 2.088061
+{txt}{space 12} {c |}
+{space 2}steroidcat {c |}{col 14}{res}{space 2} 1.229959{col 26}{space 2} .3471424{col 37}{space 1}    0.73{col 46}{space 3}0.463{col 54}{space 4} .7073726{col 67}{space 3} 2.138616
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+         failure _d:  {res}failswab == 1
+   {txt}analysis time _t:  {res}(stopswab-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Cohort{col 12}{c |}{col 15}person-time{col 29}failures{col 45}rate{col 52}[95% Conf. Interval]
+{hline 11}{c +}{hline 59}
+     total{col 12}{c |}{col 16}{res} 18468.296{col 29}    2895{col 39} .15675513{col 51} .1511478{col 63} .1625705
+
+         {txt}failure _d:  {res}failswab == 1
+   {txt}analysis time _t:  {res}(stopswab-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Cohort{col 12}{c |}{col 15}person-time{col 29}failures{col 45}rate{col 52}[95% Conf. Interval]
+{hline 11}{c +}{hline 59}
+     total{col 12}{c |}{col 16}{res} 3771.4579{col 29}     618{col 39} .16386236{col 51} .1514394{col 63} .1773044
+
+         {txt}failure _d:  {res}failswab == 1
+   {txt}analysis time _t:  {res}(stopswab-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Iteration 0:   log pseudolikelihood = {res}-906.34113
+{txt}Iteration 1:   log pseudolikelihood = {res}-896.42129
+{txt}Iteration 2:   log pseudolikelihood = {res}-895.97622
+{txt}Iteration 3:   log pseudolikelihood = {res}-895.94416
+{txt}Iteration 4:   log pseudolikelihood = {res}-895.94138
+{txt}Iteration 5:   log pseudolikelihood = {res}-895.94044
+{txt}Iteration 6:   log pseudolikelihood = {res}-895.94009
+{txt}Iteration 7:   log pseudolikelihood = {res}-895.93997
+{txt}Iteration 8:   log pseudolikelihood = {res}-895.93992
+{txt}Iteration 9:   log pseudolikelihood = {res} -895.9399
+{txt}Iteration 10:  log pseudolikelihood = {res} -895.9399
+{txt}Iteration 11:  log pseudolikelihood = {res}-895.93989
+{txt}Iteration 12:  log pseudolikelihood = {res}-895.93989
+{txt}Iteration 13:  log pseudolikelihood = {res}-895.93989
+{txt}Iteration 14:  log pseudolikelihood = {res}-895.93989
+{txt}Iteration 15:  log pseudolikelihood = {res}-895.93989
+{txt}Iteration 16:  log pseudolikelihood = {res}-895.93989
+{txt}Iteration 17:  log pseudolikelihood = {res}-895.93989
+{txt}Iteration 18:  log pseudolikelihood = {res}-895.93989
+{txt}Iteration 19:  log pseudolikelihood = {res}-895.93989
+{txt}Iteration 20:  log pseudolikelihood = {res}-895.93989
+{txt}Iteration 21:  log pseudolikelihood = {res}-895.93989
+{txt}Iteration 22:  log pseudolikelihood = {res}-895.93989
+{txt}Iteration 23:  log pseudolikelihood = {res}-895.93989
+{txt}Iteration 24:  log pseudolikelihood = {res}-895.93989
+{txt}Iteration 25:  log pseudolikelihood = {res}-895.93989
+{txt}Iteration 26:  log pseudolikelihood = {res}-895.93989
+{txt}Iteration 27:  log pseudolikelihood = {res}-895.93989
+{txt}Iteration 28:  log pseudolikelihood = {res}-895.93989
+{txt}Iteration 29:  log pseudolikelihood = {res}-895.93989
+{txt}Iteration 30:  log pseudolikelihood = {res}-895.93989
+{txt}Iteration 31:  log pseudolikelihood = {res}-895.93989
+{txt}Iteration 32:  log pseudolikelihood = {res}-895.93989
+{txt}Iteration 33:  log pseudolikelihood = {res}-895.93989
+{txt}Iteration 34:  log pseudolikelihood = {res}-895.93989
+{txt}Iteration 35:  log pseudolikelihood = {res}-895.93989
+{txt}Iteration 36:  log pseudolikelihood = {res}-895.93989
+{txt}Iteration 37:  log pseudolikelihood = {res}-895.93989
+{txt}Iteration 38:  log pseudolikelihood = {res}-895.93989
+{txt}Iteration 39:  log pseudolikelihood = {res}-895.93989
+{txt}Iteration 40:  log pseudolikelihood = {res}-895.93989
+{txt}Iteration 41:  log pseudolikelihood = {res}-895.93989
+{txt}Iteration 42:  log pseudolikelihood = {res}-895.93989
+{txt}Refining estimates:
+Iteration 0:   log pseudolikelihood = {res}-895.93989
+
+{txt}Cox regression -- Breslow method for ties
+
+No. of subjects      = {res}       1,458             {txt}Number of obs    =  {res}     1,458
+{txt}No. of failures      = {res}         125
+{txt}Time at risk         = {res} 836.0301164
+                                                {txt}Wald chi2({res}24{txt})    =  {res}     24.00
+{txt}Log pseudolikelihood =   {res}-895.93989             {txt}Prob > chi2      =  {res}    0.4614
+
+{txt}{ralign 78:(Std. Err. adjusted for {res:1,458} clusters in patient_id)}
+{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26}    Robust
+{col 1}          _t{col 14}{c |} Haz. Ratio{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 8}imid {c |}{col 14}{res}{space 2}  .854377{col 26}{space 2} .2958612{col 37}{space 1}   -0.45{col 46}{space 3}0.649{col 54}{space 4}  .433399{col 67}{space 3} 1.684268
+{txt}{space 12} {c |}
+{space 4}agegroup {c |}
+{space 5}40-<50  {c |}{col 14}{res}{space 2} .9478726{col 26}{space 2} .2450315{col 37}{space 1}   -0.21{col 46}{space 3}0.836{col 54}{space 4} .5710953{col 67}{space 3} 1.573227
+{txt}{space 5}50-<60  {c |}{col 14}{res}{space 2} 1.085735{col 26}{space 2} .2735924{col 37}{space 1}    0.33{col 46}{space 3}0.744{col 54}{space 4}  .662569{col 67}{space 3} 1.779166
+{txt}{space 5}60-<70  {c |}{col 14}{res}{space 2} .5340128{col 26}{space 2} .1789425{col 37}{space 1}   -1.87{col 46}{space 3}0.061{col 54}{space 4} .2768996{col 67}{space 3} 1.029867
+{txt}{space 5}70-<80  {c |}{col 14}{res}{space 2} .7728611{col 26}{space 2} .2344561{col 37}{space 1}   -0.85{col 46}{space 3}0.396{col 54}{space 4} .4264616{col 67}{space 3} 1.400629
+{txt}{space 8}80+  {c |}{col 14}{res}{space 2} .7199288{col 26}{space 2} .3131115{col 37}{space 1}   -0.76{col 46}{space 3}0.450{col 54}{space 4} .3069622{col 67}{space 3} 1.688473
+{txt}{space 12} {c |}
+{space 8}male {c |}{col 14}{res}{space 2} .8373767{col 26}{space 2} .1499659{col 37}{space 1}   -0.99{col 46}{space 3}0.322{col 54}{space 4} .5894936{col 67}{space 3} 1.189495
+{txt}{space 12} {c |}
+{space 3}ethnicity {c |}
+South Asian  {c |}{col 14}{res}{space 2} 1.181087{col 26}{space 2} .3221711{col 37}{space 1}    0.61{col 46}{space 3}0.542{col 54}{space 4} .6919826{col 67}{space 3} 2.015898
+{txt}{space 6}Other  {c |}{col 14}{res}{space 2} 1.343972{col 26}{space 2} .3719777{col 37}{space 1}    1.07{col 46}{space 3}0.285{col 54}{space 4} .7812665{col 67}{space 3} 2.311966
+{txt}{space 12} {c |}
+{space 9}imd {c |}
+{space 10}4  {c |}{col 14}{res}{space 2} 1.430145{col 26}{space 2} .2976504{col 37}{space 1}    1.72{col 46}{space 3}0.086{col 54}{space 4} .9510928{col 67}{space 3} 2.150489
+{txt}5 most de..  {c |}{col 14}{res}{space 2}  1.25011{col 26}{space 2} .3698294{col 37}{space 1}    0.75{col 46}{space 3}0.451{col 54}{space 4} .7000531{col 67}{space 3} 2.232367
+{txt}{space 12} {c |}
+{space 6}bmicat {c |}{col 14}{res}{space 2} .9335775{col 26}{space 2} .0539855{col 37}{space 1}   -1.19{col 46}{space 3}0.235{col 54}{space 4} .8335438{col 67}{space 3} 1.045616
+{txt}{space 7}bowel {c |}{col 14}{res}{space 2} 1.227874{col 26}{space 2} .2787111{col 37}{space 1}    0.90{col 46}{space 3}0.366{col 54}{space 4} .7869414{col 67}{space 3} 1.915866
+{txt}{space 8}skin {c |}{col 14}{res}{space 2}  .917182{col 26}{space 2} .1859272{col 37}{space 1}   -0.43{col 46}{space 3}0.670{col 54}{space 4} .6164582{col 67}{space 3} 1.364606
+{txt}{space 7}joint {c |}{col 14}{res}{space 2} 1.201816{col 26}{space 2} .2586306{col 37}{space 1}    0.85{col 46}{space 3}0.393{col 54}{space 4}  .788242{col 67}{space 3} 1.832384
+{txt}chronic_c~se {c |}{col 14}{res}{space 2} 1.154493{col 26}{space 2} .2497012{col 37}{space 1}    0.66{col 46}{space 3}0.507{col 54}{space 4} .7555933{col 67}{space 3} 1.763984
+{txt}{space 6}cancer {c |}{col 14}{res}{space 2} 1.246344{col 26}{space 2} .2270746{col 37}{space 1}    1.21{col 46}{space 3}0.227{col 54}{space 4} .8720778{col 67}{space 3} 1.781232
+{txt}{space 6}stroke {c |}{col 14}{res}{space 2} .9455886{col 26}{space 2} .2094329{col 37}{space 1}   -0.25{col 46}{space 3}0.801{col 54}{space 4} .6125965{col 67}{space 3} 1.459587
+{txt}{space 12} {c |}
+{space 5}diabcat {c |}
+Controlle..  {c |}{col 14}{res}{space 2} 4.051087{col 26}{space 2}  3.53101{col 37}{space 1}    1.61{col 46}{space 3}0.108{col 54}{space 4} .7339167{col 67}{space 3} 22.36126
+{txt}Uncontrol..  {c |}{col 14}{res}{space 2} 6.94e-19{col 26}{space 2}        .{col 37}{space 1}       .{col 46}{space 3}    .{col 54}{space 4}        .{col 67}{space 3}        .
+{txt}Diabetes,..  {c |}{col 14}{res}{space 2} 1.401084{col 26}{space 2} .2926919{col 37}{space 1}    1.61{col 46}{space 3}0.106{col 54}{space 4} .9303467{col 67}{space 3} 2.110005
+{txt}{space 12} {c |}
+{space 2}steroidcat {c |}{col 14}{res}{space 2} 1.236359{col 26}{space 2} .3499637{col 37}{space 1}    0.75{col 46}{space 3}0.454{col 54}{space 4} .7099108{col 67}{space 3} 2.153207
+{txt}{space 12} {c |}
+{space 9}ckd {c |}
+{space 8}CKD  {c |}{col 14}{res}{space 2} 1.207521{col 26}{space 2} .2229701{col 37}{space 1}    1.02{col 46}{space 3}0.307{col 54}{space 4} .8408512{col 67}{space 3} 1.734083
+{txt}chronic_l~se {c |}{col 14}{res}{space 2}  .847703{col 26}{space 2} .2098232{col 37}{space 1}   -0.67{col 46}{space 3}0.504{col 54}{space 4} .5218606{col 67}{space 3} 1.376997
+{txt}chronic_r~se {c |}{col 14}{res}{space 2} 1.072576{col 26}{space 2} .2347976{col 37}{space 1}    0.32{col 46}{space 3}0.749{col 54}{space 4} .6983794{col 67}{space 3} 1.647269
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+         failure _d:  {res}failswab == 1
+   {txt}analysis time _t:  {res}(stopswab-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Cohort{col 12}{c |}{col 15}person-time{col 29}failures{col 45}rate{col 52}[95% Conf. Interval]
+{hline 11}{c +}{hline 59}
+     total{col 12}{c |}{col 16}{res} 18468.296{col 29}    2895{col 39} .15675513{col 51} .1511478{col 63} .1625705
+
+         {txt}failure _d:  {res}failswab == 1
+   {txt}analysis time _t:  {res}(stopswab-origin)/365.25
+             {txt}origin:  {res}time enter_date
+{txt}  enter on or after:  {res}time enter_date
+                 {txt}id:  {res}patient_id
+
+{txt}Cohort{col 12}{c |}{col 15}person-time{col 29}failures{col 45}rate{col 52}[95% Conf. Interval]
+{hline 11}{c +}{hline 59}
+     total{col 12}{c |}{col 16}{res} 3771.4579{col 29}     618{col 39} .16386236{col 51} .1514394{col 63} .1773044
+{txt}
+{com}. 
+. postclose `coxoutput'
+{txt}
+{com}. 
+. 
+. 
+. 
+. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}/workspace/logs/cox_models_imid.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}26 Mar 2021, 15:05:46
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}
