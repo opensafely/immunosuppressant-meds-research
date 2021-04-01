@@ -55,7 +55,7 @@ ankylosing_spondylitis_codes = codelist_from_csv(
 )
 
 psoriasis_codes = codelist_from_csv(
-    "crossimid-codelists/crossimid-psoriasis.csv", system="ctv3", column="CTV3ID",
+    "codelists/opensafely-psoriasis.csv", system="ctv3", column="code",
 )
 
 hidradenitis_suppurativa_codes = codelist_from_csv(

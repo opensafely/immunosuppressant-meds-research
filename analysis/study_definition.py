@@ -60,6 +60,7 @@ def medication_counts_and_dates(var_name, med_codelist_file, high_cost, needs_6m
     """
     
     definitions={}
+    
     if (med_codelist_file[0:5] == "cross"):
         med_codelist_file = "crossimid-codelists/" + med_codelist_file
     else:
@@ -68,8 +69,15 @@ def medication_counts_and_dates(var_name, med_codelist_file, high_cost, needs_6m
         med_codelist=codelist_from_csv(med_codelist_file + ".csv", system="high_cost_drugs", column="olddrugname")
         with_med_func=patients.with_high_cost_drugs
     else:
-        med_codelist=codelist_from_csv(med_codelist_file + ".csv", system="snomed", column="snomed_id")
+        if ("medication" in med_codelist_file):
+            column_name="snomed_id"
+        elif ("mycophenolate" in med_codelist_file):
+            column_name="dmd_id"
+        else:
+            column_name="code"
+        med_codelist=codelist_from_csv(med_codelist_file + ".csv", system="snomed", column=column_name)
         with_med_func=patients.with_these_medications
+    
     med_functions=[
         ("3m_0m", get_medication_for_dates, {"dates": ["2019-12-01", "2020-02-29"], "return_count": not high_cost}),
         ("6m_3m", get_medication_for_dates, {"dates": ["2019-09-01", "2020-11-30"], "return_count": not high_cost})
@@ -312,14 +320,14 @@ study = StudyDefinition(
     # Medications
 
     **medication_counts_and_dates("oral_prednisolone", "opensafely-asthma-oral-prednisolone-medication", False),
-    **medication_counts_and_dates("azathioprine", "crossimid-azathioprine-medication", False),
-    **medication_counts_and_dates("ciclosporin", "crossimid-ciclosporin-medication", False),
+    **medication_counts_and_dates("azathioprine", "opensafely-azathioprine", False),
+    **medication_counts_and_dates("ciclosporin", "opensafely-ciclosporin", False),
     **medication_counts_and_dates("gold", "crossimid-gold-medication", False),
-    **medication_counts_and_dates("leflunomide", "crossimid-leflunomide-medication", False),
-    **medication_counts_and_dates("mercaptopurine", "crossimid-mercaptopurine-medication", False),
+    **medication_counts_and_dates("leflunomide", "opensafely-leflunomide", False),
+    **medication_counts_and_dates("mercaptopurine", "opensafely-mercaptopurine", False),
     **medication_counts_and_dates("methotrexate", "crossimid-methotrexate-medication", False),
-    **medication_counts_and_dates("mycophenolate", "crossimid-mycophenolate-medication", False),
-    **medication_counts_and_dates("penicillamine", "crossimid-penicillamine-medication", False),
+    **medication_counts_and_dates("mycophenolate", "opensafely-mycophenolate", False),
+    **medication_counts_and_dates("penicillamine", "opensafely-penicillamine", False),
     **medication_counts_and_dates("sulfasalazine", "crossimid-sulfasalazine-medication", False),
     **medication_counts_and_dates("mesalazine", "crossimid-mesalazine-medication", False),
    # **medication_counts_and_dates("atopic_dermatitis_meds", "crossimid-atopic-dermatitis-medication", False),

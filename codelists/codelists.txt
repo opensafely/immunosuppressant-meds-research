@@ -16,6 +16,7 @@ opensafely/hidradenitis-suppurativa/2020-08-03
 opensafely/hypertension/2020-04-28
 opensafely/inflammatory-bowel-disease-unclassified/092ac6c0
 opensafely/lung-cancer/2020-04-15
+opensafely/psoriasis/01091de1
 opensafely/psoriatic-arthritis/2020-10-21
 opensafely/rheumatoid-arthritis/2020-05-12
 opensafely/smoking-clear/2020-04-29
@@ -48,3 +49,9 @@ opensafely/high-cost-drugs-ustekinumab/182c84af
 opensafely/high-cost-drugs-vedolizumab/7f1d1179
 opensafely/asthma-inhaler-salbutamol-medication/2020-04-15
 opensafely/asthma-oral-prednisolone-medication/2020-04-27
+opensafely/azathioprine/763e1e08
+opensafely/ciclosporin/67f9aaab
+opensafely/leflunomide/2b0fc469
+opensafely/mercaptopurine/5d2eaad3
+opensafely/mycophenolate/30754455
+opensafely/penicillamine/441f379e
