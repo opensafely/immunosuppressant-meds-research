@@ -71,10 +71,8 @@ def medication_counts_and_dates(var_name, med_codelist_file, high_cost, needs_6m
     else:
         if ("medication" in med_codelist_file):
             column_name="snomed_id"
-        elif ("mycophenolate" in med_codelist_file or "sulfasalazine" in med_codelist_file):
-            column_name="dmd_id"
         else:
-            column_name="code"
+            column_name="dmd_id"
         med_codelist=codelist_from_csv(med_codelist_file + ".csv", system="snomed", column=column_name)
         with_med_func=patients.with_these_medications
     
@@ -320,17 +318,17 @@ study = StudyDefinition(
     # Medications
 
     **medication_counts_and_dates("oral_prednisolone", "opensafely-asthma-oral-prednisolone-medication", False),
-    **medication_counts_and_dates("azathioprine", "opensafely-azathioprine", False),
-    **medication_counts_and_dates("ciclosporin", "opensafely-ciclosporin", False),
+    **medication_counts_and_dates("azathioprine", "opensafely-azathioprine-dmd", False),
+    **medication_counts_and_dates("ciclosporin", "opensafely-ciclosporin-oral-dmd", False),
     **medication_counts_and_dates("gold", "crossimid-gold-medication", False),
-    **medication_counts_and_dates("leflunomide", "opensafely-leflunomide", False),
-    **medication_counts_and_dates("mercaptopurine", "opensafely-mercaptopurine", False),
-    **medication_counts_and_dates("methotrexate", "crossimid-methotrexate-medication", False),
-    #**medication_counts_and_dates("methotrexate_inj", "opensafely-methotrexate-injectable", False),
+    **medication_counts_and_dates("leflunomide", "opensafely-leflunomide-dmd", False),
+    **medication_counts_and_dates("mercaptopurine", "opensafely-mercaptopurine-dmd", False),
+    **medication_counts_and_dates("methotrexate", "opensafely-methotrexate-oral", False),
+    **medication_counts_and_dates("methotrexate_inj", "opensafely-methotrexate-injectable", False),
     **medication_counts_and_dates("mycophenolate", "opensafely-mycophenolate", False),
-    **medication_counts_and_dates("penicillamine", "opensafely-penicillamine", False),
+    **medication_counts_and_dates("penicillamine", "opensafely-penicillamine-dmd", False),
     **medication_counts_and_dates("sulfasalazine", "opensafely-sulfasalazine-oral-dmd", False),
-    **medication_counts_and_dates("mesalazine", "opensafely-mesalazine", False),
+    **medication_counts_and_dates("mesalazine", "opensafely-newer-aminosalicylates-for-ibd-dmd", False),
    # **medication_counts_and_dates("atopic_dermatitis_meds", "crossimid-atopic-dermatitis-medication", False),
     **medication_counts_and_dates("abatacept", "opensafely-high-cost-drugs-abatacept", True),
     **medication_counts_and_dates("adalimumab", "opensafely-high-cost-drugs-adalimumab", True),
