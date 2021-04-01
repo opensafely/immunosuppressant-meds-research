@@ -1,3 +1,4 @@
+opensafely/ankylosing-spondylitis/701b538a
 opensafely/cancer-excluding-lung-and-haematological/2020-04-15
 opensafely/chronic-cardiac-disease/2020-04-08
 opensafely/chronic-liver-disease/2020-06-02
@@ -53,5 +54,9 @@ opensafely/azathioprine/763e1e08
 opensafely/ciclosporin/67f9aaab
 opensafely/leflunomide/2b0fc469
 opensafely/mercaptopurine/5d2eaad3
+opensafely/mesalazine/1ba5f834
+opensafely/methotrexate-injectable/3328044b
+opensafely/methotrexate-oral/738b5e12
 opensafely/mycophenolate/30754455
 opensafely/penicillamine/441f379e
+opensafely/sulfasalazine-oral-dmd/1a189116

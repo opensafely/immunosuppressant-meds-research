@@ -51,7 +51,7 @@ inflammatory_bowel_disease_unclassified_codes = codelist_from_csv(
 )
 
 ankylosing_spondylitis_codes = codelist_from_csv(
-    "crossimid-codelists/crossimid-ankylosing-spondylitis.csv", system="ctv3", column="CTV3ID",
+    "codelists/opensafely-ankylosing-spondylitis.csv", system="ctv3", column="code",
 )
 
 psoriasis_codes = codelist_from_csv(

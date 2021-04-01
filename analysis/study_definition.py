@@ -71,7 +71,7 @@ def medication_counts_and_dates(var_name, med_codelist_file, high_cost, needs_6m
     else:
         if ("medication" in med_codelist_file):
             column_name="snomed_id"
-        elif ("mycophenolate" in med_codelist_file):
+        elif ("mycophenolate" in med_codelist_file or "sulfasalazine" in med_codelist_file):
             column_name="dmd_id"
         else:
             column_name="code"
@@ -326,10 +326,11 @@ study = StudyDefinition(
     **medication_counts_and_dates("leflunomide", "opensafely-leflunomide", False),
     **medication_counts_and_dates("mercaptopurine", "opensafely-mercaptopurine", False),
     **medication_counts_and_dates("methotrexate", "crossimid-methotrexate-medication", False),
+    #**medication_counts_and_dates("methotrexate_inj", "opensafely-methotrexate-injectable", False),
     **medication_counts_and_dates("mycophenolate", "opensafely-mycophenolate", False),
     **medication_counts_and_dates("penicillamine", "opensafely-penicillamine", False),
-    **medication_counts_and_dates("sulfasalazine", "crossimid-sulfasalazine-medication", False),
-    **medication_counts_and_dates("mesalazine", "crossimid-mesalazine-medication", False),
+    **medication_counts_and_dates("sulfasalazine", "opensafely-sulfasalazine-oral-dmd", False),
+    **medication_counts_and_dates("mesalazine", "opensafely-mesalazine", False),
    # **medication_counts_and_dates("atopic_dermatitis_meds", "crossimid-atopic-dermatitis-medication", False),
     **medication_counts_and_dates("abatacept", "opensafely-high-cost-drugs-abatacept", True),
     **medication_counts_and_dates("adalimumab", "opensafely-high-cost-drugs-adalimumab", True),
