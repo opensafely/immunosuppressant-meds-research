@@ -594,6 +594,8 @@ foreach var of varlist  oral_prednisolone_3m_0m  ///
 						mercaptopurine_6m_3m	 ///
 						methotrexate_3m_0m		 ///
 						methotrexate_6m_3m		 ///
+						methotrexate_inj_3m_0m	 ///
+						methotrexate_inj_6m_3m   ///
 						methotrexate_hcd_3m_0m 	 ///	
 						methotrexate_hcd_6m_3m	 ///
 						mycophenolate_3m_0m		 ///
@@ -610,10 +612,10 @@ foreach var of varlist  oral_prednisolone_3m_0m  ///
 
 
 *stand sys drugs data are count, not binary!
-gen standsys =1 if azathioprine_3m_0m >=1 | azathioprine_6m_3m >=1 | ciclosporin_3m_0m >=1 |ciclosporin_6m_3m >=1 | leflunomide_3m_0m >=1 |leflunomide_6m_3m >=1 | mercaptopurine_3m_0m >=1 |mercaptopurine_6m_3m >=1 | methotrexate_3m_0m >=1 | methotrexate_6m_3m >=1 | methotrexate_hcd_3m_0m >=1 | methotrexate_hcd_6m_3m >=1 | mycophenolate_3m_0m >=1 | mycophenolate_6m_3m >=1 | sulfasalazine_3m_0m >=1 |sulfasalazine_6m_3m >=1 | mesalazine_3m_0m >=1 | mesalazine_6m_3m >=1
+gen standsys =1 if azathioprine_3m_0m >=1 | azathioprine_6m_3m >=1 | ciclosporin_3m_0m >=1 |ciclosporin_6m_3m >=1 | leflunomide_3m_0m >=1 |leflunomide_6m_3m >=1 | mercaptopurine_3m_0m >=1 |mercaptopurine_6m_3m >=1 | methotrexate_3m_0m >=1 | methotrexate_6m_3m >=1 | methotrexate_inj_3m_0m >=1 | methotrexate_inj_6m_3m >=1 |methotrexate_hcd_3m_0m >=1 | methotrexate_hcd_6m_3m >=1 | mycophenolate_3m_0m >=1 | mycophenolate_6m_3m >=1 | sulfasalazine_3m_0m >=1 |sulfasalazine_6m_3m >=1 | mesalazine_3m_0m >=1 | mesalazine_6m_3m >=1
 replace standsys =. if imid !=1
 
-gen standsys3m =1 if azathioprine_3m_0m >=1 | ciclosporin_3m_0m >=1 | leflunomide_3m_0m >=1 | mercaptopurine_3m_0m >=1 | methotrexate_3m_0m >=1 | methotrexate_hcd_3m_0m >=1 | mycophenolate_3m_0m >=1 | sulfasalazine_3m_0m >=1  | mesalazine_3m_0m >=1
+gen standsys3m =1 if azathioprine_3m_0m >=1 | ciclosporin_3m_0m >=1 | leflunomide_3m_0m >=1 | mercaptopurine_3m_0m >=1 | methotrexate_3m_0m >=1 | methotrexate_inj_3m_0m >=1 | methotrexate_hcd_3m_0m >=1 | mycophenolate_3m_0m >=1 | sulfasalazine_3m_0m >=1  | mesalazine_3m_0m >=1
 replace standsys3m =. if imid !=1
 
 gen tnf =1 if adalimumab_6m_3m !=0 | adalimumab_3m_0m !=0 | certolizumab_6m_3m !=0 | certolizumab_3m_0m !=0 | etanercept_6m_3m !=0 | etanercept_3m_0m !=0 | golimumab_6m_3m !=0 | golimumab_3m_0m !=0 | infliximab_6m_3m !=0 | infliximab_3m_0m !=0
