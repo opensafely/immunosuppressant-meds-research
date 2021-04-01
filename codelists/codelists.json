@@ -1,10 +1,10 @@
 {
   "files": {
-    "opensafely-ankylosing-spondylitis.csv": {
-      "id": "opensafely/ankylosing-spondylitis/701b538a",
-      "url": "https://codelists.opensafely.org/codelist/opensafely/ankylosing-spondylitis/701b538a/",
-      "downloaded_at": "2021-04-01 12:53:32.217636Z",
-      "sha": "77600c35db8fd1747a41f6dfa5f9e1d0d90dce2f"
+    "user-mark-yates-axial-spondyloarthritis.csv": {
+      "id": "user/mark-yates/axial-spondyloarthritis/3da730d4",
+      "url": "https://codelists.opensafely.org/codelist/user/mark-yates/axial-spondyloarthritis/3da730d4/",
+      "downloaded_at": "2021-04-01 14:36:30.446820Z",
+      "sha": "d3c091494b47af3c426716f97b4869b18b260ca9"
     },
     "opensafely-cancer-excluding-lung-and-haematological.csv": {
       "id": "opensafely/cancer-excluding-lung-and-haematological/2020-04-15",
