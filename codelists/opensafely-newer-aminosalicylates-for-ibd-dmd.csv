@@ -1,0 +1,67 @@
+dmd_type,dmd_id,dmd_name,bnf_code
+VMP,317417008,Mesalazine 400mg gastro-resistant tablets,0105010B0AAAAAA
+AMP,4325311000001106,Mesalazine 400mg gastro-resistant tablets,0105010B0AAAAAA
+VMP,317404005,Mesalazine 250mg gastro-resistant tablets,0105010B0AAAHAH
+VMP,12701811000001103,Mesalazine 400mg/5ml oral solution,0105010B0AAAMAM
+VMP,12701911000001108,Mesalazine 400mg/5ml oral suspension,0105010B0AAAMAM
+AMP,12697411000001101,Mesalazine 400mg/5ml oral solution,0105010B0AAAMAM
+AMP,12697111000001106,Mesalazine 400mg/5ml oral suspension,0105010B0AAAMAM
+VMP,36041811000001106,Mesalazine 1g modified-release granules sachets sugar free,0105010B0AAANAN
+VMP,5240311000001103,Mesalazine 500mg gastro-resistant modified-release granules sachets sugar free,0105010B0AAAPAP
+VMP,12777411000001104,Mesalazine 1.2g gastro-resistant modified-release tablets,0105010B0AAARAR
+VMP,13277611000001101,Mesalazine 800mg gastro-resistant tablets,0105010B0AAASAS
+AMP,21547411000001102,Mesalazine 800mg gastro-resistant tablets,0105010B0AAASAS
+VMP,13717011000001109,Mesalazine 2g modified-release granules sachets sugar free,0105010B0AAATAT
+VMP,15649411000001101,Mesalazine 1.5g gastro-resistant modified-release granules sachets sugar free,0105010B0AAAUAU
+VMP,16090511000001109,Mesalazine 500mg/5ml oral solution,0105010B0AAAVAV
+VMP,16090611000001108,Mesalazine 500mg/5ml oral suspension,0105010B0AAAVAV
+AMP,16084611000001102,Mesalazine 500mg/5ml oral solution,0105010B0AAAVAV
+AMP,16084911000001108,Mesalazine 500mg/5ml oral suspension,0105010B0AAAVAV
+VMP,18308511000001102,Mesalazine 500mg gastro-resistant tablets,0105010B0AAAWAW
+VMP,5240211000001106,Mesalazine 1g gastro-resistant modified-release granules sachets sugar free,0105010B0AAAXAX
+VMP,19533311000001107,Mesalazine 1g modified-release tablets,0105010B0AAAYAY
+VMP,19744211000001101,Mesalazine 3g gastro-resistant modified-release granules sachets sugar free,0105010B0AAAZAZ
+VMP,28423011000001100,Mesalazine 4g modified-release granules sachets sugar free,0105010B0AABABA
+VMP,32878411000001101,Mesalazine 300mg/5ml oral suspension,0105010B0AABBBB
+AMP,32863711000001109,Mesalazine 300mg/5ml oral suspension,0105010B0AABBBB
+VMP,35205211000001105,Mesalazine 1g gastro-resistant tablets,0105010B0AABCBC
+VMP,37762711000001100,Mesalazine 1.6g gastro-resistant tablets,0105010B0AABDBD
+AMP,383111000001106,Asacol 400mg MR gastro-resistant tablets,0105010B0BBAAAA
+AMP,13255311000001101,Asacol 800mg MR gastro-resistant tablets,0105010B0BBAFAS
+AMP,737811000001104,Pentasa 500mg modified-release tablets,0105010B0BCACAI
+AMP,3256911000001108,Pentasa 1g modified-release granules sachets,0105010B0BCAEAN
+AMP,13701111000001100,Pentasa 2g modified-release granules sachets,0105010B0BCAFAT
+AMP,19521311000001109,Pentasa 1g modified-release tablets,0105010B0BCAGAY
+AMP,28390711000001106,Pentasa 4g modified-release granules sachets,0105010B0BCAHBA
+AMP,276211000001105,Salofalk 250mg gastro-resistant tablets,0105010B0BDAAAH
+AMP,5227411000001106,Salofalk 1g gastro-resistant modified-release granules sachets,0105010B0BDAFAX
+AMP,5227711000001100,Salofalk 500mg gastro-resistant modified-release granules sachets,0105010B0BDAGAP
+AMP,15640011000001102,Salofalk 1.5g gastro-resistant modified-release granules sachets,0105010B0BDAHAU
+AMP,18306811000001100,Salofalk 500mg gastro-resistant tablets,0105010B0BDAJAW
+AMP,19641711000001102,Salofalk 3g gastro-resistant modified-release granules sachets,0105010B0BDAKAZ
+AMP,35129411000001102,Salofalk 1g gastro-resistant tablets,0105010B0BDALBC
+AMP,139711000001109,Ipocol 400mg gastro-resistant tablets,0105010B0BFAAAA
+AMP,5445611000001104,Mesren MR 400mg gastro-resistant tablets,0105010B0BGABAA
+AMP,12773911000001103,Mezavant XL 1200mg tablets,0105010B0BHAAAR
+AMP,18482611000001107,Octasa 800mg MR gastro-resistant tablets,0105010B0BIAAAS
+AMP,21426611000001105,Octasa 400mg MR gastro-resistant tablets,0105010B0BIABAA
+AMP,37712411000001107,Octasa 1600mg MR gastro-resistant tablets,0105010B0BIACBD
+AMP,38002011000001109,Zintasa 400mg EC tablets,0105010B0BJAAAA
+VMP,317435004,Olsalazine 250mg capsules,0105010C0AAAAAA
+AMP,28963311000001106,Olsalazine 250mg capsules,0105010C0AAAAAA
+AMP,28878311000001103,Olsalazine 250mg capsules,0105010C0AAAAAA
+AMP,28691711000001105,Olsalazine 250mg capsules,0105010C0AAAAAA
+AMP,37610311000001108,Olsalazine 250mg capsules,0105010C0AAAAAA
+VMP,12905511000001108,Olsalazine 250mg/5ml oral solution,0105010C0AAACAC
+VMP,12905611000001107,Olsalazine 250mg/5ml oral suspension,0105010C0AAACAC
+AMP,12900211000001101,Olsalazine 250mg/5ml oral solution,0105010C0AAACAC
+AMP,12899811000001103,Olsalazine 250mg/5ml oral suspension,0105010C0AAACAC
+VMP,317437007,Olsalazine 500mg tablets,0105010C0AAADAD
+AMP,28963611000001101,Olsalazine 500mg tablets,0105010C0AAADAD
+AMP,28878511000001109,Olsalazine 500mg tablets,0105010C0AAADAD
+AMP,28693211000001104,Olsalazine 500mg tablets,0105010C0AAADAD
+AMP,37610511000001102,Olsalazine 500mg tablets,0105010C0AAADAD
+AMP,881111000001107,Dipentum 250mg capsules,0105010C0BBAAAA
+AMP,662711000001107,Dipentum 500mg tablets,0105010C0BBABAD
+VMP,317448000,Balsalazide 750mg capsules,0105010D0AAABAB
+AMP,3196111000001102,Colazide 750mg capsules,0105010D0BBAAAB

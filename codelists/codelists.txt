@@ -1,3 +1,4 @@
+user/mark-yates/axial-spondyloarthritis/3da730d4
 opensafely/cancer-excluding-lung-and-haematological/2020-04-15
 opensafely/chronic-cardiac-disease/2020-04-08
 opensafely/chronic-liver-disease/2020-06-02
@@ -16,6 +17,7 @@ opensafely/hidradenitis-suppurativa/2020-08-03
 opensafely/hypertension/2020-04-28
 opensafely/inflammatory-bowel-disease-unclassified/092ac6c0
 opensafely/lung-cancer/2020-04-15
+opensafely/psoriasis/01091de1
 opensafely/psoriatic-arthritis/2020-10-21
 opensafely/rheumatoid-arthritis/2020-05-12
 opensafely/smoking-clear/2020-04-29
@@ -48,3 +50,13 @@ opensafely/high-cost-drugs-ustekinumab/182c84af
 opensafely/high-cost-drugs-vedolizumab/7f1d1179
 opensafely/asthma-inhaler-salbutamol-medication/2020-04-15
 opensafely/asthma-oral-prednisolone-medication/2020-04-27
+opensafely/azathioprine-dmd/78f0ddfe
+opensafely/ciclosporin-oral-dmd/4c961cc9
+opensafely/leflunomide-dmd/1765d120
+opensafely/mercaptopurine-dmd/6546eab5
+opensafely/newer-aminosalicylates-for-ibd-dmd/4c377780
+opensafely/methotrexate-injectable/3328044b
+opensafely/methotrexate-oral/041a8320
+opensafely/mycophenolate/30754455
+opensafely/penicillamine-dmd/7e565dea
+opensafely/sulfasalazine-oral-dmd/1a189116

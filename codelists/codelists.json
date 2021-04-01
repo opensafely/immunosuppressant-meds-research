@@ -1,5 +1,11 @@
 {
   "files": {
+    "user-mark-yates-axial-spondyloarthritis.csv": {
+      "id": "user/mark-yates/axial-spondyloarthritis/3da730d4",
+      "url": "https://codelists.opensafely.org/codelist/user/mark-yates/axial-spondyloarthritis/3da730d4/",
+      "downloaded_at": "2021-04-01 14:36:30.446820Z",
+      "sha": "d3c091494b47af3c426716f97b4869b18b260ca9"
+    },
     "opensafely-cancer-excluding-lung-and-haematological.csv": {
       "id": "opensafely/cancer-excluding-lung-and-haematological/2020-04-15",
       "url": "https://codelists.opensafely.org/codelist/opensafely/cancer-excluding-lung-and-haematological/2020-04-15/",
@@ -107,6 +113,12 @@
       "url": "https://codelists.opensafely.org/codelist/opensafely/lung-cancer/2020-04-15/",
       "downloaded_at": "2021-02-09 09:24:27.971404Z",
       "sha": "645584a20f81c4d76187a2c305c904e8b8c63dbb"
+    },
+    "opensafely-psoriasis.csv": {
+      "id": "opensafely/psoriasis/01091de1",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/psoriasis/01091de1/",
+      "downloaded_at": "2021-04-01 07:30:15.409762Z",
+      "sha": "9bcaf40cef8b3624037e8b4ed318cefa62f8cc8c"
     },
     "opensafely-psoriatic-arthritis.csv": {
       "id": "opensafely/psoriatic-arthritis/2020-10-21",
@@ -299,6 +311,66 @@
       "url": "https://codelists.opensafely.org/codelist/opensafely/asthma-oral-prednisolone-medication/2020-04-27/",
       "downloaded_at": "2021-02-09 09:24:26.654803Z",
       "sha": "e47cc254975c23f7507cf04bb655454f8b5ece18"
+    },
+    "opensafely-azathioprine-dmd.csv": {
+      "id": "opensafely/azathioprine-dmd/78f0ddfe",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/azathioprine-dmd/78f0ddfe/",
+      "downloaded_at": "2021-04-01 14:20:22.615040Z",
+      "sha": "f6fa74e1b390e9c0735d523e68873146c19e7f39"
+    },
+    "opensafely-ciclosporin-oral-dmd.csv": {
+      "id": "opensafely/ciclosporin-oral-dmd/4c961cc9",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/ciclosporin-oral-dmd/4c961cc9/",
+      "downloaded_at": "2021-04-01 14:20:22.736447Z",
+      "sha": "e5c310a46991fd4aae1ac7b4a2272d87c4f68439"
+    },
+    "opensafely-leflunomide-dmd.csv": {
+      "id": "opensafely/leflunomide-dmd/1765d120",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/leflunomide-dmd/1765d120/",
+      "downloaded_at": "2021-04-01 14:20:22.869550Z",
+      "sha": "0d88edfe37ebb951a6ccc6199ef360c91b188c11"
+    },
+    "opensafely-mercaptopurine-dmd.csv": {
+      "id": "opensafely/mercaptopurine-dmd/6546eab5",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/mercaptopurine-dmd/6546eab5/",
+      "downloaded_at": "2021-04-01 14:20:23.021501Z",
+      "sha": "079b5e58286038aeab19569ee041b7d2bcafe78d"
+    },
+    "opensafely-newer-aminosalicylates-for-ibd-dmd.csv": {
+      "id": "opensafely/newer-aminosalicylates-for-ibd-dmd/4c377780",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/newer-aminosalicylates-for-ibd-dmd/4c377780/",
+      "downloaded_at": "2021-04-01 14:20:23.139883Z",
+      "sha": "fd7024a1bf58a5970b46f7a31894d0ddcb813b29"
+    },
+    "opensafely-methotrexate-injectable.csv": {
+      "id": "opensafely/methotrexate-injectable/3328044b",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/methotrexate-injectable/3328044b/",
+      "downloaded_at": "2021-04-01 12:53:42.410189Z",
+      "sha": "b3346c5e6169072eb26bb62094ee883dcd8325d4"
+    },
+    "opensafely-methotrexate-oral.csv": {
+      "id": "opensafely/methotrexate-oral/041a8320",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/methotrexate-oral/041a8320/",
+      "downloaded_at": "2021-04-01 14:20:23.418562Z",
+      "sha": "68754de9916bb08a1ea9d6d84c899dda5ee64ad7"
+    },
+    "opensafely-mycophenolate.csv": {
+      "id": "opensafely/mycophenolate/30754455",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/mycophenolate/30754455/",
+      "downloaded_at": "2021-04-01 07:30:21.353976Z",
+      "sha": "1d86687fd7f4dc21351f2e8af88035460a1b1a06"
+    },
+    "opensafely-penicillamine-dmd.csv": {
+      "id": "opensafely/penicillamine-dmd/7e565dea",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/penicillamine-dmd/7e565dea/",
+      "downloaded_at": "2021-04-01 14:20:23.690091Z",
+      "sha": "93620e8afea3c59e74730d4d576368c278401043"
+    },
+    "opensafely-sulfasalazine-oral-dmd.csv": {
+      "id": "opensafely/sulfasalazine-oral-dmd/1a189116",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/sulfasalazine-oral-dmd/1a189116/",
+      "downloaded_at": "2021-04-01 12:53:43.099920Z",
+      "sha": "295d27dc7f03635498c460ad4d16686608f02c71"
     }
   }
 }
