@@ -108,6 +108,12 @@
       "downloaded_at": "2021-02-09 09:24:27.971404Z",
       "sha": "645584a20f81c4d76187a2c305c904e8b8c63dbb"
     },
+    "opensafely-psoriasis.csv": {
+      "id": "opensafely/psoriasis/01091de1",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/psoriasis/01091de1/",
+      "downloaded_at": "2021-04-01 07:30:15.409762Z",
+      "sha": "9bcaf40cef8b3624037e8b4ed318cefa62f8cc8c"
+    },
     "opensafely-psoriatic-arthritis.csv": {
       "id": "opensafely/psoriatic-arthritis/2020-10-21",
       "url": "https://codelists.opensafely.org/codelist/opensafely/psoriatic-arthritis/2020-10-21/",
@@ -299,6 +305,42 @@
       "url": "https://codelists.opensafely.org/codelist/opensafely/asthma-oral-prednisolone-medication/2020-04-27/",
       "downloaded_at": "2021-02-09 09:24:26.654803Z",
       "sha": "e47cc254975c23f7507cf04bb655454f8b5ece18"
+    },
+    "opensafely-azathioprine.csv": {
+      "id": "opensafely/azathioprine/763e1e08",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/azathioprine/763e1e08/",
+      "downloaded_at": "2021-04-01 07:30:20.662917Z",
+      "sha": "cec98e1c22235ea92601aa5b6ac663badfe76569"
+    },
+    "opensafely-ciclosporin.csv": {
+      "id": "opensafely/ciclosporin/67f9aaab",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/ciclosporin/67f9aaab/",
+      "downloaded_at": "2021-04-01 07:30:20.851717Z",
+      "sha": "c93b5b705a799c80bd66de5ef2aba903f03e47ca"
+    },
+    "opensafely-leflunomide.csv": {
+      "id": "opensafely/leflunomide/2b0fc469",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/leflunomide/2b0fc469/",
+      "downloaded_at": "2021-04-01 07:30:21.018963Z",
+      "sha": "279a96ca7c07edbc754b70c3e021bcdd6d997ecf"
+    },
+    "opensafely-mercaptopurine.csv": {
+      "id": "opensafely/mercaptopurine/5d2eaad3",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/mercaptopurine/5d2eaad3/",
+      "downloaded_at": "2021-04-01 07:30:21.178126Z",
+      "sha": "99c37e2a0f16da0362b50798cfc726a943b28e43"
+    },
+    "opensafely-mycophenolate.csv": {
+      "id": "opensafely/mycophenolate/30754455",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/mycophenolate/30754455/",
+      "downloaded_at": "2021-04-01 07:30:21.353976Z",
+      "sha": "1d86687fd7f4dc21351f2e8af88035460a1b1a06"
+    },
+    "opensafely-penicillamine.csv": {
+      "id": "opensafely/penicillamine/441f379e",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/penicillamine/441f379e/",
+      "downloaded_at": "2021-04-01 07:30:21.518579Z",
+      "sha": "fbf8e9e80575222a9a976f9a37ad756b0528b1ff"
     }
   }
 }
