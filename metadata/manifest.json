@@ -460,15 +460,6 @@
       "created_at": "2021-03-22T18:28:03Z",
       "completed_at": "2021-03-22T18:29:59Z"
     },
-    "create_cohorts": {
-      "state": "succeeded",
-      "commit": "none",
-      "docker_image_id": "sha256:5a4bb3ecd807de29a18a01ffae01739415778f0b770cbd43d7140bb0017306f1",
-      "job_id": "sflz7nbxvepznprs",
-      "run_by_user": "arowan",
-      "created_at": "2021-03-23T09:29:07Z",
-      "completed_at": "2021-03-23T09:30:36Z"
-    },
     "run_baseline_tables": {
       "state": "succeeded",
       "commit": "none",
@@ -513,6 +504,15 @@
       "run_by_user": "arowan",
       "created_at": "2021-04-01T14:37:33Z",
       "completed_at": "2021-04-01T14:38:21Z"
+    },
+    "create_cohorts": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:5a4bb3ecd807de29a18a01ffae01739415778f0b770cbd43d7140bb0017306f1",
+      "job_id": "sflz7nbxvepznprs",
+      "run_by_user": "arowan",
+      "created_at": "2021-04-01T14:58:01Z",
+      "completed_at": "2021-04-01T14:58:47Z"
     }
   },
   "workspace": "immunosuppressant-meds-research",
