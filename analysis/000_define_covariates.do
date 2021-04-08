@@ -697,7 +697,7 @@ replace steroidcat =1 if oral_prednisolone_3m_0m >=1 & oral_prednisolone_3m_0m!=
 gen imiddrugcategory = 1 if standtnf ==1 | standil23 ==1 | standjaki ==1 | standritux ==1 | standil6 ==1 | standil17 ==1
 recode imiddrugcategory .=0 if standsys ==1 
 
-foreach var in standtnf standtnf3m tnfmono standil6 standil17 standil23 standjaki standritux  {
+foreach var in standtnf standtnf3m standil6 standil17 standil23 standjaki standritux  {
 	recode `var' 0=. if imiddrugcategory ==1
 }
 
