@@ -491,33 +491,6 @@
       "created_at": "2021-03-26T16:05:44Z",
       "completed_at": "2021-03-26T16:07:47Z"
     },
-    "generate_study_population": {
-      "state": "succeeded",
-      "commit": "none",
-      "docker_image_id": "sha256:02156c1b7817411d7ac7b2b91f9452e32caf63947ab8b506ae86bdfe616fb009",
-      "job_id": "5neqw2huucrvpgfr",
-      "run_by_user": "arowan",
-      "created_at": "2021-04-08T11:58:21Z",
-      "completed_at": "2021-04-08T12:00:28Z"
-    },
-    "create_cohorts": {
-      "state": "succeeded",
-      "commit": "none",
-      "docker_image_id": "sha256:5a4bb3ecd807de29a18a01ffae01739415778f0b770cbd43d7140bb0017306f1",
-      "job_id": "sflz7nbxvepznprs",
-      "run_by_user": "arowan",
-      "created_at": "2021-04-08T12:01:23Z",
-      "completed_at": "2021-04-08T12:03:30Z"
-    },
-    "run_baseline_tables": {
-      "state": "succeeded",
-      "commit": "none",
-      "docker_image_id": "sha256:5a4bb3ecd807de29a18a01ffae01739415778f0b770cbd43d7140bb0017306f1",
-      "job_id": "xz7riqnrv537wv7u",
-      "run_by_user": "arowan",
-      "created_at": "2021-04-08T12:05:20Z",
-      "completed_at": "2021-04-08T12:07:52Z"
-    },
     "run_cox_models_tnfmono": {
       "state": "succeeded",
       "commit": "none",
@@ -526,6 +499,33 @@
       "run_by_user": "arowan",
       "created_at": "2021-04-08T12:08:29Z",
       "completed_at": "2021-04-08T12:10:38Z"
+    },
+    "generate_study_population": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:02156c1b7817411d7ac7b2b91f9452e32caf63947ab8b506ae86bdfe616fb009",
+      "job_id": "5neqw2huucrvpgfr",
+      "run_by_user": "arowan",
+      "created_at": "2021-04-13T10:10:25Z",
+      "completed_at": "2021-04-13T10:11:45Z"
+    },
+    "create_cohorts": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:5a4bb3ecd807de29a18a01ffae01739415778f0b770cbd43d7140bb0017306f1",
+      "job_id": "sflz7nbxvepznprs",
+      "run_by_user": "arowan",
+      "created_at": "2021-04-13T10:12:35Z",
+      "completed_at": "2021-04-13T10:13:35Z"
+    },
+    "run_baseline_tables": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:5a4bb3ecd807de29a18a01ffae01739415778f0b770cbd43d7140bb0017306f1",
+      "job_id": "xz7riqnrv537wv7u",
+      "run_by_user": "arowan",
+      "created_at": "2021-04-13T13:13:38Z",
+      "completed_at": "2021-04-13T13:14:50Z"
     }
   },
   "workspace": "immunosuppressant-meds-research",

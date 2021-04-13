@@ -38,16 +38,16 @@ use $projectdir/output/data/file_imid, clear
 *Table 1a - 
 table1_mc, by(imid) total(before) onecol iqrmiddle(",")  ///
 	vars(joint bin %5.1f \ ///
-		psoriatic_arthritis %5.1f \	///			
-		rheumatoid_arthritis %5.1f \	///  
-		ankylosing_spondylitis %5.1f \ ///	
+		psoriatic_arthritis bin %5.1f \	///			
+		rheumatoid_arthritis bin %5.1f \	///  
+		ankylosing_spondylitis bin %5.1f \ ///	
 		skin bin %5.1f \ ///
-		psoriasis %5.1f \ ///
-		hidradenitis_suppurativa %5.1f \	///
+		psoriasis bin %5.1f \ ///
+		hidradenitis_suppurativa bin %5.1f \	///
 		bowel bin %5.1f \ ///
-		ulcerative_colitis %5.1f	\ ///
-		crohns_disease %5.1f \ ///
-		ibd_uncla %5.1f \ ///	                        
+		ulcerative_colitis bin %5.1f	\ ///
+		crohns_disease bin %5.1f \ ///
+		ibd_uncla bin %5.1f \ ///	                        
 		agegroup cat %5.1f \ ///
 		 male bin %5.1f \ ///
 		 bmicat cat %5.1f \ ///
@@ -138,16 +138,16 @@ table1_mc, by(bowel) total(before) onecol iqrmiddle(",") ///
 *Table 2 - high cost drugs (v non-high cost) - single group contribution only
 table1_mc, by(imiddrugcategory) total(before) onecol iqrmiddle(",")  ///
 	vars(joint bin %5.1f \ ///
-		psoriatic_arthritis %5.1f \	///			
-		rheumatoid_arthritis %5.1f \	///  
-		ankylosing_spondylitis %5.1f \ ///	
+		psoriatic_arthritis bin %5.1f \	///			
+		rheumatoid_arthritis bin %5.1f \	///  
+		ankylosing_spondylitis bin %5.1f \ ///	
 		skin bin %5.1f \ ///
-		psoriasis %5.1f \ ///
-		hidradenitis_suppurativa %5.1f \	///
+		psoriasis bin %5.1f \ ///
+		hidradenitis_suppurativa bin %5.1f \	///
 		bowel bin %5.1f \ ///
-		ulcerative_colitis %5.1f	\ ///
-		crohns_disease %5.1f \ ///
-		ibd_uncla %5.1f \ ///	
+		ulcerative_colitis bin %5.1f	\ ///
+		crohns_disease bin %5.1f \ ///
+		ibd_uncla bin %5.1f \ ///	
 		agegroup cat %5.1f \ ///
 		 male bin %5.1f \ ///
 		 bmicat cat %5.1f \ ///
@@ -171,16 +171,16 @@ keep if imid==1
 *2a IMID only: TNFi vs standard systemic
 table1_mc, by(standtnf) total(before) onecol iqrmiddle(",") ///
 	vars(joint bin %5.1f \ ///
-		psoriatic_arthritis %5.1f \	///			
-		rheumatoid_arthritis %5.1f \	///  
-		ankylosing_spondylitis %5.1f \ ///	
+		psoriatic_arthritis bin %5.1f \	///			
+		rheumatoid_arthritis bin %5.1f \	///  
+		ankylosing_spondylitis bin %5.1f \ ///	
 		skin bin %5.1f \ ///
-		psoriasis %5.1f \ ///
-		hidradenitis_suppurativa %5.1f \	///
+		psoriasis bin %5.1f \ ///
+		hidradenitis_suppurativa bin %5.1f \	///
 		bowel bin %5.1f \ ///
-		ulcerative_colitis %5.1f	\ ///
-		crohns_disease %5.1f \ ///
-		ibd_uncla %5.1f \ ///	
+		ulcerative_colitis bin %5.1f	\ ///
+		crohns_disease bin %5.1f \ ///
+		ibd_uncla bin %5.1f \ ///	
 		agegroup cat %5.1f \ ///
 		 male bin %5.1f \ ///
 		 bmicat cat %5.1f \ ///
@@ -202,16 +202,16 @@ table1_mc, by(standtnf) total(before) onecol iqrmiddle(",") ///
 *2b IMID only:  IL-12/23i vs standard systemic
 table1_mc, by(standil23) total(before) onecol iqrmiddle(",")  ///
 	vars(joint bin %5.1f \ ///
-		psoriatic_arthritis %5.1f \	///			
-		rheumatoid_arthritis %5.1f \	///  
-		ankylosing_spondylitis %5.1f \ ///	
+		psoriatic_arthritis bin %5.1f \	///			
+		rheumatoid_arthritis bin %5.1f \	///  
+		ankylosing_spondylitis bin %5.1f \ ///	
 		skin bin %5.1f \ ///
-		psoriasis %5.1f \ ///
-		hidradenitis_suppurativa %5.1f \	///
+		psoriasis bin %5.1f \ ///
+		hidradenitis_suppurativa bin %5.1f \	///
 		bowel bin %5.1f \ ///
-		ulcerative_colitis %5.1f	\ ///
-		crohns_disease %5.1f \ ///
-		ibd_uncla %5.1f \ ///	
+		ulcerative_colitis bin %5.1f	\ ///
+		crohns_disease bin %5.1f \ ///
+		ibd_uncla bin %5.1f \ ///	
 		agegroup cat %5.1f \ ///
 		 male bin %5.1f \ ///
 		 bmicat cat %5.1f \ ///
@@ -233,16 +233,16 @@ table1_mc, by(standil23) total(before) onecol iqrmiddle(",")  ///
 *2c Psoriasis, PsA, AS only: IL-17i vs standard systemic
 table1_mc, by(standil17) total(before) onecol iqrmiddle(",")  ///
 	vars(joint bin %5.1f \ ///
-		psoriatic_arthritis %5.1f \	///			
-		rheumatoid_arthritis %5.1f \	///  
-		ankylosing_spondylitis %5.1f \ ///	
+		psoriatic_arthritis bin %5.1f \	///			
+		rheumatoid_arthritis bin %5.1f \	///  
+		ankylosing_spondylitis bin %5.1f \ ///	
 		skin bin %5.1f \ ///
-		psoriasis %5.1f \ ///
-		hidradenitis_suppurativa %5.1f \	///
+		psoriasis bin %5.1f \ ///
+		hidradenitis_suppurativa bin %5.1f \	///
 		bowel bin %5.1f \ ///
-		ulcerative_colitis %5.1f	\ ///
-		crohns_disease %5.1f \ ///
-		ibd_uncla %5.1f \ ///	
+		ulcerative_colitis bin %5.1f	\ ///
+		crohns_disease bin %5.1f \ ///
+		ibd_uncla bin %5.1f \ ///	
 		agegroup cat %5.1f \ ///
 		 male bin %5.1f \ ///
 		 bmicat cat %5.1f \ ///
@@ -264,16 +264,16 @@ table1_mc, by(standil17) total(before) onecol iqrmiddle(",")  ///
 *2d IMID only: JAKi vs standard systemic 
 table1_mc, by(standjaki) total(before) onecol iqrmiddle(",")  ///
 	vars(joint bin %5.1f \ ///
-		psoriatic_arthritis %5.1f \	///			
-		rheumatoid_arthritis %5.1f \	///  
-		ankylosing_spondylitis %5.1f \ ///	
+		psoriatic_arthritis bin %5.1f \	///			
+		rheumatoid_arthritis bin %5.1f \	///  
+		ankylosing_spondylitis bin %5.1f \ ///	
 		skin bin %5.1f \ ///
-		psoriasis %5.1f \ ///
-		hidradenitis_suppurativa %5.1f \	///
+		psoriasis bin %5.1f \ ///
+		hidradenitis_suppurativa bin %5.1f \	///
 		bowel bin %5.1f \ ///
-		ulcerative_colitis %5.1f	\ ///
-		crohns_disease %5.1f \ ///
-		ibd_uncla %5.1f \ ///	
+		ulcerative_colitis bin %5.1f	\ ///
+		crohns_disease bin %5.1f \ ///
+		ibd_uncla bin %5.1f \ ///	
 		agegroup cat %5.1f \ ///
 		 male bin %5.1f \ ///
 		 bmicat cat %5.1f \ ///
