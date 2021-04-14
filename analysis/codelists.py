@@ -51,7 +51,7 @@ inflammatory_bowel_disease_unclassified_codes = codelist_from_csv(
 )
 
 ankylosing_spondylitis_codes = codelist_from_csv(
-    "codelists/user-mark-yates-axial-spondyloarthritis.csv", system="ctv3", column="code",
+    "codelists/user-mark-yates-axial-spondyloarthritis.csv", system="snomed", column="code",
 )
 
 psoriasis_codes = codelist_from_csv(
