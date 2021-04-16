@@ -112,6 +112,14 @@ study = StudyDefinition(
         find_first_match_in_period=True,
         return_expectations={"date": {"earliest": "2020-03-01"}, "incidence": 0.1},
     ),
+    hospital_admission_date=patients.admitted_to_hospital(
+        with_these_diagnoses=covid_identification,
+        on_or_after = "2020-03-01",
+        returning= "date_admitted" ,
+        find_first_match_in_period=True,
+        date_format = "YYYY-MM-DD",
+        return_expectations={"date": {"earliest": "2020-03-01"}, "incidence": 0.3},
+    ),
     died_ons_covid_flag_any=patients.with_these_codes_on_death_certificate(
         covid_identification, on_or_after="2020-03-01", match_only_underlying_cause=False,
         return_expectations={"date": {"earliest": "2020-03-01"}, "incidence": 0.1},
