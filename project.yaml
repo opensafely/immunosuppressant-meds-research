@@ -163,6 +163,11 @@ actions:
         figure14: output/figures/imid_graph.gph
         figure15: output/figures/survcurv_imid_died.svg
 
-
+  run_outcomes_check:
+    run: r:latest analysis/outcomes_check_withandwithoutpositivetest.R
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        data27: output/data/outcomes_check.csv 
 
         
