@@ -97,6 +97,7 @@ foreach var of varlist 	 crohns_disease						///
 foreach var of varlist 	 icu_date_admitted					///
 						 died_date_ons						///
 						 first_pos_test_sgss				///
+						 hospital_admission_date			///
 						 {
 						 
 		capture confirm string variable `var'
@@ -128,6 +129,7 @@ rename died_date_ons_date		        died_ons_date
 rename creatinine_date_date				creatinine_measured_date
 rename hba1c_mmol_per_mol_date_date		hba1c_mmol_per_mol_date	
 rename hba1c_percentage_date_date		hba1c_percentage_date
+rename hospital_admission_date_date		hospital_admission_date
 
 
 * Some names too long for loops below, shorten
@@ -162,6 +164,7 @@ foreach var of varlist 	 crohns_disease_date				    ///
 						 bmi_measured_date					    ///
 						 icu_admitted_date					    ///
 						 died_ons_date							///
+						 hospital_admission_date				///
 						 first_pos_test_sgss_date	{
 	/* date ranges are applied in python, so presence of date indicates presence of 
 	  disease in the correct time frame */ 
@@ -716,6 +719,7 @@ format enter_date %td
 * Add half-day buffer if outcome on indexdate
 replace died_ons_date=died_ons_date+0.5 if died_ons_date==enter_date
 replace icu_admitted_date=icu_admitted_date+0.5 if icu_admitted_date==enter_date
+replace hospital_admission_date=hospital_admission_date+0.5 if hospital_admission_date==enter_date
 
 * Date of Covid death in ONS
 gen died_ons_date_covid = died_ons_date if died_ons_covid_flag_any == 1
@@ -733,7 +737,13 @@ gen icu_or_death_covid_date = icu_admit_date_covid
 replace icu_or_death_covid_date = died_ons_date_covid if icu_admit_date_covid ==.
 gen icu_or_death_covid =1 if icu_or_death_covid_date !=.
 
-format died_ons_date_covid died_ons_date_noncovid icu_admit_date_covid icu_or_death_covid_date %td
+*date of COVID hospital admission ** issue we have is how we define a hospital admission as a COVID one. 
+gen hosp_admit_diff = hospital_admission_date - first_pos_test_sgss_date
+replace hosp_admit_diff =. if hosp_admit_diff <-5
+gen hosp_admit_date_covid = hospital_admission_date if hosp_admit_diff <28 
+gen hosp_admit_covid =1 if hosp_admit_date_covid !=.
+
+format died_ons_date_covid died_ons_date_noncovid icu_admit_date_covid icu_or_death_covid_date hosp_admit_date_covid %td
 
 
 /* CENSORING */
