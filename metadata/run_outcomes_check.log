@@ -1,0 +1,26 @@
+2021-04-19T19:12:29.600202400Z -- Attaching packages --------------------------------------- tidyverse 1.3.0 --
+2021-04-19T19:12:29.607444100Z v ggplot2 3.3.2     v purrr   0.3.4
+2021-04-19T19:12:29.607495900Z v tibble  3.0.3     v dplyr   1.0.2
+2021-04-19T19:12:29.607501200Z v tidyr   1.1.2     v stringr 1.4.0
+2021-04-19T19:12:29.607504600Z v readr   1.3.1     v forcats 0.5.0
+2021-04-19T19:12:29.748283500Z -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+2021-04-19T19:12:29.748330500Z x dplyr::filter() masks stats::filter()
+2021-04-19T19:12:29.748336400Z x dplyr::lag()    masks stats::lag()
+2021-04-19T19:12:29.790434300Z here() starts at /workspace
+2021-04-19T19:12:31.116601800Z `summarise()` regrouping output by 'icu_admit_flag', 'icu_admit_covid_flag', 'hosp_admit_flag', 'hosp_admit_covid_flag' (override with `.groups` argument)
+
+
+state: succeeded
+commit: none
+docker_image_id: sha256:601f44378b3f74a33e33bf67960a057692e52290dc9cb08718472632bbf2480c
+exit_code: 0
+job_id: oxz2x55qia3hxypk
+run_by_user: arowan
+created_at: 2021-04-19T19:10:35Z
+started_at: 2021-04-19T19:12:26Z
+completed_at: 2021-04-19T19:12:35Z
+
+Completed successfully
+
+outputs:
+  output/data/outcomes_check.csv  - moderately_sensitive
