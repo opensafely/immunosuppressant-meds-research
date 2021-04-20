@@ -169,5 +169,107 @@ actions:
     outputs:
       moderately_sensitive:
         data27: output/data/outcomes_check.csv 
-
+  run_hosp_cox_models_imid:
+    run: stata-mp:latest analysis/202_cox_models.do "imid"
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log17: logs/hosp_admit_cox_models_imid.smcl 
+        data28: output/data/hosp_admit_cox_model_summary_imid.dta
+        
+  run_hosp_cox_models_joint:
+    run: stata-mp:latest analysis/202_cox_models.do "joint"
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log18: logs/hosp_admit_cox_models_joint.smcl 
+        data29: output/data/hosp_admit_cox_model_summary_joint.dta
+
+  run_hosp_cox_models_skin:
+    run: stata-mp:latest analysis/202_cox_models.do "skin"
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log19: logs/hosp_admit_cox_models_skin.smcl 
+        data30: output/data/hosp_admit_cox_model_summary_skin.dta
+ 
+  run_hosp_cox_models_bowel:
+    run: stata-mp:latest analysis/202_cox_models.do "bowel"
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log20: logs/hosp_admit_cox_models_bowel.smcl 
+        data31: output/data/hosp_admit_cox_model_summary_bowel.dta
+ 
+  run_hosp_cox_models_imiddrugcategory:
+    run: stata-mp:latest analysis/202_cox_models.do "imiddrugcategory"
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log21: logs/hosp_admit_cox_models_imiddrugcategory.smcl 
+        data32: output/data/hosp_admit_cox_model_summary_imiddrugcategory.dta
+  
+  run_hosp_cox_models_standtnf:
+    run: stata-mp:latest analysis/202_cox_models.do "standtnf"
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log22: logs/hosp_admit_cox_models_standtnf.smcl 
+        data33: output/data/hosp_admit_cox_model_summary_standtnf.dta
+
+  run_hosp_cox_models_standtnf3m:
+    run: stata-mp:latest analysis/202_cox_models.do "standtnf3m"
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log23: logs/hosp_admit_cox_models_standtnf3m.smcl 
+        data34: output/data/hosp_admit_cox_model_summary_standtnf3m.dta
+       
+  run_hosp_cox_models_tnfmono:
+    run: stata-mp:latest analysis/202_cox_models.do "tnfmono"
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log24: logs/hosp_admit_cox_models_tnfmono.smcl 
+        data35: output/data/hosp_admit_cox_model_summary_tnfmono.dta
+  
+  run_hosp_cox_models_standil6:
+    run: stata-mp:latest analysis/202_cox_models.do "standil6"
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log25: logs/hosp_admit_cox_models_standil6.smcl 
+        data36: output/data/hosp_admit_cox_model_summary_standil6.dta
+  
+  run_hosp_cox_models_standil17:
+    run: stata-mp:latest analysis/202_cox_models.do "standil17"
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log26: logs/hosp_admit_cox_models_standil17.smcl 
+        data37: output/data/hosp_admit_cox_model_summary_standil17.dta
+ 
+  run_hosp_cox_models_standil23:
+    run: stata-mp:latest analysis/202_cox_models.do "standil23"
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log27: logs/hosp_admit_cox_models_standil23.smcl 
+        data38: output/data/hosp_admit_cox_model_summary_standil23.dta
+ 
+  run_hosp_cox_models_standjaki:
+    run: stata-mp:latest analysis/202_cox_models.do "standjaki"
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log28: logs/hosp_admit_cox_models_standjaki.smcl 
+        data39: output/data/hosp_admit_cox_model_summary_standjaki.dta
+  
+  run_hosp_cox_models_standritux:
+    run: stata-mp:latest analysis/202_cox_models.do "standritux"
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log29: logs/hosp_admit_cox_models_standritux.smcl 
+        data40: output/data/hosp_admit_cox_model_summary_standritux.dta
         
