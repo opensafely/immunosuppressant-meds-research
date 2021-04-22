@@ -1,8 +1,8 @@
 /*==============================================================================
 DO FILE NAME:			survival curves
 PROJECT:				Immunosuppressant meds research
-DATE: 					22 Mar 21
-AUTHOR:					M Yates / J Galloway / S Norton										
+DATE: 					2nd April 21
+AUTHOR:					M Yates / J Galloway / S Norton	/ K Bechman									
 DESCRIPTION OF FILE:	survival curves
 DATASETS USED:			imid main file plus sub files for specific drug cohorts
 DATASETS CREATED: 		none
@@ -40,16 +40,22 @@ foreach f in $files {
 	*generate censor date
 	gen diecensor = mdy(09,01,2020)
 	format diecensor %td
+		
 	egen stopdied = rmin(died_ons_date diecensor)
-	egen stopicu = rmin(icu_or_death_covid_date diecensor)
+	egen stophospital = rmin(hosp_admit_date_covid diecensor)
+	egen stopicuordeath = rmin(icu_or_death_covid_date diecensor)
 
 	gen faildied = died_ons_covid_flag_any
-	gen failicu = icu_or_death_covid
-
+	gen failhospital = hosp_admit_covid
+	gen failicuordeath = icu_or_death_covid
+	
 	gen exitdied = died_ons_covid_flag_any
-	gen exiticu = icu_or_death_covid
+	gen exithospital = hosp_admit_covid
+	gen exiticuordeath = icu_or_death_covid	 
+	
+	
 
-	foreach fail in died icu {
+	foreach fail in died hospital icuordeath {
 
 		stset stop`fail', id(patient_id) failure(fail`fail'==1) origin(time enter_date)  enter(time enter_date)
 								

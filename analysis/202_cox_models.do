@@ -1,8 +1,8 @@
 /*==============================================================================
 DO FILE NAME:			cox models
 PROJECT:				Immunosuppressant meds research
-DATE: 					22 Mar 21
-AUTHOR:					M Yates / J Galloway / S Norton
+DATE: 					22nd April 21
+AUTHOR:					M Yates / J Galloway / S Norton / K Bechman 
 DESCRIPTION OF FILE:	run cox models
 DATASETS USED:			imid main file plus sub files for specific drug cohorts
 DATASETS CREATED: 		coxoutput
@@ -56,17 +56,25 @@ use $projectdir/output/data/file_$files, replace
 gen diecensor = mdy(09,01,2020)
 format diecensor %td
 	
-//egen stopdied = rmin(died_ons_date diecensor)
+egen stopdied = rmin(died_ons_date diecensor)
 egen stophospital = rmin(hosp_admit_date_covid diecensor)
+egen stopicuordeath = rmin(icu_or_death_covid_date diecensor)
+egen stophospital_sens = rmin(hosp_admit_date_covid_sens diecensor)
+egen stopsensicu_sens = rmin(icu_admit_date_covid_sens diecensor)
 
-//gen faildied = died_ons_covid_flag_any
+gen faildied = died_ons_covid_flag_any
 gen failhospital = hosp_admit_covid
+gen failicuordeath = icu_or_death_covid
+gen failhospital_sens = hosp_admit_covid_sens
+gen failicu_sens = icu_covid_sens
 	
-//gen exitdied = died_ons_covid_flag_any
+gen exitdied = died_ons_covid_flag_any
 gen exithospital = hosp_admit_covid
-	 
+gen exiticuordeath = icu_or_death_covid	 
+gen exithospital_sens = hosp_admit_covid_sens
+gen exiticu_sens = icu_covid_sens
 
-foreach fail in hospital {
+foreach fail in died hospital icuordeath hospital_sens icu_sens {
 
 	stset stop`fail', id(patient_id) failure(fail`fail'==1) origin(time enter_date)  enter(time enter_date) scale(365.25) 
 						
