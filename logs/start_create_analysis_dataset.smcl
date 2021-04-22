@@ -3,7 +3,7 @@
       name:  {res}<unnamed>
        {txt}log:  {res}/workspace/logs/start_create_analysis_dataset.smcl
   {txt}log type:  {res}smcl
- {txt}opened on:  {res}19 Apr 2021, 16:07:00
+ {txt}opened on:  {res}22 Apr 2021, 13:30:48
 {txt}
 {com}. 
 . * Set Ado file path
@@ -1295,7 +1295,7 @@ hba1c_per~ge {c |}{res}        376    5.038308      2.0321   .4290217   10.52237
 {com}. 
 . /*   Outcomes   */
 . 
-. * Outcomes: itu admission, ONS-covid death  
+. * Outcomes: itu admission, ONS-covid death, hospital admission   
 . 
 . * Add half-day buffer if outcome on indexdate
 . replace died_ons_date=died_ons_date+0.5 if died_ons_date==enter_date
@@ -1319,27 +1319,6 @@ hba1c_per~ge {c |}{res}        376    5.038308      2.0321   .4290217   10.52237
 {txt}(35,852 missing values generated)
 
 {com}. 
-. *date of COVID ITU admission ** issue we have is how we define an ITU admission as a COVID one. 
-. gen icu_admit_diff = icu_admitted_date - first_pos_test_sgss_date
-{txt}(39,040 missing values generated)
-
-{com}. replace icu_admit_diff =. if icu_admit_diff <-5
-{txt}(161 real changes made, 161 to missing)
-
-{com}. gen icu_admit_date_covid = icu_admitted_date if icu_admit_diff <28 
-{txt}(39,399 missing values generated)
-
-{com}. 
-. gen icu_or_death_covid_date = icu_admit_date_covid
-{txt}(39,399 missing values generated)
-
-{com}. replace icu_or_death_covid_date = died_ons_date_covid if icu_admit_date_covid ==.
-{txt}(400 real changes made)
-
-{com}. gen icu_or_death_covid =1 if icu_or_death_covid_date !=.
-{txt}(38,999 missing values generated)
-
-{com}. 
 . *date of COVID hospital admission ** issue we have is how we define a hospital admission as a COVID one. 
 . gen hosp_admit_diff = hospital_admission_date - first_pos_test_sgss_date
 {txt}(38,204 missing values generated)
@@ -1354,7 +1333,40 @@ hba1c_per~ge {c |}{res}        376    5.038308      2.0321   .4290217   10.52237
 {txt}(39,338 missing values generated)
 
 {com}. 
-. format died_ons_date_covid died_ons_date_noncovid icu_admit_date_covid icu_or_death_covid_date hosp_admit_date_covid %td
+. *date of COVID ITU admission ** issue we have is how we define an ITU admission as a COVID one. 
+. gen icu_admit_date_covid = icu_admitted_date if hosp_admit_covid ==1 
+{txt}(39,421 missing values generated)
+
+{com}. gen icu_or_death_covid_date = icu_admit_date_covid
+{txt}(39,421 missing values generated)
+
+{com}. replace icu_or_death_covid_date = died_ons_date_covid if icu_admit_date_covid ==.
+{txt}(400 real changes made)
+
+{com}. gen icu_or_death_covid =1 if icu_or_death_covid_date !=.
+{txt}(39,021 missing values generated)
+
+{com}. 
+. //it is possible to be in the ICU / died cohort, but NOT in hospital cohort IF a patient dies from COVID in community
+. 
+. * sensitivity analysis 1 - COVID hospital admission ** excluding 28 day cut off
+. gen hosp_admit_date_covid_sens = hospital_admission_date if hosp_admit_diff !=. 
+{txt}(38,740 missing values generated)
+
+{com}. gen hosp_admit_covid_sens =1 if hosp_admit_date_covid_sens !=.
+{txt}(38,740 missing values generated)
+
+{com}. 
+. * sensitivity analysis 2 - COVID ICU admission ** excluding deaths 
+. gen icu_admit_date_covid_sens = icu_admitted_date if hosp_admit_covid ==1 
+{txt}(39,421 missing values generated)
+
+{com}. gen icu_covid_sens =1 if icu_admit_date_covid_sens !=.
+{txt}(39,421 missing values generated)
+
+{com}. 
+. 
+. format died_ons_date_covid died_ons_date_noncovid icu_admit_date_covid icu_or_death_covid_date hosp_admit_date_covid hosp_admit_date_covid_sens icu_admit_date_covid_sens %td
 {txt}
 {com}. 
 . 
@@ -1428,7 +1440,7 @@ file /workspace/output/data/file_standritux.dta saved
       {txt}name:  {res}<unnamed>
        {txt}log:  {res}/workspace/logs/start_create_analysis_dataset.smcl
   {txt}log type:  {res}smcl
- {txt}closed on:  {res}19 Apr 2021, 16:07:05
+ {txt}closed on:  {res}22 Apr 2021, 13:30:54
 {txt}{.-}
 {smcl}
 {txt}{sf}{ul off}

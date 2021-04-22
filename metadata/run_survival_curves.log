@@ -3,28 +3,34 @@
 state: succeeded
 commit: none
 docker_image_id: sha256:5a4bb3ecd807de29a18a01ffae01739415778f0b770cbd43d7140bb0017306f1
+exit_code: 0
 job_id: qokn4qe5mrz5jj4m
 run_by_user: arowan
-created_at: 2021-03-22T18:28:03Z
-started_at: 2021-03-22T18:29:38Z
-completed_at: 2021-03-22T18:29:59Z
+created_at: 2021-04-22T13:51:21Z
+started_at: 2021-04-22T13:53:11Z
+completed_at: 2021-04-22T13:53:40Z
 
 Completed successfully
 
 outputs:
-  logs/graphs.smcl                                   - moderately_sensitive
-  output/figures/bowel_graph.gph                     - moderately_sensitive
-  output/figures/imid_graph.gph                      - moderately_sensitive
-  output/figures/imiddrugcategory_graph.gph          - moderately_sensitive
-  output/figures/joint_graph.gph                     - moderately_sensitive
-  output/figures/skin_graph.gph                      - moderately_sensitive
-  output/figures/survcurv_bowel_died.svg             - moderately_sensitive
-  output/figures/survcurv_bowel_icu.svg              - moderately_sensitive
-  output/figures/survcurv_imid_died.svg              - moderately_sensitive
-  output/figures/survcurv_imid_icu.svg               - moderately_sensitive
-  output/figures/survcurv_imiddrugcategory_died.svg  - moderately_sensitive
-  output/figures/survcurv_imiddrugcategory_icu.svg   - moderately_sensitive
-  output/figures/survcurv_joint_died.svg             - moderately_sensitive
-  output/figures/survcurv_joint_icu.svg              - moderately_sensitive
-  output/figures/survcurv_skin_died.svg              - moderately_sensitive
-  output/figures/survcurv_skin_icu.svg               - moderately_sensitive
+  logs/graphs.smcl                                         - moderately_sensitive
+  output/figures/bowel_graph.gph                           - moderately_sensitive
+  output/figures/imid_graph.gph                            - moderately_sensitive
+  output/figures/imiddrugcategory_graph.gph                - moderately_sensitive
+  output/figures/joint_graph.gph                           - moderately_sensitive
+  output/figures/skin_graph.gph                            - moderately_sensitive
+  output/figures/survcurv_bowel_died.svg                   - moderately_sensitive
+  output/figures/survcurv_bowel_hospital.svg               - moderately_sensitive
+  output/figures/survcurv_bowel_icuordeath.svg             - moderately_sensitive
+  output/figures/survcurv_imid_died.svg                    - moderately_sensitive
+  output/figures/survcurv_imid_hospital.svg                - moderately_sensitive
+  output/figures/survcurv_imid_icuordeath.svg              - moderately_sensitive
+  output/figures/survcurv_imiddrugcategory_died.svg        - moderately_sensitive
+  output/figures/survcurv_imiddrugcategory_hospital.svg    - moderately_sensitive
+  output/figures/survcurv_imiddrugcategory_icuordeath.svg  - moderately_sensitive
+  output/figures/survcurv_joint_died.svg                   - moderately_sensitive
+  output/figures/survcurv_joint_hospital.svg               - moderately_sensitive
+  output/figures/survcurv_joint_icuordeath.svg             - moderately_sensitive
+  output/figures/survcurv_skin_died.svg                    - moderately_sensitive
+  output/figures/survcurv_skin_hospital.svg                - moderately_sensitive
+  output/figures/survcurv_skin_icuordeath.svg              - moderately_sensitive

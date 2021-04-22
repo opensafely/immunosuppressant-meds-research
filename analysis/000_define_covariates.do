@@ -751,7 +751,7 @@ gen icu_admit_date_covid_sens = icu_admitted_date if hosp_admit_covid ==1
 gen icu_covid_sens =1 if icu_admit_date_covid_sens !=.
 
 
-format died_ons_date_covid died_ons_date_noncovid icu_admit_date_covid icu_or_death_covid_date hosp_admit_date_covid %td
+format died_ons_date_covid died_ons_date_noncovid icu_admit_date_covid icu_or_death_covid_date hosp_admit_date_covid hosp_admit_date_covid_sens icu_admit_date_covid_sens %td
 
 
 /* CENSORING */

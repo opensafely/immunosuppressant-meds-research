@@ -25,7 +25,7 @@ global files `1'
 
 * Open a log file
 cap log close
-log using "$logdir/hosp_admit_cox_models_$files", replace
+log using "$logdir/cox_models_$files", replace
 
 * Set Ado file path
 adopath + "$projectdir/analysis/extra_ados"
@@ -47,7 +47,7 @@ tempname coxoutput
 	postfile `coxoutput' str20(cohort) str20(model) str20(failure) ///
 		ptime_exposed events_exposed rate_exposed /// 
 		ptime_comparator events_comparator rate_comparator hr lc uc ///
-		using $projectdir/output/data/hosp_admit_cox_model_summary_$files, replace						
+		using $projectdir/output/data/cox_model_summary_$files, replace						
 
 use $projectdir/output/data/file_$files, replace
 
@@ -60,7 +60,7 @@ egen stopdied = rmin(died_ons_date diecensor)
 egen stophospital = rmin(hosp_admit_date_covid diecensor)
 egen stopicuordeath = rmin(icu_or_death_covid_date diecensor)
 egen stophospital_sens = rmin(hosp_admit_date_covid_sens diecensor)
-egen stopsensicu_sens = rmin(icu_admit_date_covid_sens diecensor)
+egen stopicu_sens = rmin(icu_admit_date_covid_sens diecensor)
 
 gen faildied = died_ons_covid_flag_any
 gen failhospital = hosp_admit_covid
