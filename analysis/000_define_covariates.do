@@ -1,8 +1,8 @@
 /*==============================================================================
 DO FILE NAME:			create_analysis_dataset
 PROJECT:				Immunosuppressant meds research
-DATE: 					22 Mar 21
-AUTHOR:					M Yates / J Galloway 
+DATE: 					22nd April 21
+AUTHOR:					M Yates / J Galloway / K Bechman
 						adapted from C Rentsch										
 DESCRIPTION OF FILE:	data management for immunosuppressant meds project  
 						reformat variables 
@@ -714,7 +714,7 @@ format enter_date %td
 
 /*   Outcomes   */
 
-* Outcomes: itu admission, ONS-covid death  
+* Outcomes: itu admission, ONS-covid death, hospital admission   
 
 * Add half-day buffer if outcome on indexdate
 replace died_ons_date=died_ons_date+0.5 if died_ons_date==enter_date
@@ -728,22 +728,30 @@ gen died_ons_date_covid = died_ons_date if died_ons_covid_flag_any == 1
 * If missing date of death resulting died_date will also be missing
 gen died_ons_date_noncovid = died_ons_date if died_ons_covid_flag_any != 1 
 
-*date of COVID ITU admission ** issue we have is how we define an ITU admission as a COVID one. 
-gen icu_admit_diff = icu_admitted_date - first_pos_test_sgss_date
-replace icu_admit_diff =. if icu_admit_diff <-5
-gen icu_admit_date_covid = icu_admitted_date if icu_admit_diff <28 
-
-gen icu_or_death_covid_date = icu_admit_date_covid
-replace icu_or_death_covid_date = died_ons_date_covid if icu_admit_date_covid ==.
-gen icu_or_death_covid =1 if icu_or_death_covid_date !=.
-
 *date of COVID hospital admission ** issue we have is how we define a hospital admission as a COVID one. 
 gen hosp_admit_diff = hospital_admission_date - first_pos_test_sgss_date
 replace hosp_admit_diff =. if hosp_admit_diff <-5
 gen hosp_admit_date_covid = hospital_admission_date if hosp_admit_diff <28 
 gen hosp_admit_covid =1 if hosp_admit_date_covid !=.
 
-format died_ons_date_covid died_ons_date_noncovid icu_admit_date_covid icu_or_death_covid_date hosp_admit_date_covid %td
+*date of COVID ITU admission ** issue we have is how we define an ITU admission as a COVID one. 
+gen icu_admit_date_covid = icu_admitted_date if hosp_admit_covid ==1 
+gen icu_or_death_covid_date = icu_admit_date_covid
+replace icu_or_death_covid_date = died_ons_date_covid if icu_admit_date_covid ==.
+gen icu_or_death_covid =1 if icu_or_death_covid_date !=.
+
+//it is possible to be in the ICU / died cohort, but NOT in hospital cohort IF a patient dies from COVID in community
+
+* sensitivity analysis 1 - COVID hospital admission ** excluding 28 day cut off
+gen hosp_admit_date_covid_sens = hospital_admission_date if hosp_admit_diff !=. 
+gen hosp_admit_covid_sens =1 if hosp_admit_date_covid_sens !=.
+
+* sensitivity analysis 2 - COVID ICU admission ** excluding deaths 
+gen icu_admit_date_covid_sens = icu_admitted_date if hosp_admit_covid ==1 
+gen icu_covid_sens =1 if icu_admit_date_covid_sens !=.
+
+
+format died_ons_date_covid died_ons_date_noncovid icu_admit_date_covid icu_or_death_covid_date hosp_admit_date_covid hosp_admit_date_covid_sens icu_admit_date_covid_sens %td
 
 
 /* CENSORING */

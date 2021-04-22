@@ -416,7 +416,11 @@
       "created_by_action": "run_survival_curves",
       "privacy_level": "moderately_sensitive"
     },
-    "output/figures/survcurv_bowel_icu.svg": {
+    "output/figures/survcurv_bowel_hospital.svg": {
+      "created_by_action": "run_survival_curves",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/survcurv_bowel_icuordeath.svg": {
       "created_by_action": "run_survival_curves",
       "privacy_level": "moderately_sensitive"
     },
@@ -424,7 +428,11 @@
       "created_by_action": "run_survival_curves",
       "privacy_level": "moderately_sensitive"
     },
-    "output/figures/survcurv_imid_icu.svg": {
+    "output/figures/survcurv_imid_hospital.svg": {
+      "created_by_action": "run_survival_curves",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/survcurv_imid_icuordeath.svg": {
       "created_by_action": "run_survival_curves",
       "privacy_level": "moderately_sensitive"
     },
@@ -432,7 +440,11 @@
       "created_by_action": "run_survival_curves",
       "privacy_level": "moderately_sensitive"
     },
-    "output/figures/survcurv_imiddrugcategory_icu.svg": {
+    "output/figures/survcurv_imiddrugcategory_hospital.svg": {
+      "created_by_action": "run_survival_curves",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/survcurv_imiddrugcategory_icuordeath.svg": {
       "created_by_action": "run_survival_curves",
       "privacy_level": "moderately_sensitive"
     },
@@ -440,7 +452,11 @@
       "created_by_action": "run_survival_curves",
       "privacy_level": "moderately_sensitive"
     },
-    "output/figures/survcurv_joint_icu.svg": {
+    "output/figures/survcurv_joint_hospital.svg": {
+      "created_by_action": "run_survival_curves",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/survcurv_joint_icuordeath.svg": {
       "created_by_action": "run_survival_curves",
       "privacy_level": "moderately_sensitive"
     },
@@ -448,7 +464,11 @@
       "created_by_action": "run_survival_curves",
       "privacy_level": "moderately_sensitive"
     },
-    "output/figures/survcurv_skin_icu.svg": {
+    "output/figures/survcurv_skin_hospital.svg": {
+      "created_by_action": "run_survival_curves",
+      "privacy_level": "moderately_sensitive"
+    },
+    "output/figures/survcurv_skin_icuordeath.svg": {
       "created_by_action": "run_survival_curves",
       "privacy_level": "moderately_sensitive"
     },
@@ -467,15 +487,6 @@
       "created_at": "2021-03-17T13:53:28Z",
       "completed_at": "2021-03-17T13:55:22Z"
     },
-    "run_survival_curves": {
-      "state": "succeeded",
-      "commit": "none",
-      "docker_image_id": "sha256:5a4bb3ecd807de29a18a01ffae01739415778f0b770cbd43d7140bb0017306f1",
-      "job_id": "qokn4qe5mrz5jj4m",
-      "run_by_user": "arowan",
-      "created_at": "2021-03-22T18:28:03Z",
-      "completed_at": "2021-03-22T18:29:59Z"
-    },
     "run_cox_models": {
       "state": "succeeded",
       "commit": "none",
@@ -484,15 +495,6 @@
       "run_by_user": "arowan",
       "created_at": "2021-03-26T14:55:21Z",
       "completed_at": "2021-03-26T15:02:53Z"
-    },
-    "run_cox_models_imid": {
-      "state": "succeeded",
-      "commit": "none",
-      "docker_image_id": "sha256:5a4bb3ecd807de29a18a01ffae01739415778f0b770cbd43d7140bb0017306f1",
-      "job_id": "b36xdn6wi2ot3y2l",
-      "run_by_user": "arowan",
-      "created_at": "2021-03-26T15:03:30Z",
-      "completed_at": "2021-03-26T15:05:50Z"
     },
     "run_cox_models_standil23": {
       "state": "succeeded",
@@ -512,15 +514,6 @@
       "created_at": "2021-04-08T12:08:29Z",
       "completed_at": "2021-04-08T12:10:38Z"
     },
-    "run_baseline_tables": {
-      "state": "succeeded",
-      "commit": "none",
-      "docker_image_id": "sha256:5a4bb3ecd807de29a18a01ffae01739415778f0b770cbd43d7140bb0017306f1",
-      "job_id": "xz7riqnrv537wv7u",
-      "run_by_user": "arowan",
-      "created_at": "2021-04-13T13:13:38Z",
-      "completed_at": "2021-04-13T13:14:50Z"
-    },
     "generate_study_population": {
       "state": "succeeded",
       "commit": "none",
@@ -529,15 +522,6 @@
       "run_by_user": "arowan",
       "created_at": "2021-04-19T15:51:20Z",
       "completed_at": "2021-04-19T15:52:42Z"
-    },
-    "create_cohorts": {
-      "state": "succeeded",
-      "commit": "none",
-      "docker_image_id": "sha256:5a4bb3ecd807de29a18a01ffae01739415778f0b770cbd43d7140bb0017306f1",
-      "job_id": "sflz7nbxvepznprs",
-      "run_by_user": "arowan",
-      "created_at": "2021-04-19T16:05:35Z",
-      "completed_at": "2021-04-19T16:07:07Z"
     },
     "run_outcomes_check": {
       "state": "succeeded",
@@ -556,6 +540,42 @@
       "run_by_user": "arowan",
       "created_at": "2021-04-20T09:10:48Z",
       "completed_at": "2021-04-20T09:11:41Z"
+    },
+    "create_cohorts": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:5a4bb3ecd807de29a18a01ffae01739415778f0b770cbd43d7140bb0017306f1",
+      "job_id": "sflz7nbxvepznprs",
+      "run_by_user": "arowan",
+      "created_at": "2021-04-22T13:29:12Z",
+      "completed_at": "2021-04-22T13:30:58Z"
+    },
+    "run_baseline_tables": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:5a4bb3ecd807de29a18a01ffae01739415778f0b770cbd43d7140bb0017306f1",
+      "job_id": "xz7riqnrv537wv7u",
+      "run_by_user": "arowan",
+      "created_at": "2021-04-22T13:31:45Z",
+      "completed_at": "2021-04-22T13:34:19Z"
+    },
+    "run_cox_models_imid": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:5a4bb3ecd807de29a18a01ffae01739415778f0b770cbd43d7140bb0017306f1",
+      "job_id": "b36xdn6wi2ot3y2l",
+      "run_by_user": "arowan",
+      "created_at": "2021-04-22T13:34:39Z",
+      "completed_at": "2021-04-22T13:37:14Z"
+    },
+    "run_survival_curves": {
+      "state": "succeeded",
+      "commit": "none",
+      "docker_image_id": "sha256:5a4bb3ecd807de29a18a01ffae01739415778f0b770cbd43d7140bb0017306f1",
+      "job_id": "qokn4qe5mrz5jj4m",
+      "run_by_user": "arowan",
+      "created_at": "2021-04-22T13:51:21Z",
+      "completed_at": "2021-04-22T13:53:40Z"
     }
   },
   "workspace": "immunosuppressant-meds-research",
