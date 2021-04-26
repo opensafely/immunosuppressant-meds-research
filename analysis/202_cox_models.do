@@ -38,10 +38,13 @@ global crude
 
 global agesex i.agegroup male
 
-global adjusted_main i.agegroup male i.ethnicity i.imd bmicat bowel skin joint chronic_cardiac_disease cancer stroke i. steroidcat 
+global adjusted_main i.agegroup male i.imd i.obese4cat i.smoke_nomiss bowel skin joint chronic_cardiac_disease cancer stroke steroidcat 
 
-global adjusted_extra i.agegroup male i.ethnicity i.imd bmicat bowel skin joint chronic_cardiac_disease cancer stroke i.diabcat steroidcat i.ckd chronic_liver_disease chronic_respiratory_disease
+global adjusted_sensitivity_one i.agegroup male i.imd i.obese4cat i.smoke_nomiss bowel skin joint chronic_cardiac_disease cancer stroke i.diabcat steroidcat i.ckd chronic_liver_disease chronic_respiratory_disease
 
+global adjusted_sensitivity_two i.agegroup male i.imd i.obese4cat i.smoke_nomiss bowel skin joint chronic_cardiac_disease cancer stroke steroidcat i.ethnicity 
+
+global adjusted_sensitivity_three i.agegroup male i.imd i.bmicat i.smoke bowel skin joint chronic_cardiac_disease cancer stroke i.diabcat steroidcat 
 
 tempname coxoutput
 	postfile `coxoutput' str20(cohort) str20(model) str20(failure) ///
@@ -59,26 +62,56 @@ format diecensor %td
 egen stopdied = rmin(died_ons_date diecensor)
 egen stophospital = rmin(hosp_admit_date_covid diecensor)
 egen stopicuordeath = rmin(icu_or_death_covid_date diecensor)
-egen stophospital_sens = rmin(hosp_admit_date_covid_sens diecensor)
 egen stopicu_sens = rmin(icu_admit_date_covid_sens diecensor)
 
 gen faildied = died_ons_covid_flag_any
 gen failhospital = hosp_admit_covid
 gen failicuordeath = icu_or_death_covid
-gen failhospital_sens = hosp_admit_covid_sens
 gen failicu_sens = icu_covid_sens
 	
 gen exitdied = died_ons_covid_flag_any
 gen exithospital = hosp_admit_covid
 gen exiticuordeath = icu_or_death_covid	 
-gen exithospital_sens = hosp_admit_covid_sens
 gen exiticu_sens = icu_covid_sens
 
-foreach fail in died hospital icuordeath hospital_sens icu_sens {
+foreach fail in died hospital icuordeath icu_sens {
 
 	stset stop`fail', id(patient_id) failure(fail`fail'==1) origin(time enter_date)  enter(time enter_date) scale(365.25) 
 						
-	foreach model in crude agesex adjusted_main adjusted_extra {
+	foreach model in crude agesex adjusted_main adjusted_sensitivity_one adjusted_sensitivity_two adjusted_sensitivity_three {
+				
+		stcox $files $`model', vce(robust)
+					matrix b = r(table)
+					local hr = b[1,1]
+					local lc = b[5,1]
+					local uc = b[6,1]
+
+		stptime if $files == 1
+					local rate_exposed = `r(rate)'
+					local ptime_exposed = `r(ptime)'
+					local events_exposed .
+						if `r(failures)' == 0 | `r(failures)' > 5 local events_exposed `r(failures)'
+						
+		stptime if $files == 0
+					local rate_comparator = `r(rate)'
+					local ptime_comparator = `r(ptime)'
+					local events_comparator .
+					if `r(failures)' == 0 | `r(failures)' > 5 local events_comparator `r(failures)'
+
+		post `coxoutput' ("$files") ("`model'") ("`fail'") (`ptime_exposed') (`events_exposed') (`rate_exposed') ///
+					(`ptime_comparator') (`events_comparator') (`rate_comparator') ///
+					(`hr') (`lc') (`uc')	
+	}
+}
+
+	
+						 
+
+foreach fail in died hospital icuordeath {
+
+	stset stop`fail' if haem_cancer !=1 & organ_transplant !=1 , id(patient_id) failure(fail`fail'==1) origin(time enter_date)  enter(time enter_date) scale(365.25) 
+						
+	foreach model in crude agesex adjusted_main {
 				
 		stcox $files $`model', vce(robust)
 					matrix b = r(table)
