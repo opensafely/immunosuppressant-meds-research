@@ -38,11 +38,11 @@ global crude
 
 global agesex i.agegroup male
 
-global adjusted_main i.agegroup male i.imd i.obese4cat i.smoke_nomiss bowel skin joint chronic_cardiac_disease cancer stroke steroidcat 
+global adjusted_main i.agegroup male i.imd i.obese4cat i.smoke_nomiss bowel skin joint chronic_cardiac_disease cancer stroke i.diabcat steroidcat 
 
 global adjusted_sensitivity_one i.agegroup male i.imd i.obese4cat i.smoke_nomiss bowel skin joint chronic_cardiac_disease cancer stroke i.diabcat steroidcat i.ckd chronic_liver_disease chronic_respiratory_disease
 
-global adjusted_sensitivity_two i.agegroup male i.imd i.obese4cat i.smoke_nomiss bowel skin joint chronic_cardiac_disease cancer stroke steroidcat i.ethnicity 
+global adjusted_sensitivity_two i.agegroup male i.imd i.obese4cat i.smoke_nomiss bowel skin joint chronic_cardiac_disease cancer stroke i.diabcat steroidcat i.ethnicity 
 
 global adjusted_sensitivity_three i.agegroup male i.imd i.bmicat i.smoke bowel skin joint chronic_cardiac_disease cancer stroke i.diabcat steroidcat 
 
@@ -53,7 +53,6 @@ tempname coxoutput
 		using $projectdir/output/data/cox_model_summary_$files, replace						
 
 use $projectdir/output/data/file_$files, replace
-
 
 *generate censor date
 gen diecensor = mdy(09,01,2020)
@@ -104,9 +103,16 @@ foreach fail in died hospital icuordeath icu_sens {
 	}
 }
 
-	
-						 
+postclose `coxoutput'
 
+
+tempname coxoutput_haemonc
+		postfile `coxoutput_haemonc' str20(cohort) str20(model) str20(failure) ///
+		ptime_exposed events_exposed rate_exposed /// 
+		ptime_comparator events_comparator rate_comparator hr lc uc ///
+		using $projectdir/output/data/cox_model_summary_$files, replace				
+
+		
 foreach fail in died hospital icuordeath {
 
 	stset stop`fail' if haem_cancer !=1 & organ_transplant !=1 , id(patient_id) failure(fail`fail'==1) origin(time enter_date)  enter(time enter_date) scale(365.25) 
@@ -131,13 +137,13 @@ foreach fail in died hospital icuordeath {
 					local events_comparator .
 					if `r(failures)' == 0 | `r(failures)' > 5 local events_comparator `r(failures)'
 
-		post `coxoutput' ("$files") ("`model'") ("`fail'") (`ptime_exposed') (`events_exposed') (`rate_exposed') ///
+		post `coxoutput_haemonc' ("$files") ("`model'") ("`fail'") (`ptime_exposed') (`events_exposed') (`rate_exposed') ///
 					(`ptime_comparator') (`events_comparator') (`rate_comparator') ///
 					(`hr') (`lc') (`uc')	
 	}
 }
 
-postclose `coxoutput'
+postclose `coxoutput_haemonc'
 
 
 log close

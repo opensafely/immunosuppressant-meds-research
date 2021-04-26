@@ -203,22 +203,6 @@ label values ethnicity ethnicity
 //gen ethnicity2 = ethnicity
 //replace ethnicity2 = . if ethnicity == .u
 
-
-*rearrange in order of prevalence
-recode ethnicity 2=6 /* mixed to 6 */
-recode ethnicity 3=2 /* south asian to 2 */
-recode ethnicity 4=3 /* black to 3 */
-recode ethnicity 6=4 /* mixed to 4 */
-
-label define ethnicity 	1 "White"  					///
-						2 "South Asian"				///
-						3 "Black"  					///
-						4 "Mixed" 					///
-						5 "Other"					///
-						.u "Unknown"
-label values ethnicity ethnicity
-
-
 * STP 
 rename stp stp_old
 bysort stp_old: gen stp = 1 if _n==1
