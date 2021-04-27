@@ -110,7 +110,7 @@ tempname coxoutput_haemonc
 		postfile `coxoutput_haemonc' str20(cohort) str20(model) str20(failure) ///
 		ptime_exposed events_exposed rate_exposed /// 
 		ptime_comparator events_comparator rate_comparator hr lc uc ///
-		using $projectdir/output/data/cox_model_summary_$files, replace				
+		using $projectdir/output/data/cox_model_summary_haemonc_$files, replace				
 
 		
 foreach fail in died hospital icuordeath {

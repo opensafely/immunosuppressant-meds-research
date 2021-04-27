@@ -3,7 +3,7 @@
       name:  {res}<unnamed>
        {txt}log:  {res}/workspace/logs/descriptive_tables.smcl
   {txt}log type:  {res}smcl
- {txt}opened on:  {res}22 Apr 2021, 13:33:37
+ {txt}opened on:  {res}27 Apr 2021, 10:31:51
 {txt}
 {com}. 
 . * Set Ado file path
@@ -1914,11 +1914,202 @@ Data are presented as mean (SD) for continuous measures, and n (%) for categoric
  
 
 {com}. 
+. *2g IMID only: Infliximab vs standard systemic
+. table1_mc, by(standinflix) total(before) onecol iqrmiddle(",") ///
+>         vars(joint bin %5.1f \ ///
+>                 psoriatic_arthritis bin %5.1f \ ///                     
+>                 rheumatoid_arthritis bin %5.1f \        ///  
+>                 ankylosing_spondylitis bin %5.1f \ ///  
+>                 skin bin %5.1f \ ///
+>                 psoriasis bin %5.1f \ ///
+>                 hidradenitis_suppurativa bin %5.1f \    ///
+>                 bowel bin %5.1f \ ///
+>                 ulcerative_colitis bin %5.1f    \ ///
+>                 crohns_disease bin %5.1f \ ///
+>                 ibd_uncla bin %5.1f \ ///       
+>                 agegroup cat %5.1f \ ///
+>                  male bin %5.1f \ ///
+>                  bmicat cat %5.1f \ ///
+>                  obese4cat cat %5.1f \ ///
+>                  ethnicity cat %5.1f \ ///
+>                  imd cat %5.1f \ ///
+>                  smoke cat %5.1f \ ///
+>                  chronic_cardiac_disease bin %5.1f \ /// 
+>                  stroke bin %5.1f \ ///
+>                  combined_cv_comorbid bin %5.1f \ ///
+>                  hypertension bin %5.1f \ ///
+>                  diabcat cat %5.1f \ ///
+>                  ckd_egfr cat %5.1f \ ///
+>                  esrf bin %5.1f \ ///
+>                  gp_consult_count contn %5.1f \ ///
+>                  steroidcat bin %5.1f \ ///
+>                  oral_prednisolone_3m_0m contn %5.1f )
+{res}{txt}
+  {c TLC}{hline 26}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c TRC}
+  {c |} {res}factor                        N_T      N_0     N_1      m_T      m_0     m_1 {txt}{c |}
+  {c LT}{hline 26}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c RT}
+  {c |} {res}joint                      28,470   22,204   6,266        0        0       0 {txt}{c |}
+  {c LT}{hline 26}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c RT}
+  {c |} {res}psoriatic_arthritis        28,470   22,204   6,266        0        0       0 {txt}{c |}
+  {c LT}{hline 26}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c RT}
+  {c |} {res}rheumatoid_arthritis       28,470   22,204   6,266        0        0       0 {txt}{c |}
+  {c LT}{hline 26}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c RT}
+  {c |} {res}ankylosing_spondylitis     28,470   22,204   6,266        0        0       0 {txt}{c |}
+  {c LT}{hline 26}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c RT}
+  {c |} {res}skin                       28,470   22,204   6,266        0        0       0 {txt}{c |}
+  {c LT}{hline 26}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c RT}
+  {c |} {res}psoriasis                  28,470   22,204   6,266        0        0       0 {txt}{c |}
+  {c LT}{hline 26}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c RT}
+  {c |} {res}hidradenitis_suppurativa   28,470   22,204   6,266        0        0       0 {txt}{c |}
+  {c LT}{hline 26}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c RT}
+  {c |} {res}bowel                      28,470   22,204   6,266        0        0       0 {txt}{c |}
+  {c LT}{hline 26}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c RT}
+  {c |} {res}ulcerative_colitis         28,470   22,204   6,266        0        0       0 {txt}{c |}
+  {c LT}{hline 26}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c RT}
+  {c |} {res}crohns_disease             28,470   22,204   6,266        0        0       0 {txt}{c |}
+  {c LT}{hline 26}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c RT}
+  {c |} {res}ibd_uncla                  28,470   22,204   6,266        0        0       0 {txt}{c |}
+  {c LT}{hline 26}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c RT}
+  {c |} {res}RECODE of age              28,470   22,204   6,266        0        0       0 {txt}{c |}
+  {c LT}{hline 26}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c RT}
+  {c |} {res}male                       28,470   22,204   6,266        0        0       0 {txt}{c |}
+  {c LT}{hline 26}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c RT}
+  {c |} {res}bmicat                      1,510    1,165     345   26,960   21,039   5,921 {txt}{c |}
+  {c LT}{hline 26}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c RT}
+  {c |} {res}RECODE of bmicat           28,470   22,204   6,266        0        0       0 {txt}{c |}
+  {c LT}{hline 26}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c RT}
+  {c |} {res}ethnicity                  21,339   16,642   4,697    7,131    5,562   1,569 {txt}{c |}
+  {c LT}{hline 26}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c RT}
+  {c |} {res}imd                        28,470   22,204   6,266        0        0       0 {txt}{c |}
+  {c LT}{hline 26}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c RT}
+  {c |} {res}smoke                       2,575    2,018     557   25,895   20,186   5,709 {txt}{c |}
+  {c LT}{hline 26}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c RT}
+  {c |} {res}chronic_cardiac_disease    28,470   22,204   6,266        0        0       0 {txt}{c |}
+  {c LT}{hline 26}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c RT}
+  {c |} {res}stroke                     28,470   22,204   6,266        0        0       0 {txt}{c |}
+  {c LT}{hline 26}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c RT}
+  {c |} {res}combined_cv_comorbid       10,296    8,015   2,281   18,174   14,189   3,985 {txt}{c |}
+  {c LT}{hline 26}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c RT}
+  {c |} {res}hypertension               28,470   22,204   6,266        0        0       0 {txt}{c |}
+  {c LT}{hline 26}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c RT}
+  {c |} {res}diabcat                    28,470   22,204   6,266        0        0       0 {txt}{c |}
+  {c LT}{hline 26}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c RT}
+  {c |} {res}RECODE of egfr_cat_all     20,175   15,734   4,441    8,295    6,470   1,825 {txt}{c |}
+  {c LT}{hline 26}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c RT}
+  {c |} {res}esrf                       28,470   22,204   6,266        0        0       0 {txt}{c |}
+  {c LT}{hline 26}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c RT}
+  {c |} {res}gp_consult_count           28,470   22,204   6,266        0        0       0 {txt}{c |}
+  {c LT}{hline 26}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c RT}
+  {c |} {res}steroidcat                 28,470   22,204   6,266        0        0       0 {txt}{c |}
+  {c LT}{hline 26}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c RT}
+  {c |} {res}oral_prednisolone_3m_0m    28,470   22,204   6,266        0        0       0 {txt}{c |}
+  {c BLC}{hline 26}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c -}{hline 8}{c -}{hline 8}{c -}{hline 7}{c BRC}
+   N_ ... #records used below,   m_ ... #records not used
+ 
+  {c TLC}{hline 31}{c -}{hline 17}{c -}{hline 16}{c -}{hline 16}{c -}{hline 9}{c TRC}
+  {c |} {res}                                Total             0                1                p-value {txt}{c |}
+  {c LT}{hline 31}{c -}{hline 17}{c -}{hline 16}{c -}{hline 16}{c -}{hline 9}{c RT}
+  {c |} {res}                                N=28,470          N=22,204         N=6,266                  {txt}{c |}
+  {c LT}{hline 31}{c -}{hline 17}{c -}{hline 16}{c -}{hline 16}{c -}{hline 9}{c RT}
+  {c |} {res}joint                           16,744 (58.8%)    13,052 (58.8%)   3,692 (58.9%)     0.84   {txt}{c |}
+  {c LT}{hline 31}{c -}{hline 17}{c -}{hline 16}{c -}{hline 16}{c -}{hline 9}{c RT}
+  {c |} {res}psoriatic_arthritis             5,664 (19.9%)     4,405 (19.8%)    1,259 (20.1%)     0.66   {txt}{c |}
+  {c LT}{hline 31}{c -}{hline 17}{c -}{hline 16}{c -}{hline 16}{c -}{hline 9}{c RT}
+  {c |} {res}rheumatoid_arthritis            5,576 (19.6%)     4,308 (19.4%)    1,268 (20.2%)     0.14   {txt}{c |}
+  {c LT}{hline 31}{c -}{hline 17}{c -}{hline 16}{c -}{hline 16}{c -}{hline 9}{c RT}
+  {c |} {res}ankylosing_spondylitis          5,508 (19.3%)     4,343 (19.6%)    1,165 (18.6%)     0.087  {txt}{c |}
+  {c LT}{hline 31}{c -}{hline 17}{c -}{hline 16}{c -}{hline 16}{c -}{hline 9}{c RT}
+  {c |} {res}skin                            12,290 (43.2%)    9,520 (42.9%)    2,770 (44.2%)     0.060  {txt}{c |}
+  {c LT}{hline 31}{c -}{hline 17}{c -}{hline 16}{c -}{hline 16}{c -}{hline 9}{c RT}
+  {c |} {res}psoriasis                       6,123 (21.5%)     4,750 (21.4%)    1,373 (21.9%)     0.38   {txt}{c |}
+  {c LT}{hline 31}{c -}{hline 17}{c -}{hline 16}{c -}{hline 16}{c -}{hline 9}{c RT}
+  {c |} {res}hidradenitis_suppurativa        6,168 (21.7%)     4,771 (21.5%)    1,397 (22.3%)     0.17   {txt}{c |}
+  {c LT}{hline 31}{c -}{hline 17}{c -}{hline 16}{c -}{hline 16}{c -}{hline 9}{c RT}
+  {c |} {res}bowel                           16,647 (58.5%)    12,980 (58.5%)   3,667 (58.5%)     0.93   {txt}{c |}
+  {c LT}{hline 31}{c -}{hline 17}{c -}{hline 16}{c -}{hline 16}{c -}{hline 9}{c RT}
+  {c |} {res}ulcerative_colitis              5,550 (19.5%)     4,353 (19.6%)    1,197 (19.1%)     0.38   {txt}{c |}
+  {c LT}{hline 31}{c -}{hline 17}{c -}{hline 16}{c -}{hline 16}{c -}{hline 9}{c RT}
+  {c |} {res}crohns_disease                  5,597 (19.7%)     4,329 (19.5%)    1,268 (20.2%)     0.19   {txt}{c |}
+  {c LT}{hline 31}{c -}{hline 17}{c -}{hline 16}{c -}{hline 16}{c -}{hline 9}{c RT}
+  {c |} {res}ibd_uncla                       5,505 (19.3%)     4,300 (19.4%)    1,205 (19.2%)     0.81   {txt}{c |}
+  {c LT}{hline 31}{c -}{hline 17}{c -}{hline 16}{c -}{hline 16}{c -}{hline 9}{c RT}
+  {c |} {res}RECODE of age                                                                        0.10   {txt}{c |}
+  {c |} {res}   18-<40                       10,340 (36.3%)    8,113 (36.5%)    2,227 (35.5%)            {txt}{c |}
+  {c |} {res}   40-<50                       4,576 (16.1%)     3,564 (16.1%)    1,012 (16.2%)            {txt}{c |}
+  {c |} {res}   50-<60                       4,911 (17.2%)     3,792 (17.1%)    1,119 (17.9%)            {txt}{c |}
+  {c |} {res}   60-<70                       3,907 (13.7%)     3,072 (13.8%)    835 (13.3%)              {txt}{c |}
+  {c |} {res}   70-<80                       2,973 (10.4%)     2,272 (10.2%)    701 (11.2%)              {txt}{c |}
+  {c |} {res}   80+                          1,763 ( 6.2%)     1,391 ( 6.3%)    372 ( 5.9%)              {txt}{c |}
+  {c LT}{hline 31}{c -}{hline 17}{c -}{hline 16}{c -}{hline 16}{c -}{hline 9}{c RT}
+  {c |} {res}male                            14,001 (49.2%)    10,947 (49.3%)   3,054 (48.7%)     0.43   {txt}{c |}
+  {c LT}{hline 31}{c -}{hline 17}{c -}{hline 16}{c -}{hline 16}{c -}{hline 9}{c RT}
+  {c |} {res}bmicat                                                                               0.45   {txt}{c |}
+  {c |} {res}   Underweight (<18.5)          59 ( 3.9%)        49 ( 4.2%)       10 ( 2.9%)               {txt}{c |}
+  {c |} {res}   Normal (18.5-24.9)           163 (10.8%)       132 (11.3%)      31 ( 9.0%)               {txt}{c |}
+  {c |} {res}   Overweight (25-29.9)         220 (14.6%)       168 (14.4%)      52 (15.1%)               {txt}{c |}
+  {c |} {res}   Obese I (30-34.9)            308 (20.4%)       227 (19.5%)      81 (23.5%)               {txt}{c |}
+  {c |} {res}   Obese II (35-39.9)           297 (19.7%)       230 (19.7%)      67 (19.4%)               {txt}{c |}
+  {c |} {res}   Obese III (40+)              463 (30.7%)       359 (30.8%)      104 (30.1%)              {txt}{c |}
+  {c LT}{hline 31}{c -}{hline 17}{c -}{hline 16}{c -}{hline 16}{c -}{hline 9}{c RT}
+  {c |} {res}RECODE of bmicat                                                                     0.32   {txt}{c |}
+  {c |} {res}   No record of obesity         27,402 (96.2%)    21,388 (96.3%)   6,014 (96.0%)            {txt}{c |}
+  {c |} {res}   Obese I (30-34.9)            308 ( 1.1%)       227 ( 1.0%)      81 ( 1.3%)               {txt}{c |}
+  {c |} {res}   Obese II (35-39.9)           297 ( 1.0%)       230 ( 1.0%)      67 ( 1.1%)               {txt}{c |}
+  {c |} {res}   Obese III (40+)              463 ( 1.6%)       359 ( 1.6%)      104 ( 1.7%)              {txt}{c |}
+  {c LT}{hline 31}{c -}{hline 17}{c -}{hline 16}{c -}{hline 16}{c -}{hline 9}{c RT}
+  {c |} {res}ethnicity                                                                            0.16   {txt}{c |}
+  {c |} {res}   White                        17,054 (79.9%)    13,310 (80.0%)   3,744 (79.7%)            {txt}{c |}
+  {c |} {res}   South Asian                  2,137 (10.0%)     1,687 (10.1%)    450 ( 9.6%)              {txt}{c |}
+  {c |} {res}   Other                        2,148 (10.1%)     1,645 ( 9.9%)    503 (10.7%)              {txt}{c |}
+  {c LT}{hline 31}{c -}{hline 17}{c -}{hline 16}{c -}{hline 16}{c -}{hline 9}{c RT}
+  {c |} {res}imd                                                                                  0.48   {txt}{c |}
+  {c |} {res}   1 least deprived             19,871 (69.8%)    15,505 (69.8%)   4,366 (69.7%)            {txt}{c |}
+  {c |} {res}   4                            5,750 (20.2%)     4,458 (20.1%)    1,292 (20.6%)            {txt}{c |}
+  {c |} {res}   5 most deprived              2,849 (10.0%)     2,241 (10.1%)    608 ( 9.7%)              {txt}{c |}
+  {c LT}{hline 31}{c -}{hline 17}{c -}{hline 16}{c -}{hline 16}{c -}{hline 9}{c RT}
+  {c |} {res}smoke                                                                                0.88   {txt}{c |}
+  {c |} {res}   Never                        554 (21.5%)       431 (21.4%)      123 (22.1%)              {txt}{c |}
+  {c |} {res}   Former                       271 (10.5%)       215 (10.7%)      56 (10.1%)               {txt}{c |}
+  {c |} {res}   Current                      1,750 (68.0%)     1,372 (68.0%)    378 (67.9%)              {txt}{c |}
+  {c LT}{hline 31}{c -}{hline 17}{c -}{hline 16}{c -}{hline 16}{c -}{hline 9}{c RT}
+  {c |} {res}chronic_cardiac_disease         5,782 (20.3%)     4,497 (20.3%)    1,285 (20.5%)     0.66   {txt}{c |}
+  {c LT}{hline 31}{c -}{hline 17}{c -}{hline 16}{c -}{hline 16}{c -}{hline 9}{c RT}
+  {c |} {res}stroke                          5,710 (20.1%)     4,449 (20.0%)    1,261 (20.1%)     0.88   {txt}{c |}
+  {c LT}{hline 31}{c -}{hline 17}{c -}{hline 16}{c -}{hline 16}{c -}{hline 9}{c RT}
+  {c |} {res}combined_cv_comorbid            10,296 (100.0%)   8,015 (100.0%)   2,281 (100.0%)           {txt}{c |}
+  {c LT}{hline 31}{c -}{hline 17}{c -}{hline 16}{c -}{hline 16}{c -}{hline 9}{c RT}
+  {c |} {res}hypertension                    5,697 (20.0%)     4,426 (19.9%)    1,271 (20.3%)     0.54   {txt}{c |}
+  {c LT}{hline 31}{c -}{hline 17}{c -}{hline 16}{c -}{hline 16}{c -}{hline 9}{c RT}
+  {c |} {res}diabcat                                                                              0.19   {txt}{c |}
+  {c |} {res}   No diabetes                  22,853 (80.3%)    17,804 (80.2%)   5,049 (80.6%)            {txt}{c |}
+  {c |} {res}   Controlled diabetes          96 ( 0.3%)        78 ( 0.4%)       18 ( 0.3%)               {txt}{c |}
+  {c |} {res}   Uncontrolled diabetes        17 ( 0.1%)        10 ( 0.0%)       7 ( 0.1%)                {txt}{c |}
+  {c |} {res}   Diabetes, no hba1c measure   5,504 (19.3%)     4,312 (19.4%)    1,192 (19.0%)            {txt}{c |}
+  {c LT}{hline 31}{c -}{hline 17}{c -}{hline 16}{c -}{hline 16}{c -}{hline 9}{c RT}
+  {c |} {res}RECODE of egfr_cat_all                                                               0.80   {txt}{c |}
+  {c |} {res}   0                            4,430 (22.0%)     3,428 (21.8%)    1,002 (22.6%)            {txt}{c |}
+  {c |} {res}   2                            1,517 ( 7.5%)     1,189 ( 7.6%)    328 ( 7.4%)              {txt}{c |}
+  {c |} {res}   3                            2,959 (14.7%)     2,317 (14.7%)    642 (14.5%)              {txt}{c |}
+  {c |} {res}   4                            6,555 (32.5%)     5,131 (32.6%)    1,424 (32.1%)            {txt}{c |}
+  {c |} {res}   5                            4,714 (23.4%)     3,669 (23.3%)    1,045 (23.5%)            {txt}{c |}
+  {c LT}{hline 31}{c -}{hline 17}{c -}{hline 16}{c -}{hline 16}{c -}{hline 9}{c RT}
+  {c |} {res}esrf                            2,808 ( 9.9%)     2,225 (10.0%)    583 ( 9.3%)       0.093  {txt}{c |}
+  {c LT}{hline 31}{c -}{hline 17}{c -}{hline 16}{c -}{hline 16}{c -}{hline 9}{c RT}
+  {c |} {res}gp_consult_count                2.5 (2.3)         2.5 (2.3)        2.5 (2.3)         0.25   {txt}{c |}
+  {c LT}{hline 31}{c -}{hline 17}{c -}{hline 16}{c -}{hline 16}{c -}{hline 9}{c RT}
+  {c |} {res}steroidcat                      2,382 ( 8.4%)     1,855 ( 8.4%)    527 ( 8.4%)       0.89   {txt}{c |}
+  {c LT}{hline 31}{c -}{hline 17}{c -}{hline 16}{c -}{hline 16}{c -}{hline 9}{c RT}
+  {c |} {res}oral_prednisolone_3m_0m         0.3 (1.0)         0.3 (1.0)        0.3 (1.0)         0.83   {txt}{c |}
+  {c BLC}{hline 31}{c -}{hline 17}{c -}{hline 16}{c -}{hline 16}{c -}{hline 9}{c BRC}
+Data are presented as mean (SD) for continuous measures, and n (%) for categorical measures.
+ 
+
+{com}.                  
 . log close
       {txt}name:  {res}<unnamed>
        {txt}log:  {res}/workspace/logs/descriptive_tables.smcl
   {txt}log type:  {res}smcl
- {txt}closed on:  {res}22 Apr 2021, 13:34:16
+ {txt}closed on:  {res}27 Apr 2021, 10:32:24
 {txt}{.-}
 {smcl}
 {txt}{sf}{ul off}

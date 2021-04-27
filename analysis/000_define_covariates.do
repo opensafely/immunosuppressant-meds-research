@@ -626,6 +626,8 @@ replace tnf =. if imid !=1
 
 gen inflix=1 if infliximab_6m_3m !=0 | infliximab_3m_0m !=0
 replace inflix =. if imid !=1
+gen standinflix = 1 if inflix == 1
+replace standinflix = 0 if standsys == 1 & inflix != 1
 
 gen tnfmono =1 if tnf==1 & standsys !=1
 recode tnfmono .=0 if tnf==1 & standsys ==1
@@ -703,7 +705,7 @@ replace steroidcat =1 if oral_prednisolone_3m_0m >=1 & oral_prednisolone_3m_0m!=
 gen imiddrugcategory = 1 if standtnf ==1 | standil23 ==1 | standjaki ==1 | standritux ==1 | standil6 ==1 | standil17 ==1
 recode imiddrugcategory .=0 if standsys ==1 
 
-foreach var in standtnf standtnf3m standil6 standil17 standil23 standjaki standritux inflix {
+foreach var in standtnf standtnf3m standil6 standil17 standil23 standjaki standritux standinflix {
 	recode `var' 0=. if imiddrugcategory ==1
 }
 
@@ -769,7 +771,7 @@ summ died_ons_date, format */
 
 
 
-foreach var in imid joint skin bowel imiddrugcategory standtnf standtnf3m tnfmono  standil6 standil17 standil23 standjaki standritux inflix {
+foreach var in imid joint skin bowel imiddrugcategory standtnf standtnf3m tnfmono standil6 standil17 standil23 standjaki standritux standinflix {
 	preserve
 	drop if `var' ==.
 	save $projectdir/output/data/file_`var', replace	
