@@ -334,8 +334,8 @@ table1_mc, by(standil6) total(before) onecol iqrmiddle(",")  ///
 		 steroidcat bin %5.1f \ ///
 		 oral_prednisolone_3m_0m contn %5.1f )
 
-		 *2a IMID only: TNFi vs standard systemic
-table1_mc, by(inflix) total(before) onecol iqrmiddle(",") ///
+*2g IMID only: Infliximab vs standard systemic
+table1_mc, by(standinflix) total(before) onecol iqrmiddle(",") ///
 	vars(joint bin %5.1f \ ///
 		psoriatic_arthritis bin %5.1f \	///			
 		rheumatoid_arthritis bin %5.1f \	///  

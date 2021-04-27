@@ -624,6 +624,11 @@ replace standsys3m =. if imid !=1
 gen tnf =1 if adalimumab_6m_3m !=0 | adalimumab_3m_0m !=0 | certolizumab_6m_3m !=0 | certolizumab_3m_0m !=0 | etanercept_6m_3m !=0 | etanercept_3m_0m !=0 | golimumab_6m_3m !=0 | golimumab_3m_0m !=0 | infliximab_6m_3m !=0 | infliximab_3m_0m !=0
 replace tnf =. if imid !=1
 
+gen inflix=1 if infliximab_6m_3m !=0 | infliximab_3m_0m !=0
+replace inflix =. if imid !=1
+gen standinflix = 1 if inflix == 1
+replace standinflix = 0 if standsys == 1 & inflix != 1
+
 gen tnfmono =1 if tnf==1 & standsys !=1
 recode tnfmono .=0 if tnf==1 & standsys ==1
 
@@ -700,7 +705,7 @@ replace steroidcat =1 if oral_prednisolone_3m_0m >=1 & oral_prednisolone_3m_0m!=
 gen imiddrugcategory = 1 if standtnf ==1 | standil23 ==1 | standjaki ==1 | standritux ==1 | standil6 ==1 | standil17 ==1
 recode imiddrugcategory .=0 if standsys ==1 
 
-foreach var in standtnf standtnf3m standil6 standil17 standil23 standjaki standritux  {
+foreach var in standtnf standtnf3m standil6 standil17 standil23 standjaki standritux standinflix {
 	recode `var' 0=. if imiddrugcategory ==1
 }
 
@@ -742,11 +747,10 @@ gen icu_or_death_covid =1 if icu_or_death_covid_date !=.
 
 //it is possible to be in the ICU / died cohort, but NOT in hospital cohort IF a patient dies from COVID in community
 
-* sensitivity analysis 1 - COVID hospital admission ** excluding 28 day cut off
+* sensitivity analysis extra variables - COVID hospital admission ** excluding 28 day cut off
 gen hosp_admit_date_covid_sens = hospital_admission_date if hosp_admit_diff !=. 
 gen hosp_admit_covid_sens =1 if hosp_admit_date_covid_sens !=.
 
-* sensitivity analysis 2 - COVID ICU admission ** excluding deaths 
 gen icu_admit_date_covid_sens = icu_admitted_date if hosp_admit_covid ==1 
 gen icu_covid_sens =1 if icu_admit_date_covid_sens !=.
 
@@ -767,7 +771,7 @@ summ died_ons_date, format */
 
 
 
-foreach var in imid joint skin bowel imiddrugcategory standtnf standtnf3m tnfmono  standil6 standil17 standil23 standjaki standritux {
+foreach var in imid joint skin bowel imiddrugcategory standtnf standtnf3m tnfmono standil6 standil17 standil23 standjaki standritux standinflix {
 	preserve
 	drop if `var' ==.
 	save $projectdir/output/data/file_`var', replace	
