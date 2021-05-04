@@ -172,7 +172,8 @@ actions:
       moderately_sensitive:
         log1: logs/graphs.smcl 
         figure1: output/figures/survcurv_imiddrugcategory_icuordeath.svg
-        figure2: output/figures/imiddrugcategory_graph.gph        figure3: output/figures/survcurv_imiddrugcategory_died.svg
+        figure2: output/figures/imiddrugcategory_graph.gph
+        figure3: output/figures/survcurv_imiddrugcategory_died.svg
         figure4: output/figures/survcurv_bowel_icuordeath.svg
         figure5: output/figures/bowel_graph.gph
         figure6: output/figures/survcurv_bowel_died.svg
