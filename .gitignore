@@ -6,4 +6,5 @@ __pycache__
 output/*
 .Rproj.user
 make_druglists/drug_name_unique.csv
-
+metadata/*
+logs/*
