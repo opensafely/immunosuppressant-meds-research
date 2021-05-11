@@ -198,3 +198,37 @@ actions:
     outputs:
       moderately_sensitive:
         data1: output/data/outcomes_check.csv
+  
+  run_export_csv:
+    run: stata-mp:latest analysis/400_export_csv.do
+    needs: [run_cox_models_imid,run_cox_models_joint,run_cox_models_skin,run_cox_models_bowel,run_cox_models_imiddrugcategory,run_cox_models_standtnf,run_cox_models_tnfmono,run_cox_models_standjaki]
+    outputs:
+      moderately_sensitive:
+        csv_imid: csv_imid.csv
+        csvhaemonc_imid: csvhaemonc_imid.csv
+        csv_joint: csv_joint.csv
+        csvhaemonc_joint: csvhaemonc_joint.csv
+        csv_skin: csv_skin.csv
+        csvhaemonc_skin: csvhaemonc_skin.csv
+        csv_bowel: csv_bowel.csv
+        csvhaemonc_bowel: csvhaemonc_bowel.csv
+        csv_imiddrugcategory: csv_imiddrugcategory.csv
+        csvhaemonc_imiddrugcategory: csvhaemonc_imiddrugcategory.csv
+        csv_standtnf: csv_standtnf.csv
+        csvhaemonc_standtnf: csvhaemonc_standtnf.csv
+        csv_standtnf3m: csv_standtnf3m.csv
+        csvhaemonc_standtnf3m: csvhaemonc_standtnf3m.csv
+        csv_tnfmono: csv_tnfmono.csv
+        csvhaemonc_tnfmono: csvhaemonc_tnfmono.csv
+        csv_standil6: csv_standil6.csv
+        csvhaemonc_standil6: csvhaemonc_standil6.csv
+        csv_standil17: csv_standil17.csv
+        csvhaemonc_standil17: csvhaemonc_standil17.csv
+        csv_standil23: csv_standil23.csv
+        csvhaemonc_standil23: csvhaemonc_standil23.csv
+        csv_standjaki: csv_standjaki.csv
+        csvhaemonc_standjaki: csvhaemonc_standjaki.csv
+        csv_standritux: csv_standritux.csv
+        csvhaemonc_standritux: csvhaemonc_standritux.csv
+        csv_inflix: csv_inflix.csv
+        csvhaemonc_inflix: csvhaemonc_inflix.csv
