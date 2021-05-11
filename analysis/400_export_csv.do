@@ -18,15 +18,22 @@ USER-INSTALLED ADO:
 global projectdir `c(pwd)'
 di "$projectdir"
 
+global logdir "$projectdir/logs"
+di "$logdir"
+
+* Open a log file
+cap log close
+log using "$logdir/export_csv", replace
+
 global files imid joint skin bowel imiddrugcategory standtnf standtnf3m tnfmono  standil6 standil17 standil23 standjaki standritux inflix
 
 foreach f in $files {
 	
 	use $projectdir/output/data/cox_model_summary_`f', replace
-	export delimited csv_`f', replace
+	export delimited $projectdir/output/data/csv_`f', replace
 
 	use $projectdir/output/data/cox_model_summary_haemonc_`f', replace	
-	export delimited csvhaemonc_`f', replace
+	export delimited $projectdir/output/data/csvhaemonc_`f', replace
 
 	}
 
