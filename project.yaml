@@ -233,3 +233,12 @@ actions:
         csvhaemonc_standritux: output/data/csvhaemonc_standritux.csv
         csv_standinflix: output/data/csv_standinflix.csv
         csvhaemonc_standinflix: output/data/csvhaemonc_standinflix.csv
+
+  run_forest_plots:
+    run: r:latest analysis/r-immunosuppressant-meds-research/make_forest_plots.R
+    needs: [run_export_csv]
+    outputs:
+      moderately_sensitive:
+        merged_csv: output/data/merged_csv_normal.csv
+        forest_plot_vs_gen_pop: output/figures/forest_plot_vs_gen_pop.svg
+        forest_plot_vs_standard_systemic: output/figures/forest_plot_vs_standard_systemic.svg
