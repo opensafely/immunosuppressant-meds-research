@@ -1,12 +1,11 @@
 # ********************************************************************
 # ********************************************************************
-# FILE NAME:		 20210505_vsGenPop
+# FILE NAME:		 make_forest_plots.R
 # 
-# AUTHOR:					Kate Mansfield		
-# VERSION:				v1
-# DATE VERSION CREATED: 	
+# AUTHORS:				Kate Mansfield and Nick Kennedy
+# VERSION:				v2
+# DATE VERSION CREATED: 	2021-05-12
 # DESCRIPTION OF FILE:	Produce a forest plot for IMID analyses
-#                   comparing IMID to gen. pop.
 # ********************************************************************
 # ********************************************************************
 
