@@ -242,4 +242,3 @@ actions:
         merged_csv: output/data/merged_csv_normal.csv
         forest_plot_vs_gen_pop: output/figures/forest_plot_vs_gen_pop.svg
         forest_plot_vs_standard_systemic: output/figures/forest_plot_vs_standard_systemic.svg
-      
