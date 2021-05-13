@@ -57,7 +57,7 @@ foreach f in $files {
 
 	foreach fail in died hospital icuordeath {
 
-		stset stop`fail', id(patient_id) failure(fail`fail'==1) origin(time enter_date)  enter(time enter_date)
+	stset stop`fail', id(patient_id) failure(fail`fail'==1) origin(time enter_date)  enter(time enter_date)
 								
 			stcox `f' 
 			stcurve, haz kernel(epan2) at1(`f'=0) at2(`f'=1) title("") range(0 180) xtitle("Analysis time (years)") ///
@@ -65,7 +65,27 @@ foreach f in $files {
 			ylabel(,angle(horizontal)) plotregion(color(white)) graphregion(color(white)) ///
 			ytitle("Survival Probability" ) xtitle("Time (Days)" ) saving($projectdir/output/figures/`f'_graph, replace)
 	
-	graph export $projectdir/output/figures/survcurv_`f'_`fail'.svg , as(svg) replace
+	graph export $projectdir/output/figures/survhaz_`f'_`fail'.svg , as(svg) replace
+
+	stset stop`fail', id(patient_id) failure(fail`fail'==1) origin(time enter_date)  enter(time enter_date)
+								
+			stcox `f' 
+			stcurve, survival at1(`f'=0) at2(`f'=1) title("") range(0 180) xtitle("Analysis time (years)") ///
+			legend(order(1 "Comparator" 2 "Exposed") rows(2) symxsize(*0.4) size(small)) ///
+			ylabel(,angle(horizontal)) plotregion(color(white)) graphregion(color(white)) ///
+			ytitle("Survival Probability" ) xtitle("Time (Days)" ) saving($projectdir/output/figures/`f'_graph, replace)
+	
+	graph export $projectdir/output/figures/survcur_`f'_`fail'.svg , as(svg) replace
+	
+	stset stop`fail', id(patient_id) failure(fail`fail'==1) origin(time enter_date)  enter(time enter_date)
+								
+			stcox `f' 
+			sts graph, by(`f') risktable title("") tmax(180) ylabel(0.99(0.001)1) ylabel(,format(%4.3f)) xtitle("Analysis time (years)") ///
+			legend(order(1 "Comparator" 2 "Exposed") rows(2) symxsize(*0.4) size(small)) ///
+			ylabel(,angle(horizontal)) plotregion(color(white)) graphregion(color(white)) ///
+			ytitle("Survival Probability" ) xtitle("Time (Days)" ) saving($projectdir/output/figures/`f'_graph, replace)
+	
+	graph export $projectdir/output/figures/survrisk_`f'_`fail'.svg , as(svg) replace
 
 	}
 }
