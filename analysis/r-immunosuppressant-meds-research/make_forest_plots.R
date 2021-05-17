@@ -89,7 +89,7 @@ imr_fplot <- function(
       } else {
         paste(sprintf("%0.2f (%0.2f, %0.2f)", hr, lc, uc), collapse = "\n")
       },
-      `Number of events` = if (!is.na(events[1])) prettyNum(events[1], big.mark = ",") else "redacted",
+      `Number of events` = if (!is.na(events[1])) prettyNum(events[1], big.mark = ",") else "\U22645",
       `Rate (95% CI)\n(per 1,000 pyear)` = if (!is.na(rate_ci[[1]][1])) {
         sprintf(
           "%0.2f (%0.2f, %0.2f)",
@@ -98,7 +98,7 @@ imr_fplot <- function(
           1000 * rate_ci[[1]][2]
         )
       } else {
-        "redacted"
+        "-"
       },
       .groups = "drop"
     ) %>% 
