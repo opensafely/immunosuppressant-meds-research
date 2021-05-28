@@ -60,6 +60,7 @@ table1_mc, by(imid) total(before) onecol iqrmiddle(",")  ///
 		 combined_cv_comorbid bin %5.1f \ ///
 		 hypertension bin %5.1f \ ///
 		 diabcat cat %5.1f \ ///
+		 cancer cat %5.1f \ ///
 		 ckd_egfr cat %5.1f \ ///
 		 esrf bin %5.1f \ ///
 		 gp_consult_count contn %5.1f \ ///
@@ -81,6 +82,7 @@ table1_mc, by(joint) total(before) onecol iqrmiddle(",")  ///
 		 combined_cv_comorbid bin %5.1f \ ///
 		 hypertension bin %5.1f \ ///
 		 diabcat cat %5.1f \ ///
+		 cancer cat %5.1f \ ///
 		 ckd_egfr cat %5.1f \ ///
 		 esrf bin %5.1f \ ///
 		 gp_consult_count contn %5.1f \ ///
@@ -105,6 +107,7 @@ table1_mc, by(skin) total(before) onecol iqrmiddle(",")  ///
 		 combined_cv_comorbid bin %5.1f \ ///
 		 hypertension bin %5.1f \ ///
 		 diabcat cat %5.1f \ ///
+		 cancer cat %5.1f \ ///
 		 ckd_egfr cat %5.1f \ ///
 		 esrf bin %5.1f \ ///
 		 gp_consult_count contn %5.1f \ ///
@@ -127,6 +130,7 @@ table1_mc, by(bowel) total(before) onecol iqrmiddle(",") ///
 		 combined_cv_comorbid bin %5.1f \ ///
 		 hypertension bin %5.1f \ ///
 		 diabcat cat %5.1f \ ///
+		 cancer cat %5.1f \ ///
 		 ckd_egfr cat %5.1f \ ///
 		 esrf bin %5.1f \ ///
 		 gp_consult_count contn %5.1f \ ///
@@ -160,6 +164,7 @@ table1_mc, by(imiddrugcategory) total(before) onecol iqrmiddle(",")  ///
 		 combined_cv_comorbid bin %5.1f \ ///
 		 hypertension bin %5.1f \ ///
 		 diabcat cat %5.1f \ ///
+		 cancer cat %5.1f \ ///
 		 ckd_egfr cat %5.1f \ ///
 		 esrf bin %5.1f \ ///
 		 gp_consult_count contn %5.1f \ ///
@@ -193,6 +198,7 @@ table1_mc, by(standtnf) total(before) onecol iqrmiddle(",") ///
 		 combined_cv_comorbid bin %5.1f \ ///
 		 hypertension bin %5.1f \ ///
 		 diabcat cat %5.1f \ ///
+		 cancer cat %5.1f \ ///
 		 ckd_egfr cat %5.1f \ ///
 		 esrf bin %5.1f \ ///
 		 gp_consult_count contn %5.1f \ ///
@@ -224,6 +230,7 @@ table1_mc, by(standil23) total(before) onecol iqrmiddle(",")  ///
 		 combined_cv_comorbid bin %5.1f \ ///
 		 hypertension bin %5.1f \ ///
 		 diabcat cat %5.1f \ ///
+		 cancer cat %5.1f \ ///
 		 ckd_egfr cat %5.1f \ ///
 		 esrf bin %5.1f \ ///
 		 gp_consult_count contn %5.1f \ ///
@@ -255,6 +262,7 @@ table1_mc, by(standil17) total(before) onecol iqrmiddle(",")  ///
 		 combined_cv_comorbid bin %5.1f \ ///
 		 hypertension bin %5.1f \ ///
 		 diabcat cat %5.1f \ ///
+		 cancer cat %5.1f \ ///
 		 ckd_egfr cat %5.1f \ ///
 		 esrf bin %5.1f \ ///
 		 gp_consult_count contn %5.1f \ ///
@@ -286,6 +294,7 @@ table1_mc, by(standjaki) total(before) onecol iqrmiddle(",")  ///
 		 combined_cv_comorbid bin %5.1f \ ///
 		 hypertension bin %5.1f \ ///
 		 diabcat cat %5.1f \ ///
+		 cancer cat %5.1f \ ///
 		 ckd_egfr cat %5.1f \ ///
 		 esrf bin %5.1f \ ///
 		 gp_consult_count contn %5.1f \ ///
@@ -307,6 +316,7 @@ table1_mc, by(standritux) total(before) onecol iqrmiddle(",")  ///
 		 combined_cv_comorbid bin %5.1f \ ///
 		 hypertension bin %5.1f \ ///
 		 diabcat cat %5.1f \ ///
+		 cancer cat %5.1f \ ///
 		 ckd_egfr cat %5.1f \ ///
 		 esrf bin %5.1f \ ///
 		 gp_consult_count contn %5.1f \ ///
@@ -328,6 +338,7 @@ table1_mc, by(standil6) total(before) onecol iqrmiddle(",")  ///
 		 combined_cv_comorbid bin %5.1f \ ///
 		 hypertension bin %5.1f \ ///
 		 diabcat cat %5.1f \ ///
+		 cancer cat %5.1f \ ///
 		 ckd_egfr cat %5.1f \ ///
 		 esrf bin %5.1f \ ///
 		 gp_consult_count contn %5.1f \ ///
@@ -359,6 +370,7 @@ table1_mc, by(standinflix) total(before) onecol iqrmiddle(",") ///
 		 combined_cv_comorbid bin %5.1f \ ///
 		 hypertension bin %5.1f \ ///
 		 diabcat cat %5.1f \ ///
+		 cancer cat %5.1f \ ///
 		 ckd_egfr cat %5.1f \ ///
 		 esrf bin %5.1f \ ///
 		 gp_consult_count contn %5.1f \ ///
