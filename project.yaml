@@ -216,6 +216,13 @@ actions:
         survrisk_skin_died: output/figures/survrisk_skin_died.svg
         survrisk_skin_hospital: output/figures/survrisk_skin_hospital.svg
         survrisk_skin_icuordeath: output/figures/survrisk_skin_icuordeath.svg
+        
+  run_schoenfeld:
+    run: stata-mp:latest analysis/401_schoenfeld.do
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        logschoenfeld: logs/cox_model_diagnostics.smcl
 
   run_outcomes_check:
     run: r:latest analysis/outcomes_check_withandwithoutpositivetest.R
