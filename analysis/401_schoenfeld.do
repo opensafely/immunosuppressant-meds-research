@@ -15,6 +15,13 @@ USER-INSTALLED ADO:
 
 * set filepaths
 
+* set filepaths
+global projectdir `c(pwd)'
+di "$projectdir"
+
+global logdir "$projectdir/logs"
+di "$logdir"
+
 /* SET Index date ===========================================================*/
 global indexdate 			= "01/03/2020"
 
@@ -22,9 +29,10 @@ global indexdate 			= "01/03/2020"
 cap log close
 log using "$logdir/cox_model_diagnostics", replace
 
-				
+global files bowel imid imiddrugcategory joint skin standil17 standil23 standil6 standinflix standjaki standritux standtnf standtnf3m tnfmono
+
 foreach f in $files {
-		use $projectdir/output/data/file_$files, replace
+		use $projectdir/output/data/file_`f', replace
  
 		*generate censor date
 		gen diecensor = mdy(09,01,2020)
