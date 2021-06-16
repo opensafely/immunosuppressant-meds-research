@@ -41,10 +41,9 @@ foreach f in $files {
 		gen faildied = died_ons_covid_flag_any
 		gen exitdied = died_ons_covid_flag_any
 
-		stset stopdied, id(patient_id) failure(faildied==1) origin(time enter_date)  enter(time enter_date) scale(365.25) 
-						
-		stcox `f' age(age1 age2 age3) male, noshow nolog schoenfeld(sch1) scaledsch(sca1) 
-				stphtest, log detail
+    stset stopdied, id(patient_id) failure(faildied==1) origin(time enter_date)  enter(time enter_date) scale(365.25) 
+    stcox `f' age(age1 age2 age3) male, noshow nolog schoenfeld (sch*) scaled (sca*)
+        stphtest, log detail
 }
 
 log close
