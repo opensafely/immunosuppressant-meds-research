@@ -267,3 +267,10 @@ actions:
         merged_csv: output/data/merged_csv_normal.csv
         forest_plot_vs_gen_pop: output/figures/forest_plot_vs_gen_pop.svg
         forest_plot_vs_standard_systemic: output/figures/forest_plot_vs_standard_systemic.svg
+
+  run_extract_n_subjects:
+    run: r:latest analysis/r-immunosuppressant-meds-research/extract_n_subjects.R
+    needs: [run_cox_models_imid,run_cox_models_joint,run_cox_models_bowel,run_cox_models_skin,run_cox_models_imiddrugcategory,run_cox_models_standtnf,run_cox_models_standtnf3m,run_cox_models_tnfmono,run_cox_models_standil6,run_cox_models_standil17,run_cox_models_standil23,run_cox_models_standjaki,run_cox_models_standritux,run_cox_models_standinflix]
+    outputs:
+      moderately_sensitive:
+        merged_csv: output/data/subject_numbers.csv
