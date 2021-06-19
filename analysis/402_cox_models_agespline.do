@@ -25,7 +25,7 @@ global files `1'
 
 * Open a log file
 cap log close
-log using "$logdir/cox_models_$files", replace
+log using "$logdir/cox_spline_$files", replace
 
 * Set Ado file path
 adopath + "$projectdir/analysis/extra_ados"
@@ -40,11 +40,11 @@ global agesex_spline age(age1 age2 age3) male
 
 global adjusted_sensitivity_four age(age1 age2 age3) male i.imd i.obese4cat i.smoke_nomiss bowel skin joint chronic_cardiac_disease cancer stroke i.diabcat steroidcat 
 
-tempname coxoutput
-	postfile `coxoutput' str20(cohort) str20(model) str20(failure) ///
+tempname coxoutput_spline
+	postfile `coxoutput_spline' str20(cohort) str20(model) str20(failure) ///
 		ptime_exposed events_exposed rate_exposed /// 
 		ptime_comparator events_comparator rate_comparator hr lc uc ///
-		using $projectdir/output/data/cox_model_summary_$files, replace						
+		using $projectdir/output/data/cox_spline_summary_$files, replace						
 
 use $projectdir/output/data/file_$files, replace
 
@@ -91,20 +91,20 @@ foreach fail in died hospital icuordeath icu_sens {
 					local events_comparator .
 					if `r(failures)' == 0 | `r(failures)' > 5 local events_comparator `r(failures)'
 
-		post `coxoutput' ("$files") ("`model'") ("`fail'") (`ptime_exposed') (`events_exposed') (`rate_exposed') ///
+		post `coxoutput_spline' ("$files") ("`model'") ("`fail'") (`ptime_exposed') (`events_exposed') (`rate_exposed') ///
 					(`ptime_comparator') (`events_comparator') (`rate_comparator') ///
 					(`hr') (`lc') (`uc')	
 	}
 }
 
-postclose `coxoutput'
+postclose `coxoutput_spline'
 
 
-tempname coxoutput_haemonc
-		postfile `coxoutput_haemonc' str20(cohort) str20(model) str20(failure) ///
+tempname coxoutput_spline_haemonc
+		postfile `coxoutput_spline_haemonc' str20(cohort) str20(model) str20(failure) ///
 		ptime_exposed events_exposed rate_exposed /// 
 		ptime_comparator events_comparator rate_comparator hr lc uc ///
-		using $projectdir/output/data/cox_model_summary_haemonc_$files, replace				
+		using $projectdir/output/data/cox_spline_summary_haemonc_$files, replace				
 
 		
 foreach fail in died hospital icuordeath {
@@ -131,13 +131,13 @@ foreach fail in died hospital icuordeath {
 					local events_comparator .
 					if `r(failures)' == 0 | `r(failures)' > 5 local events_comparator `r(failures)'
 
-		post `coxoutput_haemonc' ("$files") ("`model'") ("`fail'") (`ptime_exposed') (`events_exposed') (`rate_exposed') ///
+		post `coxoutput_spline_haemonc' ("$files") ("`model'") ("`fail'") (`ptime_exposed') (`events_exposed') (`rate_exposed') ///
 					(`ptime_comparator') (`events_comparator') (`rate_comparator') ///
 					(`hr') (`lc') (`uc')	
 	}
 }
 
-postclose `coxoutput_haemonc'
+postclose `coxoutput_spline_haemonc'
 
 
 log close

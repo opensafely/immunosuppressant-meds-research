@@ -216,7 +216,169 @@ actions:
         survrisk_skin_died: output/figures/survrisk_skin_died.svg
         survrisk_skin_hospital: output/figures/survrisk_skin_hospital.svg
         survrisk_skin_icuordeath: output/figures/survrisk_skin_icuordeath.svg
+
+  run_cox_spline_imid:
+    run: stata-mp:latest analysis/402_cox_models_agespline.do "imid"
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log1: logs/cox_spline_imid.smcl 
+        data1: output/data/cox_spline_summary_imid.dta
+        data2: output/data/cox_spline_summary_haemonc_imid.dta
         
+  run_cox_spline_joint:
+    run: stata-mp:latest analysis/402_cox_models_agespline.do "joint"
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log1: logs/cox_spline_joint.smcl 
+        data1: output/data/cox_spline_summary_joint.dta
+        data2: output/data/cox_spline_summary_haemonc_joint.dta
+
+  run_cox_spline_skin:
+    run: stata-mp:latest analysis/402_cox_models_agespline.do "skin"
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log1: logs/cox_spline_skin.smcl 
+        data1: output/data/cox_spline_summary_skin.dta
+        data2: output/data/cox_spline_summary_haemonc_skin.dta
+ 
+  run_cox_spline_bowel:
+    run: stata-mp:latest analysis/402_cox_models_agespline.do "bowel"
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log1: logs/cox_spline_bowel.smcl 
+        data1: output/data/cox_spline_summary_bowel.dta
+        data2: output/data/cox_spline_summary_haemonc_bowel.dta
+ 
+  run_cox_spline_imiddrugcategory:
+    run: stata-mp:latest analysis/402_cox_models_agespline.do "imiddrugcategory"
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log1: logs/cox_spline_imiddrugcategory.smcl 
+        data1: output/data/cox_spline_summary_imiddrugcategory.dta
+        data2: output/data/cox_spline_summary_haemonc_imiddrugcategory.dta
+  
+  run_cox_spline_standtnf:
+    run: stata-mp:latest analysis/402_cox_models_agespline.do "standtnf"
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log1: logs/cox_spline_standtnf.smcl 
+        data1: output/data/cox_spline_summary_standtnf.dta
+        data2: output/data/cox_spline_summary_haemonc_standtnf.dta
+
+  run_cox_spline_standtnf3m:
+    run: stata-mp:latest analysis/402_cox_models_agespline.do "standtnf3m"
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log1: logs/cox_spline_standtnf3m.smcl 
+        data1: output/data/cox_spline_summary_standtnf3m.dta
+        data2: output/data/cox_spline_summary_haemonc_standtnf3m.dta
+       
+  run_cox_spline_tnfmono:
+    run: stata-mp:latest analysis/402_cox_models_agespline.do "tnfmono"
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log1: logs/cox_spline_tnfmono.smcl 
+        data1: output/data/cox_spline_summary_tnfmono.dta
+        data2: output/data/cox_spline_summary_haemonc_tnfmono.dta
+  
+  run_cox_spline_standil6:
+    run: stata-mp:latest analysis/402_cox_models_agespline.do "standil6"
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log1: logs/cox_spline_standil6.smcl 
+        data1: output/data/cox_spline_summary_standil6.dta
+        data2: output/data/cox_spline_summary_haemonc_standil6.dta
+  
+  run_cox_spline_standil17:
+    run: stata-mp:latest analysis/402_cox_models_agespline.do "standil17"
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log1: logs/cox_spline_standil17.smcl 
+        data1: output/data/cox_spline_summary_standil17.dta
+        data2: output/data/cox_spline_summary_haemonc_standil17.dta
+ 
+  run_cox_spline_standil23:
+    run: stata-mp:latest analysis/402_cox_models_agespline.do "standil23"
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log1: logs/cox_spline_standil23.smcl 
+        data1: output/data/cox_spline_summary_standil23.dta
+        data2: output/data/cox_spline_summary_haemonc_standil23.dta
+ 
+  run_cox_spline_standjaki:
+    run: stata-mp:latest analysis/402_cox_models_agespline.do "standjaki"
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log1: logs/cox_spline_standjaki.smcl 
+        data1: output/data/cox_spline_summary_standjaki.dta
+        data2: output/data/cox_spline_summary_haemonc_standjaki.dta
+  
+  run_cox_spline_standritux:
+    run: stata-mp:latest analysis/402_cox_models_agespline.do "standritux"
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log1: logs/cox_spline_standritux.smcl 
+        data1: output/data/cox_spline_summary_standritux.dta
+        data2: output/data/cox_spline_summary_haemonc_standritux.dta
+        
+  run_cox_spline_standinflix:
+    run: stata-mp:latest analysis/402_cox_models_agespline.do "standinflix"
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log1: logs/cox_spline_standinflix.smcl 
+        data1: output/data/cox_spline_summary_standinflix.dta
+        data2: output/data/cox_spline_summary_haemonc_standinflix.dta
+
+
+  run_spline_export_csv:
+    run: stata-mp:latest analysis/403_spline_export_csv.do
+    needs: [run_cox_spline_imid,run_cox_spline_joint,run_cox_spline_bowel,run_cox_spline_skin,run_cox_spline_imiddrugcategory,run_cox_spline_standtnf,run_cox_spline_standtnf3m,run_cox_spline_tnfmono,run_cox_spline_standil6,run_cox_spline_standil17,run_cox_spline_standil23,run_cox_spline_standjaki,run_cox_spline_standritux,run_cox_spline_standinflix]
+    outputs:
+      moderately_sensitive:
+        log: logs/spline_export_csv.smcl
+        csv_spline_spline_imid: output/data/csv_spline_imid.csv
+        csvhaemonc_spline_imid: output/data/csvhaemonc_spline_imid.csv
+        csv_spline_joint: output/data/csv_spline_joint.csv
+        csvhaemonc_spline_joint: output/data/csvhaemonc_spline_joint.csv
+        csv_spline_skin: output/data/csv_spline_skin.csv
+        csvhaemonc_spline_skin: output/data/csvhaemonc_spline_skin.csv
+        csv_spline_bowel: output/data/csv_spline_bowel.csv
+        csvhaemonc_spline_bowel: output/data/csvhaemonc_spline_bowel.csv
+        csv_spline_imiddrugcategory: output/data/csv_spline_imiddrugcategory.csv
+        csvhaemonc_spline_imiddrugcategory: output/data/csvhaemonc_spline_imiddrugcategory.csv
+        csv_spline_standtnf: output/data/csv_spline_standtnf.csv
+        csvhaemonc_spline_standtnf: output/data/csvhaemonc_spline_standtnf.csv
+        csv_spline_standtnf3m: output/data/csv_spline_standtnf3m.csv
+        csvhaemonc_spline_standtnf3m: output/data/csvhaemonc_spline_standtnf3m.csv
+        csv_spline_tnfmono: output/data/csv_spline_tnfmono.csv
+        csvhaemonc_spline_tnfmono: output/data/csvhaemonc_spline_tnfmono.csv
+        csv_spline_standil6: output/data/csv_spline_standil6.csv
+        csvhaemonc_spline_standil6: output/data/csvhaemonc_spline_standil6.csv
+        csv_spline_standil17: output/data/csv_spline_standil17.csv
+        csvhaemonc_spline_standil17: output/data/csvhaemonc_spline_standil17.csv
+        csv_spline_standil23: output/data/csv_spline_standil23.csv
+        csvhaemonc_spline_standil23: output/data/csvhaemonc_spline_standil23.csv
+        csv_spline_standjaki: output/data/csv_spline_standjaki.csv
+        csvhaemonc_spline_standjaki: output/data/csvhaemonc_spline_standjaki.csv
+        csv_spline_standritux: output/data/csv_spline_standritux.csv
+        csvhaemonc_spline_standritux: output/data/csvhaemonc_spline_standritux.csv
+        csv_spline_standinflix: output/data/csv_spline_standinflix.csv
+        csvhaemonc_spline_standinflix: output/data/csvhaemonc_spline_standinflix.csv
+
   run_schoenfeld:
     run: stata-mp:latest analysis/401_schoenfeld.do
     needs: [create_cohorts]
