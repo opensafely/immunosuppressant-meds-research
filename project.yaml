@@ -346,7 +346,7 @@ actions:
 
   run_spline_export_csv:
     run: stata-mp:latest analysis/403_spline_export_csv.do
-    needs: [run_cox_spline_imid,run_cox_spline_joint,run_cox_spline_bowel,run_cox_spline_skin,run_cox_spline_imiddrugcategory,run_cox_spline_standtnf,run_cox_spline_standtnf3m,run_cox_spline_tnfmono,run_cox_spline_standil6,run_cox_spline_standil17,run_cox_spline_standil23,run_cox_spline_standjaki,run_cox_spline_standritux,run_cox_spline_standinflix]
+    needs: [run_cox_spline_imid,run_cox_spline_joint,run_cox_spline_bowel,run_cox_spline_skin,run_cox_spline_imiddrugcategory,run_cox_spline_standtnf,run_cox_spline_standtnf3m,run_cox_spline_standil6,run_cox_spline_standil17,run_cox_spline_standil23,run_cox_spline_standritux,run_cox_spline_standinflix]
     outputs:
       moderately_sensitive:
         log: logs/spline_export_csv.smcl
@@ -364,16 +364,16 @@ actions:
         csvhaemonc_spline_standtnf: output/data/csvhaemonc_spline_standtnf.csv
         csv_spline_standtnf3m: output/data/csv_spline_standtnf3m.csv
         csvhaemonc_spline_standtnf3m: output/data/csvhaemonc_spline_standtnf3m.csv
-        csv_spline_tnfmono: output/data/csv_spline_tnfmono.csv
-        csvhaemonc_spline_tnfmono: output/data/csvhaemonc_spline_tnfmono.csv
+        # csv_spline_tnfmono: output/data/csv_spline_tnfmono.csv
+        # csvhaemonc_spline_tnfmono: output/data/csvhaemonc_spline_tnfmono.csv
         csv_spline_standil6: output/data/csv_spline_standil6.csv
         csvhaemonc_spline_standil6: output/data/csvhaemonc_spline_standil6.csv
         csv_spline_standil17: output/data/csv_spline_standil17.csv
         csvhaemonc_spline_standil17: output/data/csvhaemonc_spline_standil17.csv
         csv_spline_standil23: output/data/csv_spline_standil23.csv
         csvhaemonc_spline_standil23: output/data/csvhaemonc_spline_standil23.csv
-        csv_spline_standjaki: output/data/csv_spline_standjaki.csv
-        csvhaemonc_spline_standjaki: output/data/csvhaemonc_spline_standjaki.csv
+        # csv_spline_standjaki: output/data/csv_spline_standjaki.csv
+        # csvhaemonc_spline_standjaki: output/data/csvhaemonc_spline_standjaki.csv
         csv_spline_standritux: output/data/csv_spline_standritux.csv
         csvhaemonc_spline_standritux: output/data/csvhaemonc_spline_standritux.csv
         csv_spline_standinflix: output/data/csv_spline_standinflix.csv
@@ -395,7 +395,7 @@ actions:
   
   run_export_csv:
     run: stata-mp:latest analysis/400_export_csv.do
-    needs: [run_cox_models_imid,run_cox_models_joint,run_cox_models_bowel,run_cox_models_skin,run_cox_models_imiddrugcategory,run_cox_models_standtnf,run_cox_models_standtnf3m,run_cox_models_standil6,run_cox_models_standil17,run_cox_models_standil23,run_cox_models_standritux,run_cox_models_standinflix]
+    needs: [run_cox_models_imid,run_cox_models_joint,run_cox_models_bowel,run_cox_models_skin,run_cox_models_imiddrugcategory,run_cox_models_standtnf,run_cox_models_standtnf3m,run_cox_models_tnfmono,run_cox_models_standil6,run_cox_models_standil17,run_cox_models_standil23,run_cox_models_standjaki,run_cox_models_standritux,run_cox_models_standinflix]
     outputs:
       moderately_sensitive:
         log: logs/export_csv.smcl
@@ -413,16 +413,16 @@ actions:
         csvhaemonc_standtnf: output/data/csvhaemonc_standtnf.csv
         csv_standtnf3m: output/data/csv_standtnf3m.csv
         csvhaemonc_standtnf3m: output/data/csvhaemonc_standtnf3m.csv
-        # csv_tnfmono: output/data/csv_tnfmono.csv
-        # csvhaemonc_tnfmono: output/data/csvhaemonc_tnfmono.csv
+        csv_tnfmono: output/data/csv_tnfmono.csv
+        csvhaemonc_tnfmono: output/data/csvhaemonc_tnfmono.csv
         csv_standil6: output/data/csv_standil6.csv
         csvhaemonc_standil6: output/data/csvhaemonc_standil6.csv
         csv_standil17: output/data/csv_standil17.csv
         csvhaemonc_standil17: output/data/csvhaemonc_standil17.csv
         csv_standil23: output/data/csv_standil23.csv
         csvhaemonc_standil23: output/data/csvhaemonc_standil23.csv
-        # csv_standjaki: output/data/csv_standjaki.csv
-        # csvhaemonc_standjaki: output/data/csvhaemonc_standjaki.csv
+        csv_standjaki: output/data/csv_standjaki.csv
+        csvhaemonc_standjaki: output/data/csvhaemonc_standjaki.csv
         csv_standritux: output/data/csv_standritux.csv
         csvhaemonc_standritux: output/data/csvhaemonc_standritux.csv
         csv_standinflix: output/data/csv_standinflix.csv
