@@ -38,6 +38,14 @@ global crude
 
 global agesex i.agegroup male
 
+global adjusted_imid_confounders i.agegroup male i.imd 
+
+global adjusted_imid_mediators i.agegroup male i.imd i.obese4cat i.smoke_nomiss chronic_cardiac_disease i.diabcat steroidcat 
+
+global adjusted_drugs_confounders i.agegroup male i.imd i.obese4cat i.smoke_nomiss bowel skin joint chronic_cardiac_disease cancer stroke i.diabcat bowel skin joint cancer stroke i.ckd chronic_liver_disease chronic_respiratory_disease
+
+global adjusted_drugs_mediators i.agegroup male i.imd i.obese4cat i.smoke_nomiss bowel skin joint chronic_cardiac_disease cancer stroke i.diabcat bowel skin joint cancer stroke i.ckd chronic_liver_disease chronic_respiratory_disease steroidcat
+
 global adjusted_main i.agegroup male i.imd i.obese4cat i.smoke_nomiss bowel skin joint chronic_cardiac_disease cancer stroke i.diabcat steroidcat 
 
 global adjusted_sensitivity_one i.agegroup male i.imd i.obese4cat i.smoke_nomiss bowel skin joint chronic_cardiac_disease cancer stroke i.diabcat steroidcat i.ckd chronic_liver_disease chronic_respiratory_disease
@@ -77,7 +85,7 @@ foreach fail in died hospital icuordeath icu_sens {
 
 	stset stop`fail', id(patient_id) failure(fail`fail'==1) origin(time enter_date)  enter(time enter_date) scale(365.25) 
 						
-	foreach model in crude agesex adjusted_main adjusted_sensitivity_one adjusted_sensitivity_two adjusted_sensitivity_three {
+	foreach model in crude agesex adjusted_imid_confounders adjusted_imid_mediators adjusted_drugs_confounders adjusted_drugs_mediators adjusted_main adjusted_sensitivity_one adjusted_sensitivity_two adjusted_sensitivity_three {
 				
 		stcox $files $`model', vce(robust)
 					matrix b = r(table)
@@ -117,7 +125,7 @@ foreach fail in died hospital icuordeath {
 
 	stset stop`fail' if haem_cancer !=1 & organ_transplant !=1 , id(patient_id) failure(fail`fail'==1) origin(time enter_date)  enter(time enter_date) scale(365.25) 
 						
-	foreach model in crude agesex adjusted_main {
+	foreach model in crude agesex adjusted_imid_confounders adjusted_imid_mediators adjusted_drugs_confounders adjusted_drugs_mediators adjusted_main adjusted_imid_confounders {
 				
 		stcox $files $`model', vce(robust)
 					matrix b = r(table)
