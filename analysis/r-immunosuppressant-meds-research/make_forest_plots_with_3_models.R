@@ -62,7 +62,7 @@ imr_fplot <- function(
         fct_recode(
           !!!outcomes
         ),
-      Model = factor(model, models) %>% 
+      Model = factor(model, levels=models) %>% 
         fct_recode(
           !!!models
         )
@@ -131,21 +131,21 @@ imr_fplot <- function(
     # makes colours for models different shades light grey to black
     col = fpColors(
       zero = "#707070",
-      box = c("#C0C0C0", "black"),
+      box = c("black"),
       summary = "#707070"
     ),
-    fn.ci_norm = c(fpDrawCircleCI, fpDrawDiamondCI),
+    fn.ci_norm = c(fpDrawCircleCI, fpDrawDiamondCI, fpDrawPointCI),
     # estimation indicators are circles and diamonds
     # set the zero line at 1
     zero = 1,
-    boxsize = .15,
-    line.margin = .3,
+    boxsize = .12,
+    line.margin = .8,
     graphwidth = unit(2, "inches"),
     colgap = unit(2, "mm"),
     legend = levels(data_for_fp$Model),
     legend_args = fpLegend(
       # specify position of legend
-      pos = list(x = .5, y = 1),
+      pos = list(x = .5, y = 0.98),
       # specify colour of outline and background
       gp = gpar(col = "#CCCCCC", fill = "#F9F9F9")
     ),
@@ -169,7 +169,7 @@ imr_fplot <- function(
 }
 
 dir.create("output/figures", showWarnings = FALSE, recursive = TRUE)
-svg("output/figures/forest_plot_vs_gen_pop.svg", width = 12, height = 8)
+svg("output/figures/forest_plot_vs_gen_pop.svg", width = 12, height = 10)
 imr_fplot(
   model_outputs,
   ref_exposure_name = "General population",
@@ -181,7 +181,8 @@ imr_fplot(
                "COVID-19 ICU/death" = "icuordeath",
                "COVID-19 hospitalisation" = "hospital"),
   models = c("Minimally adjusted" = "agesex",
-             "Confounder adjusted" = "adjusted_imid_conf"),
+             "Confounder adjusted (IMID)" = "adjusted_imid_conf",
+             "Mediator adjusted (IMID)" = "adjusted_imid_med"),
   # clip axis
   clip = c(0.7, 2),
   # specified positions for xticks
@@ -189,7 +190,7 @@ imr_fplot(
 )
 dev.off()
 
-svg("output/figures/forest_plot_vs_standard_systemic.svg", width = 12, height = 10)
+svg("output/figures/forest_plot_vs_standard_systemic.svg", width = 12, height = 14)
 imr_fplot(
   model_outputs,
   ref_exposure_name = "Standard therapy",
@@ -203,8 +204,9 @@ imr_fplot(
   outcomes = c("COVID-19 death" = "died",
                "COVID-19 ICU/death" = "icuordeath",
                "COVID-19 hospitalisation" = "hospital"),
-  models = c("Minimally adjusted" = "agesex",
-             "Confounder adjusted" = "adjusted_drugs_conf"),
+  models = c("Minimally adjusted"="agesex",
+             "Confounder adjusted (Drugs)" = "adjusted_drugs_conf",
+             "Mediator adjusted (Drugs)"="adjusted_drugs_med"),
   clip =c(0.4, 5.5), # clip axis
   xticks = c(0.5, 1, 2, 4), # specified positions for xticks
 )
