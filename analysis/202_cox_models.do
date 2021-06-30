@@ -38,14 +38,6 @@ global crude
 
 global agesex i.agegroup male
 
-global adjusted_imid_confounders i.agegroup male i.imd 
-
-global adjusted_imid_mediators i.agegroup male i.imd i.obese4cat i.smoke_nomiss chronic_cardiac_disease i.diabcat steroidcat 
-
-global adjusted_drugs_confounders i.agegroup male i.imd i.obese4cat i.smoke_nomiss bowel skin joint chronic_cardiac_disease cancer stroke i.diabcat bowel skin joint cancer stroke i.ckd chronic_liver_disease chronic_respiratory_disease
-
-global adjusted_drugs_mediators i.agegroup male i.imd i.obese4cat i.smoke_nomiss bowel skin joint chronic_cardiac_disease cancer stroke i.diabcat bowel skin joint cancer stroke i.ckd chronic_liver_disease chronic_respiratory_disease steroidcat
-
 global adjusted_main i.agegroup male i.imd i.obese4cat i.smoke_nomiss bowel skin joint chronic_cardiac_disease cancer stroke i.diabcat steroidcat 
 
 global adjusted_sensitivity_one i.agegroup male i.imd i.obese4cat i.smoke_nomiss bowel skin joint chronic_cardiac_disease cancer stroke i.diabcat steroidcat i.ckd chronic_liver_disease chronic_respiratory_disease
@@ -53,6 +45,14 @@ global adjusted_sensitivity_one i.agegroup male i.imd i.obese4cat i.smoke_nomiss
 global adjusted_sensitivity_two i.agegroup male i.imd i.obese4cat i.smoke_nomiss bowel skin joint chronic_cardiac_disease cancer stroke i.diabcat steroidcat i.ethnicity 
 
 global adjusted_sensitivity_three i.agegroup male i.imd i.bmicat i.smoke bowel skin joint chronic_cardiac_disease cancer stroke i.diabcat steroidcat 
+
+global adjusted_imid_conf i.agegroup male i.imd 
+
+global adjusted_imid_med i.agegroup male i.imd i.obese4cat i.smoke_nomiss chronic_cardiac_disease i.diabcat steroidcat 
+
+global adjusted_drugs_conf i.agegroup male i.imd i.obese4cat i.smoke_nomiss bowel skin joint chronic_cardiac_disease cancer stroke i.diabcat bowel skin joint cancer stroke i.ckd chronic_liver_disease chronic_respiratory_disease
+
+global adjusted_drugs_med i.agegroup male i.imd i.obese4cat i.smoke_nomiss bowel skin joint chronic_cardiac_disease cancer stroke i.diabcat bowel skin joint cancer stroke i.ckd chronic_liver_disease chronic_respiratory_disease steroidcat
 
 tempname coxoutput
 	postfile `coxoutput' str20(cohort) str20(model) str20(failure) ///
