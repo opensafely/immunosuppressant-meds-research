@@ -85,7 +85,7 @@ foreach fail in died hospital icuordeath icu_sens {
 
 	stset stop`fail', id(patient_id) failure(fail`fail'==1) origin(time enter_date)  enter(time enter_date) scale(365.25) 
 						
-	foreach model in crude agesex adjusted_imid_confounders adjusted_imid_mediators adjusted_drugs_confounders adjusted_drugs_mediators adjusted_main adjusted_sensitivity_one adjusted_sensitivity_two adjusted_sensitivity_three {
+	foreach model in crude agesex adjusted_main adjusted_sensitivity_one adjusted_sensitivity_two adjusted_sensitivity_three adjusted_imid_conf adjusted_imid_med adjusted_drugs_conf adjusted_drugs_med {
 				
 		stcox $files $`model', vce(robust)
 					matrix b = r(table)
@@ -125,7 +125,7 @@ foreach fail in died hospital icuordeath {
 
 	stset stop`fail' if haem_cancer !=1 & organ_transplant !=1 , id(patient_id) failure(fail`fail'==1) origin(time enter_date)  enter(time enter_date) scale(365.25) 
 						
-	foreach model in crude agesex adjusted_imid_confounders adjusted_imid_mediators adjusted_drugs_confounders adjusted_drugs_mediators adjusted_main adjusted_imid_confounders {
+	foreach model in crude agesex adjusted_main adjusted_imid_conf adjusted_imid_med adjusted_drugs_conf adjusted_drugs_med {
 				
 		stcox $files $`model', vce(robust)
 					matrix b = r(table)
