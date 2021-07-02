@@ -34,25 +34,35 @@ adopath + "$projectdir/analysis/extra_ados"
 /* SET Index date ===========================================================*/
 global indexdate 			= "01/03/2020"
 
+
+* Crude models
 global crude
 
 global agesex i.agegroup male
 
-global adjusted_main i.agegroup male i.imd i.obese4cat i.smoke_nomiss bowel skin joint chronic_cardiac_disease cancer stroke i.diabcat steroidcat 
 
-global adjusted_sensitivity_one i.agegroup male i.imd i.obese4cat i.smoke_nomiss bowel skin joint chronic_cardiac_disease cancer stroke i.diabcat steroidcat i.ckd chronic_liver_disease chronic_respiratory_disease
+* For IMID vs general population
+global adjusted_imid_conf i.agegroup male i.imd i.smoke_nomiss
 
-global adjusted_sensitivity_two i.agegroup male i.imd i.obese4cat i.smoke_nomiss bowel skin joint chronic_cardiac_disease cancer stroke i.diabcat steroidcat i.ethnicity 
+global adjusted_imid_med i.agegroup male i.imd i.smoke_nomiss i.obese4cat chronic_cardiac_disease i.diabcat steroidcat 
 
-global adjusted_sensitivity_three i.agegroup male i.imd i.bmicat i.smoke bowel skin joint chronic_cardiac_disease cancer stroke i.diabcat steroidcat 
+global adjusted_imid_sens_one i.agegroup male i.imd i.smoke_nomiss ethnicity
 
-global adjusted_imid_conf i.agegroup male i.imd 
+global adjusted_imid_conf_two i.agegroup male i.imd i.smoke_nomiss i.ckd chronic_liver_disease chronic_respiratory_disease
 
-global adjusted_imid_med i.agegroup male i.imd i.obese4cat i.smoke_nomiss chronic_cardiac_disease i.diabcat steroidcat 
+global adjusted_imid_conf_three i.agegroup male i.imd i.smoke
 
-global adjusted_drugs_conf i.agegroup male i.imd i.obese4cat i.smoke_nomiss bowel skin joint chronic_cardiac_disease cancer stroke i.diabcat bowel skin joint cancer stroke i.ckd chronic_liver_disease chronic_respiratory_disease
 
-global adjusted_drugs_med i.agegroup male i.imd i.obese4cat i.smoke_nomiss bowel skin joint chronic_cardiac_disease cancer stroke i.diabcat bowel skin joint cancer stroke i.ckd chronic_liver_disease chronic_respiratory_disease steroidcat
+* For Targeted vs standard immunosupressants
+global adjusted_drugs_conf i.agegroup male i.imd i.smoke_nomiss i.obese4cat chronic_cardiac_disease i.diabcat cancer stroke i.ckd chronic_liver_disease chronic_respiratory_disease bowel skin joint
+
+global adjusted_drugs_med i.agegroup male i.imd i.smoke_nomiss i.obese4cat chronic_cardiac_disease i.diabcat cancer stroke i.ckd chronic_liver_disease chronic_respiratory_disease bowel skin joint steroidcat
+
+global adjusted_drugs_sens_one i.agegroup male i.imd i.smoke_nomiss i.obese4cat chronic_cardiac_disease i.diabcat cancer stroke i.ckd chronic_liver_disease chronic_respiratory_disease bowel skin joint ethnicity
+
+global adjusted_drugs_sens_three i.agegroup male i.imd i.smoke i.bmicat chronic_cardiac_disease i.diabcat cancer stroke i.ckd chronic_liver_disease chronic_respiratory_disease bowel skin joint
+
+
 
 tempname coxoutput
 	postfile `coxoutput' str20(cohort) str20(model) str20(failure) ///
