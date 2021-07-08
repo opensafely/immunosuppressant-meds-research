@@ -429,7 +429,7 @@ actions:
         csvhaemonc_standinflix: output/data/csvhaemonc_standinflix.csv
 
   run_forest_plots:
-    run: r:latest analysis/r-immunosuppressant-meds-research/make_forest_plots.R
+    run: r:latest analysis/r-immunosuppressant-meds-research/make_forest_plots_with_3_models.R
     needs: [run_export_csv]
     outputs:
       moderately_sensitive:
