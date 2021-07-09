@@ -45,8 +45,8 @@ imr_fplot <- function(
       events = events_comparator,
       rate = rate_comparator,
       hr = 1,
-      lc = if_else(model == models[1], exp(-0.03), NA_real_),
-      uc = if_else(model == models[1], exp(0.03), NA_real_)
+      lc = if_else(model == models[2], exp(-0.03), NA_real_),
+      uc = if_else(model == models[2], exp(0.03), NA_real_)
     )
   
   data_for_fp <- data %>%
@@ -123,6 +123,8 @@ imr_fplot <- function(
     ) %>% 
     bind_rows(tibble(Outcome = NA, is_summary = TRUE, horiz_line = list(NULL)), .)
   
+  shape_cols <- scales::brewer_pal(palette = "Dark2")(length(levels(data_for_fp$Model)))
+  
   forestplot(
     text_data_for_fp_list,
     mean = numeric_data_for_fp %>% select(starts_with("hr")),
@@ -131,15 +133,15 @@ imr_fplot <- function(
     # makes colours for models different shades light grey to black
     col = fpColors(
       zero = "#707070",
-      box = c("black"),
+      box = shape_cols,
       summary = "#707070"
     ),
-    fn.ci_norm = c(fpDrawCircleCI, fpDrawDiamondCI, fpDrawPointCI),
+    fn.ci_norm = c(fpDrawCircleCI, fpDrawDiamondCI, fpDrawNormalCI),
     # estimation indicators are circles and diamonds
     # set the zero line at 1
     zero = 1,
     boxsize = .12,
-    line.margin = .8,
+    line.margin = 0.1,
     graphwidth = unit(2, "inches"),
     colgap = unit(2, "mm"),
     legend = levels(data_for_fp$Model),
