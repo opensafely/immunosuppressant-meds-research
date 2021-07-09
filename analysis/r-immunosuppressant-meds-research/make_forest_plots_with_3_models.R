@@ -89,7 +89,7 @@ imr_fplot <- function(
       } else {
         paste(sprintf("%0.2f (%0.2f, %0.2f)", hr, lc, uc), collapse = "\n")
       },
-      `Number of events` = if (!is.na(events[1])) prettyNum(events[1], big.mark = ",") else "\U22645",
+      `Number of events` = if (!is.na(events[1])) prettyNum(events[1], big.mark = ",") else paste0("\U2264", 5),
       `Rate (95% CI)\n(per 1,000 pyear)` = if (!is.na(rate_ci[[1]][1])) {
         sprintf(
           "%0.2f (%0.2f, %0.2f)",
@@ -141,7 +141,7 @@ imr_fplot <- function(
     # set the zero line at 1
     zero = 1,
     boxsize = .12,
-    line.margin = 0.1,
+    line.margin = 0.2,
     graphwidth = unit(2, "inches"),
     colgap = unit(2, "mm"),
     legend = levels(data_for_fp$Model),
