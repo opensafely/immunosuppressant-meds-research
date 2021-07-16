@@ -48,9 +48,9 @@ global adjusted_imid_med i.agegroup male i.imd i.smoke_nomiss i.obese4cat chroni
 
 global adjusted_imid_sens_one i.agegroup male i.imd i.smoke_nomiss ethnicity
 
-global adjusted_imid_conf_two i.agegroup male i.imd i.smoke_nomiss i.ckd chronic_liver_disease chronic_respiratory_disease
+global adjusted_imid_sens_two i.agegroup male i.imd i.smoke_nomiss i.ckd chronic_liver_disease chronic_respiratory_disease
 
-global adjusted_imid_conf_three i.agegroup male i.imd i.smoke
+global adjusted_imid_sens_three i.agegroup male i.imd i.smoke
 
 
 * For Targeted vs standard immunosupressants
@@ -95,7 +95,7 @@ foreach fail in died hospital icuordeath icu_sens {
 
 	stset stop`fail', id(patient_id) failure(fail`fail'==1) origin(time enter_date)  enter(time enter_date) scale(365.25) 
 						
-	foreach model in crude agesex adjusted_main adjusted_sensitivity_one adjusted_sensitivity_two adjusted_sensitivity_three adjusted_imid_conf adjusted_imid_med adjusted_drugs_conf adjusted_drugs_med {
+	foreach model in crude agesex adjusted_imid_conf adjusted_imid_med adjusted_drugs_conf adjusted_drugs_med adjusted_imid_sens_one adjusted_imid_sens_two adjusted_imid_sens_three adjusted_drugs_sens_one adjusted_drugs_sens_three {
 				
 		stcox $files $`model', vce(robust)
 					matrix b = r(table)
@@ -135,7 +135,7 @@ foreach fail in died hospital icuordeath {
 
 	stset stop`fail' if haem_cancer !=1 & organ_transplant !=1 , id(patient_id) failure(fail`fail'==1) origin(time enter_date)  enter(time enter_date) scale(365.25) 
 						
-	foreach model in crude agesex adjusted_main adjusted_imid_conf adjusted_imid_med adjusted_drugs_conf adjusted_drugs_med {
+	foreach model in adjusted_imid_conf adjusted_drugs_conf {
 				
 		stcox $files $`model', vce(robust)
 					matrix b = r(table)
