@@ -395,16 +395,16 @@ actions:
   
   run_export_csv:
     run: stata-mp:latest analysis/400_export_csv.do
-    needs: [run_cox_models_imid,run_cox_models_bowel,run_cox_models_imiddrugcategory,run_cox_models_standtnf,run_cox_models_standtnf3m,run_cox_models_tnfmono,run_cox_models_standil6,run_cox_models_standil17,run_cox_models_standil23,run_cox_models_standjaki,run_cox_models_standritux,run_cox_models_standinflix]
+    needs: [run_cox_models_imid,run_cox_models_joint,run_cox_models_skin,run_cox_models_bowel,run_cox_models_imiddrugcategory,run_cox_models_standtnf,run_cox_models_standtnf3m,run_cox_models_tnfmono,run_cox_models_standil6,run_cox_models_standil17,run_cox_models_standil23,run_cox_models_standjaki,run_cox_models_standritux,run_cox_models_standinflix]
     outputs:
       moderately_sensitive:
         log: logs/export_csv.smcl
         csv_imid: output/data/csv_imid.csv
         csvhaemonc_imid: output/data/csvhaemonc_imid.csv
-        # csv_joint: output/data/csv_joint.csv
-        # csvhaemonc_joint: output/data/csvhaemonc_joint.csv
-        # csv_skin: output/data/csv_skin.csv
-        # csvhaemonc_skin: output/data/csvhaemonc_skin.csv
+        csv_joint: output/data/csv_joint.csv
+        csvhaemonc_joint: output/data/csvhaemonc_joint.csv
+        csv_skin: output/data/csv_skin.csv
+        csvhaemonc_skin: output/data/csvhaemonc_skin.csv
         csv_bowel: output/data/csv_bowel.csv
         csvhaemonc_bowel: output/data/csvhaemonc_bowel.csv
         csv_imiddrugcategory: output/data/csv_imiddrugcategory.csv
