@@ -209,7 +209,7 @@ imr_fplot(
   models = c("Minimally adjusted"="agesex",
              "Confounder adjusted (Drugs)" = "adjusted_drugs_conf",
              "Mediator adjusted (Drugs)"="adjusted_drugs_med"),
-  clip =c(0.4, 5.5), # clip axis
-  xticks = c(0.5, 1, 2, 4), # specified positions for xticks
+  clip =c(0.1, 5.5), # clip axis
+  xticks = c(0.25, 0.5, 1, 2, 4), # specified positions for xticks
 )
 dev.off()
