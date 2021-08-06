@@ -40,6 +40,10 @@ global agesex_spline age(age1 age2 age3) male
 
 global adjusted_sensitivity_four age(age1 age2 age3) male i.imd i.obese4cat i.smoke_nomiss bowel skin joint chronic_cardiac_disease cancer stroke i.diabcat steroidcat 
 
+global adjusted_imid_conf_spline age(age1 age2 age3) male i.imd i.smoke_nomiss
+
+global adjusted_drugs_conf_spline age(age1 age2 age3) male i.imd i.smoke_nomiss i.obese4cat chronic_cardiac_disease i.diabcat cancer stroke i.ckd chronic_liver_disease chronic_respiratory_disease bowel skin joint
+
 tempname coxoutput_spline
 	postfile `coxoutput_spline' str20(cohort) str20(model) str20(failure) ///
 		ptime_exposed events_exposed rate_exposed /// 
@@ -71,7 +75,7 @@ foreach fail in died hospital icuordeath icu_sens {
 
 	stset stop`fail', id(patient_id) failure(fail`fail'==1) origin(time enter_date)  enter(time enter_date) scale(365.25) 
 						
-	foreach model in agesex_spline adjusted_sensitivity_four {
+	foreach model in agesex_spline adjusted_sensitivity_four adjusted_imid_conf_spline adjusted_drugs_conf_spline {
 				
 		stcox $files $`model', vce(robust)
 					matrix b = r(table)
@@ -111,7 +115,7 @@ foreach fail in died hospital icuordeath {
 
 	stset stop`fail' if haem_cancer !=1 & organ_transplant !=1 , id(patient_id) failure(fail`fail'==1) origin(time enter_date)  enter(time enter_date) scale(365.25) 
 						
-	foreach model in agesex_spline adjusted_sensitivity_four {
+	foreach model in agesex_spline adjusted_sensitivity_four adjusted_imid_conf_spline adjusted_drugs_conf_spline {
 				
 		stcox $files $`model', vce(robust)
 					matrix b = r(table)
