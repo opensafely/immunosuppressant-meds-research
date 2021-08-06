@@ -434,8 +434,17 @@ actions:
     outputs:
       moderately_sensitive:
         merged_csv: output/data/merged_csv_normal.csv
+        merged_csv_haemoonc: output/data/merged_csv_haemonc.csv
         forest_plot_vs_gen_pop: output/figures/forest_plot_vs_gen_pop.svg
         forest_plot_vs_standard_systemic: output/figures/forest_plot_vs_standard_systemic.svg
+
+  run_merge_csvs_spline:
+    run: r:latest analysis/r-immunosuppressant-meds-research/merge_csvs_spline.R
+    needs: [run_export_csv]
+    outputs:
+      moderately_sensitive:
+        merged_csv_splline: output/data/merged_csv_normal_spline.csv
+        merged_csv_spline_haemonc: output/data/merged_csv_haemonc_spline.csv
 
   run_extract_n_subjects:
     run: r:latest analysis/r-immunosuppressant-meds-research/extract_n_subjects.R
