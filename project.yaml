@@ -440,7 +440,7 @@ actions:
 
   run_merge_csvs_spline:
     run: r:latest analysis/r-immunosuppressant-meds-research/merge_csvs_spline.R
-    needs: [run_export_csv]
+    needs: [run_spline_export_csv]
     outputs:
       moderately_sensitive:
         merged_csv_splline: output/data/merged_csv_normal_spline.csv
