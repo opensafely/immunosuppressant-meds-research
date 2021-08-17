@@ -116,28 +116,30 @@ foreach fail in died hospital icuordeath {
 	stset stop`fail' if haem_cancer !=1 & organ_transplant !=1 , id(patient_id) failure(fail`fail'==1) origin(time enter_date)  enter(time enter_date) scale(365.25) 
 						
 	foreach model in agesex_spline adjusted_sensitivity_four adjusted_imid_conf_spline adjusted_drugs_conf_spline {
-				
-		stcox $files $`model', vce(robust)
-					matrix b = r(table)
-					local hr = b[1,1]
-					local lc = b[5,1]
-					local uc = b[6,1]
 
-		stptime if $files == 1
-					local rate_exposed = `r(rate)'
-					local ptime_exposed = `r(ptime)'
-					local events_exposed .
-						if `r(failures)' == 0 | `r(failures)' > 5 local events_exposed `r(failures)'
-						
-		stptime if $files == 0
-					local rate_comparator = `r(rate)'
-					local ptime_comparator = `r(ptime)'
-					local events_comparator .
-					if `r(failures)' == 0 | `r(failures)' > 5 local events_comparator `r(failures)'
-
-		post `coxoutput_spline_haemonc' ("$files") ("`model'") ("`fail'") (`ptime_exposed') (`events_exposed') (`rate_exposed') ///
-					(`ptime_comparator') (`events_comparator') (`rate_comparator') ///
-					(`hr') (`lc') (`uc')	
+    capture noisily {
+  		stcox $files $`model', vce(robust)
+  					matrix b = r(table)
+  					local hr = b[1,1]
+  					local lc = b[5,1]
+  					local uc = b[6,1]
+  
+  		stptime if $files == 1
+  					local rate_exposed = `r(rate)'
+  					local ptime_exposed = `r(ptime)'
+  					local events_exposed .
+  						if `r(failures)' == 0 | `r(failures)' > 5 local events_exposed `r(failures)'
+  						
+  		stptime if $files == 0
+  					local rate_comparator = `r(rate)'
+  					local ptime_comparator = `r(ptime)'
+  					local events_comparator .
+  					if `r(failures)' == 0 | `r(failures)' > 5 local events_comparator `r(failures)'
+  
+  		post `coxoutput_spline_haemonc' ("$files") ("`model'") ("`fail'") (`ptime_exposed') (`events_exposed') (`rate_exposed') ///
+  					(`ptime_comparator') (`events_comparator') (`rate_comparator') ///
+  					(`hr') (`lc') (`uc')	
+		}
 	}
 }
 
