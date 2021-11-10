@@ -31,6 +31,8 @@ actions:
         data12: output/data/file_standjaki.dta
         data13: output/data/file_standritux.dta
         data14: output/data/file_standinflix.dta
+        data15: output/data/file_standvedolizumab.dta
+        data16: output/data/file_standabatacept.dta
 
   run_baseline_tables:
     run: stata-mp:latest analysis/100_baseline_characteristics.do
@@ -164,7 +166,25 @@ actions:
         log1: logs/cox_models_standinflix.smcl 
         data1: output/data/cox_model_summary_standinflix.dta
         data2: output/data/cox_model_summary_haemonc_standinflix.dta
-  
+
+  run_cox_models_standvedolizumab:
+    run: stata-mp:latest analysis/202_cox_models.do "standvedolizumab"
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log1: logs/cox_models_standvedolizumab.smcl 
+        data1: output/data/cox_model_summary_standvedolizumab.dta
+        data2: output/data/cox_model_summary_haemonc_standvedolizumab.dta
+
+  run_cox_models_standabatacept:
+    run: stata-mp:latest analysis/202_cox_models.do "standabatacept"
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log1: logs/cox_models_standabatacept.smcl 
+        data1: output/data/cox_model_summary_standabatacept.dta
+        data2: output/data/cox_model_summary_haemonc_standabatacept.dta
+
   run_survival_curves:
     run: stata-mp:latest analysis/301_survival_curves.do
     needs: [create_cohorts]
@@ -343,10 +363,27 @@ actions:
         data1: output/data/cox_spline_summary_standinflix.dta
         data2: output/data/cox_spline_summary_haemonc_standinflix.dta
 
+  run_cox_spline_standvedolizumab:
+    run: stata-mp:latest analysis/402_cox_models_agespline.do "standvedolizumab"
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log1: logs/cox_spline_standvedolizumab.smcl 
+        data1: output/data/cox_spline_summary_standvedolizumab.dta
+        data2: output/data/cox_spline_summary_haemonc_standvedolizumab.dta
+
+  run_cox_spline_standabatacept:
+    run: stata-mp:latest analysis/402_cox_models_agespline.do "standabatacept"
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        log1: logs/cox_spline_standabatacept.smcl 
+        data1: output/data/cox_spline_summary_standabatacept.dta
+        data2: output/data/cox_spline_summary_haemonc_standabatacept.dta
 
   run_spline_export_csv:
     run: stata-mp:latest analysis/403_spline_export_csv.do
-    needs: [run_cox_spline_imid,run_cox_spline_joint,run_cox_spline_bowel,run_cox_spline_skin,run_cox_spline_imiddrugcategory,run_cox_spline_standtnf,run_cox_spline_standtnf3m,run_cox_spline_standil6,run_cox_spline_standil17,run_cox_spline_standil23,run_cox_spline_standritux,run_cox_spline_standinflix,run_cox_spline_tnfmono,run_cox_spline_standjaki]
+    needs: [run_cox_spline_imid,run_cox_spline_joint,run_cox_spline_bowel,run_cox_spline_skin,run_cox_spline_imiddrugcategory,run_cox_spline_standtnf,run_cox_spline_standtnf3m,run_cox_spline_standil6,run_cox_spline_standil17,run_cox_spline_standil23,run_cox_spline_standritux,run_cox_spline_standinflix,run_cox_spline_tnfmono,run_cox_spline_standjaki,run_cox_spline_standvedolizumab,run_cox_spline_standabatacept]
     outputs:
       moderately_sensitive:
         log: logs/spline_export_csv.smcl
@@ -378,6 +415,10 @@ actions:
         csvhaemonc_spline_standritux: output/data/csvhaemonc_spline_standritux.csv
         csv_spline_standinflix: output/data/csv_spline_standinflix.csv
         csvhaemonc_spline_standinflix: output/data/csvhaemonc_spline_standinflix.csv
+        csv_spline_standvedolizumab: output/data/csv_spline_standvedolizumab.csv
+        csvhaemonc_spline_standvedolizumab: output/data/csvhaemonc_spline_standvedolizumab.csv
+        csv_spline_standabatacept: output/data/csv_spline_standabatacept.csv
+        csvhaemonc_spline_standabatacept: output/data/csvhaemonc_spline_standabatacept.csv
 
   run_schoenfeld:
     run: stata-mp:latest analysis/401_schoenfeld.do
@@ -395,7 +436,7 @@ actions:
   
   run_export_csv:
     run: stata-mp:latest analysis/400_export_csv.do
-    needs: [run_cox_models_imid,run_cox_models_joint,run_cox_models_skin,run_cox_models_bowel,run_cox_models_imiddrugcategory,run_cox_models_standtnf,run_cox_models_standtnf3m,run_cox_models_tnfmono,run_cox_models_standil6,run_cox_models_standil17,run_cox_models_standil23,run_cox_models_standjaki,run_cox_models_standritux,run_cox_models_standinflix]
+    needs: [run_cox_models_imid,run_cox_models_joint,run_cox_models_skin,run_cox_models_bowel,run_cox_models_imiddrugcategory,run_cox_models_standtnf,run_cox_models_standtnf3m,run_cox_models_tnfmono,run_cox_models_standil6,run_cox_models_standil17,run_cox_models_standil23,run_cox_models_standjaki,run_cox_models_standritux,run_cox_models_standinflix,run_cox_models_standvedolizumab,run_cox_models_standabatacept]
     outputs:
       moderately_sensitive:
         log: logs/export_csv.smcl
@@ -427,6 +468,10 @@ actions:
         csvhaemonc_standritux: output/data/csvhaemonc_standritux.csv
         csv_standinflix: output/data/csv_standinflix.csv
         csvhaemonc_standinflix: output/data/csvhaemonc_standinflix.csv
+        csv_standvedolizumab: output/data/csv_standvedolizumab.csv
+        csvhaemonc_standvedolizumab: output/data/csvhaemonc_standvedolizumab.csv
+        csv_standabatacept: output/data/csv_standabatacept.csv
+        csvhaemonc_standabatacept: output/data/csvhaemonc_standabatacept.csv
 
   run_forest_plots:
     run: r:latest analysis/r-immunosuppressant-meds-research/make_forest_plots_with_3_models.R
@@ -448,7 +493,7 @@ actions:
 
   run_extract_n_subjects:
     run: r:latest analysis/r-immunosuppressant-meds-research/extract_n_subjects.R
-    needs: [run_cox_models_imid,run_cox_models_joint,run_cox_models_bowel,run_cox_models_skin,run_cox_models_imiddrugcategory,run_cox_models_standtnf,run_cox_models_standtnf3m,run_cox_models_tnfmono,run_cox_models_standil6,run_cox_models_standil17,run_cox_models_standil23,run_cox_models_standjaki,run_cox_models_standritux,run_cox_models_standinflix]
+    needs: [run_cox_models_imid,run_cox_models_joint,run_cox_models_bowel,run_cox_models_skin,run_cox_models_imiddrugcategory,run_cox_models_standtnf,run_cox_models_standtnf3m,run_cox_models_tnfmono,run_cox_models_standil6,run_cox_models_standil17,run_cox_models_standil23,run_cox_models_standjaki,run_cox_models_standritux,run_cox_models_standinflix,run_cox_models_standvedolizumab,run_cox_models_standabatacept]
     outputs:
       moderately_sensitive:
         merged_csv: output/data/subject_numbers.csv

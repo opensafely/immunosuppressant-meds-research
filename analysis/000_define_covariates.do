@@ -41,7 +41,7 @@ rename inflammatory_bowel_disease_uncla ibd_uncla
 
 /* Drop variables not needed ================================================*/
 *calculating ckd from creat 
-drop ckd ethnicity_date mepolizumab_3m_0m mepolizumab_6m_3m vedolizumab_3m_0m vedolizumab_6m_3m
+drop ckd ethnicity_date mepolizumab_3m_0m mepolizumab_6m_3m
 
 /* CONVERT STRINGS TO DATE====================================================*/
 /* Comorb dates are given with month/year only, so adding day 15 to enable
@@ -608,7 +608,9 @@ foreach var of varlist  oral_prednisolone_3m_0m  ///
 						sulfasalazine_3m_0m	     ///
 						sulfasalazine_6m_3m		 ///
 						mesalazine_3m_0m		 ///
-						mesalazine_6m_3m	{
+						mesalazine_6m_3m         ///
+						vedolizumab_3m_0m        ///
+						vedolizumab_6m_3m	{
 						
 						replace `var' =0 if `var' ==.
 						}
@@ -698,6 +700,18 @@ replace standmesalazine =0 if standsys ==1 & mesalazine ==0
 gen standmesalazine3m =1 if mesalazine_3m_0m >=1
 replace standmesalazine3m =0 if mesalazine_3m_0m ==0 & standsys3m ==1
 
+gen vedolizumab =1 if vedolizumab_3m_0m == 1
+replace vedolizumab =. if bowel != 1
+
+gen standvedolizumab =1 if vedolizumab_3m_0m == 1
+replace standvedolizumab =0 if standsys ==1 & standvedolizumab ==0
+
+gen abatacept =1 if abatacept_3m_0m == 1
+replace abatacept =. if rheumatoid_arthritis != 1
+
+gen standabatacept =1 if abatacept_3m_0m == 1
+replace standabatacept =0 if standsys ==1 & standabatacept ==0
+
 gen steroidcat = 0
 replace steroidcat =1 if oral_prednisolone_3m_0m >=1 & oral_prednisolone_3m_0m!=.
 
@@ -771,7 +785,7 @@ summ died_ons_date, format */
 
 
 
-foreach var in imid joint skin bowel imiddrugcategory standtnf standtnf3m tnfmono standil6 standil17 standil23 standjaki standritux standinflix {
+foreach var in imid joint skin bowel imiddrugcategory standtnf standtnf3m tnfmono standil6 standil17 standil23 standjaki standritux standinflix standvedolizumab standabatacept {
 	preserve
 	drop if `var' ==.
 	save $projectdir/output/data/file_`var', replace	

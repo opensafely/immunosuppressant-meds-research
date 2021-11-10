@@ -40,7 +40,7 @@ global adjusted_main i.agegroup male i.ethnicity i.imd bmicat bowel skin joint c
 
 global adjusted_extra i.agegroup male i.ethnicity i.imd bmicat bowel skin joint chronic_cardiac_disease cancer stroke i.diabcat steroidcat i.ckd chronic_liver_disease chronic_respiratory_disease
 
-global files imid joint skin bowel imiddrugcategory standtnf standtnf3m tnfmono standil6 standil17 standil23 standjaki standritux 
+global files imid joint skin bowel imiddrugcategory standtnf standtnf3m tnfmono standil6 standil17 standil23 standjaki standritux standvedolizumab standabatacept
 
 tempname coxoutput
 	postfile `coxoutput' str20(cohort) str20(model) str20(failure) ///
