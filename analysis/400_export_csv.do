@@ -25,7 +25,7 @@ di "$logdir"
 cap log close
 log using "$logdir/export_csv", replace
 
-global files imid joint skin bowel imiddrugcategory standtnf standtnf3m tnfmono  standil6 standil17 standil23 standjaki standritux standinflix
+global files imid joint skin bowel imiddrugcategory standtnf standtnf3m tnfmono  standil6 standil17 standil23 standjaki standritux standinflix standvedolizumab standabatacept
 
 foreach f in $files {
 	

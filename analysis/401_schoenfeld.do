@@ -29,7 +29,7 @@ global indexdate 			= "01/03/2020"
 cap log close
 log using "$logdir/cox_model_diagnostics", replace
 
-global files bowel imid imiddrugcategory joint skin standil17 standil23 standil6 standinflix standjaki standritux standtnf standtnf3m tnfmono
+global files bowel imid imiddrugcategory joint skin standil17 standil23 standil6 standinflix standjaki standritux standtnf standtnf3m tnfmono standvedolizumab standabatacept
 
 foreach f in $files {
 		use $projectdir/output/data/file_`f', replace
