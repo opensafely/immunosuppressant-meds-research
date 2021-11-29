@@ -203,7 +203,7 @@ imr_fplot(
 )
 dev.off()
 
-svg("output/figures/forest_plot_vs_standard_systemic.svg", width = 12, height = 14)
+svg("output/figures/forest_plot_vs_standard_systemic.svg", width = 12, height = 16)
 imr_fplot(
   model_outputs,
   ref_exposure_name = "Standard therapy",
