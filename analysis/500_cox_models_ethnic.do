@@ -23,10 +23,11 @@ di "$logdir"
 
 global files `1' 
 global ethnic `2'
+global outfile `1'_ethnicity_`2'
 
 * Open a log file
 cap log close
-log using "$logdir/cox_models_$files_ethnicity_$ethnic", replace
+log using "$logdir/cox_models_$outfile", replace
 
 * Set Ado file path
 adopath + "$projectdir/analysis/extra_ados"
@@ -67,7 +68,7 @@ tempname coxoutput
 	postfile `coxoutput' str20(cohort) str20(model) str20(failure) ///
 		ptime_exposed events_exposed rate_exposed /// 
 		ptime_comparator events_comparator rate_comparator hr lc uc ///
-		using $projectdir/output/data/cox_model_summary_$files_ethnicity_$ethnic, replace						
+		using $projectdir/output/data/cox_model_summary_$outfile, replace						
 
 use $projectdir/output/data/file_$files, replace
 
@@ -134,7 +135,7 @@ tempname coxoutput_haemonc
 		postfile `coxoutput_haemonc' str20(cohort) str20(model) str20(failure) ///
 		ptime_exposed events_exposed rate_exposed /// 
 		ptime_comparator events_comparator rate_comparator hr lc uc ///
-		using $projectdir/output/data/cox_model_summary_haemonc_$files_ethnicity_$ethnic, replace				
+		using $projectdir/output/data/cox_model_summary_haemonc_$outfile, replace				
 
 		
 foreach fail in died hospital icuordeath {
