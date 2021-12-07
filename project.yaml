@@ -34,6 +34,14 @@ actions:
         data15: output/data/file_standvedolizumab.dta
         data16: output/data/file_standabatacept.dta
 
+  create_cohorts_single_file:
+    run: stata-mp:latest analysis/001_define_covariates_single_file.do
+    needs: [generate_study_population]
+    outputs:
+      highly_sensitive:
+        log1: logs/start_create_analysis_dataset_single_file.smcl 
+        data1: output/data/file_imid_all.dta
+
   run_baseline_tables:
     run: stata-mp:latest analysis/100_baseline_characteristics.do
     needs: [create_cohorts]
@@ -187,7 +195,7 @@ actions:
         
   run_cox_models_imid_ethnicity_1:
     run: stata-mp:latest analysis/500_cox_models_ethnic.do "imid" "1"
-    needs: [create_cohorts]
+    needs: [create_cohorts_single_file]
     outputs:
       moderately_sensitive:
         log1: logs/cox_models_imid_ethnicity_1.smcl 
@@ -196,7 +204,7 @@ actions:
 
   run_cox_models_imid_ethnicity_2:
     run: stata-mp:latest analysis/500_cox_models_ethnic.do "imid" "2"
-    needs: [create_cohorts]
+    needs: [create_cohorts_single_file]
     outputs:
       moderately_sensitive:
         log1: logs/cox_models_imid_ethnicity_2.smcl 
@@ -205,7 +213,7 @@ actions:
 
   run_cox_models_imid_ethnicity_3:
     run: stata-mp:latest analysis/500_cox_models_ethnic.do "imid" "3"
-    needs: [create_cohorts]
+    needs: [create_cohorts_single_file]
     outputs:
       moderately_sensitive:
         log1: logs/cox_models_imid_ethnicity_3.smcl 
@@ -214,7 +222,7 @@ actions:
 
   run_cox_models_imid_ethnicity_4:
     run: stata-mp:latest analysis/500_cox_models_ethnic.do "imid" "4"
-    needs: [create_cohorts]
+    needs: [create_cohorts_single_file]
     outputs:
       moderately_sensitive:
         log1: logs/cox_models_imid_ethnicity_4.smcl 
@@ -223,7 +231,7 @@ actions:
 
   run_cox_models_imid_ethnicity_5:
     run: stata-mp:latest analysis/500_cox_models_ethnic.do "imid" "5"
-    needs: [create_cohorts]
+    needs: [create_cohorts_single_file]
     outputs:
       moderately_sensitive:
         log1: logs/cox_models_imid_ethnicity_5.smcl 
@@ -232,7 +240,7 @@ actions:
 
   run_cox_models_imid_ethnicity_u:
     run: stata-mp:latest analysis/500_cox_models_ethnic.do "imid" "u"
-    needs: [create_cohorts]
+    needs: [create_cohorts_single_file]
     outputs:
       moderately_sensitive:
         log1: logs/cox_models_imid_ethnicity_u.smcl 
@@ -241,7 +249,7 @@ actions:
 
   run_cox_models_joint_ethnicity_1:
     run: stata-mp:latest analysis/500_cox_models_ethnic.do "joint" "1"
-    needs: [create_cohorts]
+    needs: [create_cohorts_single_file]
     outputs:
       moderately_sensitive:
         log1: logs/cox_models_joint_ethnicity_1.smcl 
@@ -250,7 +258,7 @@ actions:
 
   run_cox_models_joint_ethnicity_2:
     run: stata-mp:latest analysis/500_cox_models_ethnic.do "joint" "2"
-    needs: [create_cohorts]
+    needs: [create_cohorts_single_file]
     outputs:
       moderately_sensitive:
         log1: logs/cox_models_joint_ethnicity_2.smcl 
@@ -259,7 +267,7 @@ actions:
 
   run_cox_models_joint_ethnicity_3:
     run: stata-mp:latest analysis/500_cox_models_ethnic.do "joint" "3"
-    needs: [create_cohorts]
+    needs: [create_cohorts_single_file]
     outputs:
       moderately_sensitive:
         log1: logs/cox_models_joint_ethnicity_3.smcl 
@@ -268,7 +276,7 @@ actions:
 
   run_cox_models_joint_ethnicity_4:
     run: stata-mp:latest analysis/500_cox_models_ethnic.do "joint" "4"
-    needs: [create_cohorts]
+    needs: [create_cohorts_single_file]
     outputs:
       moderately_sensitive:
         log1: logs/cox_models_joint_ethnicity_4.smcl 
@@ -277,7 +285,7 @@ actions:
 
   run_cox_models_joint_ethnicity_5:
     run: stata-mp:latest analysis/500_cox_models_ethnic.do "joint" "5"
-    needs: [create_cohorts]
+    needs: [create_cohorts_single_file]
     outputs:
       moderately_sensitive:
         log1: logs/cox_models_joint_ethnicity_5.smcl 
@@ -286,7 +294,7 @@ actions:
 
   run_cox_models_joint_ethnicity_u:
     run: stata-mp:latest analysis/500_cox_models_ethnic.do "joint" "u"
-    needs: [create_cohorts]
+    needs: [create_cohorts_single_file]
     outputs:
       moderately_sensitive:
         log1: logs/cox_models_joint_ethnicity_u.smcl 
@@ -295,7 +303,7 @@ actions:
 
   run_cox_models_skin_ethnicity_1:
     run: stata-mp:latest analysis/500_cox_models_ethnic.do "skin" "1"
-    needs: [create_cohorts]
+    needs: [create_cohorts_single_file]
     outputs:
       moderately_sensitive:
         log1: logs/cox_models_skin_ethnicity_1.smcl 
@@ -304,7 +312,7 @@ actions:
 
   run_cox_models_skin_ethnicity_2:
     run: stata-mp:latest analysis/500_cox_models_ethnic.do "skin" "2"
-    needs: [create_cohorts]
+    needs: [create_cohorts_single_file]
     outputs:
       moderately_sensitive:
         log1: logs/cox_models_skin_ethnicity_2.smcl 
@@ -313,7 +321,7 @@ actions:
 
   run_cox_models_skin_ethnicity_3:
     run: stata-mp:latest analysis/500_cox_models_ethnic.do "skin" "3"
-    needs: [create_cohorts]
+    needs: [create_cohorts_single_file]
     outputs:
       moderately_sensitive:
         log1: logs/cox_models_skin_ethnicity_3.smcl 
@@ -322,7 +330,7 @@ actions:
 
   run_cox_models_skin_ethnicity_4:
     run: stata-mp:latest analysis/500_cox_models_ethnic.do "skin" "4"
-    needs: [create_cohorts]
+    needs: [create_cohorts_single_file]
     outputs:
       moderately_sensitive:
         log1: logs/cox_models_skin_ethnicity_4.smcl 
@@ -331,7 +339,7 @@ actions:
 
   run_cox_models_skin_ethnicity_5:
     run: stata-mp:latest analysis/500_cox_models_ethnic.do "skin" "5"
-    needs: [create_cohorts]
+    needs: [create_cohorts_single_file]
     outputs:
       moderately_sensitive:
         log1: logs/cox_models_skin_ethnicity_5.smcl 
@@ -340,7 +348,7 @@ actions:
 
   run_cox_models_skin_ethnicity_u:
     run: stata-mp:latest analysis/500_cox_models_ethnic.do "skin" "u"
-    needs: [create_cohorts]
+    needs: [create_cohorts_single_file]
     outputs:
       moderately_sensitive:
         log1: logs/cox_models_skin_ethnicity_u.smcl 
@@ -349,7 +357,7 @@ actions:
 
   run_cox_models_bowel_ethnicity_1:
     run: stata-mp:latest analysis/500_cox_models_ethnic.do "bowel" "1"
-    needs: [create_cohorts]
+    needs: [create_cohorts_single_file]
     outputs:
       moderately_sensitive:
         log1: logs/cox_models_bowel_ethnicity_1.smcl 
@@ -358,7 +366,7 @@ actions:
 
   run_cox_models_bowel_ethnicity_2:
     run: stata-mp:latest analysis/500_cox_models_ethnic.do "bowel" "2"
-    needs: [create_cohorts]
+    needs: [create_cohorts_single_file]
     outputs:
       moderately_sensitive:
         log1: logs/cox_models_bowel_ethnicity_2.smcl 
@@ -367,7 +375,7 @@ actions:
 
   run_cox_models_bowel_ethnicity_3:
     run: stata-mp:latest analysis/500_cox_models_ethnic.do "bowel" "3"
-    needs: [create_cohorts]
+    needs: [create_cohorts_single_file]
     outputs:
       moderately_sensitive:
         log1: logs/cox_models_bowel_ethnicity_3.smcl 
@@ -376,7 +384,7 @@ actions:
 
   run_cox_models_bowel_ethnicity_4:
     run: stata-mp:latest analysis/500_cox_models_ethnic.do "bowel" "4"
-    needs: [create_cohorts]
+    needs: [create_cohorts_single_file]
     outputs:
       moderately_sensitive:
         log1: logs/cox_models_bowel_ethnicity_4.smcl 
@@ -385,7 +393,7 @@ actions:
 
   run_cox_models_bowel_ethnicity_5:
     run: stata-mp:latest analysis/500_cox_models_ethnic.do "bowel" "5"
-    needs: [create_cohorts]
+    needs: [create_cohorts_single_file]
     outputs:
       moderately_sensitive:
         log1: logs/cox_models_bowel_ethnicity_5.smcl 
@@ -394,7 +402,7 @@ actions:
 
   run_cox_models_bowel_ethnicity_u:
     run: stata-mp:latest analysis/500_cox_models_ethnic.do "bowel" "u"
-    needs: [create_cohorts]
+    needs: [create_cohorts_single_file]
     outputs:
       moderately_sensitive:
         log1: logs/cox_models_bowel_ethnicity_u.smcl 

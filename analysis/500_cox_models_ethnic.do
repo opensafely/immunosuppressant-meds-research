@@ -48,7 +48,7 @@ global adjusted_imid_conf i.agegroup male i.imd i.smoke_nomiss
 
 global adjusted_imid_med i.agegroup male i.imd i.smoke_nomiss i.obese4cat chronic_cardiac_disease i.diabcat steroidcat 
 
-global adjusted_imid_sens_one i.agegroup male i.imd i.smoke_nomiss ethnicity
+/* global adjusted_imid_sens_one i.agegroup male i.imd i.smoke_nomiss ethnicity */
 
 global adjusted_imid_sens_two i.agegroup male i.imd i.smoke_nomiss i.ckd chronic_liver_disease chronic_respiratory_disease
 
@@ -60,7 +60,7 @@ global adjusted_drugs_conf i.agegroup male i.imd i.smoke_nomiss i.obese4cat chro
 
 global adjusted_drugs_med i.agegroup male i.imd i.smoke_nomiss i.obese4cat chronic_cardiac_disease i.diabcat cancer stroke i.ckd chronic_liver_disease chronic_respiratory_disease bowel skin joint steroidcat
 
-global adjusted_drugs_sens_one i.agegroup male i.imd i.smoke_nomiss i.obese4cat chronic_cardiac_disease i.diabcat cancer stroke i.ckd chronic_liver_disease chronic_respiratory_disease bowel skin joint ethnicity
+/* global adjusted_drugs_sens_one i.agegroup male i.imd i.smoke_nomiss i.obese4cat chronic_cardiac_disease i.diabcat cancer stroke i.ckd chronic_liver_disease chronic_respiratory_disease bowel skin joint ethnicity */
 
 global adjusted_drugs_sens_three i.agegroup male i.imd i.smoke i.bmicat chronic_cardiac_disease i.diabcat cancer stroke i.ckd chronic_liver_disease chronic_respiratory_disease bowel skin joint
 
@@ -70,7 +70,9 @@ tempname coxoutput
 		ptime_comparator events_comparator rate_comparator hr lc uc ///
 		using $projectdir/output/data/cox_model_summary_$outfile, replace						
 
-use $projectdir/output/data/file_$files, replace
+use $projectdir/output/data/file_imid_all, replace
+
+drop if $files ==.
 
 if "$ethnic" =="u" {
   drop if ethnicity !=.u
@@ -102,7 +104,7 @@ foreach fail in died hospital icuordeath icu_sens {
 
 	stset stop`fail', id(patient_id) failure(fail`fail'==1) origin(time enter_date)  enter(time enter_date) scale(365.25) 
 						
-	foreach model in crude agesex adjusted_imid_conf adjusted_imid_med adjusted_drugs_conf adjusted_drugs_med adjusted_imid_sens_one adjusted_imid_sens_two adjusted_imid_sens_three adjusted_drugs_sens_one adjusted_drugs_sens_three {
+	foreach model in crude agesex adjusted_imid_conf adjusted_imid_med adjusted_drugs_conf adjusted_drugs_med adjusted_imid_sens_two adjusted_imid_sens_three adjusted_drugs_sens_three {
 				
 		stcox $files $`model', vce(robust)
 					matrix b = r(table)

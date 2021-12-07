@@ -70,7 +70,7 @@ tempname coxoutput
 		ptime_comparator events_comparator rate_comparator hr lc uc ///
 		using $projectdir/output/data/cox_model_summary_$files, replace						
 
-use $projectdir/output/data/file_$files, replace
+use $projectdir/output/data/file_imid, replace
 
 *generate censor date
 gen diecensor = mdy(09,01,2020)
