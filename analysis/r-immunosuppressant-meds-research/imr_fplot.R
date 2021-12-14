@@ -67,7 +67,7 @@ imr_fplot <- function(
         } else {
           paste0("\U2264", 5)
         },
-      `Rate (95% CI)\n(per 1,000 pyear)` = if (!is.na(rate_ci[[1]][1])) {
+      `Rate (95% CI)\n(per 1,000 pyear)` = if (!is.na(events[1])) {
         sprintf(
           "%0.2f (%0.2f, %0.2f)",
           1000 * rate[1],
