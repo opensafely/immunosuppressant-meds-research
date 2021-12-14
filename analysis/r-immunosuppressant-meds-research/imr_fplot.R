@@ -60,7 +60,13 @@ imr_fplot <- function(
       } else {
         paste(sprintf("%0.2f (%0.2f, %0.2f)", hr, lc, uc), collapse = "\n")
       },
-      `Number of events` = if (!is.na(events[1])) prettyNum(events[1], big.mark = ",") else paste0("\U2264", 5),
+      `Number of events` = if (!is.na(events[1])) {
+          prettyNum(events[1], big.mark = ",")
+        } else if (events[1] == -1) {
+          "*"
+        } else {
+          paste0("\U2264", 5)
+        },
       `Rate (95% CI)\n(per 1,000 pyear)` = if (!is.na(rate_ci[[1]][1])) {
         sprintf(
           "%0.2f (%0.2f, %0.2f)",
@@ -68,6 +74,8 @@ imr_fplot <- function(
           1000 * rate_ci[[1]][1],
           1000 * rate_ci[[1]][2]
         )
+      } else if (events[1] == -1) {
+        "-"
       } else {
         "-"
       },

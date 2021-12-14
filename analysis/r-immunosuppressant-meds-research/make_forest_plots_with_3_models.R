@@ -30,7 +30,7 @@ do_sdc <- function(data) {
         c(rate_exposed, events_exposed),
         ~case_when(
           between(events_exposed, 1, 5) ~ NA_real_,
-          failure == "icuordeath" & between(events_exposed[failure == "icuordeath"] - events_exposed[failure == "died"], 1, 5) ~ NA_real_,
+          failure == "icuordeath" & between(events_exposed[failure == "icuordeath"] - events_exposed[failure == "died"], 1, 5) ~ -1,
           TRUE ~ .x
         )
       )
@@ -50,7 +50,7 @@ model_outputs_ho <- map_dfr(csv_files_ho, read_csv) %>%
   do_sdc()
 write_csv(model_outputs_ho, "output/data/merged_csv_haemonc.csv")
 
-source("imr_fplot.R")
+source("analysis/r-immunosuppressant-meds-research/imr_fplot.R")
 
 dir.create("output/figures", showWarnings = FALSE, recursive = TRUE)
 svg("output/figures/forest_plot_vs_gen_pop.svg", width = 12, height = 10)

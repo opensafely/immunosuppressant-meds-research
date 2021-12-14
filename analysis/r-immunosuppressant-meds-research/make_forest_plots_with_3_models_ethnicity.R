@@ -48,7 +48,7 @@ do_sdc <- function(data) {
       c(rate_exposed, events_exposed),
       ~case_when(
         between(events_exposed, 1, 5) ~ NA_real_,
-        failure == "icuordeath" & between(events_exposed[failure == "icuordeath"] - events_exposed[failure == "died"], 1, 5) ~ NA_real_,
+        failure == "icuordeath" & between(events_exposed[failure == "icuordeath"] - events_exposed[failure == "died"], 1, 5) ~ -1,
         TRUE ~ .x
       )
     )
