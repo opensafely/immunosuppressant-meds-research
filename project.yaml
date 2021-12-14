@@ -738,30 +738,30 @@ actions:
         csv_bowel_ethnicity_4_csv: output/data/csv_bowel_ethnicity_4.csv
         csv_bowel_ethnicity_5_csv: output/data/csv_bowel_ethnicity_5.csv
         csv_bowel_ethnicity_u_csv: output/data/csv_bowel_ethnicity_u.csv
-        csvyhaemonc_imid_ethnicity_1_csv:  output/data/csvhaemonc_imid_ethnicity_1.csv
-        csvyhaemonc_imid_ethnicity_2_csv:  output/data/csvhaemonc_imid_ethnicity_2.csv
-        csvyhaemonc_imid_ethnicity_3_csv:  output/data/csvhaemonc_imid_ethnicity_3.csv
-        csvyhaemonc_imid_ethnicity_4_csv:  output/data/csvhaemonc_imid_ethnicity_4.csv
-        csvyhaemonc_imid_ethnicity_5_csv:  output/data/csvhaemonc_imid_ethnicity_5.csv
-        csvyhaemonc_imid_ethnicity_u_csv:  output/data/csvhaemonc_imid_ethnicity_u.csv
-        csvyhaemonc_joint_ethnicity_1_csv: output/data/csvhaemonc_joint_ethnicity_1.csv
-        csvyhaemonc_joint_ethnicity_2_csv: output/data/csvhaemonc_joint_ethnicity_2.csv
-        csvyhaemonc_joint_ethnicity_3_csv: output/data/csvhaemonc_joint_ethnicity_3.csv
-        csvyhaemonc_joint_ethnicity_4_csv: output/data/csvhaemonc_joint_ethnicity_4.csv
-        csvyhaemonc_joint_ethnicity_5_csv: output/data/csvhaemonc_joint_ethnicity_5.csv
-        csvyhaemonc_joint_ethnicity_u_csv: output/data/csvhaemonc_joint_ethnicity_u.csv
-        csvyhaemonc_skin_ethnicity_1_csv:  output/data/csvhaemonc_skin_ethnicity_1.csv
-        csvyhaemonc_skin_ethnicity_2_csv:  output/data/csvhaemonc_skin_ethnicity_2.csv
-        csvyhaemonc_skin_ethnicity_3_csv:  output/data/csvhaemonc_skin_ethnicity_3.csv
-        csvyhaemonc_skin_ethnicity_4_csv:  output/data/csvhaemonc_skin_ethnicity_4.csv
-        csvyhaemonc_skin_ethnicity_5_csv:  output/data/csvhaemonc_skin_ethnicity_5.csv
-        csvyhaemonc_skin_ethnicity_u_csv:  output/data/csvhaemonc_skin_ethnicity_u.csv
-        csvyhaemonc_bowel_ethnicity_1_csv: output/data/csvhaemonc_bowel_ethnicity_1.csv
-        csvyhaemonc_bowel_ethnicity_2_csv: output/data/csvhaemonc_bowel_ethnicity_2.csv
-        csvyhaemonc_bowel_ethnicity_3_csv: output/data/csvhaemonc_bowel_ethnicity_3.csv
-        csvyhaemonc_bowel_ethnicity_4_csv: output/data/csvhaemonc_bowel_ethnicity_4.csv
-        csvyhaemonc_bowel_ethnicity_5_csv: output/data/csvhaemonc_bowel_ethnicity_5.csv
-        csvyhaemonc_bowel_ethnicity_u_csv: output/data/csvhaemonc_bowel_ethnicity_u.csv
+        csvhaemonc_imid_ethnicity_1_csv:  output/data/csvhaemonc_imid_ethnicity_1.csv
+        csvhaemonc_imid_ethnicity_2_csv:  output/data/csvhaemonc_imid_ethnicity_2.csv
+        csvhaemonc_imid_ethnicity_3_csv:  output/data/csvhaemonc_imid_ethnicity_3.csv
+        csvhaemonc_imid_ethnicity_4_csv:  output/data/csvhaemonc_imid_ethnicity_4.csv
+        csvhaemonc_imid_ethnicity_5_csv:  output/data/csvhaemonc_imid_ethnicity_5.csv
+        csvhaemonc_imid_ethnicity_u_csv:  output/data/csvhaemonc_imid_ethnicity_u.csv
+        csvhaemonc_joint_ethnicity_1_csv: output/data/csvhaemonc_joint_ethnicity_1.csv
+        csvhaemonc_joint_ethnicity_2_csv: output/data/csvhaemonc_joint_ethnicity_2.csv
+        csvhaemonc_joint_ethnicity_3_csv: output/data/csvhaemonc_joint_ethnicity_3.csv
+        csvhaemonc_joint_ethnicity_4_csv: output/data/csvhaemonc_joint_ethnicity_4.csv
+        csvhaemonc_joint_ethnicity_5_csv: output/data/csvhaemonc_joint_ethnicity_5.csv
+        csvhaemonc_joint_ethnicity_u_csv: output/data/csvhaemonc_joint_ethnicity_u.csv
+        csvhaemonc_skin_ethnicity_1_csv:  output/data/csvhaemonc_skin_ethnicity_1.csv
+        csvhaemonc_skin_ethnicity_2_csv:  output/data/csvhaemonc_skin_ethnicity_2.csv
+        csvhaemonc_skin_ethnicity_3_csv:  output/data/csvhaemonc_skin_ethnicity_3.csv
+        csvhaemonc_skin_ethnicity_4_csv:  output/data/csvhaemonc_skin_ethnicity_4.csv
+        csvhaemonc_skin_ethnicity_5_csv:  output/data/csvhaemonc_skin_ethnicity_5.csv
+        csvhaemonc_skin_ethnicity_u_csv:  output/data/csvhaemonc_skin_ethnicity_u.csv
+        csvhaemonc_bowel_ethnicity_1_csv: output/data/csvhaemonc_bowel_ethnicity_1.csv
+        csvhaemonc_bowel_ethnicity_2_csv: output/data/csvhaemonc_bowel_ethnicity_2.csv
+        csvhaemonc_bowel_ethnicity_3_csv: output/data/csvhaemonc_bowel_ethnicity_3.csv
+        csvhaemonc_bowel_ethnicity_4_csv: output/data/csvhaemonc_bowel_ethnicity_4.csv
+        csvhaemonc_bowel_ethnicity_5_csv: output/data/csvhaemonc_bowel_ethnicity_5.csv
+        csvhaemonc_bowel_ethnicity_u_csv: output/data/csvhaemonc_bowel_ethnicity_u.csv
 
   run_forest_plots_ethnicity:
     run: r:latest analysis/r-immunosuppressant-meds-research/make_forest_plots_with_3_models_ethnicity.R
@@ -770,7 +770,13 @@ actions:
       moderately_sensitive:
         merged_csv_ethnicity: output/data/merged_csv_normal_ethnicity.csv
         merged_csv_haemoonc_ethnicity: output/data/merged_csv_haemonc_ethnicity.csv
-        forest_plot_vs_gen_pop_ethnicity: output/figures/forest_plot_vs_gen_pop_ethnicity.svg
+        forest_plot_vs_gen_pop_ethnicity_1: output/figures/forest_plot_vs_gen_pop_ethnicity_1.svg
+        forest_plot_vs_gen_pop_ethnicity_2: output/figures/forest_plot_vs_gen_pop_ethnicity_2.svg
+        forest_plot_vs_gen_pop_ethnicity_3: output/figures/forest_plot_vs_gen_pop_ethnicity_3.svg
+        forest_plot_vs_gen_pop_ethnicity_4: output/figures/forest_plot_vs_gen_pop_ethnicity_4.svg
+        forest_plot_vs_gen_pop_ethnicity_5: output/figures/forest_plot_vs_gen_pop_ethnicity_5.svg
+        forest_plot_vs_gen_pop_ethnicity_u: output/figures/forest_plot_vs_gen_pop_ethnicity_u.svg
+
 
   run_merge_csvs_spline:
     run: r:latest analysis/r-immunosuppressant-meds-research/merge_csvs_spline.R
