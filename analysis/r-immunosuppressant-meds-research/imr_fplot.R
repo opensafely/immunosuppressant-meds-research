@@ -48,7 +48,7 @@ imr_fplot <- function(
   text_data_for_fp <- data_for_fp %>% 
     group_by(Outcome, Exposure) %>% 
     mutate(
-      rate_ci = if (!is.na(events[1])) {
+      rate_ci = if (!is.na(events[1]) & events[1] >= 0) {
         list(poisson.test(events[1], ptime[1])$conf.int)
       } else {
         list(rep(NA_real_, 2))
