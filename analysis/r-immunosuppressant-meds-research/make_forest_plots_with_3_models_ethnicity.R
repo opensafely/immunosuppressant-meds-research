@@ -38,21 +38,33 @@ model_col_types <- cols(
   ethnicity = col_character()
 )
 
-model_outputs <- map_dfr(csv_files, read_csv, col_types = model_col_types) %>% 
+do_sdc <- function(data) {
+  data %>% 
+  group_by(
+    cohort, model, ethnicity
+  ) %>% 
   mutate(
-    events_exposed = if_else(between(events_exposed, 1, 5), NA_real_, events_exposed),
-    rate_exposed = if_else(is.na(events_exposed), NA_real_, rate_exposed)
-  )
+    across(
+      c(rate_exposed, events_exposed),
+      ~case_when(
+        between(events_exposed, 1, 5) ~ NA_real_,
+        failure == "icuordeath" & between(events_exposed[failure == "icuordeath"] - events_exposed[failure == "died"], 1, 5) ~ NA_real_,
+        TRUE ~ .x
+      )
+    )
+  ) %>% 
+  ungroup()
+}
+
+model_outputs <- map_dfr(csv_files, read_csv, col_types = model_col_types) %>% 
+  do_sdc()
 write_csv(model_outputs, "output/data/merged_csv_normal_ethnicity.csv")
 
 csv_files_ho <- list.files("output/data", pattern = "^csvhaemonc_.*ethnicity_.\\.csv", full.names = TRUE) %>%
   str_subset("spline", negate = TRUE)
 
 model_outputs_ho <- map_dfr(csv_files_ho, read_csv, col_types = model_col_types) %>% 
-  mutate(
-    events_exposed = if_else(between(events_exposed, 1, 5), NA_real_, events_exposed),
-    rate_exposed = if_else(is.na(events_exposed), NA_real_, rate_exposed)
-  )
+  do_sdc()
 write_csv(model_outputs_ho, "output/data/merged_csv_haemonc_ethnicity.csv")
 
 source("analysis/r-immunosuppressant-meds-research/imr_fplot.R")

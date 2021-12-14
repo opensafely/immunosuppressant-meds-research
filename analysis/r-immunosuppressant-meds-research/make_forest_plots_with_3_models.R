@@ -19,22 +19,35 @@ if (!(basename(getwd()) %in% c("workspace", "immunosuppressant-meds-research")))
   cat("Working directory:", getwd())
   stop("Folder structure seems wrong")
 }
+
+do_sdc <- function(data) {
+  data %>% 
+    group_by(
+      cohort, model
+    ) %>% 
+    mutate(
+      across(
+        c(rate_exposed, events_exposed),
+        ~case_when(
+          between(events_exposed, 1, 5) ~ NA_real_,
+          failure == "icuordeath" & between(events_exposed[failure == "icuordeath"] - events_exposed[failure == "died"], 1, 5) ~ NA_real_,
+          TRUE ~ .x
+        )
+      )
+    ) %>% 
+    ungroup()
+}
+
 csv_files <- list.files("output/data", pattern = "^csv_.*\\.csv", full.names = TRUE) %>%
   str_subset("spline|ethnicity", negate = TRUE)
 model_outputs <- map_dfr(csv_files, read_csv) %>% 
-  mutate(
-    events_exposed = if_else(between(events_exposed, 1, 5), NA_real_, events_exposed),
-    rate_exposed = if_else(is.na(events_exposed), NA_real_, rate_exposed),
-  )
+  do_sdc()
 write_csv(model_outputs, "output/data/merged_csv_normal.csv")
 
 csv_files_ho <- list.files("output/data", pattern = "^csvhaemonc_.*\\.csv", full.names = TRUE) %>%
   str_subset("spline|ethnicity", negate = TRUE)
 model_outputs_ho <- map_dfr(csv_files_ho, read_csv) %>% 
-  mutate(
-    events_exposed = if_else(between(events_exposed, 1, 5), NA_real_, events_exposed),
-    rate_exposed = if_else(is.na(events_exposed), NA_real_, rate_exposed),
-  )
+  do_sdc()
 write_csv(model_outputs_ho, "output/data/merged_csv_haemonc.csv")
 
 source("imr_fplot.R")
