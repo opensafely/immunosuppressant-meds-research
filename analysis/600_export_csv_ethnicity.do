@@ -11,8 +11,6 @@ USER-INSTALLED ADO:
   (place .ado file(s) in analysis folder)						
 ==============================================================================*/
 
-* import delimited `c(pwd)'/output/input.csv, clear
-
 * set filepaths
 
 global projectdir `c(pwd)'
@@ -23,7 +21,7 @@ di "$logdir"
 
 * Open a log file
 cap log close
-log using "$logdir/export_csv", replace
+log using "$logdir/export_csv_ethnicity", replace
 
 global files imid joint skin bowel
 global ethnicity 1 2 3 4 5 u
