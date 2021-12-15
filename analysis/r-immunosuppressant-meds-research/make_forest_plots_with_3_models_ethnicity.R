@@ -66,7 +66,8 @@ do_sdc <- function(data) {
           TRUE ~ .x
         )
       )
-    )
+    ) %>%
+    ungroup()
 }
 
 model_outputs <- map_dfr(csv_files, read_csv, col_types = model_col_types) %>% 
