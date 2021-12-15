@@ -40,20 +40,33 @@ model_col_types <- cols(
 
 do_sdc <- function(data) {
   data %>% 
-  group_by(
-    cohort, model, ethnicity
-  ) %>% 
-  mutate(
-    across(
-      c(rate_exposed, events_exposed),
-      ~case_when(
-        between(events_exposed, 1, 5) ~ NA_real_,
-        failure == "icuordeath" & between(events_exposed[failure == "icuordeath"] - events_exposed[failure == "died"], 1, 5) ~ -1,
-        TRUE ~ .x
+    # First fix SDC for numbers between 1 and 5 as well as those where icuordeath - death is between 1 and 5
+    group_by(
+      cohort, model, ethnicity
+    ) %>% 
+    mutate(
+      across(
+        c(rate_exposed, events_exposed),
+        ~case_when(
+          between(events_exposed, 1, 5) ~ NA_real_,
+          failure == "icuordeath" & between(events_exposed[failure == "icuordeath"] - events_exposed[failure == "died"], 1, 5) ~ -1,
+          TRUE ~ .x
+        )
+      )
+    ) %>% 
+    ungroup() %>% 
+    # Then fix SDC for across ethnicities since the totals are also displayed in a separate figure
+    group_by(cohort, model, failure) %>% 
+    mutate(
+      across(
+        c(rate_exposed, events_exposed),
+        ~case_when(
+          sum(is.na(events_exposed) | events_exposed == -1) == 1 &
+            row_number() == which.min(abs(events_exposed) / !(is.na(events_exposed) | events_exposed == -1)) ~ -1,
+          TRUE ~ .x
+        )
       )
     )
-  ) %>% 
-  ungroup()
 }
 
 model_outputs <- map_dfr(csv_files, read_csv, col_types = model_col_types) %>% 
