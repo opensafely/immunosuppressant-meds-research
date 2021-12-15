@@ -48,7 +48,7 @@ imr_fplot <- function(
   text_data_for_fp <- data_for_fp %>% 
     group_by(Outcome, Exposure) %>% 
     mutate(
-      rate_ci = if (!is.na(events[1]) & events[1] >= 0) {
+      rate_ci = if (!is.na(events[1]) & events[1] > -1) {
         list(poisson.test(events[1], ptime[1])$conf.int)
       } else {
         list(rep(NA_real_, 2))
@@ -60,22 +60,20 @@ imr_fplot <- function(
       } else {
         paste(sprintf("%0.2f (%0.2f, %0.2f)", hr, lc, uc), collapse = "\n")
       },
-      `Number of events` = if (!is.na(events[1])) {
+      `Number of events` = if (!is.na(events[1]) && events[1] > -1) {
           prettyNum(events[1], big.mark = ",")
-        } else if (events[1] == -1) {
-          "*"
-        } else {
+        } else if (is.na(events[1])) {
           paste0("\U2264", 5)
+        } else {
+          "*"
         },
-      `Rate (95% CI)\n(per 1,000 pyear)` = if (!is.na(events[1])) {
+      `Rate (95% CI)\n(per 1,000 pyear)` = if (!is.na(events[1]) && events[1] > -1) {
         sprintf(
           "%0.2f (%0.2f, %0.2f)",
           1000 * rate[1],
           1000 * rate_ci[[1]][1],
           1000 * rate_ci[[1]][2]
         )
-      } else if (events[1] == -1) {
-        "-"
       } else {
         "-"
       },
