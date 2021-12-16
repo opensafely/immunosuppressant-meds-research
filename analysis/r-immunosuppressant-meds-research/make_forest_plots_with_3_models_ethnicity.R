@@ -110,3 +110,11 @@ export_fplot_svg <- function(fplot_ethnicity) {
 
 # c("White", "Asian", "Black", "Mixed", "Other", "Unknown")
 walk(c(1:5, "u"), export_fplot_svg)
+
+model_outputs %>% 
+  filter(
+    model %in% c("agesex", "adjusted_imid_conf", "adjusted_imid_med"),
+    failure %in% c("died", "icuordeath", "hospital")
+  ) %>% 
+  select(ethnicity, everything()) %>%
+  write_csv("output/data/model_data_ethnicity.csv")
