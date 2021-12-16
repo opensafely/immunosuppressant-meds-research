@@ -770,13 +770,13 @@ actions:
       moderately_sensitive:
         merged_csv_ethnicity: output/data/merged_csv_normal_ethnicity.csv
         merged_csv_haemoonc_ethnicity: output/data/merged_csv_haemonc_ethnicity.csv
+        model_data_ethnicity: output/data/model_data_ethnicity.csv
         forest_plot_vs_gen_pop_ethnicity_1: output/figures/forest_plot_vs_gen_pop_ethnicity_1.svg
         forest_plot_vs_gen_pop_ethnicity_2: output/figures/forest_plot_vs_gen_pop_ethnicity_2.svg
         forest_plot_vs_gen_pop_ethnicity_3: output/figures/forest_plot_vs_gen_pop_ethnicity_3.svg
         forest_plot_vs_gen_pop_ethnicity_4: output/figures/forest_plot_vs_gen_pop_ethnicity_4.svg
         forest_plot_vs_gen_pop_ethnicity_5: output/figures/forest_plot_vs_gen_pop_ethnicity_5.svg
         forest_plot_vs_gen_pop_ethnicity_u: output/figures/forest_plot_vs_gen_pop_ethnicity_u.svg
-
 
   run_merge_csvs_spline:
     run: r:latest analysis/r-immunosuppressant-meds-research/merge_csvs_spline.R
