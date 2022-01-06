@@ -777,6 +777,9 @@ actions:
         forest_plot_vs_gen_pop_ethnicity_4: output/figures/forest_plot_vs_gen_pop_ethnicity_4.svg
         forest_plot_vs_gen_pop_ethnicity_5: output/figures/forest_plot_vs_gen_pop_ethnicity_5.svg
         forest_plot_vs_gen_pop_ethnicity_u: output/figures/forest_plot_vs_gen_pop_ethnicity_u.svg
+        forest_plot_vs_gen_pop_ethnicity_died: output/figures/forest_plot_vs_gen_pop_ethnicity_died.svg
+        forest_plot_vs_gen_pop_ethnicity_hospital: output/figures/forest_plot_vs_gen_pop_ethnicity_hospital.svg
+        forest_plot_vs_gen_pop_ethnicity_icuordeath: output/figures/forest_plot_vs_gen_pop_ethnicity_icuordeath.svg
 
   run_merge_csvs_spline:
     run: r:latest analysis/r-immunosuppressant-meds-research/merge_csvs_spline.R
