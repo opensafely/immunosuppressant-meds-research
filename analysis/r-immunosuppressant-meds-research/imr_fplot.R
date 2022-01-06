@@ -2,16 +2,19 @@ imr_fplot <- function(
   data,
   ref_exposure_name,
   exposures,
-  outcomes,
+  groups,
   models,
+  group_var = failure,
+  group_label = "Outcome",
   ...
 ) {
+  group_var <- enquo(group_var)
   ref_pop <- data %>% 
     filter(model %in% models, cohort == exposures[1]) %>% 
     transmute(
       cohort = "ref_pop",
       model,
-      failure,
+      !!group_var,
       ptime = ptime_comparator,
       events = events_comparator,
       rate = rate_comparator,
@@ -24,29 +27,19 @@ imr_fplot <- function(
     rename(ptime = ptime_exposed, events = events_exposed, rate = rate_exposed) %>% 
     bind_rows(ref_pop) %>% 
     mutate(
-      Exposure = factor(cohort, levels = c("ref_pop", exposures)) %>% 
-        fct_recode(
-          !!(ref_exposure_name) := "ref_pop",
-          !!!exposures
-        ),
-      Outcome = factor(failure, levels = outcomes) %>% 
-        fct_recode(
-          !!!outcomes
-        ),
-      Model = factor(model, levels=models) %>% 
-        fct_recode(
-          !!!models
-        )
+      Exposure = factor(cohort, levels = c("ref_pop", exposures), labels = c(ref_exposure_name, names(exposures))),
+      Group = factor(!!group_var, levels = groups, labels = names(groups)),
+      Model = factor(model, levels = models, labels = names(models))
     ) %>% 
     filter(
       !is.na(Exposure),
-      !is.na(Outcome),
+      !is.na(Group),
       !is.na(Model)
     ) %>% 
-    arrange(Outcome, Exposure, Model)
+    arrange(Group, Exposure, Model)
   
   text_data_for_fp <- data_for_fp %>% 
-    group_by(Outcome, Exposure) %>% 
+    group_by(Group, Exposure) %>% 
     mutate(
       rate_ci = if (!is.na(events[1]) & events[1] > -1) {
         list(poisson.test(events[1], ptime[1])$conf.int)
@@ -79,13 +72,14 @@ imr_fplot <- function(
       },
       .groups = "drop"
     ) %>% 
-    mutate(Outcome = if_else(duplicated(Outcome), "", as.character(Outcome)))
+    mutate(Group = if_else(duplicated(Group), "", as.character(Group))) %>% 
+    rename(!!group_label := Group)
   
   text_data_for_fp_list <- text_data_for_fp %>%
     imap(~c(.y, as.character(.x)))
   
   numeric_data_for_fp <- data_for_fp %>% 
-    select(Outcome, Exposure, Model, hr, lc, uc) %>% 
+    select(Group, Exposure, Model, hr, lc, uc) %>% 
     pivot_wider(names_from = Model, values_from = hr:uc) %>%
     mutate(
       is_summary = Exposure == ref_exposure_name,
@@ -98,7 +92,7 @@ imr_fplot <- function(
         )
       )
     ) %>% 
-    bind_rows(tibble(Outcome = NA, is_summary = TRUE, horiz_line = list(NULL)), .)
+    bind_rows(tibble(Group = NA, is_summary = TRUE, horiz_line = list(NULL)), .)
   
   shape_cols <- scales::brewer_pal(palette = "Dark2")(length(levels(data_for_fp$Model)))
   

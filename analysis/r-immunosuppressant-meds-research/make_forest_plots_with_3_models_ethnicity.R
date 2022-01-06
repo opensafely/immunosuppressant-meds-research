@@ -71,7 +71,10 @@ do_sdc <- function(data) {
 }
 
 model_outputs <- map_dfr(csv_files, read_csv, col_types = model_col_types) %>% 
-  do_sdc()
+  do_sdc() %>% 
+  mutate(
+    ethnicity_label = factor(ethnicity, levels = c(1:5, "u"), labels = c("White", "South Asian", "Black", "Mixed", "Other", "Unknown"))
+  )
 write_csv(model_outputs, "output/data/merged_csv_normal_ethnicity.csv")
 
 csv_files_ho <- list.files("output/data", pattern = "^csvhaemonc_.*ethnicity_.\\.csv", full.names = TRUE) %>%
@@ -94,7 +97,7 @@ export_fplot_svg <- function(fplot_ethnicity) {
                   "Inflammatory joint disease" = "joint",
                   "Inflammatory skin disease" = "skin",
                   "Inflammatory bowel disease" = "bowel"),
-    outcomes = c("COVID-19 death" = "died",
+    groups = c("COVID-19 death" = "died",
                  "COVID-19 ICU/death" = "icuordeath",
                  "COVID-19 hospitalisation" = "hospital"),
     models = c("Minimally adjusted" = "agesex",
@@ -118,3 +121,33 @@ model_outputs %>%
   ) %>% 
   select(ethnicity, everything()) %>%
   write_csv("output/data/model_data_ethnicity.csv")
+
+export_fplot_svg <- function(fplot_outcome, outcome_name) {
+  svg(sprintf("output/figures/forest_plot_vs_gen_pop_ethnicity_%s.svg", fplot_outcome), width = 12, height = 20)
+  imr_fplot(
+    model_outputs %>% filter(failure == fplot_outcome),
+    ref_exposure_name = "General population",
+    exposures = c("All immune-mediated inflammatory diseases" = "imid",
+                  "Inflammatory joint disease" = "joint",
+                  "Inflammatory skin disease" = "skin",
+                  "Inflammatory bowel disease" = "bowel"),
+    groups = levels(model_outputs$ethnicity) %>% set_names(., .),
+    models = c("Minimally adjusted" = "agesex",
+               "Confounder adjusted (IMID)" = "adjusted_imid_conf",
+               "Mediator adjusted (IMID)" = "adjusted_imid_med"),
+    group_var = ethnicity,
+    group_label = "Ethnicity",
+    # clip axis
+    clip = c(0.7, 2),
+    # specified positions for xticks
+    xticks = c(0.7, 1, 1.5, 2)
+  )
+  dev.off()
+}
+
+iwalk(
+  c("COVID-19 death" = "died",
+    "COVID-19 ICU/death" = "icuordeath",
+    "COVID-19 hospitalisation" = "hospital"),
+  export_fplot_svg
+)
