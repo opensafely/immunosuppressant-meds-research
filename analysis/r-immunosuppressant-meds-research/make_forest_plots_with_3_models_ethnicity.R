@@ -131,11 +131,11 @@ export_fplot_svg <- function(fplot_outcome, outcome_name) {
                   "Inflammatory joint disease" = "joint",
                   "Inflammatory skin disease" = "skin",
                   "Inflammatory bowel disease" = "bowel"),
-    groups = levels(model_outputs$ethnicity) %>% set_names(., .),
+    groups = levels(model_outputs$ethnicity_label) %>% set_names(., .),
     models = c("Minimally adjusted" = "agesex",
                "Confounder adjusted (IMID)" = "adjusted_imid_conf",
                "Mediator adjusted (IMID)" = "adjusted_imid_med"),
-    group_var = ethnicity,
+    group_var = ethnicity_label,
     group_label = "Ethnicity",
     # clip axis
     clip = c(0.7, 2),
