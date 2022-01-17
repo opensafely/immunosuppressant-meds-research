@@ -104,9 +104,9 @@ export_fplot_svg <- function(fplot_ethnicity) {
                "Confounder adjusted (IMID)" = "adjusted_imid_conf",
                "Mediator adjusted (IMID)" = "adjusted_imid_med"),
     # clip axis
-    clip = c(0.7, 2),
+    clip = c(0.2, 7),
     # specified positions for xticks
-    xticks = c(0.7, 1, 1.5, 2)
+    xticks = c(0.2, 0.5, 1, 2, 5, 7)
   )
   dev.off()
 }
@@ -138,9 +138,9 @@ export_fplot_svg <- function(fplot_outcome, outcome_name) {
     group_var = ethnicity_label,
     group_label = "Ethnicity",
     # clip axis
-    clip = c(0.5, 7),
+    clip = c(0.2, 7),
     # specified positions for xticks
-    xticks = c(0.5, 1, 2, 5, 7)
+    xticks = c(0.2, 0.5, 1, 2, 5, 7)
   )
   dev.off()
 }
