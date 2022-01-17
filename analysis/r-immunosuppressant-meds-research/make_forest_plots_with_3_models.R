@@ -74,7 +74,7 @@ imr_fplot(
 )
 dev.off()
 
-svg("output/figures/forest_plot_vs_standard_systemic.svg", width = 12, height = 20)
+svg("output/figures/forest_plot_vs_standard_systemic.svg", width = 12, height = 16)
 imr_fplot(
   model_outputs,
   ref_exposure_name = "Standard therapy",
@@ -84,9 +84,10 @@ imr_fplot(
                 "IL-17 inhibitor" = "standil17",
                 "IL-6 inhibitor" = "standil6",
                 "JAK inhibitor" = "standjaki", 
-                "Rituximab" = "standritux",
-                "Vedolizumab" = "standvedolizumab",
-                "Abatacept" = "standabatacept"),
+                "Rituximab" = "standritux"#,
+                # "Vedolizumab" = "standvedolizumab",
+                # "Abatacept" = "standabatacept"
+                ),
   groups = c("COVID-19 death" = "died",
                "COVID-19 ICU/death" = "icuordeath",
                "COVID-19 hospitalisation" = "hospital"),
