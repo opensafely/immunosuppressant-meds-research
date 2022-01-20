@@ -410,7 +410,7 @@ actions:
         data2: output/data/cox_model_summary_haemonc_bowel_ethnicity_u.dta
 
   run_cox_models_genpop_ethnicity_vs_white:
-    run: stata-mp:latest analysis/501_cox_models_per_imid.do "genpop"
+    run: stata-mp:latest analysis/501_cox_models_ethnicity_vs_white.do "genpop"
     needs: [create_cohorts_single_file]
     outputs:
       moderately_sensitive:
@@ -418,7 +418,7 @@ actions:
         data1: output/data/cox_model_summary_genpop_ethnicity_vs_white.dta
 
   run_cox_models_imid_ethnicity_vs_white:
-    run: stata-mp:latest analysis/501_cox_models_per_imid.do "imid"
+    run: stata-mp:latest analysis/501_cox_models_ethnicity_vs_white.do "imid"
     needs: [create_cohorts_single_file]
     outputs:
       moderately_sensitive:
@@ -426,7 +426,7 @@ actions:
         data1: output/data/cox_model_summary_imid_ethnicity_vs_white.dta
 
   run_cox_models_joint_ethnicity_vs_white:
-    run: stata-mp:latest analysis/501_cox_models_per_imid.do "joint"
+    run: stata-mp:latest analysis/501_cox_models_ethnicity_vs_white.do "joint"
     needs: [create_cohorts_single_file]
     outputs:
       moderately_sensitive:
@@ -434,15 +434,15 @@ actions:
         data1: output/data/cox_model_summary_joint_ethnicity_vs_white.dta
 
   run_cox_models_skin_ethnicity_vs_white:
-    run: stata-mp:latest analysis/501_cox_models_per_imid.do "skin"
+    run: stata-mp:latest analysis/501_cox_models_ethnicity_vs_white.do "skin"
     needs: [create_cohorts_single_file]
     outputs:
       moderately_sensitive:
         log1: logs/cox_models_skin_ethnicity_vs_white.smcl 
-        data1: output/data/cox_model_summary_skin_vs_white.dta
+        data1: output/data/cox_model_summary_skin_ethnicity_vs_white.dta
 
   run_cox_models_bowel_ethnicity_vs_white:
-    run: stata-mp:latest analysis/501_cox_models_per_imid.do "bowel"
+    run: stata-mp:latest analysis/501_cox_models_ethnicity_vs_white.do "bowel"
     needs: [create_cohorts_single_file]
     outputs:
       moderately_sensitive:
@@ -801,6 +801,18 @@ actions:
         csvhaemonc_bowel_ethnicity_4_csv: output/data/csvhaemonc_bowel_ethnicity_4.csv
         csvhaemonc_bowel_ethnicity_5_csv: output/data/csvhaemonc_bowel_ethnicity_5.csv
         csvhaemonc_bowel_ethnicity_u_csv: output/data/csvhaemonc_bowel_ethnicity_u.csv
+
+  run_export_csv_ethnicity_vs_white:
+    run: stata-mp:latest analysis/601_export_csv_ethnicity_vs_white.do
+    needs: [run_cox_models_genpop_ethnicity_vs_white,run_cox_models_imid_ethnicity_vs_white,run_cox_models_joint_ethnicity_vs_white,run_cox_models_skin_ethnicity_vs_white,run_cox_models_bowel_ethnicity_vs_white]
+    outputs:
+      moderately_sensitive:
+        log: logs/export_csv_ethnicity_vs_white.smcl
+        csvrun_cox_models_genpop_ethnicity_vs_white: output/data/csv_genpop_ethnicity_vs_white.csv
+        csvrun_cox_models_imid_ethnicity_vs_white:   output/data/csv_imid_ethnicity_vs_white.csv
+        csvrun_cox_models_joint_ethnicity_vs_white:  output/data/csv_joint_ethnicity_vs_white.csv
+        csvrun_cox_models_skin_ethnicity_vs_white:   output/data/csv_skin_ethnicity_vs_white.csv
+        csvrun_cox_models_bowel_ethnicity_vs_white:  output/data/csv_bowel_ethnicity_vs_white.csv
 
   run_forest_plots_ethnicity:
     run: r:latest analysis/r-immunosuppressant-meds-research/make_forest_plots_with_3_models_ethnicity.R

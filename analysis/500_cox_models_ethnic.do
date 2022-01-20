@@ -1,8 +1,8 @@
 /*==============================================================================
 DO FILE NAME:			cox models
 PROJECT:				Immunosuppressant meds research
-DATE: 					22nd April 21
-AUTHOR:					M Yates / J Galloway / S Norton / K Bechman 
+DATE: 					18th December 2021
+AUTHOR:					M Yates / J Galloway / S Norton / K Bechman / N Kennedy
 DESCRIPTION OF FILE:	run cox models
 DATASETS USED:			imid main file plus sub files for specific drug cohorts
 DATASETS CREATED: 		coxoutput

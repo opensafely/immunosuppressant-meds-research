@@ -1,8 +1,8 @@
 /*==============================================================================
 DO FILE NAME:			cox models
 PROJECT:				Immunosuppressant meds research
-DATE: 					22nd April 21
-AUTHOR:					M Yates / J Galloway / S Norton / K Bechman 
+DATE: 					20th January 2022
+AUTHOR:					M Yates / J Galloway / S Norton / K Bechman / N Kennedy
 DESCRIPTION OF FILE:	run cox models
 DATASETS USED:			imid main file plus sub files for specific drug cohorts
 DATASETS CREATED: 		coxoutput
@@ -109,7 +109,7 @@ foreach fail in died hospital icuordeath icu_sens {
 						
 	foreach model in crude agesex adjusted_imid_conf adjusted_imid_med adjusted_drugs_conf adjusted_drugs_med adjusted_imid_sens_two adjusted_imid_sens_three adjusted_drugs_sens_three {
 				
-		stcox ethnicity $`model', vce(robust)
+		stcox i.ethnicity $`model', vce(robust)
 					matrix b = r(table)
 					local hr = b[1,1]
 					local lc = b[5,1]
