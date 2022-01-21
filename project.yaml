@@ -808,7 +808,7 @@ actions:
     outputs:
       moderately_sensitive:
         log: logs/export_csv_ethnicity_vs_white.smcl
-        csvrun_cox_models_genpop_ethnicity_vs_white: output/data/csv_genpop_ethnicity_vs_white.csv
+#        csvrun_cox_models_genpop_ethnicity_vs_white: output/data/csv_genpop_ethnicity_vs_white.csv
         csvrun_cox_models_imid_ethnicity_vs_white:   output/data/csv_imid_ethnicity_vs_white.csv
         csvrun_cox_models_joint_ethnicity_vs_white:  output/data/csv_joint_ethnicity_vs_white.csv
         csvrun_cox_models_skin_ethnicity_vs_white:   output/data/csv_skin_ethnicity_vs_white.csv
