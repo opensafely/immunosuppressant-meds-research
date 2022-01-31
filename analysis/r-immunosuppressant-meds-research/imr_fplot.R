@@ -6,28 +6,41 @@ imr_fplot <- function(
   models,
   group_var = failure,
   group_label = "Outcome",
+  exposure_var = cohort,
+  exposure_label = "Exposure",
+  ref_pop_called_comparator = TRUE,
   ...
 ) {
   group_var <- enquo(group_var)
-  ref_pop <- data %>% 
-    filter(model %in% models, cohort == exposures[1]) %>% 
-    transmute(
-      cohort = "ref_pop",
-      model,
-      !!group_var,
-      ptime = ptime_comparator,
-      events = events_comparator,
-      rate = rate_comparator,
-      hr = 1,
-      lc = if_else(model == models[2], exp(-0.03), NA_real_),
-      uc = if_else(model == models[2], exp(0.03), NA_real_)
-    )
-  
-  data_for_fp <- data %>%
-    rename(ptime = ptime_exposed, events = events_exposed, rate = rate_exposed) %>% 
-    bind_rows(ref_pop) %>% 
+  exposure_var <- enquo(exposure_var)
+  if (ref_pop_called_comparator) {
+    ref_pop <- data %>% 
+      filter(model %in% models, !!exposure_var == exposures[1]) %>% 
+      transmute(
+        !!exposure_var := "ref_pop",
+        model,
+        !!group_var,
+        ptime = ptime_comparator,
+        events = events_comparator,
+        rate = rate_comparator,
+        hr = 1,
+        lc = if_else(model == models[2], exp(-0.03), NA_real_),
+        uc = if_else(model == models[2], exp(0.03), NA_real_)
+      )
+    data_for_fp <- data %>%
+      rename(ptime = ptime_exposed, events = events_exposed, rate = rate_exposed) %>% 
+      bind_rows(ref_pop)
+  } else {
+    data_for_fp <- data %>% 
+      mutate(
+        lc = if_else(!!exposure_var == ref_exposure_name, if_else(model == models[2], exp(-0.03), NA_real_), lc),
+        uc = if_else(!!exposure_var == ref_exposure_name, if_else(model == models[2], exp(0.03), NA_real_), uc)
+      )
+  }
+
+  data_for_fp <- data_for_fp %>%   
     mutate(
-      Exposure = factor(cohort, levels = c("ref_pop", exposures), labels = c(ref_exposure_name, names(exposures))),
+      Exposure = factor(!!exposure_var, levels = c("ref_pop", exposures), labels = c(ref_exposure_name, names(exposures))),
       Group = factor(!!group_var, levels = groups, labels = names(groups)),
       Model = factor(model, levels = models, labels = names(models))
     ) %>% 
@@ -48,7 +61,7 @@ imr_fplot <- function(
       }
     ) %>%
     summarise(
-      `HR (95% CI)` = if(cohort[1] == "ref_pop") {
+      `HR (95% CI)` = if((!!exposure_var)[1] == "ref_pop" | (!!exposure_var)[1] == ref_exposure_name) {
         "reference"
       } else {
         paste(sprintf("%0.2f (%0.2f, %0.2f)", hr, lc, uc), collapse = "\n")
@@ -73,7 +86,7 @@ imr_fplot <- function(
       .groups = "drop"
     ) %>% 
     mutate(Group = if_else(duplicated(Group), "", as.character(Group))) %>% 
-    rename(!!group_label := Group)
+    rename(!!group_label := Group, !!exposure_label := Exposure)
   
   text_data_for_fp_list <- text_data_for_fp %>%
     imap(~c(.y, as.character(.x)))

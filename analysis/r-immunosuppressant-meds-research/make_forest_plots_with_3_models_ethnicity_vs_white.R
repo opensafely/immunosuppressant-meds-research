@@ -41,9 +41,18 @@ model_col_types <- cols(
   ptime_5 = col_double(),
   events_5 = col_double(),
   rate_5 = col_double(),
-  hr = col_double(),
-  lc = col_double(),
-  uc = col_double()
+  hr_2 = col_double(),
+  lc_2 = col_double(),
+  uc_2 = col_double(),
+  hr_3 = col_double(),
+  lc_3 = col_double(),
+  uc_3 = col_double(),
+  hr_4 = col_double(),
+  lc_4 = col_double(),
+  uc_4 = col_double(),
+  hr_5 = col_double(),
+  lc_5 = col_double(),
+  uc_5 = col_double()
 )
 
 do_sdc <- function(data) {
@@ -66,29 +75,33 @@ do_sdc <- function(data) {
     ungroup()
 }
 
-model_outputs <- map_dfr(csv_files, read_csv, col_types = model_col_types) %>% 
-  do_sdc()
+model_outputs <- map_dfr(csv_files, read_csv, col_types = model_col_types) %>%
+  do_sdc() %>% 
+  mutate(ethnicity = factor(ethnicity, levels = 1:5, labels = c("White", "South Asian", "Black", "Mixed", "Other")))
 write_csv(model_outputs, "output/data/merged_csv_normal_ethnicity_vs_white.csv")
 
 source("analysis/r-immunosuppressant-meds-research/imr_fplot.R")
 
 dir.create("output/figures", showWarnings = FALSE, recursive = TRUE)
 
-export_fplot_svg <- function(group) {
-  svg(sprintf("output/figures/forest_plot_ethnicity_vs_white_%s.svg", group), width = 12, height = 10)
+export_fplot_svg <- function(fplot_outcome, outcome_name) {
+  svg(sprintf("output/figures/forest_plot_ethnicity_vs_white_%s.svg", fplot_outcome), width = 12, height = 20)
   imr_fplot(
-    model_outputs %>% filter(ethnicity == fplot_ethnicity),
+    model_outputs %>% filter(failure == fplot_outcome),
     ref_exposure_name = "White",
-    exposures = c("All immune-mediated inflammatory diseases" = "imid",
-                  "Inflammatory joint disease" = "joint",
-                  "Inflammatory skin disease" = "skin",
-                  "Inflammatory bowel disease" = "bowel"),
-    groups = c("COVID-19 death" = "died",
-                 "COVID-19 ICU/death" = "icuordeath",
-                 "COVID-19 hospitalisation" = "hospital"),
+    exposures = levels(model_outputs$ethnicity) %>% set_names(., .),
+    exposure_var = ethnicity,
+    exposure_label = "Ethnicity",
+    groups = c("All immune-mediated inflammatory diseases" = "imid",
+               "Inflammatory joint disease" = "joint",
+               "Inflammatory skin disease" = "skin",
+               "Inflammatory bowel disease" = "bowel"),
     models = c("Minimally adjusted" = "agesex",
                "Confounder adjusted (IMID)" = "adjusted_imid_conf",
                "Mediator adjusted (IMID)" = "adjusted_imid_med"),
+    group_var = cohort,
+    group_label = "Cohort",
+    ref_pop_called_comparator = FALSE,
     # clip axis
     clip = c(0.2, 7),
     # specified positions for xticks
@@ -97,5 +110,9 @@ export_fplot_svg <- function(group) {
   dev.off()
 }
 
-# c("White", "Asian", "Black", "Mixed", "Other", "Unknown")
-#walk(c(1:5, "u"), export_fplot_svg)
+iwalk(
+  c("COVID-19 death" = "died",
+    "COVID-19 ICU/death" = "icuordeath",
+    "COVID-19 hospitalisation" = "hospital"),
+  export_fplot_svg
+)

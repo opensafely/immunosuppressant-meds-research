@@ -70,7 +70,10 @@ tempname coxoutput
 	  ptime_3 events_3 rate_3 ///
 	  ptime_4 events_4 rate_4 ///
 	  ptime_5 events_5 rate_5 ///
-		hr lc uc ///
+		hr_2 lc_2 uc_2 ///
+		hr_3 lc_3 uc_3 ///
+		hr_4 lc_4 uc_4 ///
+		hr_5 lc_5 uc_5 ///
 		using $projectdir/output/data/cox_model_summary_$outfile, replace						
 
 use $projectdir/output/data/file_imid_all, replace
@@ -111,9 +114,19 @@ foreach fail in died hospital icuordeath icu_sens {
 				
 		stcox i.ethnicity $`model', vce(robust)
 					matrix b = r(table)
-					local hr = b[1,1]
-					local lc = b[5,1]
-					local uc = b[6,1]
+					local hr_2 = b[1,2]
+					local lc_2 = b[5,2]
+					local uc_2 = b[6,2]
+					local hr_3 = b[1,3]
+					local lc_3 = b[5,3]
+					local uc_3 = b[6,3]
+					local hr_4 = b[1,4]
+					local lc_4 = b[5,4]
+					local uc_4 = b[6,4]
+					local hr_5 = b[1,5]
+					local lc_5 = b[5,5]
+					local uc_5 = b[6,5]
+
 					
 		stptime if ethnicity == 1
 					local rate_1 = `r(rate)'
@@ -151,7 +164,10 @@ foreach fail in died hospital icuordeath icu_sens {
 					(`ptime_3')  (`events_3')  (`rate_3') ///
 					(`ptime_4')  (`events_4')  (`rate_4') ///
 					(`ptime_5')  (`events_5')  (`rate_5') ///
-					(`hr') (`lc') (`uc')	
+					(`hr_2') (`lc_2') (`uc_2') ///
+					(`hr_3') (`lc_3') (`uc_3') ///
+					(`hr_4') (`lc_4') (`uc_4') ///
+					(`hr_5') (`lc_5') (`uc_5')
 	}
 }
 

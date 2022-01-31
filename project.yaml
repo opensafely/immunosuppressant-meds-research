@@ -832,6 +832,14 @@ actions:
         forest_plot_vs_gen_pop_ethnicity_hospital: output/figures/forest_plot_vs_gen_pop_ethnicity_hospital.svg
         forest_plot_vs_gen_pop_ethnicity_icuordeath: output/figures/forest_plot_vs_gen_pop_ethnicity_icuordeath.svg
 
+  run_forest_plots_ethnicity_vs_white:
+    run: r:latest analysis/r-immunosuppressant-meds-research/make_forest_plots_with_3_models_ethnicity_vs_white.R
+    needs: [run_export_csv_ethnicity_vs_white]
+    outputs:
+      moderately_sensitive:
+        merged_csv_ethnicity_vs_white: output/data/merged_csv_normal_ethnicity_vs_white.csv
+
+
   run_merge_csvs_spline:
     run: r:latest analysis/r-immunosuppressant-meds-research/merge_csvs_spline.R
     needs: [run_spline_export_csv]
