@@ -838,7 +838,9 @@ actions:
     outputs:
       moderately_sensitive:
         merged_csv_ethnicity_vs_white: output/data/merged_csv_normal_ethnicity_vs_white.csv
-
+        forest_plot_ethnicity_vs_white_died: output/figures/forest_plot_ethnicity_vs_white_died.svg
+        forest_plot_ethnicity_vs_white_icuordeath: output/figures/forest_plot_ethnicity_vs_white_icuordeath.svg
+        forest_plot_ethnicity_vs_white_hospital: output/figures/forest_plot_ethnicity_vs_white_hospital.svg
 
   run_merge_csvs_spline:
     run: r:latest analysis/r-immunosuppressant-meds-research/merge_csvs_spline.R
