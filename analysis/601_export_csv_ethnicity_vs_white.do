@@ -23,7 +23,7 @@ di "$logdir"
 cap log close
 log using "$logdir/export_csv_ethnicity_vs_white", replace
 
-global files imid joint skin bowel
+global files genpop imid joint skin bowel
 
 foreach f in $files {
 
