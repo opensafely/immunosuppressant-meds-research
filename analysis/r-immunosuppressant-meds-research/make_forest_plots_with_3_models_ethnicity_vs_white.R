@@ -85,14 +85,15 @@ source("analysis/r-immunosuppressant-meds-research/imr_fplot.R")
 dir.create("output/figures", showWarnings = FALSE, recursive = TRUE)
 
 export_fplot_svg <- function(fplot_outcome, outcome_name) {
-  svg(sprintf("output/figures/forest_plot_ethnicity_vs_white_%s.svg", fplot_outcome), width = 12, height = 20)
+  svg(sprintf("output/figures/forest_plot_ethnicity_vs_white_%s.svg", fplot_outcome), width = 12, height = 24)
   imr_fplot(
     model_outputs %>% filter(failure == fplot_outcome),
     ref_exposure_name = "White",
     exposures = levels(model_outputs$ethnicity) %>% set_names(., .),
     exposure_var = ethnicity,
     exposure_label = "Ethnicity",
-    groups = c("All immune-mediated inflammatory diseases" = "imid",
+    groups = c("General population" = "genpop",
+               "All immune-mediated inflammatory diseases" = "imid",
                "Inflammatory joint disease" = "joint",
                "Inflammatory skin disease" = "skin",
                "Inflammatory bowel disease" = "bowel"),
@@ -103,9 +104,9 @@ export_fplot_svg <- function(fplot_outcome, outcome_name) {
     group_label = "Cohort",
     ref_pop_called_comparator = FALSE,
     # clip axis
-    clip = c(0.2, 7),
+    clip = c(0.2, 10),
     # specified positions for xticks
-    xticks = c(0.2, 0.5, 1, 2, 5, 7)
+    xticks = c(0.2, 0.5, 1, 2, 5, 10)
   )
   dev.off()
 }

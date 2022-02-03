@@ -33,6 +33,7 @@ imr_fplot <- function(
   } else {
     data_for_fp <- data %>% 
       mutate(
+        hr = if_else(!!exposure_var == ref_exposure_name, if_else(model == models[2], 1, NA_real_), hr),
         lc = if_else(!!exposure_var == ref_exposure_name, if_else(model == models[2], exp(-0.03), NA_real_), lc),
         uc = if_else(!!exposure_var == ref_exposure_name, if_else(model == models[2], exp(0.03), NA_real_), uc)
       )
