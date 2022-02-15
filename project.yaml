@@ -859,12 +859,37 @@ actions:
 
   run_pyramid_plots:
     run: stata-mp:latest analysis/602_pyramid_plots.do
-    needs: [create_cohorts]
+    needs: [create_cohorts_single_file]
     outputs:
       moderately_sensitive:
-        pyramid_plot_1: output/figures/pyramidplot_1.svg
-        pyramid_plot_2: output/figures/pyramidplot_2.svg
-        pyramid_plot_3: output/figures/pyramidplot_3.svg
-        pyramid_plot_4: output/figures/pyramidplot_4.svg
-        pyramid_plot_5: output/figures/pyramidplot_5.svg
+        pyramid_plot_genpop_1: output/figures/pyramidplot_genpop_1.svg
+        pyramid_plot_genpop_2: output/figures/pyramidplot_genpop_2.svg
+        pyramid_plot_genpop_3: output/figures/pyramidplot_genpop_3.svg
+        pyramid_plot_genpop_4: output/figures/pyramidplot_genpop_4.svg
+        pyramid_plot_genpop_5: output/figures/pyramidplot_genpop_5.svg
+        pyramid_plot_imid_1: output/figures/pyramidplot_imid_1.svg
+        pyramid_plot_imid_2: output/figures/pyramidplot_imid_2.svg
+        pyramid_plot_imid_3: output/figures/pyramidplot_imid_3.svg
+        pyramid_plot_imid_4: output/figures/pyramidplot_imid_4.svg
+        pyramid_plot_imid_5: output/figures/pyramidplot_imid_5.svg
+        pyramid_plot_joint_1: output/figures/pyramidplot_joint_1.svg
+        pyramid_plot_joint_2: output/figures/pyramidplot_joint_2.svg
+        pyramid_plot_joint_3: output/figures/pyramidplot_joint_3.svg
+        pyramid_plot_joint_4: output/figures/pyramidplot_joint_4.svg
+        pyramid_plot_joint_5: output/figures/pyramidplot_joint_5.svg
+        pyramid_plot_skin_1: output/figures/pyramidplot_skin_1.svg
+        pyramid_plot_skin_2: output/figures/pyramidplot_skin_2.svg
+        pyramid_plot_skin_3: output/figures/pyramidplot_skin_3.svg
+        pyramid_plot_skin_4: output/figures/pyramidplot_skin_4.svg
+        pyramid_plot_skin_5: output/figures/pyramidplot_skin_5.svg
+        pyramid_plot_bowel_1: output/figures/pyramidplot_bowel_1.svg
+        pyramid_plot_bowel_2: output/figures/pyramidplot_bowel_2.svg
+        pyramid_plot_bowel_3: output/figures/pyramidplot_bowel_3.svg
+        pyramid_plot_bowel_4: output/figures/pyramidplot_bowel_4.svg
+        pyramid_plot_bowel_5: output/figures/pyramidplot_bowel_5.svg
         pyramid_plot_log: logs/pyramid_plots.smcl
+        age_sex_summary_genpop: output/data/age_sex_summary_genpop.csv
+        age_sex_summary_imid: output/data/age_sex_summary_imid.csv
+        age_sex_summary_joint: output/data/age_sex_summary_joint.csv
+        age_sex_summary_skin: output/data/age_sex_summary_skin.csv
+        age_sex_summary_bowel: output/data/age_sex_summary_bowel.csv
