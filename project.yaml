@@ -856,3 +856,15 @@ actions:
     outputs:
       moderately_sensitive:
         merged_csv: output/data/subject_numbers.csv
+
+  run_pyramid_plots:
+    run: stata-mp:latest analysis/602_pyramid_plots.do
+    needs: [create_cohorts]
+    outputs:
+      moderately_sensitive:
+        pyramid_plot_1: output/figures/pyramidplot_1.svg
+        pyramid_plot_2: output/figures/pyramidplot_2.svg
+        pyramid_plot_3: output/figures/pyramidplot_3.svg
+        pyramid_plot_4: output/figures/pyramidplot_4.svg
+        pyramid_plot_5: output/figures/pyramidplot_5.svg
+        pyramid_plot_log: logs/pyramid_plots.smcl
