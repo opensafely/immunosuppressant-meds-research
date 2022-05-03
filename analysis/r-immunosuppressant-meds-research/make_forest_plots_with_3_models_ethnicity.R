@@ -89,7 +89,7 @@ source("analysis/r-immunosuppressant-meds-research/imr_fplot.R")
 dir.create("output/figures", showWarnings = FALSE, recursive = TRUE)
 
 export_fplot_svg <- function(fplot_ethnicity) {
-  svg(sprintf("output/figures/forest_plot_vs_gen_pop_ethnicity_%s.svg", fplot_ethnicity), width = 12, height = 10)
+  svglite(sprintf("output/figures/forest_plot_vs_gen_pop_ethnicity_%s.svg", fplot_ethnicity), width = 12, height = 10)
   imr_fplot(
     model_outputs %>% filter(ethnicity == fplot_ethnicity),
     ref_exposure_name = "General population",
@@ -123,7 +123,7 @@ model_outputs %>%
   write_csv("output/data/model_data_ethnicity.csv")
 
 export_fplot_svg <- function(fplot_outcome, outcome_name) {
-  svg(sprintf("output/figures/forest_plot_vs_gen_pop_ethnicity_%s.svg", fplot_outcome), width = 12, height = 20)
+  svglite(sprintf("output/figures/forest_plot_vs_gen_pop_ethnicity_%s.svg", fplot_outcome), width = 12, height = 20)
   imr_fplot(
     model_outputs %>% filter(failure == fplot_outcome),
     ref_exposure_name = "General population",

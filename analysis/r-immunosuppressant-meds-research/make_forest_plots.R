@@ -12,6 +12,7 @@
 
 library(forestplot)
 library(tidyverse)
+library(svglite)
 if (basename(getwd()) == "r-immunosuppressant-meds-research") {
   setwd("../..")
 }
@@ -169,7 +170,7 @@ imr_fplot <- function(
 }
 
 dir.create("output/figures", showWarnings = FALSE, recursive = TRUE)
-svg("output/figures/forest_plot_vs_gen_pop.svg", width = 12, height = 8)
+svglite("output/figures/forest_plot_vs_gen_pop.svg", width = 12, height = 8)
 imr_fplot(
   model_outputs,
   ref_exposure_name = "General population",
@@ -189,7 +190,7 @@ imr_fplot(
 )
 dev.off()
 
-svg("output/figures/forest_plot_vs_standard_systemic.svg", width = 12, height = 12)
+svglite("output/figures/forest_plot_vs_standard_systemic.svg", width = 12, height = 12)
 imr_fplot(
   model_outputs,
   ref_exposure_name = "Standard therapy",

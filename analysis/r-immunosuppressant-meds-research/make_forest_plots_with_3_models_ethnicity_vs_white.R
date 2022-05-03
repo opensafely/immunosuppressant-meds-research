@@ -12,6 +12,7 @@
 
 library(forestplot)
 library(tidyverse)
+library(svglite)
 if (basename(getwd()) == "r-immunosuppressant-meds-research") {
   setwd("../..")
 }
@@ -85,7 +86,7 @@ source("analysis/r-immunosuppressant-meds-research/imr_fplot.R")
 dir.create("output/figures", showWarnings = FALSE, recursive = TRUE)
 
 export_fplot_svg <- function(fplot_outcome, outcome_name) {
-  svg(sprintf("output/figures/forest_plot_ethnicity_vs_white_%s.svg", fplot_outcome), width = 12, height = 24)
+  svglite(sprintf("output/figures/forest_plot_ethnicity_vs_white_%s.svg", fplot_outcome), width = 12, height = 24)
   imr_fplot(
     model_outputs %>% filter(failure == fplot_outcome),
     ref_exposure_name = "White",
