@@ -12,6 +12,7 @@
 
 library(forestplot)
 library(tidyverse)
+library(svglite)
 if (basename(getwd()) == "r-immunosuppressant-meds-research") {
   setwd("../..")
 }
