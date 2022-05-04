@@ -151,6 +151,7 @@ imr_fplot <- function(
     is.summary = numeric_data_for_fp$is_summary,
     graph.pos = 3,
     hrzl_lines = c(numeric_data_for_fp$horiz_line, list(NULL)),
+    new_page = FALSE,
     ...
   )
 }
