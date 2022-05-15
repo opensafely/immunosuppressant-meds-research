@@ -47,7 +47,7 @@ actions:
     needs: [create_cohorts]
     outputs:
       moderately_sensitive:
-        log1: logs/descriptive_tables.smcl 
+        log1: logs/descriptive_tables.txt
       
   run_cox_models_imid:
     run: stata-mp:latest analysis/202_cox_models.do "imid"
