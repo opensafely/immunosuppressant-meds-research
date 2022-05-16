@@ -1,15 +1,9 @@
-The working protocol is located at https://docs.google.com/document/d/1gUsQ6qOW008-IclWVftBsSrjM-zsMv0Q/edit?ts=5f046214
+# Risk of severe COVID-19 outcomes associated with immune-mediated inflammatory diseases and immune modifying therapies: a nationwide cohort study in the OpenSAFELY platform
 
-# OpenSAFELY Research Template
+This is the code and configuration for our paper.
 
-This is a template repository for making new OpenSAFELY resarch projects.  Eventually it'll become a framework. To get started, create a new repo using this repo as a template, delete this front matter, and edit the text that follows.
-
-# _title goes here_
-
-This is the code and configuration for our paper, _name goes here_
-
-* The paper is [here]()
-* Raw model outputs, including charts, crosstabs, etc, are in `released_analysis_results/`
+* The preprint is available [here](https://www.medrxiv.org/content/10.1101/2021.09.03.21262888v2).
+* Raw model outputs, including charts, crosstabs, etc, are available [here](https://jobs.opensafely.org/datalab/immunosuppresant-medication/immunosuppressant-meds-research/outputs/).
 * If you are interested in how we defined our variables, take a look at the [study definition](analysis/study_definition.py); this is written in `python`, but non-programmers should be able to understand what is going on there
 * If you are interested in how we defined our code lists, look in the [codelists folder](./codelists/).
 * Developers and epidemiologists interested in the code should review
@@ -17,16 +11,7 @@ This is the code and configuration for our paper, _name goes here_
 
 # About the OpenSAFELY framework
 
-The OpenSAFELY framework is a new secure analytics platform for
-electronic health records research in the NHS.
+The OpenSAFELY framework is a secure analytics platform for electronic health records research in the NHS.
 
-Instead of requesting access for slices of patient data and
-transporting them elsewhere for analysis, the framework supports
-developing analytics against dummy data, and then running against the
-real data *within the same infrastructure that the data is stored*.
-Read more at [OpenSAFELY.org](https://opensafely.org).
+Instead of requesting access for slices of patient data and transporting them elsewhere for analysis, the framework supports developing analytics against dummy data, and then running against the real data within the same infrastructure that the data is stored. Read more at [OpenSAFELY.org](https://opensafely.org).
 
-The framework is under fast, active development to support rapid
-analytics relating to COVID19; we're currently seeking funding to make
-it easier for outside collaborators to work with our system.  You can
-read our current roadmap [here](ROADMAP.md).
