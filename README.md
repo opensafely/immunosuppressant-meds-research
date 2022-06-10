@@ -1,8 +1,8 @@
 # Risk of severe COVID-19 outcomes associated with immune-mediated inflammatory diseases and immune modifying therapies: a nationwide cohort study in the OpenSAFELY platform
 
-This is the code and configuration for our paper.
+This is the code and configuration for our paper _Risk of severe COVID-19 outcomes associated with immune-mediated inflammatory diseases and immune-modifying therapies: a nationwide cohort study in the OpenSAFELY platform_.
 
-* The preprint is available [here](https://www.medrxiv.org/content/10.1101/2021.09.03.21262888v2) and the peer-reviewed version has been accepted for publication in Lancet Rheumatology.
+* The [here in Lancet Rheumatology](https://doi.org/10.1016/S2665-9913(22)00098-4).
 * Raw model outputs, including charts, crosstabs, etc, are available [here](https://jobs.opensafely.org/datalab/immunosuppresant-medication/immunosuppressant-meds-research/outputs/).
 * If you are interested in how we defined our variables, take a look at the [study definition](analysis/study_definition.py); this is written in `python`, but non-programmers should be able to understand what is going on there
 * If you are interested in how we defined our code lists, look in the [codelists folder](./codelists/).
